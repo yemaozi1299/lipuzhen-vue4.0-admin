@@ -1,0 +1,122 @@
+<!-- 电商新样式样式 -->
+<template name="newGoodsList">
+	<scroll-view
+		class="new-goods-list {{(data.customFeature.mode == 2 && data.curpage > 0) ? 'hor-request-status' : ''}}"
+		data-param="{{data.param}}" data-compid="{{data.compId}}" data-type="goods-list"
+		style="{{data.style + (data.customFeature.mode != 0 ? 'background: #f3f3f3;' : '')}}"
+		scroll-y="{{data.customFeature.mode == 2 ? false : true}}"
+		scroll-x="{{data.customFeature.mode == 2 ? true : false}}" scroll-top="{{data.scrollTop}}"
+		data-curpage="{{data.curpage}}" bindscrolltolower="goodsScrollFunc" bindanimationend="animationEnd">
+		<!-- 样式1 -->
+		<block wx:if="{{ data.customFeature.mode == 0 }}">
+			<view class="new-goods-list-one">
+				<view class="goods-content" wx:for="{{data.goods_data.body}}" wx:key="" data-id="{{item.id}}"
+					catchtap="turnToGoodsDetail" data-group="{{item.form_data.is_group_buy}}"
+					data-group="{{item.is_group_buy_goods}}"
+					style="margin-bottom:{{data.customFeature.margin}}px;background-color:{{data.customFeature.secColor}};height:{{data.customFeature.lineHeight}}px">
+					<image class="goods-image" src="{{item.face}}"
+						style="width: {{data.customFeature.imgWidth}}px;height:{{data.customFeature.imgHeight}}px"
+						mode="scaleToFill">
+
+					</image>
+					<!-- 样式1-1 -->
+					<view class="goods-detail">
+						<view class="title">
+							{{item.name}}
+						</view>
+
+						<view class="price-box">
+							<text class="real-price">¥{{item.price}}</text>
+							<!-- <text wx:if="{{item.virtual_price != 0}}"
+								class="virtual-price">¥{{item.virtual_price}}</text> -->
+						</view>
+						<view class="sales-box">
+							<text class="sales">{{item.sold}}人付款</text>
+							<label wx:if="{{data.customFeature.isShoppingCart}}"
+								class="addShoppingcart ico-moon icon-addshoppingcart" data-id="{{item.id}}"
+								catchtap="showAddShoppingcart"></label>
+						</view>
+					</view>
+
+				</view>
+			</view>
+		</block>
+		<!-- 样式2 -->
+		<block wx:if="{{ data.customFeature.mode == 1 }}">
+			<view class="new-goods-list-two clearfix">
+				<view class="goods-content" wx:for="{{data.goods_data.body}}" wx:key="" data-id="{{item.id}}"
+					catchtap="turnToGoodsDetail" data-group="{{item.form_data.is_group_buy}}"
+					data-group="{{item.is_group_buy_goods}}"
+					style="margin-bottom:{{data.customFeature.margin}}px;background-color:{{data.customFeature.secColor}};height:{{data.customFeature.lineHeight}}px">
+					<image class="list-img" src="{{item.face}}"
+						style="width: {{data.customFeature.imgWidth}}px;height:{{data.customFeature.imgHeight}}px"
+						mode="scaleToFill">
+					</image>
+
+					<view class="title">{{item.name}}</view>
+					<!-- 样式2-1 -->
+					<view class="goods-detail">
+						<view class="price-box">
+							<text class="real-price">¥{{item.price}}</text>
+							<!-- <text wx:if="{{item.virtual_price != 0}}"
+								class="virtual-price">¥{{item.virtual_price}}</text> -->
+						</view>
+						<view class="sales-box">
+							<text class="sales">{{item.sold}}人付款</text>
+							<label wx:if="{{data.customFeature.isShoppingCart}}"
+								class="addShoppingcart ico-moon icon-addshoppingcart" data-id="{{item.id}}"
+								catchtap="showAddShoppingcart"></label>
+						</view>
+					</view>
+
+				</view>
+			</view>
+		</block>
+		<!-- 样式3 -->
+		<block wx:if="{{ data.customFeature.mode == 2 }}">
+			<view class="new-goods-list-three">
+				<view class="goods-content" wx:for="{{data.goods_data.body}}" wx:key="" data-id="{{item.id}}"
+					catchtap="turnToGoodsDetail" data-group="{{item.form_data.is_group_buy}}"
+					data-group="{{item.is_group_buy_goods}}"
+					style="margin-bottom:{{data.customFeature.margin}}px;background-color:{{data.customFeature.secColor}};height:{{data.customFeature.lineHeight}}px">
+					<image class="goods-image" src="{{item.face}}"
+						style="width: {{data.customFeature.imgWidth}}px;height:{{data.customFeature.imgHeight}}px"
+						mode="scaleToFill"></image>
+					<view class="title">
+						{{item.name}}
+					</view>
+					<view class="goods-detail">
+						<view class="price-box">
+							<text class="real-price">¥{{item.price}}</text>
+							<!-- <text wx:if="{{item.virtual_price != 0}}"
+								class="virtual-price">¥{{item.virtual_price}}</text> -->
+						</view>
+						<view class="sales-box">
+							<text class="sales">{{item.sold}}人付款</text>
+							<label wx:if="{{data.customFeature.isShoppingCart}}"
+								class="addShoppingcart ico-moon icon-addshoppingcart" data-id="{{item.id}}"
+								catchtap="showAddShoppingcart"></label>
+						</view>
+					</view>
+
+				</view>
+			</view>
+		</block>
+
+		<template wx:if="{{data.loading}}" is="requestLoading"></template>
+		<template wx:if="{{data.is_more == 0 && data.goods_data.length == 0}}" is="requestNone"
+			data="{{data: '暂无商品数据~'}}"></template>
+		<template wx:if="{{data.loadingFail}}" is="requestFail"
+			data="{{refreshEvent: 'goodsScrollFunc', compId: data.compId}}"></template>
+		<template wx:if="{{data.is_more == 0 && data.goods_data.length > 0 && data.customFeature.isShowFinishText}}"
+			is="requestAll"></template>
+		<view class="loading-btn"
+			wx:if="{{data.customFeature.vesselAutoheight == 1 && data.customFeature.loadingMethod == 1 && data.customFeature.mode != 2 && data.is_more && data.is_more != 0 && !data.loading && !data.loadingFail }}"
+			data-compid="{{data.compId}}" bindtap="goodsScrollFunc">
+			<image wx:if="{{data.customFeature.loadingStyle == 'img'}}" mode="aspectFill"
+				src="{{data.customFeature.loadingImg}}"></image>
+			<text wx:elif="{{data.customFeature.loadingStyle == 'text'}}"
+				style="color: {{data.customFeature.loadingColor}};">{{data.customFeature.loadingText}}</text>
+		</view>
+	</scroll-view>
+</template>

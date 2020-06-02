@@ -1,0 +1,70 @@
+<template name="list-vessel_rich_8689712297">
+	<scroll-view
+		class="element list-vessel-wrap scroll-ele {{data.customFeature.mode? 'mode-' + data.customFeature.mode: ''}} {{(data.customFeature.mode == 3 && data.curpage > 0) ? 'hor-request-status' : ''}}"
+		data-id="{{data.customFeature.id}}" data-type="list-vessel" style="{{data.style}}"
+		data-form="{{data.customFeature.form}}" data-compid="{{compid}}"
+		scroll-y="{{(data.customFeature.mode == 3 || data.customFeature.vesselAutoheight != 0) ? false : true}}"
+		scroll-x="{{data.customFeature.mode == 3? true: false}}" lower-threshold="100" data-curpage="{{data.curpage}}"
+		bindscrolltolower="listVesselScrollFunc" bindanimationend="animationEnd">
+		<view class="js-list-container" data-list-index="0">
+
+			<view class="list-vessel clearfix background-ele" wx:for="{{data.list_data}}" wx:key="index"
+				style="margin-bottom:{{data.customFeature.margin}}px;background-color:{{data.customFeature.lineBackgroundColor}}"
+				data-dataid="{{item.line}}" data-router="{{data.customFeature.link}}" data-index="{{index}}"
+				catchtap="listVesselTurnToPage">
+
+				<view class="ele-container">
+					<template is="list-vessel_rich_8689712297_0"
+						data="{{data:data.content, real_value:item,index:index, parentType : data.content[0].parentCompid , page_form : data.content[0].page_form , dataId : dataId}}"></template>
+
+					<template is="RICHAPPS_text"
+						data="{{data:data.content[0],real_value:real_value,compId:2,item: item}}"></template>
+					<template is="zcTextBlock"
+						data="{{data:data.content[0], real_value:real_value,  item: item, detail_data: detail_data, in_dynamic_vessel: in_dynamic_vessel}}"></template>
+				</view>
+			</view>
+	</scroll-view>
+</template>
+
+<template name="zcListVessel2">
+	<view class="fixed {{data.topHover ? 'hover' : ''}}" style="width:100%;margin-top:-1px;margin-bottom:-1px;">
+		<scroll-view
+			class="element list-vessel-wrap scroll-ele {{data.customFeature.mode? 'mode-' + data.customFeature.mode: ''}} {{(data.customFeature.mode == 3 && data.curpage > 0) ? 'hor-request-status' : ''}}"
+			data-id="{{data.customFeature_id}}" data-type="list-vessel" style="{{data.style}}"
+			data-param="{{data.param}}" data-compid="{{data.compId}}"
+			scroll-y="{{(data.customFeature.mode == 2 || data.customFeature.vesselAutoheight != 0) ? false : true}}"
+			scroll-x="{{data.customFeature.mode == 2? true: false}}" lower-threshold="100"
+			bindscrolltolower="listVesselScrollFunc" bindanimationend="animationEnd">
+			<view class="js-list-container clearfix" data-list-index="0">
+				<view class="list-vessel clearfix background-ele" wx:for="{{data.list_data}}" wx:key="index"
+					style="{{data.list_style}}"
+					data-dataid="{{data.customFeature.link == 'franchiseeDetail' ? item.form_data.app_id[0].text : (item.id || item.form_data.id[0].text)}}"
+					data-router="{{item.form_data.sub_app_bar['homepage-router'] || data.customFeature.link}}"
+					data-isseckill="{{item.form_data.is_seckill[0].text || ''}}" data-compid="list_vessel2"
+					data-index="{{index}}" data-group-id="{{item.form_data.group_id[0].text || ''}}"
+					bindtap="listVesselTurnToPage">
+					<view class="ele-container" wx:if="{{!data.content[0].hidden}}">
+						<template is="zcTextBlock"
+							data="{{data:data.content[0], real_value:real_value,  item: item, detail_data: detail_data, in_dynamic_vessel: in_dynamic_vessel}}"></template>
+					</view>
+				</view>
+			</view>
+			<template wx:if="{{data.loading}}" is="requestLoading"></template>
+			<template wx:if="{{data.is_more == 0 && data.list_data.length == 0}}" is="requestNone"
+				data="{{data: '暂无数据~'}}"></template>
+			<template wx:if="{{data.loadingFail}}" is="requestFail"
+				data="{{refreshEvent: 'listVesselScrollFunc', compId: data.compId}}"></template>
+			<template wx:if="{{data.is_more == 0 && data.list_data.length > 0 && data.customFeature.isShowFinishText}}"
+				is="requestAll"></template>
+			<view class="loading-btn"
+				wx:if="{{data.customFeature.vesselAutoheight == 1 && data.customFeature.loadingMethod == 1 && data.customFeature.mode != 2 && data.is_more && data.is_more != 0 && !data.loading && !data.loadingFail}}"
+				data-compid="{{data.compId}}" bindtap="listVesselScrollFunc">
+				<image wx:if="{{data.customFeature.loadingStyle == 'img'}}" mode="aspectFill"
+					src="{{data.customFeature.loadingImg}}"></image>
+				<text wx:elif="{{data.customFeature.loadingStyle == 'text'}}"
+					style="color: {{data.customFeature.loadingColor}};">{{data.customFeature.loadingText}}</text>
+			</view>
+		</scroll-view>
+	</view>
+	<view class="{{data.topHover ? 'bottomHover' : ''}}" style="height:1px;"></view>
+</template>
