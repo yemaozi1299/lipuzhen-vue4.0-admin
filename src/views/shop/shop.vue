@@ -230,7 +230,7 @@ export default {
                 {
                     title: '名称',
                     key: 'name',
-                    sortable: true
+                    sortable: true,
                     // editable: true
                 },
                 {
@@ -362,8 +362,6 @@ export default {
     created () {
         this.fetchData();
         this.getClass();
-        this.$store.commit('increment')
-        console.log(this.$store.state.count)
     },
     watch: {
         chooseID: function (val) {
@@ -747,76 +745,8 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-.shop-list-card
-    font-size 12px
-    border-radius 0px
-    .layout-wrapper
-        background #FFF
-    .header-wrapper
-        padding 0px 0 20px 0px
-        background #FFF
-        height auto
-        overflow hidden
-        line-height 0px
-        .menu-box
-            margin-bottom 20px
-            height 40px
-            line-height 20px
-    .sider-wrapper
-        width 150px
-        border 1px solid #d9d9d9
-        margin 0 15px 0 0px
-        height 700px
-        background #FFF
-        .category
-            background #F6F7FB
-            line-height 42px
-            padding-left 24px
-        .menu-item
-            background #FFF
-        .add-class-container
-            text-align center
-            padding 10px 0
-            border-top 1px solid #e4e2e2
-            .class-btn
-                color #2b85e4
-                background-color #fff
-                border-color #2b85e4
-        .add-class-dialog
-            border-top 1px solid #e4e2e2
-    .table-footer
-        padding 0 0 0 17px
-        line-height 39px
-        background rgba(218, 237, 255, 0.35)
-        font-size 12px
-        .table-checkbox
-            font-size 12px
-            padding-right 25px
-    // 修改部分iview默认样式
-    .ant-btn
-        font-size 12px
-        border-radius 0
-    .ant-search-btn
-        border-radius 0px
-        box-shadow none
-    .ant-search-input
-        input
-            box-shadow none
-            border-radius 0px
-            font-size 12px
-    .distribution-row-columns
-        font-size 12px
-    th.distribution-row-columns
-        color #303445
-        background #F6F7FB
-        font-weight 500
-        border none
-        border-right 2px solid #FFF
-    .ivu-menu-vertical .ivu-menu-item, .ivu-menu-vertical .ivu-menu-submenu-title
-        padding 14px 16px
-        font-size 12px
-    .ivu-menu-light.ivu-menu-vertical .ivu-menu-item-active:not(.ivu-menu-submenu):after
-        left 0
-    .ivu-menu-vertical.ivu-menu-light:after
-        width 0px
+.shop-list-card {
+    font-size: 12px;
+    border-radius: 0px;
+}
 </style>

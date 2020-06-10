@@ -3,10 +3,11 @@
         <Sider
             hide-trigger
             collapsible
-            :width="256"
+            :width="200"
             :collapsed-width="64"
             v-model="collapsed"
             class="left-sider"
+            breakpoint="sm"
             :style="{ overflow: 'hidden' }"
         >
             <side-menu
@@ -126,6 +127,7 @@ export default {
             this.$refs.side1.toggleCollapse();
         },
         fetchData: function () {
+            console.log(this.$route.path.split('/'))
             this.activeName = this.$route.path.split('/')[1];
         },
         handleCollapsedChange (state) {

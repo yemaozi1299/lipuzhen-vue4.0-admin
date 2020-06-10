@@ -1,40 +1,72 @@
 <template>
     <div class="tables_template">
+        <!-- 搜索框 -->
+        <div class="search-area" v-if="searchable">
+            <slot></slot>
+            <Input
+                v-model="searchKey"
+                placeholder="关键字"
+                @on-keyup.enter="onSearchChange"
+                clearable
+                class="ant-search-input mg-r-10"
+                style="width: 200px;"
+            />
+            <Button
+                type="primary"
+                @click="onSearchChange"
+                icon="ios-search"
+                class="ant-search-btn"
+            ></Button>
+            <div class="search-content" v-if="isSearch">
+                搜索:{{ value }}
+                <Button
+                    type="primary"
+                    size="small"
+                    shape="circle"
+                    @click="cancelSearch"
+                    >返回</Button
+                >
+            </div>
+        </div>
+
         <!-- 设置iview表格自带属性 -->
-        <Table ref="tablesMain"
-               :data="insideTableData"
-               :columns="insideColumns"
-               :stripe="stripe"
-               :border="border"
-               :show-header="showHeader"
-               :width="width"
-               :height="height"
-               :loading="loading"
-               :disabled-hover="disabledHover"
-               :highlight-row="highlightRow"
-               :row-class-name="rowClassName"
-               :size="size"
-               :no-data-text="noDataText"
-               :no-filtered-data-text="noFilteredDataText"
-               @on-current-change="onCurrentChange"
-               @on-select="onSelect"
-               @on-select-cancel="onSelectCancel"
-               @on-select-all="onSelectAll"
-               @on-selection-change="onSelectionChange"
-               @on-sort-change="onSortChange"
-               @on-filter-change="onFilterChange"
-               @on-row-click="onRowClick"
-               @on-row-dblclick="onRowDblclick"
-               @on-expand="onExpand">
+        <Table
+            ref="tablesMain"
+            :data="insideTableData"
+            :columns="insideColumns"
+            :stripe="stripe"
+            :border="border"
+            :show-header="showHeader"
+            :width="width"
+            :height="height"
+            :loading="loading"
+            :disabled-hover="disabledHover"
+            :highlight-row="highlightRow"
+            :row-class-name="rowClassName"
+            :size="size"
+            :no-data-text="noDataText"
+            :no-filtered-data-text="noFilteredDataText"
+            @on-current-change="onCurrentChange"
+            @on-select="onSelect"
+            @on-select-cancel="onSelectCancel"
+            @on-select-all="onSelectAll"
+            @on-selection-change="onSelectionChange"
+            @on-sort-change="onSortChange"
+            @on-filter-change="onFilterChange"
+            @on-row-click="onRowClick"
+            @on-row-dblclick="onRowDblclick"
+            @on-expand="onExpand"
+        >
         </Table>
-        <div class="page-content"
-             v-if="showPage == true && total > pageSize">
-            <Page :total="total"
-                  :current="current"
-                  :page-size="pageSize"
-                  :show-total="showTotal"
-                  :show-elevator="showElevator"
-                  @on-change="skippage">
+        <div class="page-content" v-if="showPage == true && total > pageSize">
+            <Page
+                :total="total"
+                :current="current"
+                :page-size="pageSize"
+                :show-total="showTotal"
+                :show-elevator="showElevator"
+                @on-change="skippage"
+            >
             </Page>
         </div>
     </div>
@@ -107,6 +139,10 @@ export default {
          * @description 全局设置是否可编辑
          */
         editable: {
+            type: Boolean,
+            default: false
+        },
+        isSearch: {
             type: Boolean,
             default: false
         },
@@ -270,6 +306,16 @@ export default {
         },
         skippage: function (page) {
             this.$emit('on-skippage', page)
+        },
+        // 搜索
+        onSearchChange () {
+            this.$emit("on-search-change", this.searchKey);
+        },
+        onCancelSearch (evnet) {
+            this.$emit("on-cancel-search", evnet);
+        },
+        onPathEdit (evnet) {
+            this.$emit("on-path-edit", evnet)
         }
     }
 }
@@ -295,6 +341,11 @@ export default {
     .page-content
         padding 20px 0
         text-align right
+.search-area
+    overflow hidden
+    margin-bottom 10px
+    .search-content
+        float right
 </style>
 
 

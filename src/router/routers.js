@@ -105,7 +105,16 @@ export default [
 				},
 				component: () => import('@/views/shoporder/shoporder')
 			},
-
+			// 支付设置
+			{
+				path: '/shoppay',
+				name: 'shoppay',
+				meta: {
+					title: '支付设置',
+					icon: 'md-cart'
+				},
+				component: () => import('@/views/shoppay/shoppay')
+			},
 			// 配送管理
 			{
 				path: '/shoppost/:page?',
@@ -137,7 +146,323 @@ export default [
 				component: () => import('@/views/shoppost/shoppostedit')
 			},
 
+			// 店铺设置
+			{
+				path: '/shopinfo',
+				name: 'shopinfo',
+				meta: {
+					title: '店铺信息',
+					icon: 'md-home',
+				},
+				redirect: '/shopinfo/shopinfo',
+				component: () => import('@/views/shopinfo/management.vue'),
+				children: [{
+					path: '/shopinfo/shopinfo',
+					meta: {
+						title: '店铺设置',
+						hideInMenu: true
+					},
+					name: 'shopinfo_setting',
+					component: () => import('@/views/shopinfo/shopinfo.vue')
+				},
+				{
+					path: '/shopinfo/location',
+					meta: {
+						title: '座位管理',
+						hideInMenu: true
+					},
+					name: 'location_setting',
+					component: () => import('@/views/shopinfo/location.vue')
+				},
+				{
+					path: '/shopinfo/ticket',
+					meta: {
+						title: '小票机',
+						hideInMenu: true
+					},
+					name: 'smallticket',
+					component: () => import('@/views/shopinfo/ticket.vue')
+				},
+				{
+					path: '/shopinfo/ticketList',
+					meta: {
+						title: '小票机列表',
+						hideInMenu: true
+					},
+					name: 'smallticketList',
+					component: () => import('@/views/shopinfo/ticketlist.vue')
+				}]
+			},
 
+
+
+
+		]
+	},
+	{
+		path: "/marketing",
+		name: "marketing",
+		component: Main,
+		meta: {
+			icon: 'md-cart',
+			title: "营销推广"
+		},
+		children: [
+			{
+				path: '/recv',
+				name: 'recv',
+				meta: {
+					icon: 'md-cart',
+					title: "优惠券"
+				},
+				component: () => import('@/views/coupon/recv.vue')
+			},
+			{
+				path: '/recv/addrecv',
+				meta: {
+					icon: 'md-cart',
+					title: "添加优惠券",
+					hideInMenu: true
+				},
+				name: 'addrecv',
+				component: () => import('@/views/coupon/addrecv.vue')
+			},
+			{
+				path: '/recv/editrecv',
+				meta: {
+					icon: 'md-cart',
+					title: "修改优惠券",
+					hideInMenu: true
+				},
+				name: 'editrecv',
+				component: () => import('@/views/coupon/editrecv.vue')
+			},
+
+			// 储值
+			{
+				path: '/stored/:page?',
+				meta: {
+					icon: 'md-cart',
+					title: "储值",
+				},
+				name: 'stored',
+				component: () => import('@/views/stored/stored.vue')
+			},
+			{
+				path: '/stored/:page?/addStored',
+				meta: {
+					icon: 'md-cart',
+					title: "新建储值项目",
+					hideInMenu: true
+				},
+				name: 'addStored',
+				component: () => import('@/views/stored/addStored.vue')
+			},
+			{
+				path: '/stored/:page?/editStored',
+				meta: {
+					icon: 'md-cart',
+					title: "编制储值项目",
+					hideInMenu: true
+				},
+				name: 'editStored',
+				component: () => import('@/views/stored/editStored.vue')
+			},
+			{
+				path: '/stored/:page?/customStored',
+				meta: {
+					icon: 'md-cart',
+					title: "自定义储值设置",
+					hideInMenu: true
+				},
+				name: 'customStored',
+				component: () => import('@/views/stored/customStored.vue')
+			},
+
+			// 拼团
+			{
+				path: '/activity/:page?',
+				name: 'activity',
+				meta: {
+					icon: 'md-cart',
+					title: '拼团活动'
+				},
+				component: () => import('@/views/activity/manager_group_activity.vue')
+			},
+			{
+				path: '/activity/:page?/addActivity',
+				name: 'addActivity',
+				meta: {
+					icon: 'md-cart',
+					title: '添加拼团活动',
+					hideInMenu: true
+				},
+				component: () => import('@/views/activity/manager_group_addActivity.vue')
+			},
+			{
+				path: '/activity/:page?/activityGoods',
+				name: 'activityGoods',
+				meta: {
+					icon: 'md-cart',
+					title: '拼团商品列表',
+					hideInMenu: true
+				},
+				component: () => import('@/views/activity/manager_group_activityGoods.vue')
+			},
+			{
+				path: '/activity/:goodsID?/addGoodsList',
+				name: 'addGoodsList',
+				meta: {
+					icon: 'md-cart',
+					title: '添加商品列表',
+					hideInMenu: true
+				},
+				component: () => import('@/views/activity/manager_group_addGoodsList.vue')
+			},
+			{
+				path: '/activity/:group_buy_id?/addGoods',
+				name: 'addGoods',
+				meta: {
+					icon: 'md-cart',
+					title: '设置商品价格',
+					hideInMenu: true
+				},
+				component: () => import('@/views/activity/manager_group_addGoods.vue')
+			},
+			{
+				path: '/activity/:group_buy_id?/goodsInfo',
+				name: 'goodsInfo',
+				meta: {
+					icon: 'md-cart',
+					title: '拼团商品信息',
+					hideInMenu: true
+				},
+				component: () => import('@/views/activity/manager_group_goodsInfo.vue')
+			},
+
+			// 智能名片
+			{
+				path: '/card',
+				name: '_card',
+				meta: {
+					icon: 'md-cart',
+					title: '智能名片',
+				},
+				component: () => import('@/views/card/card.vue'),
+				children: [
+					{
+						path: '/card/card_controller',
+						name: 'card',
+						meta: {
+							icon: 'md-cart',
+							title: '名片管理',
+						},
+						component: () => import('@/views/card/card_controller.vue')
+					},
+					{
+						path: '/card/card_setting',
+						title: '名片设置',
+						name: 'card_setting',
+						meta: {
+							icon: 'md-cart',
+							title: '名片设置',
+							hideInMenu: true
+						},
+						component: () => import('@/views/card/card_setting.vue')
+					},
+
+					{
+						path: '/card/card_company',
+						name: 'card_company',
+						meta: {
+							icon: 'md-cart',
+							title: '公司名片代表名片',
+							hideInMenu: true
+						},
+						component: () => import('@/views/card/card_company.vue')
+					},
+					{
+						path: '/card/message_push',
+						name: 'message_push',
+						meta: {
+							icon: 'md-cart',
+							title: '消息推送',
+							hideInMenu: true
+						},
+						component: () => import('@/views/card/message_push.vue')
+					}
+				]
+			},
+			// 秒杀
+			{
+				path: '/seckill/:page?',
+				meta: {
+					icon: 'md-cart',
+					title: '秒杀商品',
+				},
+				name: 'seckill',
+				component: () => import('@/views/seckill/seckill.vue')
+			},
+			{
+				path: '/seckill/:page/add',
+				meta: {
+					icon: 'md-cart',
+					title: '添加秒杀',
+					hideInMenu: true
+				},
+				name: 'seckilladd',
+				component: () => import('@/views/seckill/add.vue')
+			},
+			{
+				path: '/seckill/:page/goods-setting/:type/:id',
+				meta: {
+					icon: 'md-cart',
+					title: '秒杀商品设置',
+					hideInMenu: true
+				},
+				name: 'seckillgid',
+				component: () => import('@/views/seckill/goodsSetting.vue')
+			},
+
+			// 分销
+			{
+				path: '/distribution',
+				meta: {
+					title: '分销',
+				},
+				name: '_distribution',
+				component: () => import('@/views/distribution/distribution.vue'),
+				children: [{
+					path: '/distribution/distribution_edit',
+					meta: {
+						icon: 'md-cart',
+						title: '分销设置',
+					},
+					name: 'distribution',
+					component: () => import('@/views/distribution/distribution_edit.vue')
+				},
+				{
+					path: '/distribution/present_list/:page',
+					meta: {
+						icon: 'md-cart',
+						title: '提现管理',
+						hideInMenu: true
+					},
+					name: 'present_list',
+					component: () => import('@/views/distribution/present_list.vue')
+				},
+				{
+					path: '/distribution/distribution_management/:page',
+					meta: {
+						icon: 'md-cart',
+						title: '分销员管理',
+						hideInMenu: true
+					},
+					name: 'distribution_management',
+					component: () => import('@/views/distribution/distribution_management.vue')
+				},
+				]
+			},
 
 
 
@@ -145,22 +470,193 @@ export default [
 	},
 
 	{
+		path: '/info',
+		component: Main,
+		name: "_news",
+		meta: {
+			title: "信息发布",
+			icon: 'md-cart'
+		},
+		children: [
+			{
+				path: "/news",
+				name: "news",
+				meta: {
+					title: "新闻系统",
+					icon: "md-card"
+				},
+				component: () => import('@/views/news/news.vue')
+			},
+			{
+				path: "/news/addNews",
+				name: "addnews",
+				meta: {
+					title: "添加新闻",
+					icon: "md-card",
+					hideInMenu: true
+				},
+				component: () => import('@/views/news/addNews.vue')
+			},
+
+		]
+	},
+
+
+
+	/*************************************
+		/dataManager/1 #列出第一页数据表
+		/dataManager/1/editField #添加数据表
+		/dataManager/1/editField/123 #编辑数据表123
+		/dataManager/1/listData/123 #列出数据库123的所有记录
+		/dataManager/1/addData/123 #给数据库123添加记录
+		/dataManager/1/editData/123/456 #编辑数据库123的记录456
+	*************************************/
+	{
+		path: '/datamanager',
+		//  /action/:id
+		component: Main,
+		name: "datamanager_",
+		meta: {
+			title: '数据',
+		},
+		children: [{
+			path: ':page?',
+			name: "datamanager",
+			meta: {
+				title: '应用数据',
+			},
+			component: resolve => require(['@/views/datamanager/datamanagerlisttable'], resolve)
+		},
+		//列出所有数据表
+		{
+			path: ':page/editTable',
+			name: 'editTable',
+			meta: {
+				title: '数据列表',
+				hideInMenu: true
+			},
+			component: resolve => require(['@/views/datamanager/datamanageredittable'], resolve)
+		},
+		//添加数据表
+		{
+			path: ':page/editTable/:table',
+			name: 'editTable_table',
+			meta: {
+				title: '添加数据表',
+				hideInMenu: true
+			},
+			component: resolve => require(['@/views/datamanager/datamanageredittable'], resolve)
+		},
+		//编辑数据表结构
+		{
+			path: ':page/listData/:table',
+			name: 'listData_table',
+			meta: {
+				title: '编辑数据表结构',
+				hideInMenu: true
+			},
+			component: resolve => require(['@/views/datamanager/datamanagerlistdata'], resolve)
+		},
+		//列出指定数据库table的数据
+		{
+			path: ':page/listData/:table/:datapage',
+			name: 'listData/:table/:datapage',
+			meta: {
+				title: '列出指定数据库table的数据',
+				hideInMenu: true
+			},
+			component: resolve => require(['@/views/datamanager/datamanagerlistdata'], resolve)
+		},
+		//列出指定数据库table的数据
+		{
+			path: ':page/editData/:table',
+			name: 'editData_table',
+			meta: {
+				title: '列出指定数据库table的数据',
+				hideInMenu: true
+			},
+			component: resolve => require(['@/views/datamanager/datamanagereditdata'], resolve)
+		},
+		//添加指定数据库table的数据
+		{
+			path: ':page/editData/:table/:line',
+			name: 'editData_table_line',
+			meta: {
+				title: '添加指定数据库table的数据',
+				hideInMenu: true
+			},
+			component: resolve => require(['@/views/datamanager/datamanagereditdata'], resolve)
+		} //编辑指定数据库table的数据line
+
+		]
+	},
+
+
+
+
+
+
+
+
+
+	{
+		path: '/member',
+		component: Main,
+		name: "_member",
+		children: [
+			{
+				path: ":page?",
+				meta: {
+					title: '用户管理',
+					icon: 'md-cart'
+				},
+				name: 'member',
+				component: () => import('@/views/member/member.vue')
+			}
+		]
+	},
+
+	{
 		path: '/file',
+		name: "_file",
 		component: Main,
 		children: [
 			{
-				path: '',
-				name: 'file_images',
+				path: '/',
+				name: 'file',
 				meta: {
 					title: '文件管理',
 					icon: 'md-cart'
 				},
-				component: () => import('@/views/file/images')
+				component: () => import('@/views/file/file')
 			},
 		]
-
 	},
 
+	{
+		path: '/401',
+		name: 'error_401',
+		meta: {
+			hideInMenu: true
+		},
+		component: () => import('@/views/error-page/401.vue')
+	},
+	{
+		path: '/500',
+		name: 'error_500',
+		meta: {
+			hideInMenu: true
+		},
+		component: () => import('@/views/error-page/500.vue')
+	},
+	{
+		path: '*',
+		name: 'error_404',
+		meta: {
+			hideInMenu: true
+		},
+		component: () => import('@/views/error-page/404.vue')
+	}
 
 ]
 

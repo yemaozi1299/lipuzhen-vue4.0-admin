@@ -1,5 +1,5 @@
 const path = require('path')
-
+const webpack = require('webpack')
 const resolve = dir => {
 	return path.join(__dirname, dir)
 }
@@ -35,5 +35,15 @@ module.exports = {
 				}
 			}
 		},
+	},
+	configureWebpack: {
+		plugins: [
+			new webpack.ProvidePlugin({
+				$: "jquery",
+				jQuery: "jquery",
+				jquery: "jquery",
+				"window.jQuery": "jquery"
+			})
+		]
 	},
 }

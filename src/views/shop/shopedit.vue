@@ -206,45 +206,19 @@
 
             <Form-item label="封面图片">
                 <div class="goods-upload-list" v-for="item in uploadListOne">
-                    <template v-if="item.status === 'finished'">
-                        <img :src="item.url" />
-                        <div class="goods-upload-list-cover">
-                            <Icon
-                                type="ios-eye-outline"
-                                @click.native="handleView(item.url)"
-                            ></Icon>
-                            <Icon
-                                type="ios-trash-outline"
-                                @click.native="handleRemoveOne(item)"
-                            ></Icon>
-                        </div>
-                    </template>
-                    <template v-else>
-                        <Progress
-                            v-if="item.showProgress"
-                            :percent="item.percentage"
-                            hide-info
-                        ></Progress>
-                    </template>
+                    <img :src="item.url" />
+                    <div class="goods-upload-list-cover">
+                        <Icon
+                            type="ios-eye-outline"
+                            @click.native="handleView(item.url)"
+                        ></Icon>
+                        <Icon
+                            type="ios-trash-outline"
+                            @click.native="handleRemoveOne"
+                        ></Icon>
+                    </div>
                 </div>
-                <!-- <Upload
-			        ref="uploadOne"
-			        :show-upload-list="false"
-			        :default-file-list="face"
-			        :on-success="handleSuccess"
-			        :format="['jpg','jpeg','png','gif']"
-			        :max-size="2048"
-			        :on-format-error="handleFormatError"
-			        :on-exceeded-size="handleMaxSize"
-			        :before-upload="handleBeforeUploadOne"
-			        type="drag"
-	                accept="image/*"
-			        action="/block/api_edit.php?action=goods_uploadImage"
-			        style="display: inline-block;width:158px;">
-			        <div style="width: 158px;height:58px;line-height: 58px;">
-	                      <Icon type="ios-cloud-upload-outline" size="20"></Icon>上传图片,支持拖拽
-	                </div>
-                </Upload>-->
+
                 <Button
                     @click="handleBeforeUploadOne"
                     style="vertical-align:top;"
@@ -254,34 +228,29 @@
                         >选择图片
                     </div>
                 </Button>
-                <Resource
-                    v-model="isUploadOne"
-                    ref="uploadOne"
-                    :default-file-lists="face"
-                ></Resource>
+
+                <Modal v-model="isUploadOne" width="860">
+                    <p slot="header">添加图片</p>
+                    <fileExplorer
+                        :options="options"
+                        @successCallback="uploadListOneFun"
+                    ></fileExplorer>
+                    <div slot="footer"></div>
+                </Modal>
             </Form-item>
             <Form-item label="轮换图片">
                 <div class="goods-upload-list" v-for="item in uploadList">
-                    <template v-if="item.status === 'finished'">
-                        <img :src="item.url" />
-                        <div class="goods-upload-list-cover">
-                            <Icon
-                                type="ios-eye-outline"
-                                @click.native="handleView(item.url)"
-                            ></Icon>
-                            <Icon
-                                type="ios-trash-outline"
-                                @click.native="handleRemove(item)"
-                            ></Icon>
-                        </div>
-                    </template>
-                    <template v-else>
-                        <Progress
-                            v-if="item.showProgress"
-                            :percent="item.percentage"
-                            hide-info
-                        ></Progress>
-                    </template>
+                    <img :src="item.url" />
+                    <div class="goods-upload-list-cover">
+                        <Icon
+                            type="ios-eye-outline"
+                            @click.native="handleView(item.url)"
+                        ></Icon>
+                        <Icon
+                            type="ios-trash-outline"
+                            @click.native="handleRemove(item)"
+                        ></Icon>
+                    </div>
                 </div>
                 <!-- <Upload
 			        ref="upload"
@@ -308,11 +277,14 @@
                         >选择图片
                     </div>
                 </Button>
-                <Resource
-                    v-model="isUpload"
-                    ref="upload"
-                    :default-file-lists="facemore"
-                ></Resource>
+                <Modal v-model="isUpload" width="860">
+                    <p slot="header">添加轮换图片</p>
+                    <fileExplorer
+                        :options="options"
+                        @successCallback="uploadListFun"
+                    ></fileExplorer>
+                    <div slot="footer"></div>
+                </Modal>
             </Form-item>
 
             <Form-item label="* 运费设置">
@@ -422,7 +394,11 @@
                 </template>
             </Form-item>
 
-            <Form-item label="详细介绍" prop="readme">
+            <Form-item
+                label="详细介绍"
+                prop="readme"
+                style="position: relative;z-index:1"
+            >
                 <!-- <Input v-model="formValidate.readme" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入..."></Input> -->
                 <!-- <Editor class="editor" v-model="formValidate.readme"></Editor>   -->
                 <editor
@@ -457,15 +433,22 @@
     </Card>
 </template>
 <script>
+import fileExplorer from '@/components/fileExplorer/fileExplorer';
 import Resource from '@/components/files/imagesModal.vue'
 import Editor from '@/components/textEditor/editor.vue'
 export default {
     components: {
         Resource,
-        Editor
+        Editor,
+        fileExplorer
     },
     data () {
         return {
+            options: {
+                mode: "view",
+                _displayMode: 'grid',  // grid 和 list
+                type: 'image'
+            },
             is_group_buy_goods: 0,
             editorContent: '',
             vueAppid: '1',
@@ -539,12 +522,7 @@ export default {
     },
     mounted () {
     },
-    updated () {
-        // console.log(this.$refs.upload.fileList);
-        // console.log(this.$refs.uploadOne.fileList);
-        this.uploadList = this.$refs.upload.fileList
-        this.uploadListOne = this.$refs.uploadOne.fileList
-    },
+
     computed: {
         postTplZhongliang: function () { // 根据给出的运费模板ID,判断他是否是按重量计费
             if (this.formValidate.posttype == '0') {
@@ -576,6 +554,14 @@ export default {
         '$route': 'fetchData'
     },
     methods: {
+        uploadListOneFun: function (files) {
+            this.isUploadOne = false;
+            this.uploadListOne = [files];
+        },
+        uploadListFun: function (files) {
+            this.isUpload = false;
+            this.uploadList.push(files);
+        },
         handleChange (html, text) {
             this.formValidate.readme = html
         },
@@ -790,6 +776,8 @@ export default {
 
                     _this.face = _this.formValidate.face
                     _this.facemore = _this.formValidate.facemore
+                    _this.uploadList = _this.formValidate.facemore;
+                    _this.uploadListOne = _this.formValidate.face;
                     console.log(_this.formValidate.face)
                 } else {
                     _this.$Message.error(response.data.message)
@@ -854,13 +842,12 @@ export default {
         },
         handleRemove (file) {
             // 从 upload 实例删除数据
-            const fileList = this.$refs.upload.fileList
-            this.$refs.upload.fileList.splice(fileList.indexOf(file), 1)
+            const fileList = this.uploadList;
+            this.uploadList.splice(fileList.indexOf(file), 1)
         },
         handleRemoveOne (file) {
             // 从 upload 实例删除数据
-            const fileList = this.$refs.uploadOne.fileList
-            this.$refs.uploadOne.fileList.splice(fileList.indexOf(file), 1)
+            this.uploadListOne = [];
         },
         handleSuccess (res, file) {
             // 因为上传过程为实例，这里模拟添加 url
@@ -906,12 +893,6 @@ export default {
             })
         },
         handleBeforeUploadOne () {
-            const checkOne = this.uploadListOne.length < 1
-            if (!checkOne) {
-                return this.$Notice.warning({
-                    title: '只能上传 1 张图片。'
-                })
-            }
             this.isUploadOne = true
         },
         handleBeforeUpload () {
@@ -977,8 +958,14 @@ export default {
     margin-right: 4px;
 }
 .goods-upload-list img {
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
 }
 .goods-upload-list-cover {
     display: none;

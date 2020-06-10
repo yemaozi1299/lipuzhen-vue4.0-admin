@@ -45,6 +45,7 @@
                 </template>
             </template>
         </Menu>
+        <!-- 缩小后 -->
         <div class="menu-collapsed" v-show="collapsed" :list="menuList">
             <template v-for="item in menuList">
                 <collapsed-menu
