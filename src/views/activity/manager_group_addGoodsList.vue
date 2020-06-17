@@ -17,7 +17,11 @@
                     searchable
                     @on-search-change="get"
                 >
-                    <Button class="ant-btn mg-r-20" @click="$router.go(-1)">
+                    <Button
+                        slot="addbtn"
+                        class="ant-btn mg-r-20"
+                        @click="$router.go(-1)"
+                    >
                         返回
                     </Button>
                 </Tables>

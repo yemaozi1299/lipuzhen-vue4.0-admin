@@ -37,7 +37,6 @@
                 <tables
                     ref="tables"
                     editable
-                    searchable
                     search-place="top"
                     :columns="columns1"
                     :loading="loading"
@@ -438,56 +437,68 @@ export default {
 
 
 <style lang="stylus" rel="stylesheet/stylus">
-.location-wrapper
-    position relative
-    .top-control
-        background-color #fff
-        padding 10px 20px
-        overflow hidden
-        .top-control-right
-            float left
-            .ant-btn
-                border-radius 0
-        .top-control-left
-            float left
-            margin-right 20px
-            .search-ele
-                width 200px
-                font-size 14px
-                line-height 1.5
-                color rgba(0, 0, 0, 0.65)
-                padding 0
-                position relative
-                display inline-block
-                .ant-input
-                    display inline-block
-                    padding 4px 11px
-                    height 32px
-                    font-size 14px
-                    color rgba(0, 0, 0, 0.65)
-                    background-color #fff
-                    background-image none
-                    border 1px solid #d9d9d9
-                    transition 0.3s
-                    font-size 12px
-                    border-radius 0
-                .ant-input-suffix
-                    position absolute
-                    right 0
-                    top 50%
-                    -webkit-transform translateY(-50%)
-                    transform translateY(-50%)
-                    line-height 0
-                    color rgba(0, 0, 0, 0.65)
-                    .ant-search-btn
-                        border-radius 0
-                .ant-input:focus
-                    outline 0
-                    border-color #2d8cf0
-    .content-body
-        padding 0 20px 20px 20px
-        background #fff
-        position relative
-        .page-wrap
-            margin 16px 16px 16px 0
+.location-wrapper {
+    position: relative;
+    .top-control {
+        background-color: #fff;
+        padding: 10px 20px;
+        overflow: hidden;
+        .top-control-right {
+            float: left;
+            .ant-btn {
+                border-radius: 0;
+            }
+        }
+        .top-control-left {
+            float: left;
+            margin-right: 20px;
+            .search-ele {
+                width: 200px;
+                font-size: 14px;
+                line-height: 1.5;
+                color: rgba(0, 0, 0, 0.65);
+                padding: 0;
+                position: relative;
+                display: inline-block;
+                .ant-input {
+                    display: inline-block;
+                    padding: 4px 11px;
+                    height: 32px;
+                    font-size: 14px;
+                    color: rgba(0, 0, 0, 0.65);
+                    background-color: #fff;
+                    background-image: none;
+                    border: 1px solid #d9d9d9;
+                    transition: 0.3s;
+                    font-size: 12px;
+                    border-radius: 0;
+                }
+                .ant-input-suffix {
+                    position: absolute;
+                    right: 0;
+                    top: 50%;
+                    -webkit-transform: translateY(-50%);
+                    transform: translateY(-50%);
+                    line-height: 0;
+                    color: rgba(0, 0, 0, 0.65);
+                    .ant-search-btn {
+                        border-radius: 0;
+                    }
+                }
+                .ant-input:focus {
+                    outline: 0;
+                    border-color: #2d8cf0;
+                }
+            }
+        }
+    }
+    .content-body {
+        padding: 0 20px 20px 20px;
+        background: #fff;
+        position: relative;
+        .page-wrap {
+            margin: 16px 16px 16px 0;
+        }
+    }
+}
 </style>

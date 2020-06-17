@@ -27,6 +27,7 @@
                         @on-search-change="get"
                     >
                         <Button
+                            slot="addbtn"
                             class="mg-r-10"
                             type="info"
                             icon="md-add"

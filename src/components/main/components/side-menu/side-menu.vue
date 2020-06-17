@@ -171,9 +171,7 @@ export default {
         }
     },
     mounted () {
-        console.log(this.openedNames, this.getOpenedNamesByActiveName(name));
         this.openedNames = getUnion(this.openedNames, this.getOpenedNamesByActiveName(name))
-        console.log(this.openedNames);
     }
 }
 </script>

@@ -68,6 +68,7 @@ export default {
         this.editor.customConfig.uploadImgServer = `/`;  // 上传图片到服务器
         this.editor.customConfig.uploadFileName = 'file';
         this.editor.customConfig.uploadImgMaxLength = 5;
+        this.editor.customConfig.zIndex = 100
         this.editor.customConfig.uploadImgHooks = {
 
             fail: function (xhr, editor, result) {

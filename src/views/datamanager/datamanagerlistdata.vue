@@ -1,6 +1,6 @@
 <template>
     <Card>
-        <div
+        <!-- <div
             style="font-size:16px;margin:0px 0px 10px 5px;display:flex;flex-direction:row;"
         >
             <div style="margin-right:10px;line-height:35px">分类:</div>
@@ -36,23 +36,74 @@
                 @on-cancel-search="cancelSearch"
                 @on-search-change="get(table, 1, keyword)"
             >
-                <Button
-                    type="primary"
-                    class="ant-btn mg-r-20"
-                    v-on:click="pathEdit"
-                >
-                    <Icon type="md-add" />数据表添加
-                </Button>
-                <Button
-                    class="ant-btn mg-r-20"
-                    type="warning"
-                    shape="circle"
-                    icon="trash-a"
-                    @click="del"
-                    >清空</Button
-                >
+                <span slot="addbtn">
+                    <Button
+                        type="primary"
+                        class="ant-btn mg-r-20"
+                        v-on:click="pathEdit"
+                    >
+                        <Icon type="md-add" />数据表添加
+                    </Button>
+                    <Button
+                        class="ant-btn mg-r-20"
+                        type="warning"
+                        shape="circle"
+                        icon="trash-a"
+                        @click="del"
+                        >清空</Button
+                    >
+                </span>
             </Tables>
-        </div>
+        </div> -->
+
+        <Tables
+            :columns="fields"
+            v-model="items"
+            :total="total"
+            :current="page"
+            :page-size="pageno"
+            show-total
+            show-elevator
+            @on-change="skippage"
+            showlayout
+        >
+            <div slot="header">
+                <div class="search-area">
+                    <Button
+                        type="primary"
+                        class="ant-btn mg-r-20"
+                        v-on:click="pathEdit"
+                    >
+                        <Icon type="md-add" />数据添加
+                    </Button>
+                    <Button
+                        class="ant-btn mg-r-20"
+                        type="warning"
+                        shape="circle"
+                        icon="trash-a"
+                        @click="del"
+                        >清空</Button
+                    >
+                    <Input
+                        v-model="keyword"
+                        placeholder="关键字"
+                        @on-keyup.enter="get(table, 1, keyword)"
+                        clearable
+                        class="ant-search-input mg-r-10"
+                        style="width: 200px;"
+                    />
+                    <Button
+                        type="primary"
+                        @click="get(table, 1, keyword)"
+                        icon="ios-search"
+                        class="ant-search-btn"
+                    ></Button>
+                    <Button style="float:right" @click="$router.go(-1)"
+                        >返回</Button
+                    >
+                </div>
+            </div>
+        </Tables>
 
         <Modal
             v-model="modalClass"

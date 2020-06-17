@@ -479,7 +479,7 @@ export default [
 		},
 		children: [
 			{
-				path: "/news",
+				path: "/news/:pageid?",
 				name: "news",
 				meta: {
 					title: "新闻系统",
@@ -488,7 +488,7 @@ export default [
 				component: () => import('@/views/news/news.vue')
 			},
 			{
-				path: "/news/addNews",
+				path: "/news/:pageid?/addNews/:newid",
 				name: "addnews",
 				meta: {
 					title: "添加新闻",
@@ -496,6 +496,25 @@ export default [
 					hideInMenu: true
 				},
 				component: () => import('@/views/news/addNews.vue')
+			},
+			{
+				path: "/message/:pageid?",
+				name: "message",
+				meta: {
+					title: "留言管理",
+					icon: "md-card",
+				},
+				component: () => import('@/views/message/message.vue')
+			},
+			{
+				path: "/message/:pageid?/addMessage/:mid",
+				name: "addMessage",
+				meta: {
+					title: "添加留言（后台一般不需要）",
+					icon: "md-card",
+					hideInMenu: true
+				},
+				component: () => import('@/views/message/addMessage.vue')
 			},
 
 		]
@@ -592,13 +611,6 @@ export default [
 	},
 
 
-
-
-
-
-
-
-
 	{
 		path: '/member',
 		component: Main,
@@ -618,11 +630,11 @@ export default [
 
 	{
 		path: '/file',
-		name: "_file",
+		name: "file_ex",
 		component: Main,
 		children: [
 			{
-				path: '/',
+				path: ':page?',
 				name: 'file',
 				meta: {
 					title: '文件管理',

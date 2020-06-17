@@ -1,8 +1,26 @@
 <template>
     <div>
         <Card class="shop-list-card" style="" dis-hover>
-            <Layout class="layout-wrapper">
-                <Header class="header-wrapper">
+            <tables
+                ref="tables"
+                editable
+                search-place="top"
+                v-model="tableData"
+                :columns="columns"
+                @on-delete="handleDelete"
+                @on-save-edit="saveEdit"
+                @on-selection-change="chooseEdit"
+                showPage
+                :total="total"
+                :current="page"
+                :page-size="pageno"
+                show-total
+                show-elevator
+                @on-skippage="skippage"
+                showlayout
+                showsider
+            >
+                <div slot="header">
                     <Menu
                         mode="horizontal"
                         @on-select="changeshoptype"
@@ -39,174 +57,145 @@
                             class="ant-search-btn"
                         ></Button>
                     </div>
-                </Header>
-                <Layout class="layout-wrapper">
-                    <Sider class="sider-wrapper" width="198">
-                        <div class="category">
-                            <span>分类</span>
-                        </div>
-                        <Menu
-                            :active-name="classid"
-                            width="auto"
-                            class="menu-item"
-                            @on-select="selectClass"
+                </div>
+                <div slot="sider">
+                    <div class="category">
+                        <span>分类</span>
+                    </div>
+                    <Menu
+                        :active-name="classid"
+                        width="auto"
+                        class="menu-item"
+                        @on-select="selectClass"
+                    >
+                        <MenuItem name="0" class="">
+                            <span>全部</span>
+                        </MenuItem>
+                        <MenuItem
+                            v-for="item in classList"
+                            :key="item.id"
+                            :name="item.id"
                         >
-                            <MenuItem name="0" class="">
-                                <span>全部</span>
-                            </MenuItem>
-                            <MenuItem
-                                v-for="item in classList"
-                                :key="item.id"
-                                :name="item.id"
-                            >
-                                <span>{{ item.classname }}</span>
-                            </MenuItem>
-                        </Menu>
-                        <div class="add-class-container">
-                            <Button
-                                type="dashed"
-                                icon="md-add"
-                                class="class-btn"
-                                @click="showClass = true"
-                                >新建分类</Button
-                            >
-                        </div>
-                        <div class="add-class-dialog" v-if="showClass">
-                            <Row
-                                type="flex"
-                                justify="center"
-                                align="middle"
-                                style="margin: 10px 5px 0 5px;"
-                            >
-                                <Col span="8">分类名称:</Col>
-                                <Col span="16">
-                                    <Input
-                                        class="ant-search-input"
-                                        v-model="classname"
-                                    ></Input>
-                                </Col>
-                            </Row>
-                            <Row
-                                type="flex"
-                                justify="center"
-                                align="middle"
-                                style="margin: 10px; text-align: center;"
-                            >
-                                <Col span="12">
-                                    <Button
-                                        type="primary"
-                                        @click="addClassConfirm"
-                                        >保存</Button
-                                    >
-                                </Col>
-                                <Col span="12">
-                                    <Button @click="addClassCancel"
-                                        >取消</Button
-                                    >
-                                </Col>
-                            </Row>
-                        </div>
-                    </Sider>
-                    <Layout class="layout-wrapper">
-                        <Content>
-                            <tables
-                                ref="tables"
-                                editable
-                                searchable
-                                search-place="top"
-                                v-model="tableData"
-                                :columns="columns"
-                                @on-delete="handleDelete"
-                                @on-save-edit="saveEdit"
-                                @on-selection-change="chooseEdit"
-                                showPage
-                                :total="total"
-                                :current="page"
-                                :page-size="pageno"
-                                show-total
-                                show-elevator
-                                @on-skippage="skippage"
-                            />
-                        </Content>
-                        <Footer class="table-footer">
-                            <Checkbox
-                                class="table-checkbox"
-                                v-model="isSelectAll"
-                                @on-change="handleSelectAll"
-                            >
-                                <span class="mg-l-10">已选</span
-                                ><span style="color:#3091F2">{{
-                                    chooseID.length
-                                }}</span
-                                ><span> / {{ tableData.length }} 个商品</span>
-                            </Checkbox>
-                            <Button
-                                class="table-btn mg-r-20"
-                                :disabled="chooseID.length == 0"
-                                @click="goodsedit('up')"
-                                >上架</Button
-                            >
-                            <Button
-                                class="table-btn mg-r-20"
-                                :disabled="chooseID.length == 0"
-                                @click="goodsedit('down')"
-                                >下架</Button
-                            >
-                            <Button
-                                class="table-btn mg-r-20"
-                                :disabled="chooseID.length == 0"
-                                @click="goodsedit('delete')"
-                                >删除</Button
-                            >
-                            <Dropdown
-                                trigger="click"
-                                placement="top"
-                                class="mg-r-20"
-                                @on-click="classmovein"
-                            >
-                                <Button
-                                    class="table-btn"
-                                    :disabled="chooseID.length == 0"
-                                    icon="ios-arrow-dropup"
-                                    >移入分类</Button
-                                >
-                                <DropdownMenu slot="list">
-                                    <DropdownItem
-                                        v-for="classitem in classList"
-                                        :key="classitem.id"
-                                        :name="classitem.id"
-                                    >
-                                        {{ classitem.classname }}</DropdownItem
-                                    >
-                                </DropdownMenu>
-                            </Dropdown>
+                            <span>{{ item.classname }}</span>
+                        </MenuItem>
+                    </Menu>
 
-                            <Dropdown
-                                trigger="click"
-                                placement="top"
-                                class="mg-r-20"
-                                @on-click="classmoveout"
-                            >
-                                <Button
-                                    class="table-btn"
-                                    :disabled="chooseID.length == 0"
-                                    icon="ios-arrow-dropup"
-                                    >移出分类</Button
+                    <div class="add-class-container">
+                        <Button
+                            type="dashed"
+                            icon="md-add"
+                            class="class-btn"
+                            @click="showClass = true"
+                            >新建分类</Button
+                        >
+                    </div>
+                    <div class="add-class-dialog" v-if="showClass">
+                        <Row
+                            type="flex"
+                            justify="center"
+                            align="middle"
+                            style="margin: 10px 5px 0 5px;"
+                        >
+                            <Col span="8">分类名称:</Col>
+                            <Col span="16">
+                                <Input
+                                    class="ant-search-input"
+                                    v-model="classname"
+                                ></Input>
+                            </Col>
+                        </Row>
+                        <Row
+                            type="flex"
+                            justify="center"
+                            align="middle"
+                            style="margin: 10px; text-align: center;"
+                        >
+                            <Col span="12">
+                                <Button type="primary" @click="addClassConfirm"
+                                    >保存</Button
                                 >
-                                <DropdownMenu slot="list">
-                                    <DropdownItem
-                                        v-for="classitem in classList"
-                                        :key="classitem.id"
-                                        :name="classitem.id"
-                                    >
-                                        {{ classitem.classname }}</DropdownItem
-                                    >
-                                </DropdownMenu>
-                            </Dropdown>
-                        </Footer>
-                    </Layout>
-                </Layout>
-            </Layout>
+                            </Col>
+                            <Col span="12">
+                                <Button @click="addClassCancel">取消</Button>
+                            </Col>
+                        </Row>
+                    </div>
+                </div>
+                <div slot="footer">
+                    <Checkbox
+                        class="table-checkbox"
+                        v-model="isSelectAll"
+                        @on-change="handleSelectAll"
+                    >
+                        <span class="mg-l-10">已选</span
+                        ><span style="color:#3091F2">{{ chooseID.length }}</span
+                        ><span> / {{ tableData.length }} 个商品</span>
+                    </Checkbox>
+                    <Button
+                        class="table-btn mg-r-20"
+                        :disabled="chooseID.length == 0"
+                        @click="goodsedit('up')"
+                        >上架</Button
+                    >
+                    <Button
+                        class="table-btn mg-r-20"
+                        :disabled="chooseID.length == 0"
+                        @click="goodsedit('down')"
+                        >下架</Button
+                    >
+                    <Button
+                        class="table-btn mg-r-20"
+                        :disabled="chooseID.length == 0"
+                        @click="goodsedit('delete')"
+                        >删除</Button
+                    >
+                    <Dropdown
+                        trigger="click"
+                        placement="top"
+                        class="mg-r-20"
+                        @on-click="classmovein"
+                    >
+                        <Button
+                            class="table-btn"
+                            :disabled="chooseID.length == 0"
+                            icon="ios-arrow-dropup"
+                            >移入分类</Button
+                        >
+                        <DropdownMenu slot="list">
+                            <DropdownItem
+                                v-for="classitem in classList"
+                                :key="classitem.id"
+                                :name="classitem.id"
+                            >
+                                {{ classitem.classname }}</DropdownItem
+                            >
+                        </DropdownMenu>
+                    </Dropdown>
+
+                    <Dropdown
+                        trigger="click"
+                        placement="top"
+                        class="mg-r-20"
+                        @on-click="classmoveout"
+                    >
+                        <Button
+                            class="table-btn"
+                            :disabled="chooseID.length == 0"
+                            icon="ios-arrow-dropup"
+                            >移出分类</Button
+                        >
+                        <DropdownMenu slot="list">
+                            <DropdownItem
+                                v-for="classitem in classList"
+                                :key="classitem.id"
+                                :name="classitem.id"
+                            >
+                                {{ classitem.classname }}</DropdownItem
+                            >
+                        </DropdownMenu>
+                    </Dropdown>
+                </div>
+            </tables>
         </Card>
     </div>
 </template>
@@ -221,6 +210,7 @@ export default {
     },
     data () {
         return {
+
             columns: [
                 {
                     type: 'selection',
@@ -433,13 +423,13 @@ export default {
                 path: '/shop/' + this.page + '/' + this.editType + '/0'
             })
         },
-        dataInitial: function () {
+        dataInitial: function (keyword) {
             var that = this
             var data = {
                 action: 'goods_list',
                 page: this.page,
                 pageno: this.pageno,
-                keyword: this.formItem.keyword,
+                keyword: keyword || this.formItem.keyword,
                 classid: this.classid,
                 shoptype: this.getType
             }
@@ -645,7 +635,7 @@ export default {
 
                 var _this = this
 
-                _this.$http.post(apiurl, _this.$qs.stringify(data)).then(function (response) {
+                _this.$http.post(apiurl, data).then(function (response) {
                     _this.doing = 0
                     if (response.data.status == 1) {
                         _this.dataInitial()

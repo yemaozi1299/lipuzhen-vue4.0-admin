@@ -216,6 +216,7 @@
     </div>
 </template>
 <script>
+import maps from "qqmap"
 export default {
     data () {
         return {
@@ -329,7 +330,6 @@ export default {
         // }
     },
     created () {
-
         this.get();
     },
     methods: {
@@ -347,17 +347,21 @@ export default {
         },
         mapInit: function () {
             var e = this;
-            e.map = new qq.maps.Map(document.getElementById("map-set-module"), {
-                zoom: 13,
-            });
-            // e.formValidate.zuobiaox && e.showGeocoder(e.formValidate.zuobiaox, e.formValidate.zuobiaoy);      //写入位置
-            qq.maps.event.addListener(e.map, 'click', function (event) {
-                e.lat = event.latLng.lat;
-                e.lng = event.latLng.lng;
+            maps.init("QHIBZ-QGKKX-Q2I4P-752UK-MX56K-3RBZS", () => {
+                e.map = new qq.maps.Map(document.getElementById("map-set-module"), {
+                    zoom: 13,
+                });
+                // e.formValidate.zuobiaox && e.showGeocoder(e.formValidate.zuobiaox, e.formValidate.zuobiaoy);      //写入位置
+                qq.maps.event.addListener(e.map, 'click', function (event) {
+                    e.lat = event.latLng.lat;
+                    e.lng = event.latLng.lng;
 
-                e.showGeocoder(e.lat, e.lng);
-                e.getmapCity();
+                    e.showGeocoder(e.lat, e.lng);
+                    e.getmapCity();
+                });
             });
+
+
             // e.toLocation(this.formValidate.address);
         },
         showGeocoder: function (e, t) {             //写入坐标和插入标注

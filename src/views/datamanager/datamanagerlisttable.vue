@@ -17,11 +17,11 @@
                     @on-skippage="skippage"
                     searchable
                     :isSearch="search"
-                    @on-path-edit="pathEdit"
                     @on-cancel-search="cancelSearch"
-                    @on-search-change="get(1, keyword)"
+                    @on-search-change="get"
                 >
                     <Button
+                        slot="addbtn"
                         type="primary"
                         class="ant-btn mg-r-20"
                         v-on:click="pathEdit"
@@ -173,7 +173,7 @@ export default {
         },
         fetchData: function () {
             this.page = parseInt(this.$route.params.page || 1);
-            this.get(this.page, this.keyword, this.pageno);
+            this.get(this.keyword);
         },
         skippage: function (page) {
             // this.$router.push({ name: 'datamanager', params: { page: page }});
@@ -181,7 +181,7 @@ export default {
         },
         cancelSearch: function () {
             this.keyword = '';
-            this.get(this.page);
+            this.get();
             this.search = false;
         },
         chooseEdit: function (selection) {
@@ -191,16 +191,17 @@ export default {
             })
             this.chooseID = chooseID
         },
-        get: function (page = 1, keyword = '', pageno = 10) {
+        get: function (keyword) {
             var _this = this;
             if (keyword) {
+                this.page = 1;
                 this.search = true;
             }
             else {
                 this.search = false;
             }
             this.searchPoptip = false;
-            var apiurl = "/block/api_edit.php?action=datamanager_listoftable&page=" + page + "&keyword=" + keyword + '&pageno=' + pageno + "&appid=" + this.vueAppid;
+            var apiurl = "/block/api_edit.php?action=datamanager_listoftable&page=" + this.page + "&keyword=" + keyword + '&pageno=' + this.pageno + "&appid=" + this.vueAppid;
             _this.$Loading.start();
             _this.$http.get(apiurl)
                 .then(function (response) {

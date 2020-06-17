@@ -252,25 +252,6 @@
                         ></Icon>
                     </div>
                 </div>
-                <!-- <Upload
-			        ref="upload"
-			        :show-upload-list="false"
-			        :default-file-list="facemore"
-			        :on-success="handleSuccess"
-			        :format="['jpg','jpeg','png','gif']"
-			        :max-size="2048"
-			        :on-format-error="handleFormatError"
-			        :on-exceeded-size="handleMaxSize"
-			        :before-upload="handleBeforeUpload"
-			        multiple
-			        type="drag"
-	                accept="image/*"
-			        action="/block/api_edit.php?action=goods_uploadImage"
-			        style="display: inline-block;width:158px;">
-			        <div style="width: 158px;height:58px;line-height: 58px;">
-	                      <Icon type="ios-cloud-upload-outline" size="20"></Icon>上传图片,支持拖拽
-	                </div>
-                </Upload>-->
                 <Button @click="handleBeforeUpload" style="vertical-align:top;">
                     <div style>
                         <Icon type="ios-cloud-upload-outline" size="20"></Icon
@@ -445,7 +426,7 @@ export default {
     data () {
         return {
             options: {
-                mode: "view",
+                mode: "single",
                 _displayMode: 'grid',  // grid 和 list
                 type: 'image'
             },

@@ -1,73 +1,169 @@
 <template>
     <div class="tables_template">
-        <!-- 搜索框 -->
-        <div class="search-area" v-if="searchable">
-            <slot></slot>
-            <Input
-                v-model="searchKey"
-                placeholder="关键字"
-                @on-keyup.enter="onSearchChange"
-                clearable
-                class="ant-search-input mg-r-10"
-                style="width: 200px;"
-            />
-            <Button
-                type="primary"
-                @click="onSearchChange"
-                icon="ios-search"
-                class="ant-search-btn"
-            ></Button>
-            <div class="search-content" v-if="isSearch">
-                搜索:{{ value }}
+        <Layout class="layout-wrapper" v-if="showlayout">
+            <Header class="header-wrapper" v-if="searchable">
+                <slot name="menu"></slot>
+                <!-- 搜索框 -->
+                <div class="search-area">
+                    <slot name="addbtn"></slot>
+                    <Input
+                        v-model="searchKey"
+                        placeholder="关键字"
+                        @on-keyup.enter="onSearchChange"
+                        clearable
+                        class="ant-search-input mg-l-20 mg-r-10"
+                        style="width: 200px;"
+                    />
+                    <Button
+                        type="primary"
+                        @click="onSearchChange"
+                        icon="ios-search"
+                        class="ant-search-btn"
+                    ></Button>
+                    <div class="search-content" v-if="isSearch">
+                        搜索:{{ value }}
+                        <Button
+                            type="primary"
+                            size="small"
+                            shape="circle"
+                            @click="cancelSearch"
+                            >返回</Button
+                        >
+                    </div>
+                </div>
+            </Header>
+            <Header class="header-wrapper" v-else>
+                <slot name="header"></slot>
+            </Header>
+            <Layout class="layout-wrapper">
+                <Sider class="sider-wrapper" width="198" v-if="showsider">
+                    <slot name="sider"></slot>
+                </Sider>
+
+                <Layout class="layout-wrapper">
+                    <Content>
+                        <!-- 设置iview表格自带属性 -->
+                        <Table
+                            ref="tablesMain"
+                            :data="insideTableData"
+                            :columns="insideColumns"
+                            :stripe="stripe"
+                            :border="border"
+                            :show-header="showHeader"
+                            :width="width"
+                            :height="height"
+                            :loading="loading"
+                            :disabled-hover="disabledHover"
+                            :highlight-row="highlightRow"
+                            :row-class-name="rowClassName"
+                            :size="size"
+                            :no-data-text="noDataText"
+                            :no-filtered-data-text="noFilteredDataText"
+                            @on-current-change="onCurrentChange"
+                            @on-select="onSelect"
+                            @on-select-cancel="onSelectCancel"
+                            @on-select-all="onSelectAll"
+                            @on-selection-change="onSelectionChange"
+                            @on-sort-change="onSortChange"
+                            @on-filter-change="onFilterChange"
+                            @on-row-click="onRowClick"
+                            @on-row-dblclick="onRowDblclick"
+                            @on-expand="onExpand"
+                        >
+                        </Table>
+                        <div
+                            class="page-content"
+                            v-if="showPage == true && total > pageSize"
+                        >
+                            <Page
+                                :total="total"
+                                :current="current"
+                                :page-size="pageSize"
+                                :show-total="showTotal"
+                                :show-elevator="showElevator"
+                                @on-change="skippage"
+                            >
+                            </Page>
+                        </div>
+                    </Content>
+                    <Footer class="table-footer">
+                        <slot name="footer"></slot>
+                    </Footer>
+                </Layout>
+            </Layout>
+        </Layout>
+        <div class="tableContent" v-else>
+            <!-- 搜索框 -->
+            <div class="search-area" v-if="searchable">
+                <slot name="addbtn"></slot>
+                <Input
+                    v-model="searchKey"
+                    placeholder="关键字"
+                    @on-keyup.enter="onSearchChange"
+                    clearable
+                    class="ant-search-input mg-r-10"
+                    style="width: 200px;"
+                />
                 <Button
                     type="primary"
-                    size="small"
-                    shape="circle"
-                    @click="cancelSearch"
-                    >返回</Button
-                >
+                    @click="onSearchChange"
+                    icon="ios-search"
+                    class="ant-search-btn"
+                ></Button>
+                <div class="search-content" v-if="isSearch">
+                    搜索:{{ searchKey }}
+                    <Button
+                        type="primary"
+                        size="small"
+                        shape="circle"
+                        @click="onCancelSearch"
+                        >返回</Button
+                    >
+                </div>
             </div>
-        </div>
-
-        <!-- 设置iview表格自带属性 -->
-        <Table
-            ref="tablesMain"
-            :data="insideTableData"
-            :columns="insideColumns"
-            :stripe="stripe"
-            :border="border"
-            :show-header="showHeader"
-            :width="width"
-            :height="height"
-            :loading="loading"
-            :disabled-hover="disabledHover"
-            :highlight-row="highlightRow"
-            :row-class-name="rowClassName"
-            :size="size"
-            :no-data-text="noDataText"
-            :no-filtered-data-text="noFilteredDataText"
-            @on-current-change="onCurrentChange"
-            @on-select="onSelect"
-            @on-select-cancel="onSelectCancel"
-            @on-select-all="onSelectAll"
-            @on-selection-change="onSelectionChange"
-            @on-sort-change="onSortChange"
-            @on-filter-change="onFilterChange"
-            @on-row-click="onRowClick"
-            @on-row-dblclick="onRowDblclick"
-            @on-expand="onExpand"
-        >
-        </Table>
-        <div class="page-content" v-if="showPage == true && total > pageSize">
-            <Page
-                :total="total"
-                :current="current"
-                :page-size="pageSize"
-                :show-total="showTotal"
-                :show-elevator="showElevator"
-                @on-change="skippage"
+            <!-- 设置iview表格自带属性 -->
+            <Table
+                ref="tablesMain"
+                :data="insideTableData"
+                :columns="insideColumns"
+                :stripe="stripe"
+                :border="border"
+                :show-header="showHeader"
+                :width="width"
+                :height="height"
+                :loading="loading"
+                :disabled-hover="disabledHover"
+                :highlight-row="highlightRow"
+                :row-class-name="rowClassName"
+                :size="size"
+                :no-data-text="noDataText"
+                :no-filtered-data-text="noFilteredDataText"
+                @on-current-change="onCurrentChange"
+                @on-select="onSelect"
+                @on-select-cancel="onSelectCancel"
+                @on-select-all="onSelectAll"
+                @on-selection-change="onSelectionChange"
+                @on-sort-change="onSortChange"
+                @on-filter-change="onFilterChange"
+                @on-row-click="onRowClick"
+                @on-row-dblclick="onRowDblclick"
+                @on-expand="onExpand"
             >
-            </Page>
+            </Table>
+            <div
+                class="page-content"
+                v-if="showPage == true && total > pageSize"
+            >
+                <Page
+                    :total="total"
+                    :current="current"
+                    :page-size="pageSize"
+                    :show-total="showTotal"
+                    :show-elevator="showElevator"
+                    @on-change="skippage"
+                >
+                </Page>
+            </div>
         </div>
     </div>
 </template>
@@ -183,7 +279,17 @@ export default {
         showElevator: {
             type: Boolean,
             default: false
-        }
+        },
+        // showlayout, 单独调用组件或者自带搜索、侧边栏
+        showlayout: {
+            type: Boolean,
+            default: false
+        },
+        //showsider
+        showsider: {
+            type: Boolean,
+            default: false
+        },
     },
     /**
      * Events
@@ -202,7 +308,6 @@ export default {
         }
     },
     mounted () {        //最开始执行
-        console.log(this.columns);
         this.handleColumns(this.columns)        //获取columns参数，初始化表格
         // this.setDefaultSearchKey()
         this.handleTableData()
@@ -325,27 +430,35 @@ export default {
 
 
 <style lang="stylus" rel="stylesheet/stylus">
-.tables_template
-    tr
-        font-size 12px
-        &:hover
-            .tables-edit-btn
-                display inline-block
-    th
-        color #303445
-        background #F6F7FB
-        font-weight 500
-        border none
-        border-right 2px solid #FFF
-        font-size 12px
-    .page-content
-        padding 20px 0
-        text-align right
-.search-area
-    overflow hidden
-    margin-bottom 10px
-    .search-content
-        float right
+.tables_template {
+    tr {
+        font-size: 12px;
+        &:hover {
+            .tables-edit-btn {
+                display: inline-block;
+            }
+        }
+    }
+    th {
+        color: #303445;
+        background: #F6F7FB;
+        font-weight: 500;
+        border: none;
+        border-right: 2px solid #FFF;
+        font-size: 12px;
+    }
+    .page-content {
+        padding: 20px 0;
+        text-align: right;
+    }
+}
+.search-area {
+    overflow: hidden;
+    margin-bottom: 10px;
+    .search-content {
+        float: right;
+    }
+}
 </style>
 
 

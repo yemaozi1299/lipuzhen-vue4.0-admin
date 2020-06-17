@@ -96,7 +96,6 @@ export default {
         '$route': 'fetchData',
     },
     created () {
-        console.log(this.menuList);
     },
     computed: {
         rotateIcon () {
