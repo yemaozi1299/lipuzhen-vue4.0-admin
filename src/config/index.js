@@ -18,9 +18,9 @@ export default {
 	 */
 	baseUrl: {
 		// 开发时请求的baseURL
-		dev: '',
+		dev: '/move/',
 		// 正式版本请求的baseURL
-		pro: ''
+		pro: '/move/'
 	},
 	/**
 	 * @description 默认打开的首页的路由name值，默认为home

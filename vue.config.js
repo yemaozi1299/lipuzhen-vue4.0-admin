@@ -29,7 +29,7 @@ module.exports = {
 		hotOnly: false,
 		proxy: {
 			'/block': {
-				target: 'http://www.rich2020.com/block',
+				target: 'http://www.rich2020.com/move',
 				changeOrigin: true,
 				pathRewrite: {
 					'^/block': '/'
