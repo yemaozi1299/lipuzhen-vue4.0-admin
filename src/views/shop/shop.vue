@@ -42,6 +42,13 @@
                         >
                             <Icon type="md-add" />添加商品
                         </Button>
+                        <Button
+                            type="primary"
+                            class="ant-btn mg-r-20"
+                            v-on:click="goClassList"
+                        >
+                            <Icon type="ios-construct" />分类管理
+                        </Button>
                         <Input
                             v-model="formItem.keyword"
                             placeholder="关键字"
@@ -370,7 +377,6 @@ export default {
             this.editType = this.shoptype == 'ec' ? 'shopedit' : 'waimaiedit'
             this.getType = this.shoptype == 'ec' ? 0 : 1
             this.dataInitial()
-            this.getClass()
         },
         chooseEdit: function (selection) {
             var chooseID = []
@@ -462,6 +468,7 @@ export default {
                 } else {
                     that.$Message.error(res.data.message)
                 }
+                console.log(res);
             });
         },
         classmovein: function (classid) { // 移入分类
@@ -729,6 +736,15 @@ export default {
                 _this.$Message.info('请选择要操作的记录')
                 return false
             }
+        },
+        goClassList () {
+            this.$router.push({
+                name: "classlist",
+                params: {
+                    page: this.page,
+                    shoptype: this.shoptype
+                }
+            })
         }
     }
 }

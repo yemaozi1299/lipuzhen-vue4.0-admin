@@ -11,7 +11,7 @@
                         placeholder="关键字"
                         @on-keyup.enter="onSearchChange"
                         clearable
-                        class="ant-search-input mg-l-20 mg-r-10"
+                        class="ant-search-input mg-r-10"
                         style="width: 200px;"
                     />
                     <Button
@@ -45,6 +45,7 @@
                         <!-- 设置iview表格自带属性 -->
                         <Table
                             ref="tablesMain"
+                            :row-key="rowKey"
                             :data="insideTableData"
                             :columns="insideColumns"
                             :stripe="stripe"
@@ -124,6 +125,7 @@
             <!-- 设置iview表格自带属性 -->
             <Table
                 ref="tablesMain"
+                :row-key="rowKey"
                 :data="insideTableData"
                 :columns="insideColumns"
                 :stripe="stripe"
@@ -184,6 +186,10 @@ export default {
             default () {
                 return []
             }
+        },
+        rowKey: {
+            type: String,
+            default: ""
         },
         size: String,
         width: {

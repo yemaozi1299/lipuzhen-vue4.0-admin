@@ -1,6 +1,6 @@
 <template>
     <Card>
-        <p slot="title">添加新闻</p>
+        <p slot="title">添加产品</p>
         <Form
             ref="formValidate"
             :model="formValidate"
@@ -8,13 +8,13 @@
             :label-width="200"
             style="padding-bottom: 30px;"
         >
-            <Form-item label="新闻标题" prop="title">
+            <Form-item label="产品标题" prop="title">
                 <Input
                     v-model="formValidate.title"
                     placeholder="请输入名称"
                 ></Input>
             </Form-item>
-            <Form-item label="新闻摘要" prop="summary">
+            <Form-item label="产品摘要" prop="summary">
                 <Input
                     v-model="formValidate.summary"
                     placeholder="请输入摘要"
@@ -51,36 +51,38 @@
                             </div>
                         </Button>
                     </Col>
-                    <Col span="12">
-                        <i-Switch v-model="formValidate.face2body" />
-                        <span class="notes">封面图片是否在正文显示</span>
-                    </Col>
                 </Row>
             </Form-item>
-            <Form-item label="标识图标" prop="ico">
-                <RadioGroup v-model="formValidate.ico">
-                    <Radio label="0">无</Radio>
-                    <Radio label="1"
-                        ><img
-                            src="../../assets/images/new-icon/hotnews.gif"
-                            alt=""
-                    /></Radio>
-                    <Radio label="2"
-                        ><img
-                            src="../../assets/images/new-icon/newnews.gif"
-                            alt=""
-                    /></Radio>
-                    <Radio label="3"
-                        ><div class="icon_url">
-                            <img :src="formValidate.ico_url" alt="" />
-                        </div>
-                        <Button @click="handleBeforeUpload('icon')"
-                            >自定义图标</Button
-                        ></Radio
-                    >
-                </RadioGroup>
+            <Form-item label="轮播图片" prop="face">
+                <div
+                    class="goods-upload-list"
+                    v-if="uploadList.length >= 1"
+                    v-for="item in uploadList"
+                >
+                    <img :src="item" />
+                    <div class="goods-upload-list-cover">
+                        <Icon
+                            type="ios-eye-outline"
+                            @click.native="handleView(item)"
+                        ></Icon>
+                        <Icon
+                            type="ios-trash-outline"
+                            @click.native="handleRemoveList(item)"
+                        ></Icon>
+                    </div>
+                </div>
+                <Button
+                    @click="handleBeforeUpload('facemore')"
+                    style="vertical-align:top;"
+                >
+                    <div style>
+                        <Icon type="ios-cloud-upload-outline" size="20"></Icon
+                        >选择图片
+                    </div>
+                </Button>
             </Form-item>
-            <Form-item label="新闻分类" prop="classid">
+
+            <Form-item label="产品分类" prop="classid">
                 <Select v-model="formValidate.classid" style="width: 200px;">
                     <template v-for="item in classidList">
                         <Option :value="item.id">{{ item.sortname }}</Option>
@@ -95,10 +97,10 @@
                     </template>
                 </Select>
             </Form-item>
-            <Form-item label="新闻推荐" prop="tj">
+            <Form-item label="产品推荐" prop="tj">
                 <i-Switch v-model="formValidate.tj" /> 推荐
             </Form-item>
-            <Form-item label="相关新闻关键字" prop="keyword">
+            <Form-item label="相关产品关键字" prop="keyword">
                 <Input
                     v-model="formValidate.keyword"
                     placeholder="请输入关键字"
@@ -114,10 +116,10 @@
                     style="width: 200px"
                     :value="formValidate.date"
                     @on-change="changeDateTime"
-                    :disabled="newid > 0"
+                    :disabled="pid > 0"
                 ></DatePicker>
             </Form-item>
-            <Form-item label="新闻正文" prop="body">
+            <Form-item label="产品正文" prop="readme">
                 <editor
                     ref="editor"
                     :value="editorContent"
@@ -168,27 +170,28 @@ export default {
                 id: 0,
                 classid: "",
                 title: "",
-                ico: "0",
-                ico_url: "",
                 tj: false,
                 keyword: "",
                 date: "",
-                body: "",
+                readme: "",
                 face: "",
-                face2body: false,
+                facemore: "",
+                pr: 0,
                 summary: ""
             },
+            uploadList: [],
+            uploadListName: [],
             ruleValidate: {
                 title: [
                     { required: true, message: '标题不能为空', trigger: 'blur' }
                 ],
                 classid: [
-                    { required: true, message: '新闻分类不能为空', trigger: 'blur' }
+                    { required: true, message: '产品分类不能为空', trigger: 'blur' }
                 ],
                 date: [
                     { required: true, message: '请填写日期', trigger: 'blur' }
                 ],
-                body: [
+                readme: [
                     { required: true, message: '请填写正文内容', trigger: 'blur' }
                 ]
             },
@@ -202,7 +205,8 @@ export default {
             editorContent: '',
             imgName: '',
             visible: false,
-            classidList: []
+            classidList: [],
+            pid: 0
 
         }
     },
@@ -215,8 +219,8 @@ export default {
     },
     methods: {
         fetchData () {
-            this.newid = this.$route.params.newid ? parseInt(this.$route.params.newid) : 0;
-            if (this.newid > 0) {
+            this.pid = this.$route.params.pid ? parseInt(this.$route.params.pid) : 0;
+            if (this.pid > 0) {
                 this.dataInitial();
             }
         },
@@ -224,7 +228,7 @@ export default {
             this.$http.request({
                 url: "/block/api_edit.php?action=news_get",
                 params: {
-                    id: this.newid
+                    id: this.pid
                 }
             }).then((res) => {
                 var data = res.data.body;
@@ -237,7 +241,7 @@ export default {
                     tj: data.tj == 0 ? false : true,
                     keyword: data.keyword,
                     date: data.date,
-                    body: data.body,
+                    readme: data.readme,
                     face: data.face,
                     face2body: data.face2body == 0 ? false : true,
                     summary: data.summary
@@ -249,7 +253,7 @@ export default {
         },
         getNewClass: function () {
             this.$http.request({
-                url: "/block/api_edit.php?action=news_class_get",
+                url: "/block/api_edit.php?action=product_class_get",
                 params: {
                     appid: 1
                 }
@@ -270,8 +274,9 @@ export default {
             this.isUpload = true;
         },
         uploadIcon: function (file) {
-            if (this.uploadType == "icon") {
-                this.formValidate.ico_url = file.url;
+            if (this.uploadType == "facemore") {
+                this.uploadList.push(file.url);
+                this.uploadListName.push(file.name);
             } else {
                 this.formValidate.face = file.url;
             }
@@ -283,13 +288,18 @@ export default {
             console.log(time);
         },
         handleChange (html, text) {
-            this.formValidate.body = html
+            this.formValidate.readme = html
         },
         changeContent (content) {
             this.$refs.editor.setHtml(content)
         },
         handleRemove: function () {
             this.formValidate.face = ""
+        },
+        handleRemoveList (file) {
+            // 从 upload 实例删除数据
+            const fileList = this.uploadList;
+            this.uploadList.splice(fileList.indexOf(file), 1)
         },
         handleView (name) {
             console.log(name)
@@ -300,7 +310,7 @@ export default {
             var _this = this
             this.$refs[name].validate((valid) => {
                 if (valid) {
-                    var apiurl = '/block/api_edit.php?action=news_edit';
+                    var apiurl = '/block/api_edit.php?action=product_edit';
                     var params = {},
                         data = this.formValidate;
                     params = {
@@ -308,15 +318,13 @@ export default {
                         id: data.id,
                         items: {
                             classid: data.classid,
-                            title: data.title,
-                            ico: data.ico,
-                            ico_url: data.ico_url,
+                            name: data.title,
                             tj: data.tj ? "1" : "0",
                             keyword: data.keyword,
                             date: data.date,
-                            body: data.body,
+                            body: data.readme,
                             face: data.face,
-                            face2body: data.face2body ? "1" : "0",
+                            facemore: this.uploadListName,
                             summary: data.summary
                         }
                     }
@@ -409,5 +417,10 @@ export default {
         max-width: 100%;
         max-height: 100%;
     }
+}
+.notes {
+    margin: 0 10px;
+    font-size: 13px;
+    color: #666;
 }
 </style>

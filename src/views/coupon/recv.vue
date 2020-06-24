@@ -28,7 +28,7 @@
                     >
                         <Button
                             slot="addbtn"
-                            class="mg-r-10"
+                            class="mg-r-20"
                             type="info"
                             icon="md-add"
                             v-on:click="addRecv"

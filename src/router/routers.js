@@ -12,6 +12,15 @@ import Main from '@/components/main'
  *  access: (null) 可访问该页面的权限数组，当前路由设置的权限会影响子路由
  *  icon: (-) 该页面在左侧菜单、面包屑和标签导航处显示的图标，如果是自定义图标，需要在图标名称前加下划线'_'
  *  beforeCloseName: (-) 设置该字段，则在关闭当前tab页时会去'@/router/before-close.js'里寻找该字段名对应的方法，作为关闭前的钩子函数
+ * 
+ * 商品:改成电商管理
+支付设置改成微信参数
+店铺信息改成餐饮管理
+信息发布改成资讯管理
+新闻系统
+留言系统
+产品系统
+招聘系统
  * }
  */
 export default [
@@ -42,7 +51,7 @@ export default [
 		component: Main,
 		meta: {
 			icon: 'md-cart',
-			title: '商品'
+			title: '电商管理'
 		},
 		children: [
 			// 商品列表
@@ -51,7 +60,6 @@ export default [
 				name: 'shop',
 				meta: {
 					title: '商品列表',
-					icon: 'md-cart'
 				},
 				component: () => import('@/views/shop/shop')
 			},
@@ -60,7 +68,6 @@ export default [
 				name: 'shop-page-type',
 				meta: {
 					title: '商品列表',
-					icon: 'md-home',
 					hideInMenu: true
 				},
 				component: () => import('@/views/shop/shop')
@@ -70,7 +77,6 @@ export default [
 				name: 'shop-edit',
 				meta: {
 					title: '普通商品设置',
-					icon: 'md-cart',
 					hideInMenu: true
 				},
 				component: () => import('@/views/shop/shopedit')
@@ -80,10 +86,18 @@ export default [
 				name: 'jifen-edit',
 				meta: {
 					title: '外卖商品设置',
-					icon: 'md-cart',
 					hideInMenu: true
 				},
 				component: () => import('@/views/shop/jifenedit')
+			},
+			{
+				path: ':page/:shoptype/classlist',
+				name: 'classlist',
+				meta: {
+					title: '分类管理',
+					hideInMenu: true
+				},
+				component: () => import('@/views/shop/classlist')
 			},
 			// 订单管理
 			{
@@ -91,7 +105,6 @@ export default [
 				name: 'shoporder',
 				meta: {
 					title: '订单管理',
-					icon: 'md-home'
 				},
 				component: () => import('@/views/shoporder/shoporder')
 			},
@@ -100,7 +113,6 @@ export default [
 				name: "shoporder_page",
 				meta: {
 					title: '订单管理',
-					icon: 'md-home',
 					hideInMenu: true
 				},
 				component: () => import('@/views/shoporder/shoporder')
@@ -110,8 +122,7 @@ export default [
 				path: '/shoppay',
 				name: 'shoppay',
 				meta: {
-					title: '支付设置',
-					icon: 'md-cart'
+					title: '微信参数',
 				},
 				component: () => import('@/views/shoppay/shoppay')
 			},
@@ -121,7 +132,6 @@ export default [
 				name: 'shoppost',
 				meta: {
 					title: '配送管理',
-					icon: 'md-cart'
 				},
 				component: () => import('@/views/shoppost/shoppost')
 			},
@@ -130,7 +140,6 @@ export default [
 				name: 'shoppost_edit',
 				meta: {
 					title: '添加配送方式',
-					icon: 'md-home',
 					hideInMenu: true
 				},
 				component: () => import('@/views/shoppost/shoppostedit')
@@ -140,7 +149,6 @@ export default [
 				name: 'shoppost_edit_id',
 				meta: {
 					title: '设置配送设置',
-					icon: 'md-home',
 					hideInMenu: true
 				},
 				component: () => import('@/views/shoppost/shoppostedit')
@@ -151,8 +159,7 @@ export default [
 				path: '/shopinfo',
 				name: 'shopinfo',
 				meta: {
-					title: '店铺信息',
-					icon: 'md-home',
+					title: '餐饮管理',
 				},
 				redirect: '/shopinfo/shopinfo',
 				component: () => import('@/views/shopinfo/management.vue'),
@@ -204,7 +211,7 @@ export default [
 		name: "marketing",
 		component: Main,
 		meta: {
-			icon: 'md-cart',
+			icon: 'ios-cube-outline',
 			title: "营销推广"
 		},
 		children: [
@@ -212,7 +219,6 @@ export default [
 				path: '/recv',
 				name: 'recv',
 				meta: {
-					icon: 'md-cart',
 					title: "优惠券"
 				},
 				component: () => import('@/views/coupon/recv.vue')
@@ -220,7 +226,6 @@ export default [
 			{
 				path: '/recv/addrecv',
 				meta: {
-					icon: 'md-cart',
 					title: "添加优惠券",
 					hideInMenu: true
 				},
@@ -230,7 +235,6 @@ export default [
 			{
 				path: '/recv/editrecv',
 				meta: {
-					icon: 'md-cart',
 					title: "修改优惠券",
 					hideInMenu: true
 				},
@@ -242,7 +246,6 @@ export default [
 			{
 				path: '/stored/:page?',
 				meta: {
-					icon: 'md-cart',
 					title: "储值",
 				},
 				name: 'stored',
@@ -251,7 +254,6 @@ export default [
 			{
 				path: '/stored/:page?/addStored',
 				meta: {
-					icon: 'md-cart',
 					title: "新建储值项目",
 					hideInMenu: true
 				},
@@ -261,7 +263,6 @@ export default [
 			{
 				path: '/stored/:page?/editStored',
 				meta: {
-					icon: 'md-cart',
 					title: "编制储值项目",
 					hideInMenu: true
 				},
@@ -271,7 +272,6 @@ export default [
 			{
 				path: '/stored/:page?/customStored',
 				meta: {
-					icon: 'md-cart',
 					title: "自定义储值设置",
 					hideInMenu: true
 				},
@@ -284,7 +284,6 @@ export default [
 				path: '/activity/:page?',
 				name: 'activity',
 				meta: {
-					icon: 'md-cart',
 					title: '拼团活动'
 				},
 				component: () => import('@/views/activity/manager_group_activity.vue')
@@ -293,7 +292,6 @@ export default [
 				path: '/activity/:page?/addActivity',
 				name: 'addActivity',
 				meta: {
-					icon: 'md-cart',
 					title: '添加拼团活动',
 					hideInMenu: true
 				},
@@ -303,7 +301,6 @@ export default [
 				path: '/activity/:page?/activityGoods',
 				name: 'activityGoods',
 				meta: {
-					icon: 'md-cart',
 					title: '拼团商品列表',
 					hideInMenu: true
 				},
@@ -313,7 +310,6 @@ export default [
 				path: '/activity/:goodsID?/addGoodsList',
 				name: 'addGoodsList',
 				meta: {
-					icon: 'md-cart',
 					title: '添加商品列表',
 					hideInMenu: true
 				},
@@ -323,7 +319,6 @@ export default [
 				path: '/activity/:group_buy_id?/addGoods',
 				name: 'addGoods',
 				meta: {
-					icon: 'md-cart',
 					title: '设置商品价格',
 					hideInMenu: true
 				},
@@ -333,7 +328,6 @@ export default [
 				path: '/activity/:group_buy_id?/goodsInfo',
 				name: 'goodsInfo',
 				meta: {
-					icon: 'md-cart',
 					title: '拼团商品信息',
 					hideInMenu: true
 				},
@@ -345,7 +339,6 @@ export default [
 				path: '/card',
 				name: '_card',
 				meta: {
-					icon: 'md-cart',
 					title: '智能名片',
 				},
 				component: () => import('@/views/card/card.vue'),
@@ -354,7 +347,6 @@ export default [
 						path: '/card/card_controller',
 						name: 'card',
 						meta: {
-							icon: 'md-cart',
 							title: '名片管理',
 						},
 						component: () => import('@/views/card/card_controller.vue')
@@ -364,7 +356,6 @@ export default [
 						title: '名片设置',
 						name: 'card_setting',
 						meta: {
-							icon: 'md-cart',
 							title: '名片设置',
 							hideInMenu: true
 						},
@@ -375,7 +366,6 @@ export default [
 						path: '/card/card_company',
 						name: 'card_company',
 						meta: {
-							icon: 'md-cart',
 							title: '公司名片代表名片',
 							hideInMenu: true
 						},
@@ -385,7 +375,6 @@ export default [
 						path: '/card/message_push',
 						name: 'message_push',
 						meta: {
-							icon: 'md-cart',
 							title: '消息推送',
 							hideInMenu: true
 						},
@@ -397,7 +386,6 @@ export default [
 			{
 				path: '/seckill/:page?',
 				meta: {
-					icon: 'md-cart',
 					title: '秒杀商品',
 				},
 				name: 'seckill',
@@ -406,7 +394,6 @@ export default [
 			{
 				path: '/seckill/:page/add',
 				meta: {
-					icon: 'md-cart',
 					title: '添加秒杀',
 					hideInMenu: true
 				},
@@ -416,7 +403,6 @@ export default [
 			{
 				path: '/seckill/:page/goods-setting/:type/:id',
 				meta: {
-					icon: 'md-cart',
 					title: '秒杀商品设置',
 					hideInMenu: true
 				},
@@ -435,7 +421,6 @@ export default [
 				children: [{
 					path: '/distribution/distribution_edit',
 					meta: {
-						icon: 'md-cart',
 						title: '分销设置',
 					},
 					name: 'distribution',
@@ -444,7 +429,6 @@ export default [
 				{
 					path: '/distribution/present_list/:page',
 					meta: {
-						icon: 'md-cart',
 						title: '提现管理',
 						hideInMenu: true
 					},
@@ -454,7 +438,6 @@ export default [
 				{
 					path: '/distribution/distribution_management/:page',
 					meta: {
-						icon: 'md-cart',
 						title: '分销员管理',
 						hideInMenu: true
 					},
@@ -474,8 +457,8 @@ export default [
 		component: Main,
 		name: "_news",
 		meta: {
-			title: "信息发布",
-			icon: 'md-cart'
+			title: "资讯管理",
+			icon: 'ios-globe-outline'
 		},
 		children: [
 			{
@@ -483,7 +466,6 @@ export default [
 				name: "news",
 				meta: {
 					title: "新闻系统",
-					icon: "md-card"
 				},
 				component: () => import('@/views/news/news.vue')
 			},
@@ -492,7 +474,6 @@ export default [
 				name: "addnews",
 				meta: {
 					title: "添加新闻",
-					icon: "md-card",
 					hideInMenu: true
 				},
 				component: () => import('@/views/news/addNews.vue')
@@ -502,7 +483,6 @@ export default [
 				name: "message",
 				meta: {
 					title: "留言管理",
-					icon: "md-card",
 				},
 				component: () => import('@/views/message/message.vue')
 			},
@@ -510,11 +490,62 @@ export default [
 				path: "/message/:pageid?/addMessage/:mid",
 				name: "addMessage",
 				meta: {
-					title: "添加留言（后台一般不需要）",
-					icon: "md-card",
+					title: "添加留言",
 					hideInMenu: true
 				},
 				component: () => import('@/views/message/addMessage.vue')
+			},
+			{
+				path: "/product/:pageid?",
+				name: "product",
+				meta: {
+					title: "产品系统",
+				},
+				component: () => import('@/views/product/product_list.vue')
+			},
+			{
+				path: "/product/:pageid?/addProduct/:pid",
+				name: "addProduct",
+				meta: {
+					title: "添加产品",
+					hideInMenu: true
+				},
+				component: () => import('@/views/product/product_add.vue')
+			},
+			{
+				path: "/job/:pageid?",
+				name: "job",
+				meta: {
+					title: "招聘系统",
+				},
+				component: () => import('@/views/job/job_list.vue')
+			},
+			{
+				path: "/job/:pageid?/addJob/:jobid?",
+				name: "addJob",
+				meta: {
+					title: "添加招聘信息",
+					hideInMenu: true
+				},
+				component: () => import('@/views/job/job_add.vue')
+			},
+			{
+				path: "/job/:pageid?/resume/:jobid",
+				name: "resume",
+				meta: {
+					title: "简历列表",
+					hideInMenu: true
+				},
+				component: () => import('@/views/job/resume_list.vue')
+			},
+			{
+				path: "/job/:pageid?/resume/:jobid/:resumeid",
+				name: "resume_show",
+				meta: {
+					title: "简历详情",
+					hideInMenu: true
+				},
+				component: () => import('@/views/job/resume_show.vue')
 			},
 
 		]
@@ -537,12 +568,14 @@ export default [
 		name: "datamanager_",
 		meta: {
 			title: '数据',
+
 		},
 		children: [{
 			path: ':page?',
 			name: "datamanager",
 			meta: {
-				title: '应用数据',
+				title: '数据表单',
+				icon: "md-repeat"
 			},
 			component: resolve => require(['@/views/datamanager/datamanagerlisttable'], resolve)
 		},
@@ -620,7 +653,7 @@ export default [
 				path: ":page?",
 				meta: {
 					title: '用户管理',
-					icon: 'md-cart'
+					icon: 'md-people'
 				},
 				name: 'member',
 				component: () => import('@/views/member/member.vue')
@@ -638,7 +671,7 @@ export default [
 				name: 'file',
 				meta: {
 					title: '文件管理',
-					icon: 'md-cart'
+					icon: 'ios-folder-outline'
 				},
 				component: () => import('@/views/file/file')
 			},

@@ -150,7 +150,7 @@
 	<div class="pro_bd">
 	  <div class="indexbox">
 		<div class="m_index_title">目录</div>
-		<ul>
+		<ol>
 		  <li><a href="#1">添加栏目</a> </li>
 		  <li><a href="#2">修改栏目名称</a> </li>
 		  <li><a href="#2-1">获取栏目结构</a> </li>
@@ -219,6 +219,9 @@
 		  <li><a href="#56">商品大分类--删除</a> </li>
 		  <li><a href="#57">将商品小类归到大类</a> </li>
 		  <li><a href="#58">将商品小类从大类移除</a> </li>
+		  <li><a href="#581">列出所有商品大分类</a> </li>
+		  <li><a href="#582">修改商品大分类</a> </li>
+		  <li><a href="#583">列出商品大小分类</a> </li>
 		  
 		  
 		  <li><a href="#59">相册查找浏览</a> </li>
@@ -234,7 +237,7 @@
 		  
 
 
-		</ul>
+		</ol>
 	  </div>
 	</div>
 
@@ -1150,35 +1153,29 @@ DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=block_param_g
           <tr>
             <td class="label">param</td>
             <td>array</td>
-            <td>数组 参数的细节 <br />
+            <td>数组 参数的细节  如果没有则填 -1<br />
               array(<br>
-              'b_title',<br>
-              'b_style_path',<br>
-              'b_style_color',<br>
-              'b_morelink',<br>
-              'b_padding',<br>
-              'b_overflow',<br>
-              'b_showrecommend',<br>
-              'b_showrows',<br>
-              'b_thumbwidth',<br>
-              'b_thumbheight',<br>
-              'b_titlelen',<br>
-              'b_bodylen',<br>
-              'b_target',<br>
-              'b_image',<br>
-              'b_image_link',<br>
-              'b_text',<br>
-              'b_category',<br>
-              'b_groupid',<br>
-              'b_menu',<br>
-              'b_shopsort',<br>
-              'b_menutype',<br>
-              'b_size',<br>
-              'b_color',<br>
-              'b_mode',<br>
-'b_drop',<br>
-&#39;b_detail&#39;,<br>
-b_pages)             <br />
+              'b_title',标题<br>
+              'b_style_path',模板文件名,如:block/tpl/news/001/tpl.htm<br>
+              'b_style_color',模板的颜色<br>
+              'b_morelink',模块右上角更多的链接 -1为不显示 <br>
+              'b_recommend',只显示推荐记录<br>
+              'b_showrows',显示条数<br>
+              'b_titlelen',标题显示多少个字<br>
+              'b_bodylen',内容显示多少个字<br>
+              'b_target',是否在新窗口打开只支持 enum('-1', '_self', '_blank') 三个值 <br>
+              'b_image',图片路径<br>
+              'b_image_link',图片链接地址<br>
+              'b_text',定自义文字内容<br>
+              'b_groupid',显示分类的ID<br>
+              'b_shopsort',未使用,可删除<br>
+              'b_grouptype',分类类别只支持:&quot;news&quot;,&quot;job&quot;,'goods','product','album','member','cartlist','dingdan','pay','comment','search'<br>
+              'b_size',大小目前只用在导航栏上<br>
+              'b_color',颜色目前只用在导航栏上<br>
+              'b_mode',模式目前只用在导航栏上<br>
+'b_drop',弹出方向:目前只用在导航栏上<br>
+&#39;b_detail&#39;,此模块是否是内容详情页上的专属模块#值为可用的详细页类别 =-1不是 只支持:&quot;news&quot;,&quot;job&quot;,'goods','product','album','comment','search'<br>
+b_pages)              #=1此模块支持翻页 =0不支持翻页<br />
               <br />
               不同的模块参数不一样:<br />
 
@@ -2558,7 +2555,7 @@ $items['summary']);//摘要<br>
             <td>product_list</td>
           </tr>
           <tr>
-            <td class="label">groupid</td>
+            <td class="label">classid</td>
             <td>int</td>
             <td>分类</td>
           </tr>
@@ -2581,7 +2578,7 @@ $items['summary']);//摘要<br>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
         URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=job_groupDel&amp;groupid=1<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=product_list&amp;classid=1<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">{&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;,&quot;body&quot;:[]}<br>
@@ -3030,6 +3027,106 @@ $items[face];            产品封面图<br>
 	  {&quot;status&quot;:0,&quot;message&quot;:&quot;操作失败&quot;}<br>
 	  {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;}</div>
 		
+		
+		
+      <a name="581"></a><hr />
+      <div class="m_title">商品大分类--列出所有商品大分类</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>goods_groupList</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/block/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=goods_groupList<br/>
+        返回结果:JSON<br/>
+        ----------返回的结果有如下几种：---------- </div>
+	  <div class="pre">	  {&quot;status&quot;:0,&quot;message&quot;:&quot;参数丢失&quot;}<br>
+	  {&quot;status&quot;:0,&quot;message&quot;:&quot;操作失败&quot;}<br>
+	  {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;}</div>
+		
+		
+      <a name="582"></a><hr />
+      <div class="m_title">商品大分类--修改商品大分类</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>goods_groupEdit</td>
+          </tr>
+          <tr>
+            <td class="label">groupid</td>
+            <td>int or array </td>
+            <td>小分类ID</td>
+          </tr>
+          <tr>
+            <td class="label">groupname</td>
+            <td>int</td>
+            <td>大分类ID</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/block/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=goods_groupEdit&amp;groupid=123&amp;groupname=abc<br/>
+        返回结果:JSON<br/>
+        ----------返回的结果有如下几种：---------- </div>
+	  <div class="pre">	  {&quot;status&quot;:0,&quot;message&quot;:&quot;参数丢失&quot;}<br>
+	  {&quot;status&quot;:0,&quot;message&quot;:&quot;操作失败&quot;}<br>
+	  {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;}</div>
+		
+		
+		
+		
+      <a name="583"></a><hr />
+      <div class="m_title">列出商品大小分类</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>goods_group_list($groupid,$shoptype=0) </td>
+          </tr>
+          <tr>
+            <td class="label">groupid</td>
+            <td>int or array </td>
+            <td>大分类ID</td>
+          </tr>
+          <tr>
+            <td class="label">shoptype</td>
+            <td>int</td>
+            <td>0=电商 1=外卖 </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/block/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=goods_group_list&amp;groupid=123<br/>
+        返回结果:JSON<br/>
+        ----------返回的结果有如下几种：---------- </div>
+	  <div class="pre">	  {&quot;status&quot;:0,&quot;message&quot;:&quot;参数丢失&quot;}<br>
+	  {&quot;status&quot;:0,&quot;message&quot;:&quot;操作失败&quot;}<br>
+	  {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;}</div>
 		
 		
 		

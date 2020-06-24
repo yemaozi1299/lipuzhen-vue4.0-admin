@@ -114,5 +114,41 @@ img {
             padding-right: 25px;
         }
     }
+    .sider-menu-template {
+        .ant-radio-button-wrapper:hover {
+            .ant-icon {
+                display: block;
+            }
+        }
+        .ant-radio-button-wrapper {
+            padding: 14px 30px;
+            font-size: 12px;
+            span {
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+            .ant-icon {
+                display: none;
+                position: absolute;
+                top: 0;
+                width: 30px;
+                font-size: 16px;
+                line-height: 47px;
+                text-align: center;
+            }
+            &.ivu-menu-item-selected {
+                .ant-icon {
+                    display: block;
+                }
+            }
+        }
+    }
+    .notes {
+        margin: 0 10px;
+        font-size: 13px;
+        color: #666;
+    }
 }
 </style>

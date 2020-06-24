@@ -39,6 +39,26 @@
                         v-model="isFullscreen"
                         style="margin-right: 10px;"
                     /> -->
+                    <div class="link-wrap-right">
+                        <a
+                            :href="'/appeditor/preview.php?appid='"
+                            target="_blank"
+                        >
+                            <Button type="text" icon="md-play" size="large"
+                                >预览</Button
+                            >
+                        </a>
+                    </div>
+                    <div class="link-wrap-left">
+                        <a :href="'/appeditor/?appid='" target="_blank">
+                            <Button
+                                type="text"
+                                icon="ios-construct"
+                                size="large"
+                                >小程序界面编辑</Button
+                            >
+                        </a>
+                    </div>
                 </header-bar>
             </Header>
             <Content class="main-content-con">

@@ -1,8 +1,8 @@
 <template>
-    <div style="position:relative;margin:0 10px 10px 10px;">
-        <div style="margin-right: 10px; line-height: 55px;">
-            <h2>支付方式</h2>
-        </div>
+    <Card>
+        <p slot="title">
+            支付方式
+        </p>
         <Form
             ref="formValidate"
             :model="formValidate"
@@ -53,7 +53,7 @@
             >
             <!-- <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button> -->
         </div>
-    </div>
+    </Card>
 </template>
 <script>
 export default {

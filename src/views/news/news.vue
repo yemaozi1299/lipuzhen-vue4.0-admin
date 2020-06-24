@@ -32,7 +32,7 @@
                     <Sider
                         class="sider-wrapper"
                         width="198"
-                        style="    overflow-y: auto;"
+                        style="overflow-y: auto;"
                     >
                         <!-- <div class="category">
                             <span>分类</span>
@@ -301,7 +301,7 @@ export default {
                             },
                             on: {
                                 'click': (val) => {
-                                    this.remove(params.index)
+                                    this.remove(params.row)
                                 }
                             }
                         }, '删除'),
@@ -436,7 +436,7 @@ export default {
             var _this = this;
             var that = this;
             var value = item.sortname;
-            this.$Modal.info({
+            this.$Modal.confirm({
                 title: "修改分类名称",
                 render: h => {
                     return h("Input", {
@@ -465,6 +465,9 @@ export default {
                     })
 
                     // _this.editGroup(item);
+                },
+                onCancel () {
+
                 }
             });
         },
@@ -491,6 +494,9 @@ export default {
                     })
 
                     // _this.editGroup(item);
+                },
+                onCancel () {
+
                 }
             });
         },
@@ -548,6 +554,28 @@ export default {
                 return false
             }
         },
+        remove (item) {
+            if (item) {
+                var apiurl = '/block/api_edit.php?action=news_del'
+                var data = {
+                    appid: 1,
+                    del: [item.id]
+                }
+                console.log(data);
+
+                var _this = this
+                _this.$http.post(apiurl, data).then(function (response) {
+                    if (response.data.status == 1) {
+                        _this.dataInitial()
+                    } else {
+                        _this.$Message.error(response.data.message)
+                    }
+                })
+            } else {
+                _this.$Message.info('请选择要操作的记录')
+                return false
+            }
+        }
     }
 }
 </script>

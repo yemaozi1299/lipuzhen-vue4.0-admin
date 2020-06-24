@@ -1,6 +1,6 @@
 <template>
-    <Card class="message-content-list">
-        <p slot="title">留言管理</p>
+    <Card>
+        <p slot="title">产品列表</p>
         <tables
             ref="tables"
             editable
@@ -20,6 +20,10 @@
             searchable
             @on-search-change="get"
         >
+            <template slot="addbtn">
+                <Button type="info" @click="pathEdit">添加产品</Button>
+            </template>
+
             <template slot="sider">
                 <div class="category">
                     <span>分类</span>
@@ -45,7 +49,7 @@
                             style="left: 0px;"
                             v-on:click.stop="handleEdit(item)"
                         />
-                        <span>{{ item.groupname }}</span>
+                        <span>{{ item.sortname }}</span>
                         <Icon
                             class="ant-icon"
                             type="ios-close-circle-outline"
@@ -104,7 +108,7 @@
                 >
                     <span class="mg-l-10">已选</span
                     ><span style="color:#3091F2">{{ chooseID.length }}</span
-                    ><span> / {{ tableData.length }} 条留言</span>
+                    ><span> / {{ tableData.length }} 个产品</span>
                 </Checkbox>
                 <Button
                     class="table-btn mg-r-20"
@@ -112,113 +116,41 @@
                     @click="classmovein('del')"
                     >删除</Button
                 >
-                <Dropdown
-                    trigger="click"
-                    placement="top"
-                    class="mg-r-20"
-                    @on-click="classmovein"
-                >
-                    <Button
-                        class="table-btn"
-                        :disabled="chooseID.length == 0"
-                        icon="ios-arrow-dropup"
-                        >审核操作</Button
-                    >
-                    <DropdownMenu slot="list">
-                        <DropdownItem name="ok"> 已审核</DropdownItem>
-                        <DropdownItem name="no"> 未审核</DropdownItem>
-                    </DropdownMenu>
-                </Dropdown>
             </template>
         </tables>
-        <Modal v-model="isModal" width="660">
-            <p slot="header">回复留言</p>
-            <div style="text-align:left">
-                <div class="expand-row">
-                    <span class="expand-key">回复内容： </span>
-                    <span class="expand-value">{{
-                        messageContent.message
-                    }}</span>
-                </div>
-
-                <Input
-                    v-model="replyContent"
-                    :autosize="{ minRows: 5, maxRows: 5 }"
-                    type="textarea"
-                    placeholder="请输入回复内容"
-                ></Input>
-            </div>
-            <div slot="footer">
-                <Button
-                    type="info"
-                    long
-                    size="large"
-                    :loading="modal_loading"
-                    @click="guestbookReply"
-                    >回复留言</Button
-                >
-            </div>
-        </Modal>
     </Card>
 </template>
 
 <script>
 import Tables from '@/components/tables'
 import Buttons from '@/components/buttons'
-import expandRow from './components/table-expand.vue';
 export default {
-    name: 'shopList',
     components: {
         Tables,
         Buttons
     },
     data () {
         return {
-
             columns: [{
                 type: 'selection',
                 width: 80,
                 align: 'center'
             },
             {
-                title: "内容",
-                type: 'expand',
-                width: 65,
-                render: (h, params) => {
-                    return h(expandRow, {
-                        props: {
-                            row: params.row
-                        },
-                        on: {
-                            "on-del-reply": (id) => {
-                                var list = [];
-                                list.push(id);
-                                this.classmovein('del', list);
-                            }
-                        }
-                    })
-                }
-            },
-            {
-                title: '姓名',
+                title: '产品名称',
                 key: 'name',
             }, {
-                title: '电话',
-                key: 'tel',
+                title: '时间',
+                key: 'date',
             }, {
-                title: '公司',
-                key: 'company',
-            }, {
-                title: '邮箱',
-                key: 'email',
-            }, {
-                title: '状态',
+                title: "是否推荐",
+                align: "center",
                 render: (h, params) => {
                     return h('div', {
                         style: {
-                            color: params.row.yesno == 1 ? '#19be6b' : '#ffad33'
+                            color: params.row.tj == 1 ? '#47cb89' : '#333'
                         }
-                    }, params.row.yesno == 1 ? '已审核' : '未审核')
+                    }, params.row.tj == 1 ? '是' : '否');
                 }
             }, {
                 title: '操作',
@@ -239,7 +171,7 @@ export default {
                                     }
                                 }
                             }
-                        }, '回复留言'),
+                        }, '编辑'),
 
                     ])
                 }
@@ -248,6 +180,7 @@ export default {
             pageno: 10,
             page: 1,
             total: 0,
+
             chooseID: [],
 
             classid: "0",
@@ -255,13 +188,6 @@ export default {
             classList: [],
             showClass: false,
             isSelectAll: false,
-            isModal: false,
-            modal_loading: false,
-            replyContent: "",
-            messageContent: {
-                id: "",
-                message: ""
-            }
         }
     },
     watch: {
@@ -291,22 +217,17 @@ export default {
                 keyword: keyword,
                 page: this.page,
                 pageno: this.pageno,
-                groupid: this.classid
+                classid: this.classid
             }
-            this.$http.post("/block/api_edit.php?action=guestbook_list", data).then((res) => {
-                var tabList = [];
-                res.data.body && res.data.body.forEach((item) => {
-                    var box = item;
-                    box.main && (box.main.reply = box.re || []);
-                    tabList.push(box.main);
-                });
+            this.$http.post("/block/api_edit.php?action=product_list", data).then((res) => {
+                console.log(res);
                 this.total = parseInt(res.data.total || 0);
-                this.tableData = tabList;
+                this.tableData = res.data.body || [];
             });
         },
         getClass () {
             var data = {}
-            this.$http.post("/block/api_edit.php?action=guestbook_groupList", data).then((res) => {
+            this.$http.post("/block/api_edit.php?action=product_class_get", data).then((res) => {
                 this.classList = res.data.body || [];
             });
         },
@@ -316,7 +237,7 @@ export default {
                 return this.get()
             }
             this.$router.push({
-                name: "message",
+                name: "product",
                 params: {
                     pageid: page
                 }
@@ -329,87 +250,14 @@ export default {
             })
             this.chooseID = chooseID
         },
-        addMessage () {
-            this.$router.push({
-                name: "addMessage",
-                params: {
-                    pageid: this.page || 1,
-                    mid: 1
-                }
-            })
-        },
-        selectClass (id) {
-            this.classid = id;
-            this.page = 1;
-            this.get();
-        },
+
         handleSelectAll (status) { // 全选按钮
             this.$refs.tables.selectAll(status)
         },
-        classmovein (type, id) {
-            var editList = id || this.chooseID;
-            if (editList.length == 0) {
-                this.$Message.warning('请选择要操作的留言')
-                return false
-            }
-            switch (type) {
-                case 'ok':
-                    var content = '确定对所选留言进行：通过审核'
-                    break
-                case 'no':
-                    var content = '确定对所选留言进行：未审核'
-                    break
-                case 'del':
-                    var content = '确定对所选留言进行：删除'
-                    break
-            }
-            this.$Modal.confirm({
-                title: '提醒',
-                content: content,
-                onOk: () => {
-                    this.choose2edit(type, editList)
-                }
-            })
-
-        },
-        choose2edit (type, editList) {
-            this.$http.request({
-                url: "/block/api_edit.php?action=guestbook_check",
-                params: {
-                    chooseID: editList,
-                    editmode: type
-                }
-            }).then((res) => {
-                if (res.data.status == 1) {
-                    this.chooseID = [];
-                    this.get();
-                }
-            })
-        },
-        guestbookReply () {
-            this.modal_loading = true;
-            if (this.replyContent == '') {
-                _this.$Message.error('请输入回复内容');
-                this.modal_loading = false;
-                return false
-            }
-            this.$http.request({
-                url: "/block/api_edit.php?action=guestbook_re",
-                params: {
-                    id: this.messageContent.id,
-                    message: this.replyContent
-                }
-            }).then((res) => {
-                if (res.data.status == 1) {
-                    this.isModal = false;
-                    this.messageContent = {
-                        id: "",
-                        message: ""
-                    }
-                    this.get();
-                }
-                this.modal_loading = false;
-            })
+        selectClass (id) {   //切换分类
+            this.classid = id;
+            this.page = 1;
+            this.get();
         },
         handleEdit: function (item) {           //
             var value = "";
@@ -418,7 +266,7 @@ export default {
                 render: h => {
                     return h("Input", {
                         props: {
-                            value: item.groupname,
+                            value: item.sortname,
                             autofocus: true,
                             placeholder: "请输入分类名称"
                         },
@@ -431,10 +279,10 @@ export default {
                 },
                 onOk: () => {
                     this.$http.request({
-                        url: "/block/api_edit.php?action=guestbook_groupEdit",
+                        url: "/block/api_edit.php?action=product_class_edit",
                         params: {
-                            groupid: item.id,
-                            groupname: value
+                            id: item.id,
+                            sortname: value
                         }
                     }).then((res) => {
                         this.getClass();
@@ -442,16 +290,16 @@ export default {
                 }
             });
         },
-        delGroundState: function (item) {
+        delGroundState () {
             var value = "";
             this.$Modal.confirm({
                 title: "删除分类",
-                content: "确定要删除分类吗，删除留言分类会将分类下的留言一起删除",
+                content: "确定要删除分类吗，删除留言分类会将分类下的产品一起删除",
                 onOk: () => {
                     this.$http.request({
-                        url: "/block/api_edit.php?action=guestbook_groupDel",
+                        url: "/block/api_edit.php?action=product_class_del",
                         params: {
-                            groupid: item.id,
+                            id: item.id,
                         }
                     }).then((res) => {
                         this.get();
@@ -461,45 +309,24 @@ export default {
             });
         },
         addClassConfirm () {
-            if (this.classname == '') {
-                this.$Message.error('请输入分类名称')
-                return false
-            }
-            this.$http.request({
-                url: "/block/api_edit.php?action=guestbook_groupADD",
-                params: {
-                    groupname: this.classname
-                }
-            }).then((res) => {
-                this.classname = "";
-                this.showClass = false;
-                this.getClass();
-            });
+
         },
         addClassCancel () {
-            this.showClass = false
-        }
-    },
 
+        },
+        pathEdit () {
+            this.$router.push({
+                name: "addProduct",
+                params: {
+                    pageid: this.page,
+                    pid: 0
+                }
+            });
+        },
+    },
 
 }
 </script>
-<style lang="less">
-.message-content-list {
-    label {
-        box-shadow: none;
-    }
 
-    .expand-row {
-        margin-bottom: 10px;
-    }
-    .expand-key {
-        font-weight: 900;
-    }
-    .expand-value {
-        font-size: 14px;
-        line-height: 16px;
-    }
-}
+<style>
 </style>
-
