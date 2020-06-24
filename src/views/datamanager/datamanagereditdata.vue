@@ -47,7 +47,7 @@
                   :before-upload="handleUpload"
                   type="drag"
                   accept="image/*" 
-                  :action="'/block/api_edit.php?action=datamanager_uploadImage&fieldid='+item.fieldid"
+                  :action="'/api_edit.php?action=datamanager_uploadImage&fieldid='+item.fieldid"
                   style="display: inline-block;width:158px;">
                   <div style="width: 158px;height:58px;line-height: 58px;">
                       <Icon type="ios-cloud-upload-outline" size="20"></Icon>上传图片,支持拖拽
@@ -189,11 +189,11 @@ export default {
                 return false;
             }
 
-            //  /block/api_edit.php?action=datamanager_gettableline&tableid=4&line=1
+            //  /api_edit.php?action=datamanager_gettableline&tableid=4&line=1
             console.log("datamanagereditdata111111111111");
             this.$http.request({
                 method: 'post',
-                url: "/block/api_edit.php",
+                url: "/api_edit.php",
                 params: {
                     action: 'datamanager_gettableline',
                     tableid: table,
@@ -217,7 +217,7 @@ export default {
 
         },
         getclass: function (table) {
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
                 action: "datamanager_classlist",
                 appid: this.vueAppid,
@@ -240,7 +240,7 @@ export default {
                 if (valid) {
                     // console.log(this.UEcontent);//编辑器的内容
                     _this.loading = true;
-                    var apiurl = "/block/api_edit.php";
+                    var apiurl = "/api_edit.php";
                     var data = {
                         appid: this.vueAppid,
                     };

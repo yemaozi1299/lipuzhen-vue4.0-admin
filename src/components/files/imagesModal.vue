@@ -98,7 +98,7 @@
                                 :max-size="2048"
                                 accept="image/*"
                                 :action="
-                                    '/block/api_edit.php?action=filemanager_upload&classid=' +
+                                    '/api_edit.php?action=filemanager_upload&classid=' +
                                         groupState.id +
                                         '&appid=' +
                                         wxappid
@@ -329,7 +329,7 @@ export default {
                 classid: this.classid,
                 page: this.page
             }
-            this.$http.post("/block/api_edit.php", params).then(function (response) {
+            this.$http.post("/api_edit.php", params).then(function (response) {
                 _this.reversedMessage = response.data.body || [];
                 _this.total = response.data.total || 0;
                 // _this.page = 1;
@@ -349,7 +349,7 @@ export default {
                 pageno: 35,
                 appid: this.vueAppid,
             }
-            this.$http.post("/block/api_edit.php", _this.$qs.stringify(params)).then(function (response) {
+            this.$http.post("/api_edit.php", _this.$qs.stringify(params)).then(function (response) {
                 console.log(response.data);
                 _this.reversedMessage = response.data.body || [];
                 _this.total = response.data.total || 0;
@@ -367,7 +367,7 @@ export default {
             var _this = this;
             this.$http({
                 method: 'post',
-                url: '/block/api_edit.php?action=filemanager_classdel',
+                url: '/api_edit.php?action=filemanager_classdel',
                 params: {
                     classid: state.id,
                     appid: this.vueAppid
@@ -396,7 +396,7 @@ export default {
         },
         deleteClassList: function (item, index) {         //删除图片
             var _this = this;
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
                 action: 'filemanager_del',
                 filename: item.pic,
@@ -416,7 +416,7 @@ export default {
 
         getClassData: function () {                               //获取分类数据
             var _this = this;
-            this.$http.get("/block/api_edit.php?action=filemanager_classlist&appid=" + this.vueAppid).then(function (response) {
+            this.$http.get("/api_edit.php?action=filemanager_classlist&appid=" + this.vueAppid).then(function (response) {
                 // _this.getData();
                 _this.classList = response.data.body || [];
             }).catch(function (response) {
@@ -455,7 +455,7 @@ export default {
             var _this = this;
             this.$http.request({
                 method: 'post',
-                url: '/block/api_edit.php?action=filemanager_classedit',
+                url: '/api_edit.php?action=filemanager_classedit',
                 params: {
                     classname: _this.addGroupName,
                     classid: 0,
@@ -507,7 +507,7 @@ export default {
             var _this = this;
             this.$http.request({
                 method: 'post',
-                url: '/block/api_edit.php?action=filemanager_classedit',
+                url: '/api_edit.php?action=filemanager_classedit',
                 params: {
                     classname: item.groupname,
                     classid: item.id,
@@ -526,7 +526,7 @@ export default {
         },
         SelectClass: function () {                   //移动图片到其他分类
             var _this = this;
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
                 action: 'filemanager_move',
                 filename: _this.activeHideArr,
@@ -553,7 +553,7 @@ export default {
         },
         delActiveImage: function () {       //删除选中
             var _this = this;
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
                 action: 'filemanager_del',
                 filename: _this.activeHideArr,
@@ -614,232 +614,275 @@ export default {
 
 
 <style lang="stylus" rel="stylesheet/stylus">
-.files-images-modal
-    position relative
-    width 100%
-    height 100%
-    z-index 1000
-    .webapp-box
-        position fixed
-        z-index 10
-        left 50%
-        top 50%
-        width 890px
-        min-height 565px
-        margin-left -435px
-        margin-top -283px
-        border 1px solid #DDD
+.files-images-modal {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    .webapp-box {
+        position: fixed;
+        z-index: 10;
+        left: 50%;
+        top: 50%;
+        width: 890px;
+        min-height: 565px;
+        margin-left: -435px;
+        margin-top: -283px;
+        border: 1px solid #DDD;
         /* border-radius: 5px; */
-        background #FFF
-        padding 0px
-    .webapp-box-bg
-        position fixed
-        width 100%
-        height 100%
-        z-index 1
-        left 0
-        top 0
-        background rgba(0, 0, 0, 0.5)
-    .webapp-box select
-        border 1px solid #ccc
-        border-radius 4px
-        line-height 14px
-        padding 6px 4px 6px 6px
-        box-shadow inset 0 2px 8px rgba(0, 0, 0, 0.2)
-        outline 0
-        width 160px
-        margin 0
+        background: #FFF;
+        padding: 0px;
+    }
+    .webapp-box-bg {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        background: rgba(0, 0, 0, 0.5);
+    }
+    .webapp-box select {
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        line-height: 14px;
+        padding: 6px 4px 6px 6px;
+        box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2);
+        outline: 0;
+        width: 160px;
+        margin: 0;
+    }
     /* ####################顶部布局##################### */
-    .webapp-model-header
-        height 49px
-        padding 0 16px
-        border-bottom 1px solid #e9e9e9
-    .webapp-model-header > ul
-        overflow hidden
-        zoom 1
-    .webapp-model-header > ul > li
-        height 49px
-        display inline-block
-        line-height 50px
-        text-align center
-        box-sizing border-box
-        padding 0 20px
-        font-size 14px
-    .webapp-model-header > ul > li.active
-        color #2c91fb
-        border-bottom 2px solid #2c91fb
-    .webapp-box-close
-        position absolute
-        top 7px
-        right 20px
-        cursor pointer
-        font-size 2.1rem
-        font-weight bold
-        line-height 1
-        color #000
-        text-shadow 0 1px 0 #fff
-        opacity 0.2
+    .webapp-model-header {
+        height: 49px;
+        padding: 0 16px;
+        border-bottom: 1px solid #e9e9e9;
+    }
+    .webapp-model-header > ul {
+        overflow: hidden;
+        zoom: 1;
+    }
+    .webapp-model-header > ul > li {
+        height: 49px;
+        display: inline-block;
+        line-height: 50px;
+        text-align: center;
+        box-sizing: border-box;
+        padding: 0 20px;
+        font-size: 14px;
+    }
+    .webapp-model-header > ul > li.active {
+        color: #2c91fb;
+        border-bottom: 2px solid #2c91fb;
+    }
+    .webapp-box-close {
+        position: absolute;
+        top: 7px;
+        right: 20px;
+        cursor: pointer;
+        font-size: 2.1rem;
+        font-weight: bold;
+        line-height: 1;
+        color: #000;
+        text-shadow: 0 1px 0 #fff;
+        opacity: 0.2;
+    }
     /* ####################中部布局#################### */
-    .webapp-model-content
-        height 465px
+    .webapp-model-content {
+        height: 465px;
+    }
     /* ######################左边布局###################### */
-    .sider-left
-        width 22%
-        height 100%
-        border-right 1px solid #e9e9e9
-        float left
-    .sider-left > ul
-        overflow hidden
-        zoom 1
-        height 100%
-        overflow-y auto
-    .sider-left > ul > li
-        width 100%
-        padding 0 30px
-        height 50px
-        line-height 50px
-        cursor pointer
-        position relative
-    .sider-left > ul > li.active
-        background rgba(48, 145, 242, 0.1)
-        color #2c91fb
-    .sider-left > ul > li:hover
-        background rgba(48, 145, 242, 0.1)
-    .sider-left > ul > li > span
-        display block
-        overflow hidden
-        text-overflow ellipsis
-        white-space nowrap
-    .sider-left > ul > li:hover > i
-        display block !important
-    .sider-left > ul > li > i.cate-compose
-        display none
-        position absolute
-        left 0px
-        top 0px
-        width 30px
-        line-height 50px
-        text-align center
-        z-index 10px
-    .sider-left > ul > li > i.cate-close
-        display none
-        position absolute
-        right 0px
-        top 0px
-        width 30px
-        line-height 50px
-        text-align center
-        z-index 10px
+    .sider-left {
+        width: 22%;
+        height: 100%;
+        border-right: 1px solid #e9e9e9;
+        float: left;
+    }
+    .sider-left > ul {
+        overflow: hidden;
+        zoom: 1;
+        height: 100%;
+        overflow-y: auto;
+    }
+    .sider-left > ul > li {
+        width: 100%;
+        padding: 0 30px;
+        height: 50px;
+        line-height: 50px;
+        cursor: pointer;
+        position: relative;
+    }
+    .sider-left > ul > li.active {
+        background: rgba(48, 145, 242, 0.1);
+        color: #2c91fb;
+    }
+    .sider-left > ul > li:hover {
+        background: rgba(48, 145, 242, 0.1);
+    }
+    .sider-left > ul > li > span {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .sider-left > ul > li:hover > i {
+        display: block !important;
+    }
+    .sider-left > ul > li > i.cate-compose {
+        display: none;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        width: 30px;
+        line-height: 50px;
+        text-align: center;
+        z-index: 10px;
+    }
+    .sider-left > ul > li > i.cate-close {
+        display: none;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        width: 30px;
+        line-height: 50px;
+        text-align: center;
+        z-index: 10px;
+    }
     /* ######################内容###################### */
-    .sider-content
-        width 78%
-        height 100%
-        float left
-    .resource-list-wrap
-        height 465px
-        overflow-x hidden
-        overflow-y auto
-    .resource-list
-        padding-left 15px
-        padding-top 20px
-        text-align left
-    .resource-list li
-        display inline-block
-        margin 0 12px 15px 0
-        border 1px solid #bfbfbf
-        background-color #e6e6e6
-        position relative
-    .resource-list li .thumbnail
-        text-align center
-        display inline-block
-        width 80px
-        height 80px
-        border 0
-    .thumbnail:before, .thumbnail:after
-        content ''
-        display inline-block
-        width 0
-        height 100%
-        vertical-align middle
-    .resource-list li img
-        display inline-block
-        max-width 100%
-        max-height 100%
-        vertical-align middle
-    .resource-list li:hover .img-operate
-        display block
-        background-color #dddddd
-        border-color #ccc
-    .resource-list .img-operate
-        display none
-        position absolute
-        left 0
-        right 0
-        bottom 0
-        z-index 1
-    .resource-list .img-operate a
-        display table-cell
-        width 1%
-        padding 2px
-        text-align center
-        color #fff
-        font-size 12px
-        text-decoration none
-        background-color rgba(0, 0, 0, 0.5)
-        line-height 20px
-    .resource-list li.selected::after
-        position absolute
-        right -12px
-        top -10px
-        display block
-        width 24px
-        height 24px
-        content '√'
-        color rgb(255, 255, 255)
-        font-family '微软雅黑'
-        line-height 22px
-        text-align center
-        border-width 2px
-        border-style solid
-        border-color rgb(255, 255, 255)
-        border-image initial
-        background rgb(106, 187, 3)
-        border-radius 50%
+    .sider-content {
+        width: 78%;
+        height: 100%;
+        float: left;
+    }
+    .resource-list-wrap {
+        height: 465px;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    .resource-list {
+        padding-left: 15px;
+        padding-top: 20px;
+        text-align: left;
+    }
+    .resource-list li {
+        display: inline-block;
+        margin: 0 12px 15px 0;
+        border: 1px solid #bfbfbf;
+        background-color: #e6e6e6;
+        position: relative;
+    }
+    .resource-list li .thumbnail {
+        text-align: center;
+        display: inline-block;
+        width: 80px;
+        height: 80px;
+        border: 0;
+    }
+    .thumbnail:before, .thumbnail:after {
+        content: '';
+        display: inline-block;
+        width: 0;
+        height: 100%;
+        vertical-align: middle;
+    }
+    .resource-list li img {
+        display: inline-block;
+        max-width: 100%;
+        max-height: 100%;
+        vertical-align: middle;
+    }
+    .resource-list li:hover .img-operate {
+        display: block;
+        background-color: #dddddd;
+        border-color: #ccc;
+    }
+    .resource-list .img-operate {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+    .resource-list .img-operate a {
+        display: table-cell;
+        width: 1%;
+        padding: 2px;
+        text-align: center;
+        color: #fff;
+        font-size: 12px;
+        text-decoration: none;
+        background-color: rgba(0, 0, 0, 0.5);
+        line-height: 20px;
+    }
+    .resource-list li.selected::after {
+        position: absolute;
+        right: -12px;
+        top: -10px;
+        display: block;
+        width: 24px;
+        height: 24px;
+        content: '√';
+        color: rgb(255, 255, 255);
+        font-family: '微软雅黑';
+        line-height: 22px;
+        text-align: center;
+        border-width: 2px;
+        border-style: solid;
+        border-color: rgb(255, 255, 255);
+        border-image: initial;
+        background: rgb(106, 187, 3);
+        border-radius: 50%;
+    }
     /* ####################底部布局#################### */
-    .webapp-model-footer
-        height 50px
-        border-top 1px solid #e9e9e9
-    .box-operation-menu
-        padding 10px 16px 10px 10px
-        text-align right
-    .box-operation-menu > ul
-        overflow hidden
-        zoom 1
-    .box-operation-menu > ul > li
-        display inline-block
-        vertical-align middle
-    .box-operation-menu > ul > li.upload-btn
-        float left
-    .box-hide
-        padding 10px 10px 0px 10px
-        text-align right
+    .webapp-model-footer {
+        height: 50px;
+        border-top: 1px solid #e9e9e9;
+    }
+    .box-operation-menu {
+        padding: 10px 16px 10px 10px;
+        text-align: right;
+    }
+    .box-operation-menu > ul {
+        overflow: hidden;
+        zoom: 1;
+    }
+    .box-operation-menu > ul > li {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .box-operation-menu > ul > li.upload-btn {
+        float: left;
+    }
+    .box-hide {
+        padding: 10px 10px 0px 10px;
+        text-align: right;
+    }
     /* =================加载动画================== */
-    .loading
-        position relative
-        margin-top 200px
-        width 78%
-        float left
-    .demo-spin-icon-load
-        animation ani-demo-spin 1s linear infinite
-    @keyframes ani-demo-spin
-        from
-            transform rotate(0deg)
-        50%
-            transform rotate(180deg)
-        to
-            transform rotate(360deg)
-    .demo-spin-col
-        height 100px
-        position relative
-        border 1px solid #eee
+    .loading {
+        position: relative;
+        margin-top: 200px;
+        width: 78%;
+        float: left;
+    }
+    .demo-spin-icon-load {
+        animation: ani-demo-spin 1s linear infinite;
+    }
+    @keyframes ani-demo-spin {
+        from {
+            transform: rotate(0deg);
+        }
+        50% {
+            transform: rotate(180deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    .demo-spin-col {
+        height: 100px;
+        position: relative;
+        border: 1px solid #eee;
+    }
+}
 </style>

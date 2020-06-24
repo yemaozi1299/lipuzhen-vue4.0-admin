@@ -129,7 +129,7 @@ export default {
             }
             this.$http.request({
                 method: "POST",
-                url: "/block/api_edit.php?action=album_list",
+                url: "/api_edit.php?action=album_list",
                 params: {
                     page: this.page,
                     pageno: this.pageno,

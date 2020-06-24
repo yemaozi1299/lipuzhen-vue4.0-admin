@@ -137,7 +137,7 @@ export default {
                 appid: this.vueAppid
             };
             this.$Loading.start();
-            _this.$http.post('/block/api_edit.php', _this.$qs.stringify(data)).then(function (response) {
+            _this.$http.post('/api_edit.php', _this.$qs.stringify(data)).then(function (response) {
 
                 if (response.data.status == 1) {
                     var data = response.data.body;
@@ -172,7 +172,7 @@ export default {
             };
             console.log(data);
             this.$Loading.start();
-            _this.$http.post('/block/api_edit.php', _this.$qs.stringify(data)).then(function (response) {
+            _this.$http.post('/api_edit.php', _this.$qs.stringify(data)).then(function (response) {
                 if (response.data.status == 1) {
                     _this.$Message.success('提交成功!');
                     _this.$router.push({ path: '/stored' });

@@ -226,7 +226,7 @@ export default {
         },
         dataInitial () {
             this.$http.request({
-                url: "/block/api_edit.php?action=news_get",
+                url: "/api_edit.php?action=news_get",
                 params: {
                     id: this.pid
                 }
@@ -253,7 +253,7 @@ export default {
         },
         getNewClass: function () {
             this.$http.request({
-                url: "/block/api_edit.php?action=product_class_get",
+                url: "/api_edit.php?action=product_class_get",
                 params: {
                     appid: 1
                 }
@@ -310,7 +310,7 @@ export default {
             var _this = this
             this.$refs[name].validate((valid) => {
                 if (valid) {
-                    var apiurl = '/block/api_edit.php?action=product_edit';
+                    var apiurl = '/api_edit.php?action=product_edit';
                     var params = {},
                         data = this.formValidate;
                     params = {

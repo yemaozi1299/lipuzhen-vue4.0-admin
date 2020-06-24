@@ -1,7 +1,7 @@
 <template>
     <div
         id="file-explorer"
-        data-url="/block/api_edit.php?action=filemanager_list"
+        data-url="/api_edit.php?action=filemanager_list"
         :class="mode"
     >
         <div class="file-panel" data-count="25/58">
@@ -371,14 +371,14 @@ export default {
             }],
             vueFileList: [],
             floderList: [],
-            baseURL: "/block/api_edit.php?action=filemanager_list",
-            explorerURL: "/block/api_edit.php?action=filemanager_list",
-            deleteURL: "/block/api_edit.php?action=filemanager_del",
-            renameURL: "/block/api_edit.php?action=filemanager_memo",
-            mkdirURL: "/block/api_edit.php?action=filemanager_classedit",
-            deleteMkdirURL: "/block/api_edit.php?action=filemanager_classdel",
-            getFolder: "/block/api_edit.php?action=filemanager_classlist",
-            moveURL: "/block/api_edit.php?action=filemanager_move",
+            baseURL: "/api_edit.php?action=filemanager_list",
+            explorerURL: "/api_edit.php?action=filemanager_list",
+            deleteURL: "/api_edit.php?action=filemanager_del",
+            renameURL: "/api_edit.php?action=filemanager_memo",
+            mkdirURL: "/api_edit.php?action=filemanager_classedit",
+            deleteMkdirURL: "/api_edit.php?action=filemanager_classdel",
+            getFolder: "/api_edit.php?action=filemanager_classlist",
+            moveURL: "/api_edit.php?action=filemanager_move",
             lockURL: "/Admin/FileExplorer/lock",
             filterExt: {
                 all: [".gif", ".jpg", ".png", ".bmp", ".jpeg", ".swf", ".mp3", ".mp4", ".flv", ".webm", ".txt", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".pdf", ".odt", ".csv", ".rar", ".zip", ".xml"],
@@ -409,7 +409,7 @@ export default {
             selectedSeq: 0,
             cutCache: {},
             cutClass: ".file-cut",
-            uploadURL: "/block/api_edit.php?action=filemanager_upload",
+            uploadURL: "/api_edit.php?action=filemanager_upload",
             uploadFileSizeLimit: 2048,
             formData: { //{Object} [可选] [默认值：{}] 文件上传请求的参数表，每次发送都会发送此对象中的参数。
                 classid: ""

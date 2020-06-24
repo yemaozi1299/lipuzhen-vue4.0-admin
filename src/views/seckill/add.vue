@@ -153,7 +153,7 @@ export default {
                 that.search = false;
             }
             that.searchPoptip = false;
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
                 appid: this.vueAppid
             };
@@ -198,7 +198,7 @@ export default {
                 that.search = false;
             }
             that.searchPoptip = false;
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
                 appid: this.vueAppid
             };
@@ -231,7 +231,7 @@ export default {
         goodsClassList: function () {
             var that = this;
 
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
                 appid: this.vueAppid,
                 shoptype: 0,

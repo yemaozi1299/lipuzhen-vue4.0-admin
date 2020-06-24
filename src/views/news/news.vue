@@ -335,7 +335,7 @@ export default {
                 this.page = 1;
             }
             this.$http.request({
-                url: "/block/api_edit.php?action=news_list",
+                url: "/api_edit.php?action=news_list",
                 params: {
                     appid: 1,
                     classid: this.classid,
@@ -353,7 +353,7 @@ export default {
         },
         getClass () {
             this.$http.request({
-                url: "/block/api_edit.php?action=news_class_get",
+                url: "/api_edit.php?action=news_class_get",
                 params: {}
             }).then((res) => {
                 this.classList = res.data.body;
@@ -386,7 +386,7 @@ export default {
         },
         setStatus (params) {
             this.$http.request({
-                url: "/block/api_edit.php?action=news_class_add",
+                url: "/api_edit.php?action=news_class_add",
                 params: {
                     appid: 1,
                     upid: this.uid,
@@ -405,7 +405,7 @@ export default {
         },
         addClassConfirm () {
             this.$http.request({
-                url: "/block/api_edit.php?action=news_class_add",
+                url: "/api_edit.php?action=news_class_add",
                 params: {
                     appid: 1,
                     upid: this.uid,
@@ -444,7 +444,7 @@ export default {
                     });
                 },
                 onOk: function () {
-                    var apiurl = "/block/api_edit.php?action=news_class_edit";
+                    var apiurl = "/api_edit.php?action=news_class_edit";
                     var data = {
                         sortname: value,
                         id: item.id
@@ -469,7 +469,7 @@ export default {
                 title: "删除分类",
                 content: "确定要删除分类吗，删除该新闻分类会将其下所有新闻删除",
                 onOk: function () {
-                    var apiurl = "/block/api_edit.php?action=news_class_del";
+                    var apiurl = "/api_edit.php?action=news_class_del";
                     var data = {
                         appid: 1,
                         id: item.id
@@ -525,7 +525,7 @@ export default {
         choose2edit: function (mode) { // 将要进行的操作提交到服务器API
             // console.log(name+'='+this.chooseID);
             if (this.chooseID.length > 0) {
-                var apiurl = '/block/api_edit.php?action=news_del'
+                var apiurl = '/api_edit.php?action=news_del'
                 var data = {
                     appid: 1,
                     del: this.chooseID
@@ -551,7 +551,7 @@ export default {
                     title: "删除提示",
                     content: "确定要删除该条新闻吗",
                     onOk: () => {
-                        var apiurl = '/block/api_edit.php?action=news_del'
+                        var apiurl = '/api_edit.php?action=news_del'
                         var data = {
                             appid: 1,
                             del: [item.id]

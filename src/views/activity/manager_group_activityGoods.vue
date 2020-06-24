@@ -159,7 +159,7 @@ export default {
                 page: this.pageData.page,
                 pageno: this.pageData.pageno
             };
-            this.$http.post("/block/api_edit.php", this.$qs.stringify(params)).then(function (res) {
+            this.$http.post("/api_edit.php", this.$qs.stringify(params)).then(function (res) {
                 _this.infoData.data = res.data.body;
                 _this.pageData.total = res.data.total;
                 // console.log(JSON.stringify(res.data));
@@ -196,7 +196,7 @@ export default {
 
             }
             _this.$Loading.start();
-            _this.$http.post('/block/api_edit.php', _this.$qs.stringify(data)).then(function (response) {
+            _this.$http.post('/api_edit.php', _this.$qs.stringify(data)).then(function (response) {
                 if (response.data.status == 1) {
                     _this.infoData.data.splice(params._index, 1);
                     _this.$Message.info(response.data.message);

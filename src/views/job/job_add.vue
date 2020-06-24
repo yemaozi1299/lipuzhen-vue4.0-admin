@@ -209,7 +209,7 @@ export default {
         dataInitial () {
             this.$http.request({
                 method: "POST",
-                url: "/block/api_edit.php?action=job_get",
+                url: "/api_edit.php?action=job_get",
                 params: {
                     id: this.jobid
                 }
@@ -240,7 +240,7 @@ export default {
             var that = this;
             this.$http.request({
                 method: "POST",
-                url: "/block/api_edit.php?action=job_groupList",
+                url: "/api_edit.php?action=job_groupList",
                 params: {}
             }).then((res) => {
                 this.classidList = res.data.body || [];
@@ -277,7 +277,7 @@ export default {
             var _this = this
             this.$refs[name].validate((valid) => {
                 if (valid) {
-                    var apiurl = '/block/api_edit.php?action=job_edit';
+                    var apiurl = '/api_edit.php?action=job_edit';
                     var params = {},
                         data = this.formValidate;
                     params = {

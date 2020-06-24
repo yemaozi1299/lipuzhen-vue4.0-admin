@@ -201,7 +201,7 @@ export default {
                 this.search = false;
             }
             this.searchPoptip = false;
-            var apiurl = "/block/api_edit.php?action=datamanager_listoftable&page=" + this.page + "&keyword=" + keyword + '&pageno=' + this.pageno + "&appid=" + this.vueAppid;
+            var apiurl = "/api_edit.php?action=datamanager_listoftable&page=" + this.page + "&keyword=" + keyword + '&pageno=' + this.pageno + "&appid=" + this.vueAppid;
             _this.$Loading.start();
             _this.$http.get(apiurl)
                 .then(function (response) {
@@ -240,7 +240,7 @@ export default {
                 title: '提示',
                 content: "确定删除所选数据表吗?",
                 onOk: () => {
-                    var apiurl = "/block/api_edit.php";
+                    var apiurl = "/api_edit.php";
                     var data = {
                         appid: this.vueAppid
                     };

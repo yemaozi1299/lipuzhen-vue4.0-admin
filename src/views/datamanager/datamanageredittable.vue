@@ -206,7 +206,7 @@ export default {
             //datamanager_gettable  获取表信息和表字段     $tableid 要获取信息的表ID
 
 
-            var apiurl = "/block/api_edit.php?action=datamanager_gettable&tableid=" + table + "&appid=" + this.vueAppid;
+            var apiurl = "/api_edit.php?action=datamanager_gettable&tableid=" + table + "&appid=" + this.vueAppid;
             _this.$http.get(apiurl).then((response) => {
                 console.log(response);
                 if (response.data.status == 1) {
@@ -274,7 +274,7 @@ export default {
                         }
                     }
 
-                    var apiurl = "/block/api_edit.php";
+                    var apiurl = "/api_edit.php";
                     var data = {
                         appid: this.vueAppid,
                     };

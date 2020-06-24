@@ -185,7 +185,7 @@ export default {
                 // pageno: 10
             };
             this.$Loading.start();
-            _this.$http.post('/block/api_edit.php', _this.$qs.stringify(data)).then(function (response) {
+            _this.$http.post('/api_edit.php', _this.$qs.stringify(data)).then(function (response) {
                 if (response.data.status == 1) {
                     _this.infoData.data = response.data.body;
                     _this.pageData.total = Number(response.data.total);
@@ -214,7 +214,7 @@ export default {
                 delid: [params.id]
             };
             this.$Loading.start();
-            _this.$http.post('/block/api_edit.php', _this.$qs.stringify(data)).then(function (response) {
+            _this.$http.post('/api_edit.php', _this.$qs.stringify(data)).then(function (response) {
                 if (response.data.status == 1) {
                     _this.infoData.data.splice(params._index, 1);
                 } else {
@@ -241,7 +241,7 @@ export default {
             };
             console.log(params.status)
             this.$Loading.start();
-            _this.$http.post('/block/api_edit.php', _this.$qs.stringify(data)).then(function (response) {
+            _this.$http.post('/api_edit.php', _this.$qs.stringify(data)).then(function (response) {
                 if (response.data.status == 1) {
                     params.status = params.status == 1 ? 0 : 1;
                 } else {

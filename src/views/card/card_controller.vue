@@ -256,7 +256,7 @@ export default {
                 cardType: type ? 1 : 0
             }
             console.log(params);
-            this.$http.post("/block/api_edit.php", that.$qs.stringify(params)).then(function (response) {
+            this.$http.post("/api_edit.php", that.$qs.stringify(params)).then(function (response) {
                 console.log(response);
                 that.data1[_index].cardType = params.cardType;
             }).catch(function (response) {
@@ -276,7 +276,7 @@ export default {
                 status: type ? 1 : 0
             }
             console.log(params);
-            this.$http.post("/block/api_edit.php", that.$qs.stringify(param)).then(function (response) {
+            this.$http.post("/api_edit.php", that.$qs.stringify(param)).then(function (response) {
                 that.data1[_index].official = param.status;
                 console.log(response);
             }).catch(function (response) {
@@ -295,7 +295,7 @@ export default {
                 id: params.id,
                 status: params.status == 1 ? 0 : 1
             }
-            this.$http.post("/block/api_edit.php", that.$qs.stringify(param)).then(function (response) {
+            this.$http.post("/api_edit.php", that.$qs.stringify(param)).then(function (response) {
                 that.data1[_index].status = param.status;
                 console.log(response);
             }).catch(function (response) {
@@ -318,7 +318,7 @@ export default {
                 keyword: this.searchVal
             }
             console.log(this.searchVal);
-            this.$http.post("/block/api_edit.php", that.$qs.stringify(params)).then(function (response) {
+            this.$http.post("/api_edit.php", that.$qs.stringify(params)).then(function (response) {
                 console.log(response.data.body);
                 that.data1 = response.data.body;
             }).catch(function (response) {

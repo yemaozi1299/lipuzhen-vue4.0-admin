@@ -173,7 +173,7 @@ export default {
             }
             var _this = this;
             _this.searchPoptip = false;
-            var apiurl = "/block/api_edit.php?action=goods_postList&keyword=" + keyword + "&appid=" + this.vueAppid;
+            var apiurl = "/api_edit.php?action=goods_postList&keyword=" + keyword + "&appid=" + this.vueAppid;
             _this.$http.get(apiurl)
                 .then(function (response) {
                     if (response.data.status == 1) {
@@ -202,7 +202,7 @@ export default {
                 content: "确定删除所选记录吗?",
                 onOk: () => {
 
-                    var apiurl = "/block/api_edit.php";
+                    var apiurl = "/api_edit.php";
                     var data = {
                         appid: this.vueAppid
                     };

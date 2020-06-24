@@ -501,7 +501,7 @@
                 console.log(data);
                 _this.$http.request({
                     method: "POST",
-                    url: "/block/api_edit.php",
+                    url: "/api_edit.php",
                     params: data
                 }).then(function (response) {
                     if (response.data.status == 1) {
@@ -549,7 +549,7 @@
 
                 console.log(data);
 
-                _this.$http.post('/block/api_edit.php', data).then(function (response) {
+                _this.$http.post('/api_edit.php', data).then(function (response) {
                     console.log(response.data);
                     if (response.data.status == 1) {
                         _this.orderPost.isModal = false;
@@ -589,7 +589,7 @@
                 }
 
 
-                _this.$http.post('/block/api_edit.php', data).then(function (response) {
+                _this.$http.post('/api_edit.php', data).then(function (response) {
                     if (response.data.status == 1) {
                         _this.isOrderPriceEdit = false;
                         _this.orderPriceEditLoading = false;
@@ -643,7 +643,7 @@
 
                 this.shoptype = this.$route.params.shoptype || 'ec';
 
-                var apiurl = "/block/api_edit.php";
+                var apiurl = "/api_edit.php";
                 var data = {
                     appid: this.vueAppid
                 };
@@ -721,7 +721,7 @@
                     content: "确定删除所选记录吗?",
                     onOk: () => {
 
-                        var apiurl = "/block/api_edit.php";
+                        var apiurl = "/api_edit.php";
                         var data = {
                             appid: this.vueAppid
                         };
@@ -752,7 +752,7 @@
                     content: "确认结账吗?",
                     onOk: () => {
 
-                        var apiurl = "/block/api_edit.php";
+                        var apiurl = "/api_edit.php";
                         var data = {
                             action: "waimaiCashPayAndFinish",
                             appid: this.vueAppid,
@@ -773,60 +773,75 @@
         }
     };</script>
 <style lang="stylus" rel="stylesheet/stylus">
-.shoporder-wrapper
-    .menu-box
-        margin-bottom 20px
-        height 40px
-        line-height 20px
-    .code-row-bg3
-        padding 10px 0
-        text-align center
-        font-weight bold
-        background #f7f7f7
-    .code-row-bg4
-        padding-top 10px
-        margin-bottom 0px
-        text-align center
-    .orderheader
-        padding 5px
-        margin-bottom 0px
-        text-align left
-        background #f7f7f7
-        border-bottom 1px solid #e7e7e7
-    .goodsline
-        padding-left 10px
-        padding-bottom 5px
-        text-align left
-    .goodsline img
-        width 50px
-        height 50px
-        margin-right 10px
-    .goods-name, .goods-num, .goods-price
-        display inline-block
-        width 120px
-        text-align left
-        word-break break-all
-        vertical-align middle
-    .areaname
-        padding 0 10px
-        text-align left
-    .linebg
-        margin-bottom 0px
-    .post-input
-        text-align center
-    .itembox
-        border 1px solid #D0CACA
-        margin 10px 0
-    .searchbox
-        border 1px solid #D0CACA
-        margin 10px 0
-        padding 10px
-    .itembox_header
-        border-bottom 1px solid #9C9898
-        background #fdfdfd
-        padding 0 12px
-        line-height 40px
-    .no-record
-        text-align center
+.shoporder-wrapper {
+    .menu-box {
+        margin-bottom: 20px;
+        height: 40px;
+        line-height: 20px;
+    }
+    .code-row-bg3 {
+        padding: 10px 0;
+        text-align: center;
+        font-weight: bold;
+        background: #f7f7f7;
+    }
+    .code-row-bg4 {
+        padding-top: 10px;
+        margin-bottom: 0px;
+        text-align: center;
+    }
+    .orderheader {
+        padding: 5px;
+        margin-bottom: 0px;
+        text-align: left;
+        background: #f7f7f7;
+        border-bottom: 1px solid #e7e7e7;
+    }
+    .goodsline {
+        padding-left: 10px;
+        padding-bottom: 5px;
+        text-align: left;
+    }
+    .goodsline img {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+    }
+    .goods-name, .goods-num, .goods-price {
+        display: inline-block;
+        width: 120px;
+        text-align: left;
+        word-break: break-all;
+        vertical-align: middle;
+    }
+    .areaname {
+        padding: 0 10px;
+        text-align: left;
+    }
+    .linebg {
+        margin-bottom: 0px;
+    }
+    .post-input {
+        text-align: center;
+    }
+    .itembox {
+        border: 1px solid #D0CACA;
+        margin: 10px 0;
+    }
+    .searchbox {
+        border: 1px solid #D0CACA;
+        margin: 10px 0;
+        padding: 10px;
+    }
+    .itembox_header {
+        border-bottom: 1px solid #9C9898;
+        background: #fdfdfd;
+        padding: 0 12px;
+        line-height: 40px;
+    }
+    .no-record {
+        text-align: center;
+    }
+}
 </style>
 

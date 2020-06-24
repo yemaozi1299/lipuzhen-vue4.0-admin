@@ -258,7 +258,7 @@ export default {
                 appid: this.vueAppid,
                 id: id,
             }
-            that.$http.post("/block/api_edit.php", that.$qs.stringify(param)).then(function (res) {
+            that.$http.post("/api_edit.php", that.$qs.stringify(param)).then(function (res) {
                 if (res.data.status == 1) {
                     console.log(res.data);
                     that.$Message.info(res.data.message);
@@ -289,7 +289,7 @@ export default {
             console.log(param);
             this.$refs['formValidate'].validate((valid) => {
                 if (valid) {
-                    that.$http.post("/block/api_edit.php", that.$qs.stringify(param)).then(function (res) {
+                    that.$http.post("/api_edit.php", that.$qs.stringify(param)).then(function (res) {
                         if (res.data.status == 1) {
                             that.modal1 = false;
                             that.formItem = {
@@ -335,7 +335,7 @@ export default {
                 appid: this.vueAppid,
                 id: row.id,
             }
-            that.$http.post("/block/api_edit.php", that.$qs.stringify(param)).then(function (res) {
+            that.$http.post("/api_edit.php", that.$qs.stringify(param)).then(function (res) {
                 if (res.data.status == 1) {
                     that.get();
                 } else {
@@ -358,7 +358,7 @@ export default {
                 appid: this.vueAppid,
                 status: row.status == 1 ? 0 : 1
             };
-            that.$http.post("/block/api_edit.php", that.$qs.stringify(param)).then(function (res) {
+            that.$http.post("/api_edit.php", that.$qs.stringify(param)).then(function (res) {
                 if (res.data.status == 1) {
                     console.log(res);
                 } else {
@@ -381,7 +381,7 @@ export default {
                 status: this.formItem.autoPrint ? 1 : 0
             };
             console.log(param)
-            that.$http.post("/block/api_edit.php", that.$qs.stringify(param)).then(function (res) {
+            that.$http.post("/api_edit.php", that.$qs.stringify(param)).then(function (res) {
                 if (res.data.status == 1) {
                     console.log(res);
                 } else {
@@ -406,7 +406,7 @@ export default {
                 appid: this.vueAppid
             }
             this.loading = true;
-            this.$http.post("/block/api_edit.php", that.$qs.stringify(param)).then(function (res) {
+            this.$http.post("/api_edit.php", that.$qs.stringify(param)).then(function (res) {
                 that.data1 = res.data.body;
                 that.loading = false;
                 that.$set(that.formItem, "autoPrint", res.data.autoPrint == 1 ? true : false);
@@ -424,37 +424,47 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-.ticket-container
-    padding 0 20px 20px 20px
-    background #fff
-    position relative
-    .content_tab
-        .pos_opera
-            padding-top 16px
-            .title
-                display inline-block
-                height 30px
-                line-height 30px
-                font-size 12px
-                padding-right 15px
-                border none
-            .pos
-                display inline-block
-                height 30px
-                line-height 30px
-                font-size 12px
-                padding-left 15px
-                padding-right 15px
-                span
-                    vertical-align middle
-                    color #999
-                    padding-left 15px
-                    padding-right 15px
-        .pos_in
-            padding-bottom 16px
-            .ant-btn
-                border-radius 0
-    .table-wrapper
-        .page-wrap
-            margin 16px 16px 16px 0
+.ticket-container {
+    padding: 0 20px 20px 20px;
+    background: #fff;
+    position: relative;
+    .content_tab {
+        .pos_opera {
+            padding-top: 16px;
+            .title {
+                display: inline-block;
+                height: 30px;
+                line-height: 30px;
+                font-size: 12px;
+                padding-right: 15px;
+                border: none;
+            }
+            .pos {
+                display: inline-block;
+                height: 30px;
+                line-height: 30px;
+                font-size: 12px;
+                padding-left: 15px;
+                padding-right: 15px;
+                span {
+                    vertical-align: middle;
+                    color: #999;
+                    padding-left: 15px;
+                    padding-right: 15px;
+                }
+            }
+        }
+        .pos_in {
+            padding-bottom: 16px;
+            .ant-btn {
+                border-radius: 0;
+            }
+        }
+    }
+    .table-wrapper {
+        .page-wrap {
+            margin: 16px 16px 16px 0;
+        }
+    }
+}
 </style>

@@ -100,7 +100,7 @@ export default {
     methods: {
         get: function () {//获取新闻内容
             var _this = this;
-            var apiurl = "/block/api_edit.php?action=goods_payGet&appid=" + this.vueAppid;
+            var apiurl = "/api_edit.php?action=goods_payGet&appid=" + this.vueAppid;
             _this.$http.get(apiurl)
                 .then((response) => {
                     if (response.data.status == 1) {
@@ -130,7 +130,7 @@ export default {
             _this.$refs[name].validate((valid) => {
                 if (valid) {
 
-                    var apiurl = "/block/api_edit.php";
+                    var apiurl = "/api_edit.php";
                     var data = {
                         appid: this.vueAppid
                     };

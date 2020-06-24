@@ -490,7 +490,7 @@ export default {
         },
         get: function () {//获取店铺内容
             var _this = this;
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
                 action: 'waimai_info',
                 appid: this.vueAppid
@@ -548,7 +548,7 @@ export default {
             _this.$refs[name].validate((valid) => {
                 console.log(valid);
                 if (valid && _this.ifRepeat()) {
-                    var apiurl = "/block/api_edit.php";
+                    var apiurl = "/api_edit.php";
                     var data = {
                         action: 'waimai_infoset',
                         info: {

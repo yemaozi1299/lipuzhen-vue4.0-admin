@@ -174,7 +174,7 @@ export default {
         },
         dataInitial () {
             this.$http.request({
-                url: "/block/api_edit.php?action=album_get",
+                url: "/api_edit.php?action=album_get",
                 params: {
                     id: this.id
                 }
@@ -203,7 +203,7 @@ export default {
             var _this = this
             this.$refs[name].validate((valid) => {
                 if (valid) {
-                    var action = this.id == 0 ? "/block/api_edit.php?action=album_add" : "/block/api_edit.php?action=album_edit"
+                    var action = this.id == 0 ? "/api_edit.php?action=album_add" : "/api_edit.php?action=album_edit"
                     var params = {},
                         data = this.formValidate,
                         body = [];

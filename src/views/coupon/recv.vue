@@ -202,7 +202,7 @@ export default {
             };
             this.infoData.data = [];
             this.$Loading.start();
-            _this.$http.post('/block/api_edit.php', _this.$qs.stringify(data)).then(function (response) {
+            _this.$http.post('/api_edit.php', _this.$qs.stringify(data)).then(function (response) {
                 if (response.data.status == 1) {
                     _this.infoData.data = response.data.body;
                     _this.pageData.total = response.data.total;
@@ -266,7 +266,7 @@ export default {
             };
             console.log(json);
             this.$Loading.start();
-            _this.$http.post('/block/api_edit.php', _this.$qs.stringify(json)).then(function (response) {
+            _this.$http.post('/api_edit.php', _this.$qs.stringify(json)).then(function (response) {
                 if (response.data.status == 1) {
                     data.enable_status = data.enable_status == 1 ? 0 : 1;
                     console.log(data.enable_status);
@@ -293,7 +293,7 @@ export default {
             };
             console.log(json);
             this.$Loading.start();
-            _this.$http.post('/block/api_edit.php', _this.$qs.stringify(json)).then(function (response) {
+            _this.$http.post('/api_edit.php', _this.$qs.stringify(json)).then(function (response) {
                 if (response.data.status == 1) {
                     _this.infoData.data.splice(data._index, 1);
                     console.log(data.enable_status);

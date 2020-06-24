@@ -236,7 +236,7 @@ export default {
             this.loading = true;
             this.$http.request({
                 method: "POST",
-                url: "/block/api_edit.php?action=job_list",
+                url: "/api_edit.php?action=job_list",
                 params: {
                     keyword: keyword,
                     page: this.page,
@@ -254,7 +254,7 @@ export default {
         getClass () {
             this.$http.request({
                 method: "POST",
-                url: "/block/api_edit.php?action=job_groupList",
+                url: "/api_edit.php?action=job_groupList",
                 params: {}
             }).then((res) => {
                 this.classList = res.data.body || [];
@@ -308,7 +308,7 @@ export default {
                 },
                 onOk: () => {
                     this.$http.request({
-                        url: "/block/api_edit.php?action=job_groupEdit",
+                        url: "/api_edit.php?action=job_groupEdit",
                         params: {
                             groupid: item.id,
                             groupname: value
@@ -326,7 +326,7 @@ export default {
                 content: "确定要删除分类吗，删除留言分类会将分类下的留言一起删除",
                 onOk: () => {
                     this.$http.request({
-                        url: "/block/api_edit.php?action=job_groupDel",
+                        url: "/api_edit.php?action=job_groupDel",
                         params: {
                             groupid: item.id,
                         }
@@ -343,7 +343,7 @@ export default {
                 return false
             }
             this.$http.request({
-                url: "/block/api_edit.php?action=job_groupADD",
+                url: "/api_edit.php?action=job_groupADD",
                 params: {
                     groupname: this.classname
                 }
@@ -361,7 +361,7 @@ export default {
             var that = this;
             this.$http.request({
                 method: "POST",
-                url: "/block/api_edit.php?action=job_del",
+                url: "/api_edit.php?action=job_del",
                 params: {
                     delid: id
                 }

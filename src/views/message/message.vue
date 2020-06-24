@@ -293,7 +293,7 @@ export default {
                 pageno: this.pageno,
                 groupid: this.classid
             }
-            this.$http.post("/block/api_edit.php?action=guestbook_list", data).then((res) => {
+            this.$http.post("/api_edit.php?action=guestbook_list", data).then((res) => {
                 var tabList = [];
                 res.data.body && res.data.body.forEach((item) => {
                     var box = item;
@@ -306,7 +306,7 @@ export default {
         },
         getClass () {
             var data = {}
-            this.$http.post("/block/api_edit.php?action=guestbook_groupList", data).then((res) => {
+            this.$http.post("/api_edit.php?action=guestbook_groupList", data).then((res) => {
                 this.classList = res.data.body || [];
             });
         },
@@ -374,7 +374,7 @@ export default {
         },
         choose2edit (type, editList) {
             this.$http.request({
-                url: "/block/api_edit.php?action=guestbook_check",
+                url: "/api_edit.php?action=guestbook_check",
                 params: {
                     chooseID: editList,
                     editmode: type
@@ -394,7 +394,7 @@ export default {
                 return false
             }
             this.$http.request({
-                url: "/block/api_edit.php?action=guestbook_re",
+                url: "/api_edit.php?action=guestbook_re",
                 params: {
                     id: this.messageContent.id,
                     message: this.replyContent
@@ -431,7 +431,7 @@ export default {
                 },
                 onOk: () => {
                     this.$http.request({
-                        url: "/block/api_edit.php?action=guestbook_groupEdit",
+                        url: "/api_edit.php?action=guestbook_groupEdit",
                         params: {
                             groupid: item.id,
                             groupname: value
@@ -449,7 +449,7 @@ export default {
                 content: "确定要删除分类吗，删除留言分类会将分类下的留言一起删除",
                 onOk: () => {
                     this.$http.request({
-                        url: "/block/api_edit.php?action=guestbook_groupDel",
+                        url: "/api_edit.php?action=guestbook_groupDel",
                         params: {
                             groupid: item.id,
                         }
@@ -466,7 +466,7 @@ export default {
                 return false
             }
             this.$http.request({
-                url: "/block/api_edit.php?action=guestbook_groupADD",
+                url: "/api_edit.php?action=guestbook_groupADD",
                 params: {
                     groupname: this.classname
                 }

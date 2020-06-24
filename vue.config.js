@@ -28,11 +28,11 @@ module.exports = {
 		https: false,
 		hotOnly: false,
 		proxy: {
-			'/block': {
+			'/move': {
 				target: 'http://www.rich2020.com/move',
 				changeOrigin: true,
 				pathRewrite: {
-					'^/block': '/'
+					'^/move': '/'
 				}
 			}
 		},

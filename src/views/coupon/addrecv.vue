@@ -1045,7 +1045,7 @@ export default {
         //     id: 1
         // };
         // this.$Loading.start();
-        // _this.$http.post('/block/api_edit.php',_this.$qs.stringify(data)).then(function(response){
+        // _this.$http.post('/api_edit.php',_this.$qs.stringify(data)).then(function(response){
         // 	if(response.data.body && response.data.body.length >= 1){
         // 		_this.formValidate = response.data.body[0];
         // 		_this.formValidate.extra_goods = null ? '' : (_this.extra_goods = '0');
@@ -1079,9 +1079,9 @@ export default {
             // that.searchPoptip = false;
             //shop_listofbody&tableid=1
 
-            // var apiurl="/block/api_edit.php?action=goods_list&classid="+classid+"&page="+page+"&keyword="+keyword;
+            // var apiurl="/api_edit.php?action=goods_list&classid="+classid+"&page="+page+"&keyword="+keyword;
 
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
                 appid: this.vueAppid,
                 pageno: 10
@@ -1137,7 +1137,7 @@ export default {
             };
             console.log(data);
             this.$Loading.start();
-            _this.$http.post('/block/api_edit.php', _this.$qs.stringify(data)).then(function (response) {
+            _this.$http.post('/api_edit.php', _this.$qs.stringify(data)).then(function (response) {
                 if (response.data.status == 1) {
                     _this.$Message.info(response.data.message);
                     _this.$router.go(-1);

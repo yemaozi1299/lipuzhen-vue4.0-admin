@@ -197,7 +197,7 @@ export default {
                 goodsid: this.goodsid
             };
             // console.log(params);
-            this.$http.post("/block/api_edit.php", this.$qs.stringify(params)).then(function (res) {
+            this.$http.post("/api_edit.php", this.$qs.stringify(params)).then(function (res) {
                 console.log(res.data);
                 _this.have_guige = res.data.body.have_guige;
                 _this.goods = res.data.body.goods;
@@ -310,7 +310,7 @@ export default {
             params.info = arr;
             console.log(JSON.stringify(params));
             // return false;
-            this.$http.post('/block/api_edit.php', this.$qs.stringify(params)).then(function (response) {
+            this.$http.post('/api_edit.php', this.$qs.stringify(params)).then(function (response) {
                 if (response.data.status != 1) {
                     return _this.$Message.error(response.data.message);
                 }

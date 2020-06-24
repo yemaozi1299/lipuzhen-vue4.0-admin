@@ -139,7 +139,7 @@ export default {
                 goodsid: this.goodsid
             };
             // console.log(params);
-            this.$http.post("/block/api_edit.php", this.$qs.stringify(params)).then(function (res) {
+            this.$http.post("/api_edit.php", this.$qs.stringify(params)).then(function (res) {
                 console.log(res.data);
                 if (res.data.status == 0) {
                     return _this.$Message.warning(res.data.message);
@@ -205,7 +205,7 @@ export default {
             params.info = arr;
             console.log(params);
             // return false;
-            this.$http.post('/block/api_edit.php', this.$qs.stringify(params)).then(function (res) {
+            this.$http.post('/api_edit.php', this.$qs.stringify(params)).then(function (res) {
                 console.log(res.data);
                 _this.$router.go(-1);
             }).catch(function (response) {

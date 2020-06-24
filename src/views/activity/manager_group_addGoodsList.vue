@@ -159,7 +159,7 @@ export default {
                 pageno: this.pageno
             };
             console.log(params);
-            this.$http.post("/block/api_edit.php", this.$qs.stringify(params)).then(function (res) {
+            this.$http.post("/api_edit.php", this.$qs.stringify(params)).then(function (res) {
                 _this.infoData.data = res.data.body;
                 _this.total = parseInt(res.data.total);
                 // console.log(JSON.stringify(res.data));

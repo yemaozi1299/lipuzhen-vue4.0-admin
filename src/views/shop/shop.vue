@@ -442,7 +442,7 @@ export default {
             console.log(that.$http);
             that.$http.request({
                 method: "POST",
-                url: "/block/api_edit.php",
+                url: "/api_edit.php",
                 params: data
             }).then(function (res) {
                 that.tableData = res.data.body
@@ -460,7 +460,7 @@ export default {
             }
             that.$http.request({
                 method: "POST",
-                url: "/block/api_edit.php",
+                url: "/api_edit.php",
                 params: data
             }).then(function (res) {
                 if (res.data.status == 1) {
@@ -479,7 +479,7 @@ export default {
                 return false
             }
 
-            var apiurl = '/block/api_edit.php'
+            var apiurl = '/api_edit.php'
             var data = {
                 appid: this.vueAppid
             }
@@ -516,7 +516,7 @@ export default {
                 _this.$Message.warning('请选择要操作的记录')
                 return false
             }
-            var apiurl = '/block/api_edit.php'
+            var apiurl = '/api_edit.php'
             var data = {
                 appid: this.vueAppid
             }
@@ -546,7 +546,7 @@ export default {
 
         },
         addClassConfirm: function () {
-            var apiurl = '/block/api_edit.php'
+            var apiurl = '/api_edit.php'
             var data = {
                 appid: this.vueAppid
             }
@@ -626,7 +626,7 @@ export default {
         choose2edit: function (mode) { // 将要进行的操作提交到服务器API
             // console.log(name+'='+this.chooseID);
             if (this.chooseID.length > 0) {
-                var apiurl = '/block/api_edit.php'
+                var apiurl = '/api_edit.php'
                 var data = {
                     appid: this.vueAppid
                 }
@@ -665,7 +665,7 @@ export default {
             var _this = this
             var goodsid = this.tableData[index].id
 
-            var apiurl = '/block/api_edit.php'
+            var apiurl = '/api_edit.php'
             var data = {
                 appid: this.vueAppid
             }
@@ -706,7 +706,7 @@ export default {
             }
 
             if (_this.chooseID.length > 0) {
-                var apiurl = '/block/api_edit.php'
+                var apiurl = '/api_edit.php'
                 var data = {
                     appid: this.vueAppid
                 }

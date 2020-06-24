@@ -180,7 +180,7 @@ export default {
                 appid: that.vueAppid,
             };
             that.$Loading.start();
-            that.$http.post("/block/api_edit.php", that.$qs.stringify(data)).then(function (res) {
+            that.$http.post("/api_edit.php", that.$qs.stringify(data)).then(function (res) {
                 that.$Loading.finish();
                 if (res.data.status == 1) {
                     var data = res.data.body;
@@ -229,7 +229,7 @@ export default {
                     };
                     console.log(data);
                     that.$Loading.start();
-                    that.$http.post("/block/api_edit.php", that.$qs.stringify(data)).then(function (res) {
+                    that.$http.post("/api_edit.php", that.$qs.stringify(data)).then(function (res) {
                         that.$Loading.finish();
                         console.log(res);
                         that.$Message.success("提交成功")

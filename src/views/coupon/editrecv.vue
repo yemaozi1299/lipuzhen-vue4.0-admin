@@ -844,7 +844,7 @@ export default {
                 id: this.$route.query.user
             };
             this.$Loading.start();
-            _this.$http.post('/block/api_edit.php', _this.$qs.stringify(data)).then(function (response) {
+            _this.$http.post('/api_edit.php', _this.$qs.stringify(data)).then(function (response) {
                 if (response.data.body && response.data.body.length >= 1) {
                     _this.formValidate = response.data.body[0];
                     _this.formValidate.extra_goods ? (_this.extra_goods = '0') : (_this.extra_goods = 'all');
@@ -881,7 +881,7 @@ export default {
                 appid: this.vueAppid
             };
             this.$Loading.start();
-            _this.$http.post('/block/api_edit.php', _this.$qs.stringify(data)).then(function (response) {
+            _this.$http.post('/api_edit.php', _this.$qs.stringify(data)).then(function (response) {
                 if (response.data.status == 1) {
                     _this.$Message.info(response.data.message);
                     _this.$router.go(-1)
@@ -906,7 +906,7 @@ export default {
                 appid: this.vueAppid
             };
             this.$Loading.start();
-            _this.$http.post('/block/api_edit.php', _this.$qs.stringify(data)).then(function (response) {
+            _this.$http.post('/api_edit.php', _this.$qs.stringify(data)).then(function (response) {
                 if (response.data.status == 1) {
                     _this.goods_item.push({
                         name: response.data.goodsitem.name,

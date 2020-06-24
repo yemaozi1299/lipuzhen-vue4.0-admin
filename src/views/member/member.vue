@@ -267,7 +267,7 @@ export default {
                 that.search = false;
             }
             that.searchPoptip = false;
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
                 appid: this.vueAppid
             };
@@ -318,7 +318,7 @@ export default {
                 that.search = false;
             }
             that.searchPoptip = false;
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
                 appid: this.vueAppid
             };
@@ -361,7 +361,7 @@ export default {
             }
 
             if (_this.chooseID.length > 0) {
-                var apiurl = "/block/api_edit.php";
+                var apiurl = "/api_edit.php";
                 var data = {};
 
                 data.action = "member_status";
@@ -403,7 +403,7 @@ export default {
                 content: "确定要删除分类吗，删除分类不会影响分类里的用户",
                 onOk: function () {
                     that.$Loading.start();
-                    var apiurl = "/block/api_edit.php";
+                    var apiurl = "/api_edit.php";
                     var data = {
                         appid: that.vueAppid,
                         action: "member_groupDel",
@@ -447,7 +447,7 @@ export default {
                 },
                 onOk: function () {
                     that.$Loading.start();
-                    var apiurl = "/block/api_edit.php";
+                    var apiurl = "/api_edit.php";
                     var data = {
                         appid: that.vueAppid,
                         action: "member_groupEdit",
@@ -490,7 +490,7 @@ export default {
                     });
                 },
                 onOk: function () {
-                    var apiurl = "/block/api_edit.php";
+                    var apiurl = "/api_edit.php";
                     var data = {
                         appid: that.vueAppid,
                         action: "member_groupEdit",
@@ -515,7 +515,7 @@ export default {
         groundedit: function (name) {
             var that = this;
             if (that.chooseID.length > 0) {
-                var apiurl = "/block/api_edit.php";
+                var apiurl = "/api_edit.php";
                 var data = {
                     appid: this.vueAppid,
                     id: this.chooseID,
@@ -544,7 +544,7 @@ export default {
         memberGroupList: function () {
             var that = this;
 
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
                 appid: this.vueAppid,
                 action: "member_groupList"

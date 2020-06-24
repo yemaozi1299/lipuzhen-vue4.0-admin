@@ -209,7 +209,7 @@ export default {
 
             _this.$Loading.start();
 
-            var apiurl = "/block/api_edit.php?action=goods_postGet&id=" + postid;
+            var apiurl = "/api_edit.php?action=goods_postGet&id=" + postid;
             _this.$http.get(apiurl).then(function (response) {
 
                 if (response.data.status == 1) {
@@ -235,7 +235,7 @@ export default {
                 });
         },
         getarea: function () {
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
             };
             data.action = "goods_arealist";
@@ -300,7 +300,7 @@ export default {
 
                     }
 
-                    var apiurl = "/block/api_edit.php";
+                    var apiurl = "/api_edit.php";
                     var data = {
                     };
 
@@ -351,7 +351,7 @@ export default {
 
             var _this = this;
 
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
                 appid: this.vueAppid
             };

@@ -273,7 +273,7 @@ export default {
     methods: {
         seckillStart: function (status, id) {
             var that = this;
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
                 appid: this.vueAppid,
                 action: status ? "seckill_start" : "seckill_stop",
@@ -307,7 +307,7 @@ export default {
         },
         get: function () {
             var that = this;
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
                 appid: this.vueAppid,
                 page: this.keyword ? 1 : this.page,
@@ -340,7 +340,7 @@ export default {
         classStateEdit: function (id) {
             var that = this;
             this.activeClass = id;
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
                 appid: this.vueAppid,
                 page: this.keyword ? 1 : this.page,
@@ -370,7 +370,7 @@ export default {
         goodsClassList: function () {
             var that = this;
 
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
                 appid: this.vueAppid,
                 shoptype: 0,
@@ -399,7 +399,7 @@ export default {
         },
         delSeckill: function (id) {
             var that = this;
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
                 appid: this.vueAppid,
                 action: "seckill_del",

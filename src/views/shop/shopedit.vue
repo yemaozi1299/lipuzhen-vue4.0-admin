@@ -124,7 +124,7 @@
 			                        :before-upload="handleUpload"
 			                        type="drag"
 			                        accept="image/*"
-			                        :action="'/block/api_edit.php?action=goods_uploadImage&index='+gindex"
+			                        :action="'/api_edit.php?action=goods_uploadImage&index='+gindex"
 			                        style="display: inline-block;width:158px;">
 			                        <div style="width: 158px;height:40px;line-height: 40px;">
 			                            <Icon type="ios-cloud-upload-outline" size="20"></Icon>上传图片,支持拖拽
@@ -679,7 +679,7 @@ export default {
 
                     // console.log("开始保存");
 
-                    var apiurl = '/block/api_edit.php'
+                    var apiurl = '/api_edit.php'
                     var data = {
                         appid: this.vueAppid,
                         shoptype: 0
@@ -741,11 +741,11 @@ export default {
                 return false// 添加
             }
 
-            //  /block/api_edit.php?action=goods_getone&goodsid=3
+            //  /api_edit.php?action=goods_getone&goodsid=3
 
 
 
-            var apiurl = '/block/api_edit.php?action=goods_getone&goodsid=' + goodsid + '&appid=' + this.vueAppid + '&shoptype=0'
+            var apiurl = '/api_edit.php?action=goods_getone&goodsid=' + goodsid + '&appid=' + this.vueAppid + '&shoptype=0'
             _this.$http.get(apiurl).then(function (response) {
                 _this.$Loading.finish()
                 console.log(response)
@@ -773,7 +773,7 @@ export default {
                 })
         },
         getclass: function () {
-            var apiurl = '/block/api_edit.php'
+            var apiurl = '/api_edit.php'
             var data = {
                 appid: this.vueAppid,
                 shoptype: 0
@@ -795,7 +795,7 @@ export default {
             })
         },
         getPostlistName: function () {
-            var apiurl = '/block/api_edit.php'
+            var apiurl = '/api_edit.php'
             var data = {
                 appid: this.vueAppid,
                 shoptype: 0

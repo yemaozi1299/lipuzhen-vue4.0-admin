@@ -212,7 +212,7 @@ export default {
         classdel: function (event, name) {
             var _this = this;
             console.log('name');
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
                 appid: _this.vueAppid
             };
@@ -233,7 +233,7 @@ export default {
         },
         classedit: function () {
             var _this = this;
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
                 appid: this.vueAppid
             };
@@ -266,10 +266,10 @@ export default {
             //datamanager_listofbody&tableid=1
 
 
-            // var apiurl="/block/api_edit.php?action=datamanager_listofbody&tableid="+table+"&page="+page+"&keyword="+keyword;
+            // var apiurl="/api_edit.php?action=datamanager_listofbody&tableid="+table+"&page="+page+"&keyword="+keyword;
 
 
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
                 appid: this.vueAppid
             };
@@ -314,7 +314,7 @@ export default {
 
         },
         getclass: function (table) {
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var data = {
                 appid: this.vueAppid
             };
@@ -338,7 +338,7 @@ export default {
                 content: "确定删除所选数据表吗?",
                 onOk: () => {
 
-                    var apiurl = "/block/api_edit.php";
+                    var apiurl = "/api_edit.php";
                     var data = {
                         appid: this.vueAppid
                     };
@@ -470,7 +470,7 @@ export default {
 
             var _this = this;
 
-            var apiurl = "/block/api_edit.php?action=datamanager_delline&tableid=" + table + "&delline=" + delline + "&appid=" + this.vueAppid;
+            var apiurl = "/api_edit.php?action=datamanager_delline&tableid=" + table + "&delline=" + delline + "&appid=" + this.vueAppid;
             this.$http.get(apiurl)
                 .then((response) => {
                     if (response.data.status == 1) {

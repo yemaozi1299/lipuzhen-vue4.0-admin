@@ -114,7 +114,7 @@ export default {
             }
             this.$http.request({
                 method: "POST",
-                url: "/block/api_edit.php?action=job_getResumeList",
+                url: "/api_edit.php?action=job_getResumeList",
                 params: {
                     id: this.jobid,
                     keyword: keyword,

@@ -221,7 +221,7 @@ export default {
                 pageno: this.pageno,
                 classid: this.classid
             }
-            this.$http.post("/block/api_edit.php?action=product_list", data).then((res) => {
+            this.$http.post("/api_edit.php?action=product_list", data).then((res) => {
                 console.log(res);
                 this.total = parseInt(res.data.total || 0);
                 this.tableData = res.data.body || [];
@@ -229,7 +229,7 @@ export default {
         },
         getClass () {
             var data = {}
-            this.$http.post("/block/api_edit.php?action=product_class_get", data).then((res) => {
+            this.$http.post("/api_edit.php?action=product_class_get", data).then((res) => {
                 this.classList = res.data.body || [];
             });
         },
@@ -281,7 +281,7 @@ export default {
                 },
                 onOk: () => {
                     this.$http.request({
-                        url: "/block/api_edit.php?action=product_class_edit",
+                        url: "/api_edit.php?action=product_class_edit",
                         params: {
                             id: item.id,
                             sortname: value
@@ -299,7 +299,7 @@ export default {
                 content: "确定要删除分类吗，删除留言分类会将分类下的产品一起删除",
                 onOk: () => {
                     this.$http.request({
-                        url: "/block/api_edit.php?action=product_class_del",
+                        url: "/api_edit.php?action=product_class_del",
                         params: {
                             id: item.id,
                         }

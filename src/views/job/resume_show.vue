@@ -130,7 +130,7 @@ export default {
         dataInitial () {
             this.$http.request({
                 method: "POST",
-                url: "/block/api_edit.php?action=job_getResume",
+                url: "/api_edit.php?action=job_getResume",
                 params: {
                     id: this.id,
                 }

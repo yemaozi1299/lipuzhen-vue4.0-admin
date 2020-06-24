@@ -152,7 +152,7 @@ export default {
                     face: "sgVL9kSBNMkpmm.jpg"
                 },]
             }
-            this.$http.post("/block/api_edit.php?action=album_add", data).then((res) => {
+            this.$http.post("/api_edit.php?action=album_add", data).then((res) => {
                 console.log(res);
             });
         },
@@ -163,7 +163,7 @@ export default {
             console.log(that.$http);
             that.$http.request({
                 method: "POST",
-                url: "/block/api_edit.php?action=goods_group_list",
+                url: "/api_edit.php?action=goods_group_list",
                 params: data
             }).then(function (res) {
                 that.goods_group_list = res.data.body;
@@ -182,7 +182,7 @@ export default {
             }
             that.$http.request({
                 method: "POST",
-                url: "/block/api_edit.php",
+                url: "/api_edit.php",
                 params: data
             }).then(function (res) {
                 if (res.data.status == 1) {
@@ -271,7 +271,7 @@ export default {
 
                     this.$http.request({
                         method: "POST",
-                        url: "/block/api_edit.php?action=goods_group_add",
+                        url: "/api_edit.php?action=goods_group_add",
                         params: {
                             groupname: value
                         }
@@ -303,7 +303,7 @@ export default {
             if (this.treeSelected.length) {
                 this.$http.request({
                     method: "POST",
-                    url: "/block/api_edit.php?action=goods_add_class2group",
+                    url: "/api_edit.php?action=goods_add_class2group",
                     params: {
                         groupid: this.selectedGroup,
                         classid: this.treeSelected
@@ -340,7 +340,7 @@ export default {
 
                     this.$http.request({
                         method: "POST",
-                        url: "/block/api_edit.php?action=goods_groupEdit",
+                        url: "/api_edit.php?action=goods_groupEdit",
                         params: {
                             groupid: item.id,
                             groupname: value

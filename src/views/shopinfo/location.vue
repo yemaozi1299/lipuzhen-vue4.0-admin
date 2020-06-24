@@ -297,7 +297,7 @@ export default {
             }
             this.$refs['formValidate'].validate((valid) => {
                 if (valid) {
-                    that.$http.post("/block/api_edit.php", that.$qs.stringify(param)).then(function (res) {
+                    that.$http.post("/api_edit.php", that.$qs.stringify(param)).then(function (res) {
 
                         if (res.data.status == 1) {
                             that.modal1 = false;
@@ -345,7 +345,7 @@ export default {
                 keyword: this.keyword
             }
             this.loading = true;
-            this.$http.post("/block/api_edit.php", that.$qs.stringify(param)).then(function (res) {
+            this.$http.post("/api_edit.php", that.$qs.stringify(param)).then(function (res) {
                 that.total = res.data.total;
                 that.data1 = res.data.body;
                 that.loading = false;
@@ -378,7 +378,7 @@ export default {
                 orderid: orderid
             }
             console.log(param)
-            this.$http.post("/block/api_edit.php", that.$qs.stringify(param)).then(function (res) {
+            this.$http.post("/api_edit.php", that.$qs.stringify(param)).then(function (res) {
                 that.$Message.info(res.data.message);
                 console.log(res);
             }).catch(function (response) {
@@ -398,7 +398,7 @@ export default {
                 status: row.status == 1 ? 0 : 1
             }
             console.log(param)
-            this.$http.post("/block/api_edit.php", that.$qs.stringify(param)).then(function (res) {
+            this.$http.post("/api_edit.php", that.$qs.stringify(param)).then(function (res) {
                 that.$Message.info(res.data.message);
                 console.log(res);
             }).catch(function (response) {
@@ -416,7 +416,7 @@ export default {
                 appid: this.vueAppid,
                 id: row.id,
             }
-            that.$http.post("/block/api_edit.php", that.$qs.stringify(param)).then(function (res) {
+            that.$http.post("/api_edit.php", that.$qs.stringify(param)).then(function (res) {
                 if (res.data.status == 1) {
                     that.get();
                 } else {

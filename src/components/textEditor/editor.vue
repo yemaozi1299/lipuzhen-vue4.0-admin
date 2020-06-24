@@ -90,7 +90,7 @@ export default {
                 console.log(param)
                 //param.append('chunk','0');//添加form表单中其他数据
                 //console.log(param.get('tweetPic')); //FormData私有类对象，访问不到，可以通过get判断值是否传进去
-                axios.post(`/block/api_edit.php?action=filemanager_upload&appid=${that.$cookieStore.get("CookVueAppid")}`, param).then(response => {
+                axios.post(`/api_edit.php?action=filemanager_upload&appid=${that.$cookieStore.get("CookVueAppid")}`, param).then(response => {
                     insert(response.data.url)
                     console.log(response.data.url);
                 });

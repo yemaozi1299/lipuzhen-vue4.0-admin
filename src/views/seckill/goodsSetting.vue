@@ -368,7 +368,7 @@ export default {
             }
             that.$Loading.start();
 
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var params = {
                 appid: this.vueAppid,
                 action: "goods_getone",
@@ -431,7 +431,7 @@ export default {
         },
         getSettingData: function () {
             var that = this;
-            var apiurl = "/block/api_edit.php";
+            var apiurl = "/api_edit.php";
             var params = {
                 appid: this.vueAppid,
                 action: "seckill_getinfo",
@@ -586,7 +586,7 @@ export default {
                 }
             }
             console.log(params);
-            this.$http.post("/block/api_edit.php", that.$qs.stringify(params)).then(function (response) {
+            this.$http.post("/api_edit.php", that.$qs.stringify(params)).then(function (response) {
                 if (response.data.status == 1) {
                     that.$Message.success("提交成功");
                     that.$router.push({

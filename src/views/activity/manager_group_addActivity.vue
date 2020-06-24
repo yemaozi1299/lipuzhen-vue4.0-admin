@@ -307,7 +307,7 @@ export default {
                     can_use_youhui: this.formValidate.can_use_youhui
                 }
             };
-            this.$http.post("/block/api_edit.php", _this.$qs.stringify(params)).then(function (response) {
+            this.$http.post("/api_edit.php", _this.$qs.stringify(params)).then(function (response) {
                 // console.log(response);
                 if (response.data.status != 1) {
                     return _this.$Message.error(response.data.message);
