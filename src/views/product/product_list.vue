@@ -164,11 +164,13 @@ export default {
                             },
                             on: {
                                 'click': (val) => {
-                                    this.isModal = true;
-                                    this.messageContent = {
-                                        id: params.row.id,
-                                        message: params.row.message
-                                    }
+                                    this.$router.push({
+                                        name: "addProduct",
+                                        params: {
+                                            pageid: this.page,
+                                            pid: params.row.id
+                                        }
+                                    });
                                 }
                             }
                         }, '编辑'),

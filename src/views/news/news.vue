@@ -34,26 +34,6 @@
                         width="198"
                         style="overflow-y: auto;"
                     >
-                        <!-- <div class="category">
-                            <span>分类</span>
-                        </div>
-                        <Menu
-                            :active-name="classid"
-                            width="auto"
-                            class="menu-item"
-                            @on-select="selectClass"
-                        >
-                            <MenuItem name="0" class="">
-                                <span>全部</span>
-                            </MenuItem>
-                            <MenuItem
-                                v-for="item in classList"
-                                :key="item.id"
-                                :name="item.id"
-                            >
-                                <span>{{ item.sortname }}</span>
-                            </MenuItem>
-                        </Menu> -->
                         <label
                             class="ant-radio-button-wrapper"
                             :class="{
@@ -301,6 +281,7 @@ export default {
                             },
                             on: {
                                 'click': (val) => {
+
                                     this.remove(params.row)
                                 }
                             }
@@ -331,6 +312,7 @@ export default {
     },
     created () {
         this.fetchData();
+        this.getClass();
     },
     watch: {
         chooseID: function (val) {
@@ -349,6 +331,9 @@ export default {
         },
         dataInitial () {
             this.loading = true;
+            if (this.keyword) {
+                this.page = 1;
+            }
             this.$http.request({
                 url: "/block/api_edit.php?action=news_list",
                 params: {
@@ -360,13 +345,18 @@ export default {
                 }
             }).then((res) => {
                 this.tableData = res.data.body || [];
-                if (this.classid == 0) {
-                    this.classList = res.data.class || [];
-                }
                 console.log(res);
                 this.total = parseInt(res.data.total);
                 this.page = parseInt(res.data.page);
                 this.loading = false;
+            });
+        },
+        getClass () {
+            this.$http.request({
+                url: "/block/api_edit.php?action=news_class_get",
+                params: {}
+            }).then((res) => {
+                this.classList = res.data.body;
             });
         },
         pathEdit () {
@@ -424,7 +414,7 @@ export default {
             }).then((res) => {
                 this.uid = "0";
                 this.classname = "";
-                this.dataInitial();
+                this.getClass();
                 console.log(res);
             });
         },
@@ -436,6 +426,7 @@ export default {
             var _this = this;
             var that = this;
             var value = item.sortname;
+
             this.$Modal.confirm({
                 title: "修改分类名称",
                 render: h => {
@@ -459,7 +450,7 @@ export default {
                         id: item.id
                     };
                     that.$http.post(apiurl, that.$qs.stringify(data)).then((response) => {
-                        that.dataInitial();
+                        that.getClass();
 
                         console.log(response);
                     })
@@ -486,7 +477,7 @@ export default {
                     that.$http.post(apiurl, that.$qs.stringify(data)).then(function (response) {
                         if (response.data.status == 1) {
                             that.classid = "0";
-                            that.dataInitial();
+                            that.getClass();
                         } else {
                             that.$Message.error(response.data.message);
                         }
@@ -556,23 +547,29 @@ export default {
         },
         remove (item) {
             if (item) {
-                var apiurl = '/block/api_edit.php?action=news_del'
-                var data = {
-                    appid: 1,
-                    del: [item.id]
-                }
-                console.log(data);
-
-                var _this = this
-                _this.$http.post(apiurl, data).then(function (response) {
-                    if (response.data.status == 1) {
-                        _this.dataInitial()
-                    } else {
-                        _this.$Message.error(response.data.message)
+                this.$Modal.confirm({
+                    title: "删除提示",
+                    content: "确定要删除该条新闻吗",
+                    onOk: () => {
+                        var apiurl = '/block/api_edit.php?action=news_del'
+                        var data = {
+                            appid: 1,
+                            del: [item.id]
+                        }
+                        console.log(data);
+                        var _this = this
+                        _this.$http.post(apiurl, data).then(function (response) {
+                            if (response.data.status == 1) {
+                                _this.dataInitial()
+                            } else {
+                                _this.$Message.error(response.data.message)
+                            }
+                        })
                     }
                 })
+
             } else {
-                _this.$Message.info('请选择要操作的记录')
+                this.$Message.info('请选择要操作的记录')
                 return false
             }
         }

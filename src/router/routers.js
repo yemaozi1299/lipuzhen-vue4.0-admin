@@ -547,6 +547,23 @@ export default [
 				},
 				component: () => import('@/views/job/resume_show.vue')
 			},
+			{
+				path: "/album/:pageid?",
+				name: "album",
+				meta: {
+					title: "相册",
+				},
+				component: () => import('@/views/album/album_list.vue')
+			},
+			{
+				path: "/album/:pageid?/addAlbum/:aid?",
+				name: "album_add",
+				meta: {
+					title: "添加相册",
+					hideInMenu: true
+				},
+				component: () => import('@/views/album/album_add.vue')
+			},
 
 		]
 	},
@@ -677,6 +694,7 @@ export default [
 			},
 		]
 	},
+
 
 	{
 		path: '/401',
