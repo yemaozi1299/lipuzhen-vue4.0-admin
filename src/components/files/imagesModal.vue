@@ -98,7 +98,7 @@
                                 :max-size="2048"
                                 accept="image/*"
                                 :action="
-                                    '/api_edit.php?action=filemanager_upload&classid=' +
+                                    '/move/api_edit.php?action=filemanager_upload&classid=' +
                                         groupState.id +
                                         '&appid=' +
                                         wxappid

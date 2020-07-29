@@ -409,7 +409,7 @@ export default {
             selectedSeq: 0,
             cutCache: {},
             cutClass: ".file-cut",
-            uploadURL: "/api_edit.php?action=filemanager_upload",
+            uploadURL: "/move/api_edit.php?action=filemanager_upload",
             uploadFileSizeLimit: 2048,
             formData: { //{Object} [可选] [默认值：{}] 文件上传请求的参数表，每次发送都会发送此对象中的参数。
                 classid: ""

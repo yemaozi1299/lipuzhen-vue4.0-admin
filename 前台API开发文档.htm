@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title>前台API开发文档v1.0 锐奇智能网站制作软件响应式</title>
+<style type="text/css">
+.article {
+    margin-left: 20px;
+    margin-bottom: 30px;
+}
+.article table {
+    border-collapse: collapse;
+}
+.article td {
+    padding: 2px 10px;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+}
+.title {
+    margin: 0 10px;
+    height: 35px;
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+    position: relative;
+    clear: both;
+}
+.title h3 {
+    display: inline-block;
+    padding-left: 20px;
+    padding-right: 30px;
+    height: 35px;
+    border-bottom: 3px solid #038a3e;
+}
+.m_index_title {
+    line-height: 20px;
+    font-weight: bold;
+    display: inline-block;
+    color: #a40000;
+    font-size: 20px;
+}
+.m_title {
+    height: 40px;
+    line-height: 40px;
+    font-weight: bold;
+    margin: 10px 0;
+    display: inline-block;
+    color: #a40000;
+    font-size: 20px;
+}
+.pro_bd {
+    padding: 20px;
+    font-size: 13px;
+    color: #444;
+    line-height: 26px;
+}
+.mt20 {
+    margin-top: 20px;
+}
+.indexbox {
+    margin: 10px;
+    clear: both;
+	height:500px;
+	overflow:auto
+}
+.indexbox ul{
+	padding:15px;
+}
+.pre {
+    font: 12px "MicroSoft YaHei", "Courier New", "Andale Mono", monospace;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    color: #333;
+    background-color: #F8F8F8;
+    line-height: 20px;
+    /*
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+*/
+    word-wrap: break-word;
+    border-radius: 3px;
+}
+.label {
+    font-weight: bold;
+    width: 20%;
+    background-color: #F8F8F8;
+}
+.label_more {
+    font-weight: bold;
+    width: 60%;
+    background-color: #F8F8F8;
+}
+.readme {
+    margin: 10px 0;
+}
+.fanhui {
+    right: 14px;
+    bottom: 60px;
+    position: fixed;
+    z-index: 105;
+}
+.article_index{
+	width:300px;
+    border: 1px solid #ccc;
+    position: fixed;
+	z-index:99;
+
+}
+.article_body{
+    padding-left: 300px;
+    position: absolute;
+	top:0;
+	left:0;
+	width:auto;
+}
+.pre1 {    font: 12px "MicroSoft YaHei", "Courier New", "Andale Mono", monospace;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    color: #333;
+    background-color: #F8F8F8;
+    line-height: 20px;
+    /*
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+*/
+    word-wrap: break-word;
+    border-radius: 3px;
+}
+</style>
+</head>
+<body>
+
+
+<div class="fanhui">
+	<a href="#">
+		<img width="55" height="55" src="http://www.51rich.net/newimages/fanhui.png" border="0">
+	</a>
+</div>
+
+
+<div class="article_index">
+	<div class="title">
+	  <h3>前台API开发文档v1.0&nbsp;</h3>
+	</div>
+	<div class="pro_bd">
+	  <div class="indexbox">
+		<div class="m_index_title">目录</div>
+		<ul>
+		  <li><a href="#1">小程序会员自动注册登录</a> </li>
+		  <li><a href="#2">邮箱密码登录</a> </li>
+		  <li><a href="#3">手机短信验证登录</a> </li>
+		  <li><a href="#4">邮箱密码注册</a> </li>
+		  <li><a href="#5">退出登录</a> </li>
+		  <li><a href="#6">用邮箱注册会员</a> </li>
+		  <li><a href="#7">保存用户信息</a> </li>
+		  <li><a href="#8">验证TOKEN</a> </li>
+		  <li><a href="#9">获取身份信息</a> </li>
+
+
+		  <li><a href="#10">浏览页面</a> </li>
+		  <li><a href="#11">获取页面HTML</a> </li>
+		  <li><a href="#12">获取系统页面</a> </li>
+		  <li><a href="#13">获取语言列表</a> </li>
+
+
+		  <li><a href="#14">获取我所有评论</a> </li>
+		  <li><a href="#15">发表评论</a> </li>
+
+
+
+		  <li><a href="#16">获取留言列表</a> </li>
+		  <li><a href="#17">发表留言</a> </li>
+
+		  <li><a href="#16">获取支付列表</a> </li>
+		  <li><a href="#17">发表留言</a> </li>
+
+		  <li><a href="#18">支付列表</a> </li>
+
+		  <li><a href="#other">其它API</a> </li>
+
+
+
+		</ul>
+	  </div>
+	</div>
+
+</div>
+
+
+<div class="pro_bd article_body">
+
+  <div>
+    <div class="article">
+
+
+
+
+      <a name="1"></a>
+      <div class="m_title">小程序会员自动注册登录</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>login</td>
+          </tr>
+          <tr>
+            <td class="label">wxcode</td>
+            <td>string</td>
+            <td>微信code 参见https://developers.weixin.qq.com/miniprogram/dev/api/open-api/login/wx.login.html</td>
+          </tr>
+          <tr>
+            <td class="label">upID</td>
+            <td>int</td>
+            <td>upID 介绍人ID</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_member.php<br/>
+        DEMO:http://www.rich2020.com/move/api_member.php?action=login&amp;wxcode=xxxxxxxxxx<br/>
+        返回结果:JSON字符串 <br/>
+      </div>
+      <div class="pre"> {&quot;status&quot;:0,&quot;message&quot;:&quot;参数丢失&quot;}<br/>
+        {&quot;status&quot;:0,&quot;message&quot;:&quot;管理员未设置好小程序参数&quot;}<br/>
+        {&quot;status&quot;:0,&quot;message&quot;:&quot;登录失败&quot;}<br/>
+        {&quot;status&quot;:0,&quot;message&quot;:&quot;账号已停用&quot;}<br/>
+        {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;,&quot;userid&quot;:123,&quot;session_token&quot;:'aaaaaaaaaaaaa'}</div>
+
+
+
+
+
+
+		
+      <a name="2"></a>
+      <div class="m_title">邮箱密码登录</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>login</td>
+          </tr>
+          <tr>
+            <td class="label">email</td>
+            <td>string</td>
+            <td>email地址</td>
+          </tr>
+          <tr>
+            <td class="label">password</td>
+            <td>string</td>
+            <td>密码&nbsp;</td>
+          </tr>
+          <tr>
+            <td class="label">code</td>
+            <td>string</td>
+            <td>图型验证码&nbsp; 由http://www.rich2020.com/move/code.php生成的</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_member.php<br/>
+        DEMO:http://www.rich2020.com/move/api_member.php?action=login&amp;email=123@abc.com&amp;password=123&amp;code=123<br/>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre"> {&quot;status&quot;:0,&quot;message&quot;:&quot;参数丢失&quot;} <br>
+      {&quot;status&quot;:0,&quot;message&quot;:&quot;登录失败&quot;}<br> 
+      {&quot;status&quot;:0,&quot;message&quot;:&quot;账号已停用&quot;}<br> 
+      {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;,&quot;userid&quot;:123,&quot;web_token&quot;:'aaaaaaaaaaaaa'}<br>
+      {&quot;status&quot;:2,&quot;message&quot;:&quot;验证码错误&quot;}</div>
+
+
+
+
+
+
+
+      <a name="3"></a>
+      <div class="m_title">手机短信验证登录(关闭)</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>login</td>
+          </tr>
+          <tr>
+            <td class="label">mobile</td>
+            <td>string</td>
+            <td>手机号</td>
+          </tr>
+          <tr>
+            <td class="label">code</td>
+            <td>string</td>
+            <td>验证码 由短信验证码接口生成的</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_member.php<br/>
+        DEMO:http://www.rich2020.com/move/api_member.php?action=login&amp;mobile=123@abc.com&amp;code=123<br/>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre"> {&quot;status&quot;:0,&quot;message&quot;:&quot;参数丢失&quot;} {&quot;status&quot;:0,&quot;message&quot;:&quot;登录失败&quot;} {&quot;status&quot;:0,&quot;message&quot;:&quot;账号已停用&quot;} {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;,&quot;userid&quot;:123,&quot;web_token&quot;:'aaaaaaaaaaaaa'}</div>
+
+
+
+
+      <a name="4"></a>
+      <div class="m_title">邮箱密码注册</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>regByEMAIL</td>
+          </tr>
+          <tr>
+            <td class="label">code</td>
+            <td>string</td>
+            <td>图型验证码 由http://www.rich2020.com/move/code.php生成的</td>
+          </tr>
+          <tr>
+            <td class="label">email</td>
+            <td>string</td>
+            <td>邮箱账号</td>
+          </tr>
+          <tr>
+            <td class="label">password</td>
+            <td>string</td>
+            <td>密码</td>
+          </tr>
+          <tr>
+            <td class="label">upID</td>
+            <td>int</td>
+            <td>upID 介绍人ID</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_member.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_member.php?action=regByEMAIL&amp;id=1<br/>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：---------- <br/>
+      </div>
+      <div class="pre"> {&quot;status&quot;:0,&quot;message&quot;:&quot;账号已存在}<br/>
+        {&quot;status&quot;:0,&quot;message&quot;:&quot;数据库忙&quot;}<br/>
+        {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;}</div>
+
+
+
+
+
+      <a name="5"></a>
+      <div class="m_title">退出登录</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>logout</td>
+          </tr>
+          <tr>
+            <td class="label">uid</td>
+            <td>int</td>
+            <td>网站会员ID</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_member.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_member.php?action=logout&amp;uid=1<br/>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：---------- </div>
+      <div class="pre"> {&quot;status&quot;:1,&quot;message&quot;:&quot;退出成功&quot;}<br>
+      {&quot;status&quot;:0,&quot;message&quot;:&quot;退出失败&quot;}<br>
+      {&quot;status&quot;:0,&quot;message&quot;:&quot;uid参数丢失&quot;}</div>
+
+
+
+      <a name="6"></a>
+      <div class="m_title">用邮箱注册会员</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>regByEMAIL</td>
+          </tr>
+          <tr>
+            <td class="label">email</td>
+            <td>string</td>
+            <td>email</td>
+          </tr>
+          <tr>
+            <td class="label">password</td>
+            <td>string</td>
+            <td>密码</td>
+          </tr>
+          <tr>
+            <td class="label">code</td>
+            <td>int</td>
+            <td>验证码</td>
+          </tr>
+          <tr>
+            <td class="label">upID</td>
+            <td>int</td>
+            <td>介绍人ID</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_member.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_member.php?action=regByEMAIL&amp;email=123@qq.com&amp;password=123&amp;code=123&amp;upID=123<br/>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：---------- </div>
+      <div class="pre"> {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;}<br>
+      {&quot;status&quot;:0,&quot;message&quot;:&quot;注册失败&quot;}<br>
+      {&quot;status&quot;:0,&quot;message&quot;:&quot;验证码错误&quot;}</div>
+
+
+
+
+		
+      <a name="7"></a>
+      <div class="m_title">保存用户信息</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">uid</td>
+            <td>string</td>
+            <td>会员ID</td>
+          </tr>
+          <tr>
+            <td class="label">session_token 或者 web_token </td>
+            <td>string</td>
+            <td>token session_token用在小程序 web_token用在网站 </td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>userinfo_update</td>
+          </tr>
+          <tr>
+            <td class="label">userInfo</td>
+            <td>array</td>
+            <td><p>用户信息数组<br>
+                $userInfo['nickName'] 称呼 <br>
+                $userInfo['gender'] 性别 <br>
+                $userInfo['city']城市<br>
+                userInfo['province']省<br>
+            $userInfo['country']国家<br>
+            $userInfo['avatarUrl']头像</p>            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_member.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_member.php?uid=1&amp;web_token=11111&amp;action=userinfo_update&amp;userInfo=[]<br/>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：---------- </div>
+      <div class="pre"> {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;}<br>
+      {&quot;status&quot;:0,&quot;message&quot;:&quot;数据库保存失败&quot;}<br>
+      {&quot;status&quot;:0,&quot;message&quot;:&quot;资料为空&quot;}</div>
+
+
+
+		
+		
+      <a name="8"></a>
+      <div class="m_title">验证TOKEN</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">uid</td>
+            <td>string</td>
+            <td>会员ID</td>
+          </tr>
+          <tr>
+            <td class="label">session_token 或者 web_token </td>
+            <td>string</td>
+            <td>token session_token用在小程序 web_token用在网站 </td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>checkToken</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_member.php<br/>
+        DEMO:&nbsp;&nbsp;&nbsp;http://www.rich2020.com/move/api_member.php?uid=1&amp;web_token=11111&amp;action=checkToken<br/>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：---------- </div>
+      <div class="pre"> {&quot;status&quot;:2,&quot;message&quot;:&quot;参数uid丢失&quot;<br>
+      {&quot;status&quot;:2,&quot;message&quot;:&quot;需要TOKEN&quot;}<br>
+      {&quot;status&quot;:1,&quot;message&quot;:&quot;身份验证成功&quot;}</div>
+		
+		
+		
+		
+      <a name="9"></a>
+      <div class="m_title">获取用户信息</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">uid</td>
+            <td>string</td>
+            <td>会员ID</td>
+          </tr>
+          <tr>
+            <td class="label">session_token 或者 web_token </td>
+            <td>string</td>
+            <td>token session_token用在小程序 web_token用在网站 </td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>getuserinfo</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_member.php<br/>
+        DEMO:&nbsp;&nbsp;&nbsp;http://www.rich2020.com/move/api_member.php?uid=1&amp;web_token=11111&amp;action=checkToken<br/>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：---------- </div>
+      <div class="pre">      {&quot;status&quot;:0,&quot;message&quot;:&quot;查无此记录&quot;}<br>
+      {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;,&quot;userinfo&quot;:[]}</div>
+		
+		
+      <a name="10"></a>
+      <div class="m_title">浏览页面</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label"><span class="readme">pagetype</span></td>
+            <td>string</td>
+            <td><span class="readme">此参数的范围可通过API 获取系统页面列表 getPagetype来获取,如: news,goods,product,job等</span></td>
+          </tr>
+          <tr>
+            <td class="label">language</td>
+            <td>string</td>
+            <td>单独使用为打开首页,与pagetype参数配合使用则打开系统页,默认是Chinese</td>
+          </tr>
+          <tr>
+            <td class="label">pageid</td>
+            <td>int</td>
+            <td>页面ID 此参数与<span class="readme">pagetype</span>参数不可同时使用,同时使用以pageid优先</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/index.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/index.php?pagetype=news 或者 &nbsp;http://www.rich2020.com/index.php?pageid=1 或者 &nbsp;http://www.rich2020.com/index.php?language=Chinese<br/>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：---------- </div>
+      <div class="pre">      查无此网页404<br>
+      &lt;html&gt;xxxx&lt;/html&gt;</div>
+		
+      <a name="11"></a>
+      <div class="m_title">获取页面HTML</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>loadPage</td>
+          </tr>
+          <tr>
+            <td class="label">pageid</td>
+            <td>int</td>
+            <td>页面ID</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_web.php<br/>
+        DEMO:&nbsp;&nbsp;&nbsp;http://www.rich2020.com/move/api_web.php?action=loadPage&amp;pageid=1<br/>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：---------- </div>
+      <div class="pre">      查无此网页404<br>
+      &lt;div&gt;xxxx&lt;/div&gt;</div>
+		
+		
+		
+      <a name="12"></a>
+      <div class="m_title">获取系统页面列表</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>getPagetype</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_web.php<br/>
+        DEMO:&nbsp;&nbsp;&nbsp;http://www.rich2020.com/move/api_web.php?action=getPagetype<br/>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：---------- </div>
+      <div class="pre">[{"code":"news","name":"新闻展示页"},{"code":"job","name":"招聘展示页"},{"code":"goods","name":"商城展示页"},{"code":"product","name":"产品库展示页"},{"code":"album","name":"相册展示页"},{"code":"member","name":"会员中心"},{"code":"cartlist"},{"code":"dingdan","name":"下单页"},{"code":"pay","name":"支付页"}]</div>
+		
+		
+		
+      <a name="13"></a>
+      <div class="m_title">获取语言列表</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>getLanguage 取出的数据可以在 在lib/set_config.php#10 修改 </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_web.php<br/>
+        DEMO:&nbsp;&nbsp;&nbsp;http://www.rich2020.com/move/api_web.php?action=getLanguage<br/>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：---------- </div>
+      <div class="pre">["Chinese","English","French","German","Hungary","Japanese","Korean","Russia","Spaish","Thai","Vietnam"]</div>
+
+
+      <a name="14"></a>
+      <div class="m_title">列出或者查找我的评论</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>comment_my</td>
+          </tr>
+          <tr>
+            <td class="label">uid</td>
+            <td>int<br></td>
+            <td>会员ID</td>
+          </tr>
+          <tr>
+            <td class="label">sort</td>
+            <td>text<br></td>
+            <td>评论的对象,只支持五种//'fabu','shop','blog','news','toadmin'</td>
+          </tr>
+          <tr>
+            <td class="label">page</td>
+            <td>int<br></td>
+            <td>页码</td>
+          </tr>
+          <tr>
+            <td class="label">pageno</td>
+            <td>int<br></td>
+            <td>每页显示条数</td>
+          </tr>
+          <tr>
+            <td class="label">keyword</td>
+            <td>text</td>
+            <td>关键字</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_member.php<br/>
+        DEMO:&nbsp;&nbsp;&nbsp;http://www.rich2020.com/move/api_member.php?action=comment_my<br/>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：---------- </div>
+      <div class="pre">{&quot;status&quot;:0,&quot;message&quot;:&quot;ok&quot;,&quot;total&quot;:1,&quot;body&quot;:[]}<br> 
+      {&quot;status&quot;:0,&quot;message&quot;:&quot;查无记录&quot;,&quot;total&quot;:0,&quot;body&quot;:[]}</div>
+		
+
+      <a name="15"></a>
+      <div class="m_title">发表评论</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>add </td>
+          </tr>
+          <tr>
+            <td class="label">uid</td>
+            <td>int</td>
+            <td>会员ID</td>
+          </tr>
+          <tr>
+            <td class="label">items</td>
+            <td>array</td>
+            <td>$items['sort'] 值范围:'fabu','shop','blog','news','toadmin'<br>
+$items['aboutid']评论对象的ID,比如给新闻评论,则是新闻的ID<br>
+$items['body']评论内容<br>
+$items['upid']是否是回复别人的留言 =0表示不是 </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_member.php<br/>
+        DEMO:&nbsp;&nbsp;&nbsp;http://www.rich2020.com/move/api_member.php?action=add&amp;uid=123&amp;items={}<br/>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：---------- </div>
+      <div class="pre">{&quot;status&quot;:0,&quot;message&quot;:&quot;ok&quot;}</div>
+		
+
+      <a name="16"></a>
+      <div class="m_title">列出或者查找留言</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>guestbook_list</td>
+          </tr>
+          <tr>
+            <td class="label">groupid</td>
+            <td>int<br></td>
+            <td>留言分组ID</td>
+          </tr>
+          <tr>
+            <td class="label">page</td>
+            <td>int<br></td>
+            <td>页码</td>
+          </tr>
+          <tr>
+            <td class="label">pageno</td>
+            <td>int<br></td>
+            <td>每页显示条数</td>
+          </tr>
+          <tr>
+            <td class="label">keyword</td>
+            <td>text</td>
+            <td>关键字</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_member.php<br/>
+        DEMO:&nbsp;&nbsp;&nbsp;http://www.rich2020.com/move/api_member.php?action=guestbook_list&amp;groupid=1&amp;page=1&amp;pageno=20<br/>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：---------- </div>
+      <div class="pre">{&quot;status&quot;:0,&quot;message&quot;:&quot;ok&quot;,&quot;total&quot;:1,&quot;body&quot;:[]}<br> 
+      {&quot;status&quot;:0,&quot;message&quot;:&quot;查无记录&quot;,&quot;total&quot;:0,&quot;body&quot;:[]}</div>
+		
+
+      <a name="17"></a>
+      <div class="m_title">发表留言</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>guestbook_add </td>
+          </tr>
+          <tr>
+            <td class="label">groupid</td>
+            <td>int<br></td>
+            <td>留言分组ID</td>
+          </tr>
+          <tr>
+            <td class="label">items</td>
+            <td>array</td>
+            <td>$items['name'] 姓名 <br>
+$items['tel'] 电话<br>
+$items['company'] 单位<br>
+$items['email'] 邮箱<br>
+$items['qq'] QQ<br>
+$items['message'] 留言内容<br>
+<br>
+<br></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_member.php<br/>
+        DEMO:&nbsp;&nbsp;&nbsp;http://www.rich2020.com/move/api_member.php?action=guestbook_add&amp;groupid=123&amp;items={}<br/>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：---------- </div>
+      <div class="pre">{&quot;status&quot;:0,&quot;message&quot;:&quot;ok&quot;}</div>
+		
+
+		
+		<br><br>
+		
+		
+		
+		
+		
+		
+      <a name="18"></a><hr />
+      <div class="m_title">支付管理API __________列表</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>pay_list</td>
+          </tr>
+          <tr>
+            <td class="label">pay_type</td>
+            <td>text</td>
+            <td>选填 空=所有 pc=电脑 mobile=手机 mini=微信小程序 </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_member.php<br/>
+        DEMO:http://www.rich2020.com/move/api_member.php?action=pay_list<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;,<br>
+body:[],<br>
+total:0,<br>
+        } </p>
+      </div>
+		<br><br>
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<br><br>
+		<a name="other"></a>
+		<div class="m_title">以下功能为小程序已上线功能,待产品开发完后,再添加成文档,先简单列一下</div>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_member.php<br/>
+        DEMO:&nbsp;&nbsp;&nbsp;http://www.rich2020.com/move/api_member.php?action=add&amp;uid=123<br/>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：---------- </div>
+      <div class="pre">{&quot;status&quot;:0,&quot;message&quot;:&quot;ok&quot;}</div>
+		
+		<br><br>
+		<p> //开始商城订单管理API=========================================</p>
+		<p> <br>
+		  cartEdit($cartid,$count) 修改购物车物品数量 id为购物车物品ID how 数量<br>
+		  cartDel($item) 删除购物车中指定ID的物品<br>
+		  cart2order  item 数组包含所选购物车内记录的ID形成数组	从购物车内选择物品去结算页 返回所选物品信息,重点是查看是否有库存 kcno=1表单库存不足,购物车所选物品数量超过库存<br>
+		  orderADD ($item,$addressid) 数组包含所选购物车内记录的ID形成数组  $addressid地址栏ID  返回金额和订单号<br>
+		  cartADD($shoptype,$goodsId,$goods_count,$category,$category2,$buy_team_id,$num_of_people,$seckill) 	//添加购物车 $shoptype=1,商店分类 0=电商 1=外卖 $buy_team_id  是否是团购 -1不是团购 0自己开团 &gt;0为跟团的ID; $num_of_people 如果开团开多少人的团(如果是跟团则不需要此参数) $seckill =0普通 =1秒杀</p>
+		<p> cartGet($item) 	 获取购物车内容   如果指定$item,则只显示要显示的$item信息 $item为数组,可指定多个,如果不指定则返回全部<br>
+		  orderPostMoney orderPostMoney($ordernumber,$addressid,$uid); 用于结算页 得出运费额 根据订单号及所在的省份  $ordernumber订单号 $addressid 地址ID $uid会员ID <br>
+		  cartPostMoney cartPostMoney($item,$addressid,$uid);			根据结算页中所勾选的购物车中的物品ID生成运费 $item所勾选的购物车中的物品ID $addressid 地址ID  $uid会员ID<br>
+
+		  orderPay($ordernumber,$pay_name);						支付订单,ordernumber=订单号 $pay_name=支付接口名称  默认为 wxpay=微信支付
+		 <br>
+	  </p>
+		<p> #===============以下是地址管理方法================<br>
+	  </p>
+		<p> /*<br>
+		  address_save	($uid,$address_id,$prov,$city,$dist,$address,$zipcode,$shouhuoren,$mobile,$isdef);$uid会员ID $address_id 地址ID  ,$prov省,$city市,$dist区,$address地址,$zipcode邮编,$shouhuoren收货人,$mobile手机,$isdef是否是默认地址 1=默认 0=不是<br>
+		  address_default ($uid); $uid会员ID   获取用户的默认地址<br>
+		  address_get		($uid,$id); $uid会员ID $id=地址ID  获取指定ID地址详细内容<br>
+		  address_del		($uid,$id); $uid会员ID $id=地址ID  删除指定ID地址<br>
+		  upload			($classid=0,$base64=&quot;&quot;) 上传图片 $classid 分类 $base64=如果是base64则将内容传给这个参数 如果是表单上传则将表单文件上传字段名称设为file<br>
+		  */<br>
+	      <br>
+#===============以下是应用数据 面向用户的 API ================<br>
+/*<br>
+datamanager_listoftable 列出或者查找所有数据表		$page=1,$keyword='',$pageno=20 //http://www.rich.com/move/api_member.php?action=datamanager_listoftable&amp;user=test008&amp;web_token=cbd9dc4734f65d03027871ca3415096e&amp;uid=1<br>
+datamanager_listofbody  列出指定表的记录			$tableid=表ID  $classid=分类ID  page=页码 pageno=一页显示多少记录 <br>
+//http://www.rich.com/move/api_member.php?action=datamanager_listofbody&amp;tableid=19&amp;user=test008&amp;web_token=cbd9dc4734f65d03027871ca3415096e&amp;uid=1<br>
+datamanager_gettable	获取表信息和表字段			$tableid 要获取信息的表ID<br>
+datamanager_gettableline获取指定表中指定的行信息	$tableid 表ID,$line 表记录行号<br>
+datamanager_gettableline4c 获取指定表中指定的行信息	$tableid 表ID,$line 表记录行号 面向小程序 新<br>
+datamanager_editline	添加或者修改表记录 line=0则是添加 $tableid 表ID,$line 表记录行号 $classid 分类 其它表单内容则由方法通过$_REQUEST来获取<br>
+datamanager_classlist	列出所有分类<br>
+*/<br>
+//开始商城商品管理API=========================================<br>
+/*<br>
+goods_list	($classid=0,$page=1,$pageno=20,$keyword='',$sort_key='',$sort_direction='') 商品列表 classid 分类 =0全部 $sort_key='排序关键字price sold 空',$sort_direction='方向 升序0降序1'<br>
+goods_getone  	$goodsid// 获取指定商品信息$goodsid 产品ID<br>
+新	goods_getone4c  $goodsid  获取指定商品信息$goodsid 产品ID 列出指定ID商品信息 生成客户端所需要的格式 规格参数不一样 可输出来对比一下<br>
+goods_classlist		无参数  //分类列表</p>
+		<p> goods_arealist	 无参数 列出物流省份<br>
+		  goods_postList  ($keyword); 列出运费模版</p>
+		<p> goods_postListName  无参数  只列出运费模版名称<br>
+		  goods_postGet	$postid  获取指定ID运费模板信息<br>
+		  myOrder ($uid,$shoptype,$page,$ordertype,$pageno,$searchtype,$keyword,$starttime,$endtime) 获取指定用户所有订单//searchtype number=订单号 receiver=收货人姓名 mobile=收货人手机号//ordertype 全部 待付款0 待发货1 已发货2 已完成3 //$shoptype 0=普通商品订单 1=外卖订单 $keyword=关键字 $starttime=开始时间格式是 0000-00-00 00:00:00 $endtime=结束时间格式是 0000-00-00 00:00:00</p>
+		<p> myOrderInfo $uid,$number 获取指定用户指定订单<br>
+		  */</p>
+		<p><br>
+//开始外卖商品管理API=========================================<br>
+/*</p>
+		<p>http://www.rich.com/move/api_member.php?action=waimai_getone4c&amp;goodsid=34&amp;user=test008<br>
+	  </p>
+		<p> waimai_info		无参数  //外卖商家信息<br>
+		  waimai_list	($classid=0,$page=1,$pageno=20,$keyword='',$sort_key='',$sort_direction='')  商品列表 classid 分类 =0全部 $sort_key='排序关键字price sold 空',$sort_direction='方向 升序0降序1'<br>
+		  新	waimai_getone4c  $goodsid  获取指定商品信息$goodsid 产品ID 列出指定ID商品信息 生成客户端所需要的格式 规格参数不一样 可输出来对比一下<br>
+		  waimai_classlist		无参数  //分类列表<br>
+		  waimai_cartADD	$goodsId,count,$category,$category2,$uid  //加到购物车 $goodsId商品ID,count,$category规格一,$category2规格二,$uid会员ID<br>
+		  waimai_cartEdit($cartid,$count) 修改购物车物品数量 id为购物车物品ID how 数量<br>
+		  waimai_cartDel($item) 删除购物车中指定ID的物品<br>
+		  waimai_orderADD ($item,$addressid) 数组包含所选购物车内记录的ID形成数组  $addressid地址栏ID  返回金额和订单号<br>
+		  waimai_cartGet($item) 	 获取购物车内容   如果指定$item,则只显示要显示的$item信息 $item为数组,可指定多个,如果不指定则返回全部</p>
+		<p> zuowei_get($id) 	 根据ID获取座位名称   $id=座位id</p>
+		<p>&nbsp;</p>
+		<p> 注:shoptype=1,商店分类 0=电商 1=外卖<br>
+		  */<br>
+		  <br>
+//开始优惠卡API=========================================<br>
+/*<br>
+youhui_list		($uid,$page,$pageno,$keyword);		//前端列出或者查找优惠券<br>
+youhui_get			($uid,$id);						//前端会员领取优惠券 uid是会员ID id是优惠券ID<br>
+youhui_getone		($id,$uid);						//列出指定ID优惠券信息<br>
+youhui_my			($uid,$type);					//我的优惠券 type 0或者空=全部 1=未使用 2=已使用 3=已失效<br>
+youhui_2order		($uid,$item);					//列出用户uid下当前下单时所选商品可用的优惠券 item=下单时所有的商品ID,此为数组</p>
+		<p> */<br>
+//开始储值卡API=========================================<br>
+/*<br>
+chuzhi_list		($uid,$page,$pageno,$keyword);  //前端列出或者查找优惠券<br>
+chuzhi_getone		($id,$uid);						//列出指定ID优惠券信息<br>
+chuzhi_getmymoney	($uid);							//取出用户uid下储值余额<br>
+chuzhi_addOrder		($uid,$id=0,$money=0)		    //前端会员领取储值券 uid=会员ID id=储值卡ID money=自定义充值金额 返回小程序支付密钥<br>
+chuzhi_my			($uid,$type);					//我的优惠券 type 0或者空=全部 1=未使用 2=已使用 3=已失效<br>
+chuzhi_chuzhilog($uid,$page,$pageno)				//列出储值卡明细 uid=会员ID page=页码 pageno=一页显示多少条<br>
+chongzhiDIY_get		//获取自定义充值设置<br>
+</p>
+		<p> */</p>
+		<p> #===============分销相关API================<br>
+/*<br>
+fenxiao_checkUidFenxiao()  //检测本会员是否是分销商<br>
+fenxiao_get()		//获取分销设置<br>
+fenxiao_totalPay()	//统计用户在本应用总共花了多少钱<br>
+fenxiao_register()  //申请成为分销商<br>
+fenxiao_setBank($info=array())  //设置提现银行<br>
+$info为一个数组,数组中相关参数如下:<br>
+$info[bank]  #提现银行名称<br>
+$info[accountTitle]  	#提现银行户名<br>
+$info[accountNumber]  	#提现银行账号</p>
+		<p> fenxiao_getOneOfFenxiaoHuiyan()  //获取本分销会员概况信息<br>
+		  fenxiao_fenrun($page,$pageno)  //分润明细 $page页码 pageno一页显示条数<br>
+		  fenxiao_tixian($fx,$money,$bank,$accountTitle,$accountNumber)  //申请提现 $fx=方向  0=储值卡 1=银行卡 $money=金额 $bank=银行,$accountTitle=户名,$accountNumber=账号<br>
+		  fenxiao_tixian_list($page,$pageno)  //提现明细 $page页码 pageno一页显示条数<br>
+		  fenxiao_xiaji($uid,$next_id,$keyword,$pageno);  //列出下级 $uid=当前会员 $next_id=最后一个ID $keyword=搜索关键字 $pageno=每页显示记录数量<br>
+		  fenxiao_xiaxiaji($uid,$xiaji_uid,$next_id,$keyword,$pageno);  //列出下下级  $uid=当前会员 $xiaji_uid=下级的ID $next_id=最后一个ID $keyword=搜索关键字 $pageno=每页显示记录数量</p>
+		<p> */</p>
+		<p>&nbsp; </p>
+		<p>&nbsp; </p>
+		<p>&nbsp; </p>
+		<br>
+        <br>
+      <br>
+      <br>
+    </div>
+  </div>
+</div>
+</body>
+</html>

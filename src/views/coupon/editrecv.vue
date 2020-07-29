@@ -938,7 +938,7 @@ export default {
 }
 </script>
 
-<style type="text/css">
+<style type="text/css" scoped>
 .select-goods-item {
     box-sizing: border-box;
     margin: 10px 15px;
@@ -973,5 +973,412 @@ export default {
     overflow: hidden;
     white-space: nowrap;
     line-height: 20px;
+}
+
+/*******************优惠券*************************/
+.manager-page-body {
+    margin: 10px 10px 10px 10px;
+    padding: 20px 20px 10px 20px;
+    /*border: 1px solid #e5e5e5;*/
+    background-color: #fff;
+    border-radius: 5px;
+}
+.phone-preview-area {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.info-edit-area {
+    display: inline-block;
+    vertical-align: top;
+    margin-top: 20px;
+    margin-left: 30px;
+}
+.phone-preview-title {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+#coupon-ticket {
+    position: relative;
+    width: 320px;
+    margin: 0 auto 20px;
+}
+#coupon-ticket::before {
+    content: "";
+    position: absolute;
+    bottom: 20px;
+    left: -4px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background-color: #fff;
+    z-index: 10;
+}
+#coupon-ticket::after {
+    content: "";
+    position: absolute;
+    bottom: 20px;
+    right: -4px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background-color: #fff;
+    z-index: 10;
+}
+#coupon-ticket .top-section {
+    width: 320px;
+    height: 90px;
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    border-top: 5px solid #ff4d64;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    box-shadow: 0px -5px 5px -5px rgba(0, 0, 0, 0.2),
+        5px 0px 5px -5px rgba(0, 0, 0, 0.2),
+        -5px 0px 5px -5px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+#coupon-ticket .detail-info {
+    position: absolute;
+    top: 20px;
+    left: 19px;
+}
+#coupon-ticket .detail-info .name {
+    color: #333;
+    font-size: 15px;
+    line-height: 15px;
+    margin-bottom: 10px;
+}
+#coupon-ticket .detail-info .use-tiaojian {
+    color: #666;
+    font-size: 12px;
+}
+#coupon-ticket .background-word-area {
+    position: absolute;
+    right: -32px;
+    top: -40px;
+    padding: 5px;
+    border: 1px solid #ff4d64;
+    border-radius: 50%;
+    color: #fff;
+    opacity: 0.1;
+}
+#coupon-ticket .background-circle {
+    width: 90px;
+    height: 90px;
+    line-height: 90px;
+    background-color: #ff4d64;
+    border-radius: 50%;
+}
+#coupon-ticket .background-word {
+    position: absolute;
+    bottom: 25px;
+    left: 25px;
+    font-size: 32px;
+    line-height: 32px;
+}
+#coupon-ticket .function-btn {
+    position: absolute;
+    top: 44px;
+    right: 18px;
+    font-size: 12px;
+    width: 60px;
+    height: 23px;
+    line-height: 23px;
+    text-align: center;
+    background-color: #ff4d64;
+    border-radius: 8px;
+    color: #fff;
+}
+#coupon-ticket .bottom-section {
+    position: relative;
+    width: 320px;
+    margin: 0 auto;
+    height: 25px;
+    line-height: 25px;
+    text-indent: 1em;
+    background: #fff;
+    font-size: 12px;
+    color: #999;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    white-space: nowrap;
+}
+#coupon-ticket .bottom-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 4px;
+    width: calc(100% - 10px);
+    border-top: 1px dashed #dbdbdb;
+}
+#coupon-ticket .bottom-section::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 25px;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+}
+#coupon-ticket .bottom-section > div {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#coupon-detail .bottom-section {
+    background-color: #fff;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-top: 1px dashed #dbdbdb;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+}
+.phone-preview-content {
+    position: relative;
+    width: 320px;
+    height: 580px;
+    box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+.phone-preview-content .phone-head {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 320px;
+    height: 58px;
+    background-image: url("../../assets/images/phone-head.jpg");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+.phone-preview-content .phone-container {
+    position: absolute;
+    top: 58px;
+    left: 0;
+    width: 320px;
+    height: 568px;
+    overflow: hidden;
+    background-color: #fff;
+}
+#coupon-detail {
+    height: 100%;
+    background-color: #edeeef;
+}
+.page {
+    min-height: 705px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+#coupon-detail .coupon-detail-wrap {
+    margin: 15px 10px 0;
+}
+#coupon-detail .top-section {
+    position: relative;
+    width: 100%;
+    height: 45px;
+    background: #fff;
+    background: radial-gradient(circle at bottom left, transparent 5px, #fff 0)
+            bottom left,
+        radial-gradient(circle at bottom right, transparent 5px, #fff 0) bottom
+            right;
+    background-size: 50% 100%;
+    background-repeat: no-repeat;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    color: #8a8b8c;
+    box-shadow: 0px -5px 5px -5px rgba(0, 0, 0, 0.2),
+        5px 0px 5px -5px rgba(0, 0, 0, 0.2),
+        -5px 0px 5px -5px rgba(0, 0, 0, 0.2);
+}
+#coupon-detail .top-section .logo {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+#coupon-detail .top-section .name {
+    position: absolute;
+    top: 5px;
+    left: 55px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 13px;
+}
+#coupon-detail .top-section .share {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: #000;
+    font-size: 15px;
+    line-height: 1em;
+}
+#coupon-detail .top-section::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 5px;
+    width: calc(100% - 10px);
+    border-bottom: 1px dashed #dbdbdb;
+}
+#coupon-detail .middle-section {
+    position: relative;
+    background: #fff;
+    background: radial-gradient(circle at top left, transparent 5px, #fff 0) top
+            left,
+        radial-gradient(circle at top right, transparent 5px, #fff 0) top right;
+    background-size: 50% 100%;
+    background-repeat: no-repeat;
+    box-shadow: 5px 0px 5px -5px rgba(0, 0, 0, 0.2),
+        -5px 0px 5px -5px rgba(0, 0, 0, 0.2);
+}
+#coupon-detail .middle-section .title {
+    padding-top: 24px;
+    line-height: 24px;
+    font-size: 24px;
+    text-align: center;
+    font-weight: 400;
+}
+#coupon-detail .middle-section .sub-title {
+    margin-top: 12px;
+    line-height: 15px;
+    font-size: 15px;
+    text-align: center;
+}
+#coupon-detail .middle-section .receive-btn {
+    margin: 18px auto;
+    width: 145px;
+    height: 30px;
+    line-height: 30px;
+    background: #fd445b;
+    border-radius: 4px;
+    font-size: 15px;
+    text-align: center;
+    color: #fff;
+}
+#coupon-detail .middle-section .detail-item {
+    margin: 0 20px;
+    padding-bottom: 13px;
+    line-height: 16px;
+    font-size: 13px;
+}
+#coupon-detail .middle-section .detail-item .item-name {
+    display: inline-block;
+    vertical-align: top;
+}
+#coupon-detail .middle-section .detail-item .item-content {
+    display: inline-block;
+    color: #8a8b8c;
+    width: calc(100% - 70px);
+    vertical-align: top;
+}
+#coupon-detail .middle-section .detail-item {
+    margin: 0 20px;
+    padding-bottom: 13px;
+    line-height: 16px;
+    font-size: 13px;
+}
+#coupon-detail .middle-section .detail-item .item-name {
+    display: inline-block;
+    vertical-align: top;
+}
+#coupon-detail .middle-section .detail-item .item-content {
+    display: inline-block;
+    color: #8a8b8c;
+    width: calc(100% - 70px);
+    vertical-align: top;
+    line-height: 20px;
+}
+#coupon-detail .bottom-section .goto-homepage {
+    position: relative;
+    padding: 15px 20px;
+    line-height: 13px;
+    font-size: 13px;
+}
+.info-edit-area {
+    display: inline-block;
+    vertical-align: top;
+    width: 550px;
+    margin-top: 20px;
+    margin-left: 60px;
+}
+.info-edit-title {
+    height: 50px;
+    line-height: 50px;
+    border: 1px solid #ddd;
+    border-bottom: 0;
+    padding-left: 20px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    font-size: 14px;
+}
+.info-edit-content {
+    padding-bottom: 15px;
+    border: 1px solid #ddd;
+}
+.info-edit-btn-panel {
+    margin: 20px 0;
+    text-align: center;
+}
+.coupon-type-content > div span.type-title {
+    display: inline-block;
+    margin-right: 15px;
+    font-size: 14px;
+}
+/**********可用商品**************/
+.coupon-goods-catgory {
+    display: flex;
+    margin-top: 10px;
+}
+.coupon-goods-catgory label {
+    margin-right: 15px;
+    color: #4d4e53;
+    font-size: 14px;
+    font-weight: 300;
+}
+.coupon-goods-catgory .part-set {
+    display: inline-block;
+    font-size: 14px;
+    color: #eec253;
+    margin-left: 10px;
+    cursor: pointer;
+}
+/**********去除日期**************/
+.select-time-checkbox {
+    display: inline-block;
+    margin-right: 15px;
+}
+.time-slot > div,
+.time-slot > p {
+    display: inline-block;
+    margin-right: 5px;
+}
+.field-item-panel {
+    display: inline-block;
+}
+.field-item-panel > p {
+}
+/*优惠券底部*/
+#coupon-detail .bottom-section .detail-item {
+    margin: 0 20px;
+    padding: 12px 0;
+    border-bottom: 1px solid #eaebec;
+    line-height: 16px;
+    font-size: 13px;
+}
+#coupon-detail .bottom-section .detail-item .item-name {
+    display: inline-block;
+    vertical-align: top;
+}
+#coupon-detail .bottom-section .detail-item .item-content {
+    display: inline-block;
+    width: calc(100% - 70px);
+    color: #8a8b8c;
+    vertical-align: top;
 }
 </style>

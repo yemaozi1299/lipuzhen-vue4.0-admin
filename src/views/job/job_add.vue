@@ -261,7 +261,7 @@ export default {
                 this.page = page
                 return this.dataInitial()
             }
-            this.$route.push({})
+            this.$router.push({})
         },
         handleChange (html, text) {
             this.formValidate.message = html

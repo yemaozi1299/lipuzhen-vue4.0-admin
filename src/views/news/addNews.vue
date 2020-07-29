@@ -319,6 +319,7 @@ export default {
                             face2body: data.face2body ? "1" : "0",
                             summary: data.summary
                         }
+
                     }
                     console.log(params);
                     //  _this.$qs.stringify(data)

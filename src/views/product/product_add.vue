@@ -116,7 +116,6 @@
                     style="width: 200px"
                     :value="formValidate.date"
                     @on-change="changeDateTime"
-                    :disabled="pid > 0"
                 ></DatePicker>
             </Form-item>
             <Form-item label="产品正文" prop="readme">
@@ -226,29 +225,36 @@ export default {
         },
         dataInitial () {
             this.$http.request({
-                url: "/api_edit.php?action=news_get",
+                url: "/api_edit.php?action=product_get",
                 params: {
                     id: this.pid
                 }
             }).then((res) => {
+                console.log(res.data.body)
+
                 var data = res.data.body;
+                var facemoreUrl = [], facemoreName = [];
                 this.formValidate = {
                     id: data.id,
                     classid: data.classid,
-                    title: data.title,
-                    ico: data.ico,
-                    ico_url: "",
-                    tj: data.tj == 0 ? false : true,
+                    title: data.name,
+                    tj: data.tj == 1 ? true : false,
                     keyword: data.keyword,
                     date: data.date,
                     readme: data.readme,
-                    face: data.face,
-                    face2body: data.face2body == 0 ? false : true,
-                    summary: data.summary
+                    face: data.face_url,
+                    faceName: data.face,
+                    facemore: data.facemore,
+                    summary: data.summary,
                 }
-                this.changeContent(data.body);
+                data.facemore.length && data.facemore.forEach(function (item) {
+                    facemoreUrl.push(item.url);
+                    facemoreName.push(item.filename);
+                });
+                this.uploadList = facemoreUrl;
+                this.uploadListName = facemoreName;
+                this.changeContent(data.readme);
                 // this.formValidate = res.data.body;
-                console.log(res.data.body)
             })
         },
         getNewClass: function () {
@@ -279,6 +285,7 @@ export default {
                 this.uploadListName.push(file.name);
             } else {
                 this.formValidate.face = file.url;
+                this.formValidate.faceName = file.name;
             }
 
             this.isUpload = false;
@@ -299,7 +306,9 @@ export default {
         handleRemoveList (file) {
             // 从 upload 实例删除数据
             const fileList = this.uploadList;
-            this.uploadList.splice(fileList.indexOf(file), 1)
+            const index = fileList.indexOf(file);
+            this.uploadList.splice(index, 1)
+            this.uploadListName.splice(index, 1)
         },
         handleView (name) {
             console.log(name)
@@ -322,11 +331,14 @@ export default {
                             tj: data.tj ? "1" : "0",
                             keyword: data.keyword,
                             date: data.date,
-                            body: data.readme,
-                            face: data.face,
+                            readme: data.readme,
+                            face: data.faceName,
                             facemore: this.uploadListName,
-                            summary: data.summary
+                            summary: data.summary,
+                            pr: data.pr
                         }
+
+
                     }
                     console.log(params);
                     //  _this.$qs.stringify(data)

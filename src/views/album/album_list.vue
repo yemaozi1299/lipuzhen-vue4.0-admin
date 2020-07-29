@@ -20,9 +20,13 @@
             @on-search-change="dataInitial"
         >
             <template slot="addbtn">
-                <Button class="mg-r-20" type="info" @click="pathEdit"
-                    >添加相册</Button
+                <Button
+                    type="primary"
+                    class="ant-btn mg-r-20"
+                    v-on:click="pathEdit"
                 >
+                    <Icon type="md-add" />添加相册
+                </Button>
             </template>
             <template slot="sider"></template>
             <template slot="footer"></template>
@@ -152,7 +156,7 @@ export default {
                 this.page = page
                 return this.dataInitial()
             }
-            this.$route.push({})
+            this.$router.push({})
         },
         show (item) {
             this.$router.push({

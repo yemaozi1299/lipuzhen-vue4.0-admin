@@ -9,6 +9,7 @@ import Editor from 'wangeditor'
 import 'wangeditor/release/wangEditor.min.css'
 import { oneOf } from '@/libs/tools'
 import axios from 'axios'
+import $ from 'jquery'
 export default {
     name: 'Editor',
     props: {
@@ -53,7 +54,7 @@ export default {
     },
     mounted () {
         let that = this;
-        this.editor = new Editor(`#${this.editorId}`)
+        this.editor = new Editor(`#${this.editorId}`);
         this.editor.customConfig.onchange = (html) => {
             let text = this.editor.txt.text()
             if (this.cache) localStorage.editorCache = html
@@ -68,7 +69,35 @@ export default {
         this.editor.customConfig.uploadImgServer = `/`;  // 上传图片到服务器
         this.editor.customConfig.uploadFileName = 'file';
         this.editor.customConfig.uploadImgMaxLength = 5;
-        this.editor.customConfig.zIndex = 100
+        this.editor.customConfig.zIndex = 100;
+
+
+        this.editor.viewsource = {
+            init: function (editorSelector) {
+                $(editorSelector + " .w-e-toolbar").prepend('<div class="w-e-menu html-e-menu" onclick="window.wangEditor.viewsource.toggleViewsource(\'' + editorSelector + '\')"><a class="_wangEditor_btn_viewsource" href="javascript:void(0);">&#60;&#47;&#62;</a></div>');
+            },
+            toggleViewsource: function (editorSelector) {
+                var editorHtml = window.wangEditor.txt.html();
+                var editorBtn = $(editorSelector);
+                var htmlBtn = $(editorSelector + ' .html-e-menu');
+                editorBtn.toggleClass('fullscreen-editor');
+                if (editorBtn.hasClass("fullscreen-editor")) {
+                    editorHtml = editorHtml.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/ /g, "&nbsp;");
+                    $(editorSelector + ' ._wangEditor_btn_viewsource').text('返回');
+                    htmlBtn.siblings().hide();
+                } else {
+                    editorHtml = window.wangEditor.txt.text().replace(/&lt;/ig, "<").replace(/&gt;/ig, ">").replace(/&nbsp;/ig, " ");
+                    $(editorSelector + ' ._wangEditor_btn_viewsource').text('</>');
+                    htmlBtn.siblings().show();
+                }
+
+
+                console.log(editorHtml);
+                window.wangEditor.txt.html(editorHtml);
+                window.wangEditor.change && window.wangEditor.change();	//更新编辑器的内容
+            }
+        }
+
         this.editor.customConfig.uploadImgHooks = {
 
             fail: function (xhr, editor, result) {
@@ -99,7 +128,9 @@ export default {
             // insert(imgUrl)
         }
         // create这个方法一定要在所有配置项之后调用
-        this.editor.create()
+        window.wangEditor = this.editor;
+        this.editor.create();
+        this.editor.viewsource.init(`#${this.editorId}`);
         // 如果本地有存储加载本地存储内容
         // let html = this.value || localStorage.editorCache
         // if (html) this.editor.txt.html(html)
@@ -110,5 +141,15 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
 .editor-wrapper {
     z-index: 100 !important;
+    ._wangEditor_btn_viewsource {
+        color: #999;
+    }
+    .w-e-menu {
+        &:hover {
+            ._wangEditor_btn_viewsource {
+                color: #333;
+            }
+        }
+    }
 }
 </style>

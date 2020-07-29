@@ -21,7 +21,13 @@
             @on-search-change="get"
         >
             <template slot="addbtn">
-                <Button type="info" @click="pathEdit">添加产品</Button>
+                <Button
+                    type="primary"
+                    class="ant-btn mg-r-20"
+                    v-on:click="pathEdit"
+                >
+                    <Icon type="md-add" />添加产品
+                </Button>
             </template>
 
             <template slot="sider">
@@ -75,6 +81,24 @@
                         align="middle"
                         style="margin: 10px 5px 0 5px;"
                     >
+                        <Col span="8">选择分类:</Col>
+                        <Col span="16">
+                            <Select v-model="uid">
+                                <Option value="0">一级分类</Option>
+                                <Option
+                                    v-for="item in classList"
+                                    :value="item.id"
+                                    >{{ item.sortname }}</Option
+                                >
+                            </Select>
+                        </Col>
+                    </Row>
+                    <Row
+                        type="flex"
+                        justify="center"
+                        align="middle"
+                        style="margin: 10px 5px 0 5px;"
+                    >
                         <Col span="8">分类名称:</Col>
                         <Col span="16">
                             <Input
@@ -107,7 +131,7 @@
                     @on-change="handleSelectAll"
                 >
                     <span class="mg-l-10">已选</span
-                    ><span style="color:#3091F2">{{ chooseID.length }}</span
+                    ><span style="color: #3091f2;">{{ chooseID.length }}</span
                     ><span> / {{ tableData.length }} 个产品</span>
                 </Checkbox>
                 <Button
@@ -184,7 +208,7 @@ export default {
             total: 0,
 
             chooseID: [],
-
+            uid: "0",
             classid: "0",
             classname: "",
             classList: [],
@@ -231,7 +255,9 @@ export default {
             var data = {}
             this.$http.post("/api_edit.php?action=product_class_get", data).then((res) => {
                 this.classList = res.data.body || [];
+                console.log(this.classList);
             });
+
         },
         skippage: function (page) {
             if (this.$route.params.pageid == page) {
@@ -261,7 +287,7 @@ export default {
             this.page = 1;
             this.get();
         },
-        handleEdit: function (item) {           //
+        handleEdit: function (item) {
             var value = "";
             this.$Modal.info({
                 title: "修改分类名称",
@@ -292,11 +318,12 @@ export default {
                 }
             });
         },
-        delGroundState () {
+        delGroundState (item) {
             var value = "";
+            console.log(item);
             this.$Modal.confirm({
                 title: "删除分类",
-                content: "确定要删除分类吗，删除留言分类会将分类下的产品一起删除",
+                content: "确定要删除分类吗，删除分类会将分类下的产品一起删除",
                 onOk: () => {
                     this.$http.request({
                         url: "/api_edit.php?action=product_class_del",
@@ -311,10 +338,24 @@ export default {
             });
         },
         addClassConfirm () {
-
+            if (this.classname == '') {
+                this.$Message.error('请输入分类名称')
+                return false
+            }
+            this.$http.request({
+                url: "/api_edit.php?action=product_class_add",
+                params: {
+                    sortname: this.classname,
+                    upid: this.uid
+                }
+            }).then((res) => {
+                this.classname = "";
+                this.showClass = false;
+                this.getClass();
+            });
         },
         addClassCancel () {
-
+            this.showClass = false;
         },
         pathEdit () {
             this.$router.push({
@@ -324,6 +365,39 @@ export default {
                     pid: 0
                 }
             });
+        },
+        classmovein (type, id) {
+            var editList = id || this.chooseID;
+            if (editList.length == 0) {
+                this.$Message.warning('请选择要操作的留言')
+                return false
+            }
+            switch (type) {
+                case 'del':
+                    var content = '确定对所选留言进行：删除'
+                    break
+            }
+            this.$Modal.confirm({
+                title: '提醒',
+                content: content,
+                onOk: () => {
+                    this.choose2edit(type, editList)
+                }
+            })
+
+        },
+        choose2edit (type, editList) {
+            this.$http.request({
+                url: "/api_edit.php?action=product_del",
+                params: {
+                    delid: editList
+                }
+            }).then((res) => {
+                if (res.data.status == 1) {
+                    this.chooseID = [];
+                    this.get();
+                }
+            })
         },
     },
 

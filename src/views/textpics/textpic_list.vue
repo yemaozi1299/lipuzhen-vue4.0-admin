@@ -16,10 +16,16 @@
             @on-skippage="skippage"
             showlayout
             :loading="loading"
-            searchable
-            @on-search-change="dataInitial"
         >
-            <template slot="sider"></template>
+            <template slot="header">
+                <Button
+                    type="primary"
+                    class="ant-btn mg-r-20"
+                    v-on:click="pathEdit"
+                >
+                    <Icon type="md-add" />添加图文网页
+                </Button>
+            </template>
             <template slot="footer"></template>
         </tables>
     </Card>
@@ -37,43 +43,45 @@ export default {
     data () {
         return {
             columns: [{
-                type: 'selection',
-                width: 80,
-                align: 'center'
-            }, {
-                title: '名称',
-                key: 'name',
-                // sortable: true,
-                // editable: true
-            }, {
-                title: '邮箱',
-                key: 'email',
-            }, {
-                title: '名称',
-                key: 'dayandtime',
+                title: "标题",
+                key: "title"
             }, {
                 title: '操作',
+                width: 300,
                 render: (h, params) => {
                     return h('div', [
                         h(Buttons, {
                             props: {
-                                border: false
+                                border: true
                             },
                             style: {
                             },
                             on: {
                                 'click': (val) => {
                                     this.$router.push({
-                                        name: "resume_show",
+                                        name: "textpicAdd",
                                         params: {
                                             pageid: this.page,
-                                            jobid: this.jobid,
-                                            resumeid: params.row.id
+                                            textid: params.row.id
                                         }
                                     });
                                 }
                             }
-                        }, '查看详情'),
+                        }, '编辑'),
+                        h(Buttons, {
+                            props: {
+                                border: false,
+                                type: 'error'
+                            },
+                            style: {
+
+                            },
+                            on: {
+                                'click': (val) => {
+                                    this.delText(params.row);
+                                }
+                            }
+                        }, '删除'),
 
                     ])
                 }
@@ -86,7 +94,6 @@ export default {
             total: 0,
             loading: false,
             isSelectAll: false,
-            jobid: 0,
         }
     },
     created () {
@@ -105,24 +112,19 @@ export default {
     methods: {
         fetchData () {
             this.page = this.$route.params.pageid ? parseInt(this.$route.params.pageid) : 1;
-            this.jobid = this.$route.params.jobid ? parseInt(this.$route.params.jobid) : 0;
             this.dataInitial()
         },
-        dataInitial (keyword) {
-            if (keyword) {
-                this.page = keyword;
-            }
+        dataInitial () {
             this.$http.request({
                 method: "POST",
-                url: "/api_edit.php?action=job_getResumeList",
-                params: {
-                    id: this.jobid,
-                    keyword: keyword,
-                    page: this.page,
-                    pageno: this.pageno
-                }
+                url: "/api_edit.php?action=textpic_list"
+
             }).then((res) => {
-                this.tableData = res.data.body || [];
+                if (res.data.status == 1) {
+                    this.tableData = res.data.body || [];
+                } else {
+
+                }
                 console.log(res);
             })
         },
@@ -138,8 +140,36 @@ export default {
                 this.page = page
                 return this.dataInitial()
             }
-            this.$router.push({})
+            this.$router.push({
+                name: "textpic",
+                params: {
+                    pageid: this.page,
+                }
+            });
         },
+
+        pathEdit () {
+            this.$router.push({
+                name: "textpicAdd",
+                params: {
+                    pageid: this.page,
+                    textid: 0
+                }
+            });
+        },
+        delText (params) {
+            console.log(params);
+            this.$http.request({
+                method: "POST",
+                url: "/api_edit.php?action=textpic_del",
+                params: {
+                    delid: params.id
+                }
+            }).then((res) => {
+
+                console.log(res);
+            })
+        }
     }
 }
 </script>

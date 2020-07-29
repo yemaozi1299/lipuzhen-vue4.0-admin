@@ -20,6 +20,15 @@
             searchable
             @on-search-change="get"
         >
+            <template slot="addbtn">
+                <Button
+                    type="primary"
+                    class="ant-btn mg-r-20"
+                    v-on:click="addMessage"
+                >
+                    <Icon type="md-add" />添加留言
+                </Button>
+            </template>
             <template slot="sider">
                 <div class="category">
                     <span>分类</span>
@@ -308,6 +317,7 @@ export default {
             var data = {}
             this.$http.post("/api_edit.php?action=guestbook_groupList", data).then((res) => {
                 this.classList = res.data.body || [];
+                console.log(res.data);
             });
         },
         skippage: function (page) {
@@ -320,7 +330,7 @@ export default {
                 params: {
                     pageid: page
                 }
-            })
+            });
         },
         chooseEdit: function (selection) {
             var chooseID = []

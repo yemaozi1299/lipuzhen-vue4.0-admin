@@ -14,7 +14,7 @@ export default {
 
     created () {
         var data = {
-            groupid: 13,
+            groupid: 14,
             items: {
                 name: "所谓老杨",
                 tel: "13144825885",

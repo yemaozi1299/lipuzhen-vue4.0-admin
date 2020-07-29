@@ -564,6 +564,23 @@ export default [
 				},
 				component: () => import('@/views/album/album_add.vue')
 			},
+			{
+				path: "/textpic/:pageid?",
+				name: "textpic",
+				meta: {
+					title: "图文网页",
+				},
+				component: () => import('@/views/textpics/textpic_list.vue')
+			},
+			{
+				path: "/textpic/:pageid?/addTextpic/:textid?",
+				name: "textpicAdd",
+				meta: {
+					title: "添加图文网页",
+					hideInMenu: true
+				},
+				component: () => import('@/views/textpics/textpic_add.vue')
+			},
 
 		]
 	},

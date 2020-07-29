@@ -1174,7 +1174,7 @@ export default {
 }
 </script>
 
-<style type="text/css">
+<style type="text/css" scoped>
 #goods-resource-dialog .webapp-box {
     position: fixed;
     z-index: 1001;
@@ -1497,9 +1497,6 @@ export default {
     color: #eec253;
     cursor: pointer;
 }
-</style>
-
-<style>
 /*******************优惠券*************************/
 .manager-page-body {
     margin: 10px 10px 10px 10px;
@@ -1907,3 +1904,4 @@ export default {
     vertical-align: top;
 }
 </style>
+

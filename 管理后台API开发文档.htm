@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-<title>管理后台API开发文档v1.0 锐奇智能网站制作软件响应式 </title>
+<title>管理后台API开发文档v1.0 锐奇智能响应式全网营销软件 </title>
 <style type="text/css">
 .article {
     margin-left: 20px;
@@ -174,6 +174,7 @@
 		  <li><a href="#11">获取模块的内容参数</a> </li>
 		  <li><a href="#12">保存模块的内容参数</a> </li>
 		  <li><a href="#13">获取软件可用模块并列表</a> </li>
+		  <li><a href="#13-1">给指定模块添加模板</a> </li>
 		  <li><a href="#14">保存页面</a> </li>
 		  <li><a href="#15">获取指定模块可用模板列表</a> </li>
 		  <li><a href="#16">新闻列表</a> </li>
@@ -232,9 +233,47 @@
 		  <li><a href="#64">保存指定语言的网站属性设置</a> </li>
 		  <li><a href="#65">设置本站开通的语言版本</a> </li>
 		  <li><a href="#66">获取指定语言的网站属性设置</a> </li>
-
 		  <li><a href="#other">其它API</a> </li>
-		  
+
+		  <li>2020-6-29增加 </li>
+		  <li>图文网页模块</li>
+		  <li><a href="#67">列出或者查找所有</a> </li>
+		  <li><a href="#68">删除</a> </li>
+		  <li><a href="#69">获取指定ID的内容</a> </li>
+		  <li><a href="#70">添加或者修改</a> </li>
+	  
+
+		  <li>调查问卷</li>
+		  <li><a href="#71">列出或者查找所有</a> </li>
+		  <li><a href="#72">清除投票数据</a> </li>
+		  <li><a href="#73">添加</a> </li>
+		  <li><a href="#732">删除</a> </li>
+		  <li><a href="#733">获取</a> </li>
+		  <li><a href="#74">修改</a> </li>
+	  
+
+
+		  <li>友情链接API</li>
+		  <li><a href="#75">列表</a> </li>
+		  <li><a href="#76">删除</a> </li>
+		  <li><a href="#761">获取</a> </li>
+		  <li><a href="#77">添加或者修改</a> </li>
+		  <li><a href="#78">列出所有分类</a> </li>
+		  <li><a href="#79">添加分类</a> </li>
+		  <li><a href="#80">修改分类</a> </li>
+		  <li><a href="#81">删除分类</a> </li>
+	  
+
+		  <li>支付管理API</li>
+		  <li><a href="#82">列表</a> </li>
+		  <li><a href="#83">添加修改</a> </li>
+		  <li><a href="#84">显示隐藏</a> </li>
+		  <li><a href="#85">获取参数</a> </li>
+		  <li><a href="#86">获取支持的支付接口</a> </li>
+
+
+
+
 
 
 		</ol>
@@ -285,8 +324,8 @@
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:http://www.rich2020.com/block/api_edit.php?action=menu_add&amp;menuname=首页&amp;upid=0&amp;yc=0&amp;languageID=0<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=menu_add&amp;menuname=首页&amp;upid=0&amp;yc=0&amp;languageID=0<br/>
         返回结果:JSON字符串<br/>
         注释:成功会返回所添加栏目的ID<br/>
         ----------返回的结果有如下几种：---------- <br/>
@@ -351,8 +390,8 @@
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:http://www.rich2020.com/block/api_edit.php?action=menu_edit&amp;id=123&amp;menuname=首页&amp;upid=0&amp;yc=0&amp;target=0&amp;browse=0<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=menu_edit&amp;id=123&amp;menuname=首页&amp;upid=0&amp;yc=0&amp;target=0&amp;browse=0<br/>
         返回结果:JSON字符串<br/>
         ----------返回的结果有如下几种：----------<br/>
       </div>
@@ -390,8 +429,8 @@
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:http://www.rich2020.com/block/api_edit.php?action=menu_get&amp;leibie=0&amp;languageID=0<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=menu_get&amp;leibie=0&amp;languageID=0<br/>
         返回结果:JSON字符串<br/>
         ----------返回的结果有如下几种：----------<br/>
       </div>
@@ -441,8 +480,8 @@
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:http://www.rich2020.com/block/api_edit.php?action=menu_del&amp;id=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=menu_del&amp;id=123<br/>
         返回结果:JSON字符串<br/>
         ----------返回的结果有如下几种：----------<br/>
       </div>
@@ -483,8 +522,8 @@
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:http://www.rich2020.com/block/api_edit.php?action=menu_getone&amp;id=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=menu_getone&amp;id=123<br/>
         返回结果:JSON字符串<br/>
         ----------返回的结果有如下几种：----------<br/>
       </div>
@@ -542,8 +581,8 @@
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:http://www.rich2020.com/block/api_edit.php?action=page_get&amp;pageid=123 <br>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=page_get&amp;pageid=123 <br>
         或者<br> 
         /api_edit.php?action=page_get&amp;pagetype=new&amp;languageID=0<br/>
         返回结果:JSON字符串<br/>
@@ -601,8 +640,8 @@
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:http://www.rich2020.com/block/api_edit.php?action=page_set&amp;pageid=123&amp;param=[]<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=page_set&amp;pageid=123&amp;param=[]<br/>
         返回结果:JSON字符串<br/>
         ----------返回的结果有如下几种：----------<br/>
       </div>
@@ -644,8 +683,8 @@
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:http://www.rich2020.com/block/api_edit.php?action=page_top&amp;pageid=123&amp;status=0<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=page_top&amp;pageid=123&amp;status=0<br/>
         返回结果:JSON字符串<br/>
         ----------返回的结果有如下几种：----------<br/>
       </div>
@@ -685,8 +724,8 @@
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:http://www.rich2020.com/block/api_edit.php?action=page_bottom&amp;pageid=123&amp;status=0<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=page_bottom&amp;pageid=123&amp;status=0<br/>
         返回结果:JSON字符串<br/>
         ----------返回的结果有如下几种：----------<br/>
       </div>
@@ -720,8 +759,8 @@
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:http://www.rich2020.com/block/api_edit.php?action=menuid4pageid&amp;id=1<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=menuid4pageid&amp;id=1<br/>
         返回结果:JSON字符串<br/>
         ----------返回的结果有如下几种：----------<br/>
       </div>
@@ -767,8 +806,8 @@
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:&nbsp; http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=rowcell_add&amp;pageid=1&amp;rowtype=1-1-1-1&amp;area=1 <br/>
+        URL:&nbsp; http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=rowcell_add&amp;pageid=1&amp;rowtype=1-1-1-1&amp;area=1 <br/>
         返回结果:JSON字符串<br/>
         ----------返回的结果有如下几种：---------- <br/>
       </div>
@@ -803,8 +842,8 @@
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=row_del&amp;id=1<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=row_del&amp;id=1<br/>
         返回结果:JSON字符串<br/>
         ----------返回的结果有如下几种：---------- <br/>
       </div>
@@ -840,8 +879,8 @@
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=cell_del&amp;id=1<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=cell_del&amp;id=1<br/>
         返回结果:JSON字符串<br/>
         ----------返回的结果有如下几种：---------- </div>
       <div class="pre"> {&quot;status&quot;:0,&quot;message&quot;:&quot;参数丢失&quot;}<br>
@@ -881,8 +920,8 @@
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=block_add&amp;cellid=1&amp;block_name=text<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=block_add&amp;cellid=1&amp;block_name=text<br/>
         返回结果:JSON字符串<br/>
         ----------返回的结果有如下几种：---------- <br/>
       </div>
@@ -917,8 +956,8 @@
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=block_del&amp;id=1<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=block_del&amp;id=1<br/>
         返回结果:JSON字符串<br/>
         ----------返回的结果有如下几种：---------- <br/>
       </div>
@@ -961,8 +1000,8 @@
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=box_style_get&amp;boxtype=area&amp;pageid=1<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=box_style_get&amp;boxtype=area&amp;pageid=1<br/>
         返回结果:JSON字符串<br/>
         ----------返回的结果有如下几种：---------- <br/>
       </div>
@@ -1035,8 +1074,8 @@
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=box_style_save&amp;boxtype=area&amp;pageid=1&amp;param=数组<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=box_style_save&amp;boxtype=area&amp;pageid=1&amp;param=数组<br/>
         返回结果:JSON字符串<br/>
         ----------返回的结果有如下几种：---------- </div>
       <div class="pre"> {&quot;status&quot;:0,&quot;message&quot;:&quot;param 参数有误,数组为空&quot;}<br/>
@@ -1050,7 +1089,7 @@
 
 
       <a name="10"></a><hr />
-      <div class="m_title">获取指定模块的HTML</div>
+      <div class="m_title">获取指定模块的HTML 已转前台</div>
       <table cellpadding="0" cellspacing="0" width="100%">
         <tbody>
           <tr>
@@ -1076,8 +1115,8 @@
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=getBlockHTML&amp;id=1<br/>
+        URL:http://www.rich2020.com/move/api_web.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_web.php?action=getBlockHTML&amp;id=1<br/>
         返回结果:字符串<br/>
         ----------返回的结果有如下几种：---------- </div>
       <div class="pre"> 模块系统文件丢失<br/>
@@ -1108,8 +1147,8 @@
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br />
-DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=block_param_get&amp;id=1<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br />
+DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=block_param_get&amp;id=1<br/>
         返回结果:字符串<br/>
         ----------返回的结果有如下几种：---------- </div>
       <div class="pre"> 
@@ -1156,7 +1195,7 @@ DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=block_param_g
             <td>数组 参数的细节  如果没有则填 -1<br />
               array(<br>
               'b_title',标题<br>
-              'b_style_path',模板文件名,如:block/tpl/news/001/tpl.htm<br>
+              'b_style_path',模板文件名,如:move/tpl/news/001/tpl.htm<br>
               'b_style_color',模板的颜色<br>
               'b_morelink',模块右上角更多的链接 -1为不显示 <br>
               'b_recommend',只显示推荐记录<br>
@@ -1228,8 +1267,8 @@ $param['b_text']=文字内容,格式为html<br />
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=block_param_save&amp;id=1&amp;param=数组<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=block_param_save&amp;id=1&amp;param=数组<br/>
         返回结果:字符串<br/>
         ----------返回的结果有如下几种：---------- </div>
        <div class="pre"> {&quot;status&quot;:0,&quot;message&quot;:&quot;param 参数有误,数组为空&quot;}<br/>
@@ -1262,8 +1301,8 @@ $param['b_text']=文字内容,格式为html<br />
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=block_list<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=block_list<br/>
         返回结果:字符串<br/>
         ----------返回的结果有如下几种：---------- </div>
 	
@@ -1280,8 +1319,57 @@ $param['b_text']=文字内容,格式为html<br />
 		</div>
 		
 		
-		
+	
 
+      <a name="13-1"></a><hr />
+      <div class="m_title">给指定模块添加模板</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>block_template_add</td>
+          </tr>
+          <tr>
+            <td class="label">block_name</td>
+            <td>string</td>
+            <td>模块英文名称 如 navbar</td>
+          </tr>
+          <tr>
+            <td class="label">template_path</td>
+            <td>string</td>
+            <td>模块模板地址 如 move/tpl/news/002/tpl_notime.htm</td>
+          </tr>
+          <tr>
+            <td class="label">multi_color</td>
+            <td>bool</td>
+            <td>是否支持多种颜色 0 or 1 0=单色 1=多彩 </td>
+          </tr>
+          <tr>
+            <td class="label">info</td>
+            <td>string</td>
+            <td>模板说明 如 导航菜单</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=block_template_add&...<br/>
+        返回结果:字符串<br/>
+        ----------返回的结果有如下几种：---------- </div>
+	
+		
+		<div class="pre"> 
+			{"status":0,"message":"保存失败"}<br>
+			{"status":0,"message":"查无此模块名称"}<br>
+			{"status":1,"message":"操作成功","id":123}<br>
+		</div>
+			
 
       <a name="14"></a><hr />
       <div class="m_title">保存页面</div>
@@ -1310,8 +1398,8 @@ $param['b_text']=文字内容,格式为html<br />
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=savePage&amp;id=1&amp;param={}<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=savePage&amp;id=1&amp;param={}<br/>
         返回结果:字符串<br/>
         ----------返回的结果有如下几种：---------- </div>
 	
@@ -1430,8 +1518,8 @@ $param['b_text']=文字内容,格式为html<br />
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=block_template_get&b_name=img<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=block_template_get&b_name=img<br/>
         返回结果:字符串<br/>
         ----------返回的结果有如下几种：---------- </div>
 	
@@ -1444,18 +1532,18 @@ $param['b_text']=文字内容,格式为html<br />
         {
             "id":"2",
             "b_id":"1",
-            "path":"/block/tpl/img/001/tpl.htm",
+            "path":"/move/tpl/img/001/tpl.htm",
             "multi_color":"0",
             "info":"图片无链接",
-            "demo":"/block/tpl/img/001/demo.jpg"
+            "demo":"/move/tpl/img/001/demo.jpg"
         },
         {
             "id":"9",
             "b_id":"1",
-            "path":"/block/tpl/img/002/tpl.htm",
+            "path":"/move/tpl/img/002/tpl.htm",
             "multi_color":"0",
             "info":"显示带连接图片",
-            "demo":"/block/tpl/img/002/demo.jpg"
+            "demo":"/move/tpl/img/002/demo.jpg"
         }
     ]
 }
@@ -1504,8 +1592,8 @@ $param['b_text']=文字内容,格式为html<br />
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=news_list<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=news_list<br/>
         返回结果:字符串<br/>
         ----------返回的结果有如下几种：---------- </div>
 	
@@ -1559,8 +1647,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=news_edit&amp;id=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=news_edit&amp;id=123<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	
@@ -1596,8 +1684,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=news_del&amp;del=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=news_del&amp;del=123<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	
@@ -1631,8 +1719,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=news_get&amp;id=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=news_get&amp;id=123<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	
@@ -1667,8 +1755,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=news_class_del&amp;id=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=news_class_del&amp;id=123<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	
@@ -1712,8 +1800,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=news_class_add&amp;sortname=abc<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=news_class_add&amp;sortname=abc<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	
@@ -1752,8 +1840,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=news_class_edit&amp;sortname=xyz&amp;id=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=news_class_edit&amp;sortname=xyz&amp;id=123<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	
@@ -1785,8 +1873,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=news_class_show&amp;id=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=news_class_show&amp;id=123<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	
@@ -1819,8 +1907,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=news_class_hiddenl&amp;id=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=news_class_hiddenl&amp;id=123<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	
@@ -1849,8 +1937,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=news_class_get<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=news_class_get<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	
@@ -1899,8 +1987,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=guestbook_list<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=guestbook_list<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	
@@ -1943,8 +2031,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=guestbook_add&amp;items=[]<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=guestbook_add&amp;items=[]<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre"> {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;,&quot;id&quot;:123}<br>
@@ -1981,8 +2069,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=guestbook_re&amp;id=1&amp;message=abc<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=guestbook_re&amp;id=1&amp;message=abc<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre"> {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;,&quot;id&quot;:123}<br>
@@ -2018,8 +2106,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=guestbook_check&amp;chooseID=1&amp;editmode=ok<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=guestbook_check&amp;chooseID=1&amp;editmode=ok<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre"> {&quot;status&quot;:0,&quot;message&quot;:&quot;请选择要操作的记录&quot;}<br>
@@ -2045,8 +2133,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=guestbook_groupList<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=guestbook_groupList<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">	  {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;,&quot;body&quot;:[]}</div>
@@ -2077,8 +2165,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=guestbook_groupADD&amp;groupname=abc<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=guestbook_groupADD&amp;groupname=abc<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">	  {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;}<br>
@@ -2114,8 +2202,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=guestbook_groupEdit&amp;groupid=123&amp;groupname=abc<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=guestbook_groupEdit&amp;groupid=123&amp;groupname=abc<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">	  {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;}<br>
@@ -2144,8 +2232,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=guestbook_groupEdit&amp;groupid=123&amp;groupname=abc<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=guestbook_groupEdit&amp;groupid=123&amp;groupname=abc<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">	  {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;}<br>
@@ -2189,8 +2277,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=job_list&amp;groupid=123&amp;groupid&amp;page=1&amp;pageno=20&amp;keyword=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=job_list&amp;groupid=123&amp;groupid&amp;page=1&amp;pageno=20&amp;keyword=123<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">{&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;,&quot;body&quot;:[]}<br>
@@ -2221,8 +2309,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=job_get&amp;id=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=job_get&amp;id=123<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	
@@ -2254,8 +2342,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=job_getResume&amp;id=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=job_getResume&amp;id=123<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	
@@ -2291,8 +2379,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=job_getResumeList&amp;id=123&amp;keyword=abc<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=job_getResumeList&amp;id=123&amp;keyword=abc<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	
@@ -2343,8 +2431,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=job_edit&amp;id=123&amp;items=[]<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=job_edit&amp;id=123&amp;items=[]<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	
@@ -2377,8 +2465,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=job_edit&amp;delid=[]<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=job_edit&amp;delid=[]<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre"> {&quot;status&quot;:0,&quot;message&quot;:&quot;请选择要删除的记录&quot;}<br>
@@ -2411,8 +2499,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=job_delResume&amp;delid=[]<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=job_delResume&amp;delid=[]<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre"> {&quot;status&quot;:0,&quot;message&quot;:&quot;请选择要删除的记录&quot;}<br>
@@ -2438,8 +2526,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=job_groupList<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=job_groupList<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">{&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;,&quot;body&quot;:[]}</div>
@@ -2467,8 +2555,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=job_groupADD&amp;groupname=abc<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=job_groupADD&amp;groupname=abc<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">{&quot;status&quot;:0,&quot;message&quot;:&quot;groupname参数丢失&quot;}<br>
@@ -2502,8 +2590,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=job_groupEdit&amp;groupname=abc&amp;groupid=1<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=job_groupEdit&amp;groupname=abc&amp;groupid=1<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">{&quot;status&quot;:0,&quot;message&quot;:&quot;参数丢失&quot;}<br>
@@ -2532,8 +2620,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=job_groupDel&amp;groupid=1<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=job_groupDel&amp;groupid=1<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">{&quot;status&quot;:0,&quot;message&quot;:&quot;参数丢失&quot;}<br>
@@ -2577,8 +2665,8 @@ $items['summary']);//摘要<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=product_list&amp;classid=1<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=product_list&amp;classid=1<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">{&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;,&quot;body&quot;:[]}<br>
@@ -2625,8 +2713,8 @@ $items[face];            产品封面图<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=product_edit&amp;id=1&amp;items=[]<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=product_edit&amp;id=1&amp;items=[]<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">{&quot;status&quot;:0,&quot;message&quot;:&quot;保存失败&quot;}<br>
@@ -2656,8 +2744,8 @@ $items[face];            产品封面图<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=product_del&amp;delid=[]<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=product_del&amp;delid=[]<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">{&quot;status&quot;:0,&quot;message&quot;:&quot;保存失败&quot;}<br>
@@ -2688,8 +2776,8 @@ $items[face];            产品封面图<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=product_get&amp;id=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=product_get&amp;id=123<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">	  {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;}<br>
@@ -2718,8 +2806,8 @@ $items[face];            产品封面图<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=product_class_del&amp;id=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=product_class_del&amp;id=123<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">	  {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;}<br>
@@ -2745,11 +2833,21 @@ $items[face];            产品封面图<br>
             <td>string</td>
             <td>分类名称</td>
           </tr>
+          <tr>
+            <td class="label">upid</td>
+            <td>int</td>
+            <td>=0一级分类 &gt;0此ID下面的二级分类 </td>
+          </tr>
+          <tr>
+            <td class="label">yc</td>
+            <td>int</td>
+            <td>显示还是隐藏 =0显示 =1隐藏</td>
+          </tr>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=product_class_add&amp;sortname=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=product_class_add&amp;sortname=123<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">	  {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;}<br>
@@ -2784,8 +2882,8 @@ $items[face];            产品封面图<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=product_class_edit&amp;sortname=abc&amp;id=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=product_class_edit&amp;sortname=abc&amp;id=123<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">	  {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;}<br>
@@ -2817,8 +2915,8 @@ $items[face];            产品封面图<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=product_class_show&amp;id=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=product_class_show&amp;id=123<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">	  {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;}<br>
@@ -2848,8 +2946,8 @@ $items[face];            产品封面图<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=product_class_hidden&amp;groupname=abc&amp;id=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=product_class_hidden&amp;groupname=abc&amp;id=123<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">	  {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;}<br>
@@ -2874,8 +2972,8 @@ $items[face];            产品封面图<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=product_class_get<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=product_class_get<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">	  {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;,body:[]}<br>
@@ -2906,8 +3004,8 @@ $items[face];            产品封面图<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=goods_group_add<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=goods_group_add<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">	  {&quot;status&quot;:1,&quot;message&quot;:&quot;ok&quot;,id:123}<br>
@@ -2940,8 +3038,8 @@ $items[face];            产品封面图<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=goods_group_del&amp;groupid=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=goods_group_del&amp;groupid=123<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">	  {&quot;status&quot;:0,&quot;message&quot;:&quot;参数丢失&quot;}<br>
@@ -2983,8 +3081,8 @@ $items[face];            产品封面图<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=goods_add_class2group&amp;classid=123&amp;groupid=123&amp;shoptype=0<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=goods_add_class2group&amp;classid=123&amp;groupid=123&amp;shoptype=0<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">	  {&quot;status&quot;:0,&quot;message&quot;:&quot;参数丢失&quot;}<br>
@@ -3019,8 +3117,8 @@ $items[face];            产品封面图<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=goods_remove_class2group&amp;classid=123&amp;groupid=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=goods_remove_class2group&amp;classid=123&amp;groupid=123<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">	  {&quot;status&quot;:0,&quot;message&quot;:&quot;参数丢失&quot;}<br>
@@ -3046,8 +3144,8 @@ $items[face];            产品封面图<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=goods_groupList<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=goods_groupList<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">	  {&quot;status&quot;:0,&quot;message&quot;:&quot;参数丢失&quot;}<br>
@@ -3082,8 +3180,8 @@ $items[face];            产品封面图<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=goods_groupEdit&amp;groupid=123&amp;groupname=abc<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=goods_groupEdit&amp;groupid=123&amp;groupname=abc<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">	  {&quot;status&quot;:0,&quot;message&quot;:&quot;参数丢失&quot;}<br>
@@ -3120,8 +3218,8 @@ $items[face];            产品封面图<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=goods_group_list&amp;groupid=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=goods_group_list&amp;groupid=123<br/>
         返回结果:JSON<br/>
         ----------返回的结果有如下几种：---------- </div>
 	  <div class="pre">	  {&quot;status&quot;:0,&quot;message&quot;:&quot;参数丢失&quot;}<br>
@@ -3163,8 +3261,8 @@ $items[face];            产品封面图<br>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=album_list&amp;page=1&amp;pageno=20&amp;keyword=''<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=album_list&amp;page=1&amp;pageno=20&amp;keyword=''<br/>
         返回结果:JSON
         <br/>
         ----------返回的结果有如下几种：---------- </div>
@@ -3209,8 +3307,8 @@ body[0]['face']</td>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=album_add&amp;title=标题&amp;face=封面.jpg&amp;body=[]<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=album_add&amp;title=标题&amp;face=封面.jpg&amp;body=[]<br/>
         返回结果:JSON
         <br/>
         ----------返回的结果有如下几种：---------- </div>
@@ -3244,8 +3342,8 @@ body[0]['face']</td>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=album_del&amp;delid=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=album_del&amp;delid=123<br/>
         返回结果:JSON
         <br/>
         ----------返回的结果有如下几种：---------- </div>
@@ -3280,8 +3378,8 @@ body[0]['face']</td>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=album_get&amp;id=123<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=album_get&amp;id=123<br/>
         返回结果:JSON
         <br/>
         ----------返回的结果有如下几种：---------- </div>
@@ -3327,8 +3425,8 @@ body[0]['face']</td>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-DEMO:&nbsp;&nbsp;http://www.rich2020.com/block/api_edit.php?action=album_edit&amp;title=标题&amp;face=封面.jpg&amp;body=[]<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+DEMO:&nbsp;&nbsp;http://www.rich2020.com/move/api_edit.php?action=album_edit&amp;title=标题&amp;face=封面.jpg&amp;body=[]<br/>
         返回结果:JSON
         <br/>
         ----------返回的结果有如下几种：---------- </div>
@@ -3382,8 +3480,8 @@ $param['hide_bottom']=页面隐藏底部区</td>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:http://www.rich2020.com/block/api_edit.php?action=site_set&amp;languageID=0&amp;param=[]<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=site_set&amp;languageID=0&amp;param=[]<br/>
         返回结果:JSON字符串<br/>
         ----------返回的结果有如下几种：----------<br/>
       </div>
@@ -3425,8 +3523,8 @@ $param['hide_bottom']=页面隐藏底部区</td>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:http://www.rich2020.com/block/api_edit.php?action=language_set&amp;languageList=[]&amp;defaultLanguage=Chinese<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=language_set&amp;languageList=[]&amp;defaultLanguage=Chinese<br/>
         返回结果:JSON字符串<br/>
         ----------返回的结果有如下几种：----------<br/>
       </div>
@@ -3460,8 +3558,8 @@ $param['hide_bottom']=页面隐藏底部区</td>
         </tbody>
       </table>
       <div class="readme"> 调用方式:HTTP POST<br/>
-        URL:http://www.rich2020.com/block/api_edit.php<br/>
-        DEMO:http://www.rich2020.com/block/api_edit.php?action=site_get&amp;languageID=0 <br>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=site_get&amp;languageID=0 <br>
         返回结果:JSON字符串<br/>
         ----------返回的结果有如下几种：----------<br/>
       </div>
@@ -3474,11 +3572,1350 @@ $param['hide_bottom']=页面隐藏底部区</td>
         </p>
       </div>
 		
+		
+      <a name="67"></a><hr />
+      <div class="m_title">图文网页 列出或者查找所有图文网页</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>textpic_list</td>
+          </tr>
+          <tr>
+            <td class="label">page</td>
+            <td>int</td>
+            <td>页码</td>
+          </tr>
+          <tr>
+            <td class="label">pageno</td>
+            <td>int</td>
+            <td>单页显示条数</td>
+          </tr>
+          <tr>
+            <td class="label">keyword</td>
+            <td>string</td>
+            <td>搜索关键 字 </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=textpic_list<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;,<br>
+&quot;body&quot;:[]<br>
+}        </p>
+      </div>
+		<br><br>
+		
+		
+		
+      <a name="68"></a><hr />
+      <div class="m_title">图文网页 删除</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>textpic_del</td>
+          </tr>
+          <tr>
+            <td class="label">delid</td>
+            <td>array</td>
+            <td>要删除的记录数组</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=textpic_del&amp;delid=array<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;<br>
+}
+        </p>
+      </div>
+		<br><br>
+		
+		
+      <a name="69"></a><hr />
+      <div class="m_title">图文网页 获取指定ID的内容</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>textpic_get</td>
+          </tr>
+          <tr>
+            <td class="label">id</td>
+            <td>int</td>
+            <td>记录的ID</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=textpic_get&amp;id=123<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;,<br>
+&quot;body&quot;:''<br>
+}        </p>
+      </div>
+		<br><br>
+		
+      <a name="70"></a><hr />
+      <div class="m_title">图文网页 添加或者修改 </div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>textpic_edit</td>
+          </tr>
+          <tr>
+            <td class="label">id</td>
+            <td>int</td>
+            <td>记录的ID</td>
+          </tr>
+          <tr>
+            <td class="label">title</td>
+            <td>text</td>
+            <td>标题</td>
+          </tr>
+          <tr>
+            <td class="label">body</td>
+            <td>text</td>
+            <td>正文</td>
+          </tr>
+          <tr>
+            <td class="label">css</td>
+            <td>text</td>
+            <td>CSS代码</td>
+          </tr>
+          <tr>
+            <td class="label">js</td>
+            <td>text</td>
+            <td>JS代码</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=textpic_edit&amp;id=123&amp;title=1&amp;body=123&amp;css=123&amp;js=321<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;<br>
+}        </p>
+      </div>
+		<br><br>
+      <a name="71"></a><hr />
+      <div class="m_title">调查问卷API 列出或者查找所有 </div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>survey_list</td>
+          </tr>
+          <tr>
+            <td class="label">groupid</td>
+            <td>int</td>
+            <td>分类ID =0则显示全部</td>
+          </tr>
+          <tr>
+            <td class="label">page</td>
+            <td>int</td>
+            <td>页码</td>
+          </tr>
+          <tr>
+            <td class="label">pageno</td>
+            <td>int</td>
+            <td>单页显示条数</td>
+          </tr>
+          <tr>
+            <td class="label">keyword</td>
+            <td>string</td>
+            <td>搜索关键 字 </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=survey_list&amp;groupid=0<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;,<br>
+&quot;body&quot;:[]<br>
+}        </p>
+      </div>
+		<br><br>
 		<p><br>
 		  <br>
 		  <br>
 		  <br>
 		
+      <a name="72"></a><hr />
+      <div class="m_title">调查问卷API 清除指定ID投票数据 </div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>survey_clear</td>
+          </tr>
+          <tr>
+            <td class="label">id</td>
+            <td>int</td>
+            <td>投票ID</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=survey_clear&amp;id=1<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;<br>
+}        </p>
+      </div>
+		<br><br>
+      <a name="73"></a><hr />
+      <div class="m_title">调查问卷API 添加 </div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>survey_add</td>
+          </tr>
+          <tr>
+            <td class="label">question</td>
+            <td>text</td>
+            <td>投票标题</td>
+          </tr>
+          <tr>
+            <td class="label">answer</td>
+            <td>array</td>
+            <td>选 项 </td>
+          </tr>
+          <tr>
+            <td class="label">choice</td>
+            <td>int</td>
+            <td>类别 0=单选 1=多选 </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=survey_add&amp;question=123&amp;answer=array&amp;choice=1<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;<br>
+}        </p>
+      </div>
+		<br><br>
+      <a name="732"></a><hr />
+      <div class="m_title">调查问卷API 删除 </div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>survey_del</td>
+          </tr>
+          <tr>
+            <td class="label">delid</td>
+            <td>array</td>
+            <td>要删除的记录ID 数组 </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=survey_del&amp;delid=array<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;<br>
+}        </p>
+      </div>
+		<br><br>
+      <a name="733"></a><hr />
+      <div class="m_title">调查问卷API 获取 </div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>survey_get</td>
+          </tr>
+          <tr>
+            <td class="label">id</td>
+            <td>int</td>
+            <td>记录ID </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=survey_get&amp;id=123<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;,<br>
+&quot;body&quot;:{}<br>
+}        </p>
+      </div>
+		<br><br>
+      <a name="74"></a><hr />
+      <div class="m_title">调查问卷API 修改 </div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>survey_edit</td>
+          </tr>
+          <tr>
+            <td class="label">id</td>
+            <td>int</td>
+            <td>记录ID </td>
+          </tr>
+          <tr>
+            <td class="label">question</td>
+            <td>text</td>
+            <td>问题</td>
+          </tr>
+          <tr>
+            <td class="label">answer</td>
+            <td>text</td>
+            <td>一行一个回答选项</td>
+          </tr>
+          <tr>
+            <td class="label">choice</td>
+            <td>text</td>
+            <td>0=单选 1=多选 </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=survey_edit&amp;id=123<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;<br>
+}        </p>
+      </div>
+		<br><br>
+      <a name="75"></a><hr />
+      <div class="m_title">友情链接API 列表 </div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>weblink_list</td>
+          </tr>
+          <tr>
+            <td class="label">page</td>
+            <td>int</td>
+            <td>页码</td>
+          </tr>
+          <tr>
+            <td class="label">pageno</td>
+            <td>int</td>
+            <td>每页显示条数</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=weblink_list&amp;page=1<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;,<br>
+&quot;body&quot;:[]<br>
+        } </p>
+      </div>
+		<br><br>
+      <a name="76"></a><hr />
+      <div class="m_title">友情链接API 删除 </div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>weblink_del</td>
+          </tr>
+          <tr>
+            <td class="label">delid</td>
+            <td>array</td>
+            <td>删除记录条数</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=weblink_del&amp;delid=1<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;<br>
+        } </p>
+      </div>
+		<br><br>
+      <a name="761"></a><hr />
+      <div class="m_title">友情链接API 获取 </div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>weblink_get</td>
+          </tr>
+          <tr>
+            <td class="label">id</td>
+            <td>int</td>
+            <td>id</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=weblink_get&amp;id=1<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;<br>
+&quot;body&quot;:&quot;[]&quot;<br>
+        } </p>
+      </div>
+		<br><br>
+		<br><br>
+      <a name="77"></a><hr />
+      <div class="m_title">友情链接API 修改 </div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>weblink_edit</td>
+          </tr>
+          <tr>
+            <td class="label">id</td>
+            <td>int</td>
+            <td>id</td>
+          </tr>
+          <tr>
+            <td class="label">groupid</td>
+            <td>int</td>
+            <td>分组ID</td>
+          </tr>
+          <tr>
+            <td class="label">urlname</td>
+            <td>text</td>
+            <td>链接文字</td>
+          </tr>
+          <tr>
+            <td class="label">url</td>
+            <td>text</td>
+            <td>链接地址</td>
+          </tr>
+          <tr>
+            <td class="label">picture</td>
+            <td>text</td>
+            <td>图片 filename 不是URL </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=weblink_edit&amp;id=1<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;<br>
+        } </p>
+      </div>
+		<br><br>
+      <a name="78"></a><hr />
+      <div class="m_title">友情链接API 列出所有分类</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>weblink_groupList</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=weblink_groupList<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;,<br>
+&quot;body&quot;:[]<br>
+        } </p>
+      </div>
+		<br><br>
+		<br><br>
+      <a name="79"></a><hr />
+      <div class="m_title">友情链接API 添加分类</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>weblink_groupADD</td>
+          </tr>
+          <tr>
+            <td class="label">groupname</td>
+            <td>text</td>
+            <td>分类名称 </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=weblink_groupADD&amp;groupname=123<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;<br>
+        } </p>
+      </div>
+		<br><br>
+      <a name="80"></a><hr />
+      <div class="m_title">友情链接API 修改分类</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>weblink_groupEdit</td>
+          </tr>
+          <tr>
+            <td class="label">groupname</td>
+            <td>text</td>
+            <td>分类名称 </td>
+          </tr>
+          <tr>
+            <td class="label">groupid</td>
+            <td>text</td>
+            <td>分类id</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=weblink_groupEdit&amp;groupname=123&amp;groupid=123<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;<br>
+        } </p>
+      </div>
+		<br><br>
+		<br><br>
+		
+      <a name="81"></a><hr />
+      <div class="m_title">友情链接API 删除分类</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>weblink_groupDel</td>
+          </tr>
+          <tr>
+            <td class="label">groupid</td>
+            <td>text</td>
+            <td>分类id</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=weblink_groupDel&amp;groupid=123<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;<br>
+        } </p>
+      </div>
+		<br><br>
+		
+		
+		
+		
+		
+      <a name="82"></a><hr />
+      <div class="m_title">支付管理API __________列表</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>pay_list</td>
+          </tr>
+          <tr>
+            <td class="label">pay_type</td>
+            <td>text</td>
+            <td>选填 空=所有 pc=电脑 mobile=手机 mini=微信小程序 </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=pay_list<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+              
+          "status":1,<br>
+              
+          "message":"操作成功",<br>
+              
+          "total":13,<br>
+              
+          "body":[<br>
+                  
+          {<br>
+                      
+          "id":"1",<br>
+                      
+          "pay_name":"alipay",<br>
+                      
+          "yc":"0",<br>
+                      
+          "pr":"0",<br>
+                      
+          "pay_logo":"logo.png",<br>
+                      
+          "pay_type":"pc",<br>
+                      
+          "pay_desc":"支付宝"<br>
+                  
+          },<br>
+                  
+          {<br>
+                      
+          "id":"2",<br>
+                      
+          "pay_name":"paypal",<br>
+                      
+          "yc":"0",<br>
+                      
+          "pr":"0",<br>
+                      
+          "pay_logo":"paypal_logo.gif",<br>
+                      
+          "pay_type":"pc",<br>
+                      
+          "pay_desc":"贝宝"<br>
+                  
+          },<br>
+                  
+          {<br>
+                      
+          "id":"3",<br>
+                      
+          "pay_name":"tenpay",<br>
+                      
+          "yc":"0",<br>
+                      
+          "pr":"0",<br>
+                      
+          "pay_logo":"tenpay_logo.gif",<br>
+                      
+          "pay_type":"pc",<br>
+                      
+          "pay_desc":"财付通"<br>
+                  
+          },<br>
+                  
+          {<br>
+                      
+          "id":"4",<br>
+                      
+          "pay_name":"chinabank",<br>
+                      
+          "yc":"0",<br>
+                      
+          "pr":"0",<br>
+                      
+          "pay_logo":"chinabank_logo.gif",<br>
+                      
+          "pay_type":"pc",<br>
+                      
+          "pay_desc":"网银在线"<br>
+                  
+          },<br>
+                  
+          {<br>
+                      
+          "id":"5",<br>
+                      
+          "pay_name":"beijing",<br>
+                      
+          "yc":"0",<br>
+                      
+          "pr":"0",<br>
+                      
+          "pay_logo":"beijing_logo.gif",<br>
+                      
+          "pay_type":"pc",<br>
+                      
+          "pay_desc":"首信支付"<br>
+                  
+          },<br>
+                  
+          {<br>
+                      
+          "id":"6",<br>
+                      
+          "pay_name":"yeepay",<br>
+                      
+          "yc":"0",<br>
+                      
+          "pr":"0",<br>
+                      
+          "pay_logo":"logo.jpg",<br>
+                      
+          "pay_type":"pc",<br>
+                      
+          "pay_desc":"易宝支付"<br>
+                  
+          },<br>
+                  
+          {<br>
+                      
+          "id":"7",<br>
+                      
+          "pay_name":"99bill",<br>
+                      
+          "yc":"0",<br>
+                      
+          "pr":"0",<br>
+                      
+          "pay_logo":"99bill.gif",<br>
+                      
+          "pay_type":"pc",<br>
+                      
+          "pay_desc":"快钱"<br>
+                  
+          },<br>
+                  
+          {<br>
+                      
+          "id":"8",<br>
+                      
+          "pay_name":"498",<br>
+                      
+          "yc":"0",<br>
+                      
+          "pr":"0",<br>
+                      
+          "pay_logo":"498.png",<br>
+                      
+          "pay_type":"pc",<br>
+                      
+          "pay_desc":"498"<br>
+                  
+          },<br>
+                  
+          {<br>
+                      
+          "id":"10",<br>
+                      
+          "pay_name":"allinpay",<br>
+                      
+          "yc":"0",<br>
+                      
+          "pr":"0",<br>
+                      
+          "pay_logo":"allinpaylogo.gif",<br>
+                      
+          "pay_type":"pc",<br>
+                      
+          "pay_desc":"通联支付"<br>
+                  
+          },<br>
+                  
+          {<br>
+                      
+          "id":"11",<br>
+                      
+          "pay_name":"baofoo",<br>
+                      
+          "yc":"0",<br>
+                      
+          "pr":"0",<br>
+                      
+          "pay_logo":"baofoo.gif",<br>
+                      
+          "pay_type":"pc",<br>
+                      
+          "pay_desc":"宝付支付"<br>
+                  
+          },<br>
+                  
+          {<br>
+                      
+          "id":"12",<br>
+                      
+          "pay_name":"cmbchina",<br>
+                      
+          "yc":"0",<br>
+                      
+          "pr":"0",<br>
+                      
+          "pay_logo":"cmbchina_logo.gif",<br>
+                      
+          "pay_type":"pc",<br>
+                      
+          "pay_desc":"招商银行"<br>
+                  
+          },<br>
+                  
+          {<br>
+                      
+          "id":"13",<br>
+                      
+          "pay_name":"shengpay",<br>
+                      
+          "yc":"0",<br>
+                      
+          "pr":"0",<br>
+                      
+          "pay_logo":"logo_shengpay.png",<br>
+                      
+          "pay_type":"pc",<br>
+                      
+          "pay_desc":"盛付通"<br>
+                  
+          },<br>
+                  
+          {<br>
+                      
+          "id":"14",<br>
+                      
+          "pay_name":"wxpay",<br>
+                      
+          "yc":"0",<br>
+                      
+          "pr":"0",<br>
+                      
+          "pay_logo":"logo.png",<br>
+                      
+          "pay_type":"mini",<br>
+                      
+          "pay_desc":"微信支付"<br>
+                  
+          }<br>
+              
+          ]<br>
+        }</p>
+      </div>
+		<br><br>
+      <a name="83"></a><hr />
+      <div class="m_title">支付管理API __________添加 </div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>pay_edit</td>
+          </tr>
+          <tr>
+            <td class="label">id</td>
+            <td>int</td>
+            <td>0=添加 &gt;0为修改 </td>
+          </tr>
+          <tr>
+            <td class="label">pay_name</td>
+            <td>text</td>
+            <td>支付英文代号</td>
+          </tr>
+          <tr>
+            <td class="label">pay_user</td>
+            <td>text</td>
+            <td>商户号</td>
+          </tr>
+          <tr>
+            <td class="label">pay_mdkey</td>
+            <td>text</td>
+            <td>密钥</td>
+          </tr>
+          <tr>
+            <td class="label">yc</td>
+            <td>int</td>
+            <td> 0=显示 1=隐藏</td>
+          </tr>
+          <tr>
+            <td class="label">pr</td>
+            <td>int</td>
+            <td>排序值 值越大越在前面 </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=pay_edit&amp;id=123<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;<br>
+        } </p>
+      </div>
+		<br><br>
+      <a name="84"></a><hr />
+      <div class="m_title">支付管理API __________隐藏显示 </div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>pay_hidden</td>
+          </tr>
+          <tr>
+            <td class="label">chooseID</td>
+            <td>int</td>
+            <td>要操作的对象的ID  </td>
+          </tr>
+          <tr>
+            <td class="label">yc</td>
+            <td>int</td>
+            <td>  0=显示 1=隐藏</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=pay_hidden&amp;chooseID=11&amp;yc=0<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;<br>
+        } </p>
+      </div>
+		<br><br>
+      <a name="85"></a><hr />
+      <div class="m_title">支付管理API __________获取内容</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>pay_get</td>
+          </tr>
+          <tr>
+            <td class="label">id</td>
+            <td>int</td>
+            <td>id</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=pay_get&amp;id=123<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+              
+          "status":1,<br>
+              
+          "message":"操作成功",<br>
+              
+          "body":{<br>
+                  
+          "id":"1",<br>
+                  
+          "pay_name":"alipay",<br>
+                  
+          "pay_user":null,<br>
+                  
+          "pay_mdkey":null,<br>
+                  
+          "yc":"0",<br>
+                  
+          "pr":"0",<br>
+                  
+          "user":"1",<br>
+                  
+          "appid":"1"<br>
+              
+          }<br>
+        }</p>
+      </div>
+		<br><br>
+		
+      <a name="86"></a><hr />
+      <div class="m_title">支付管理API __________获取所有支持的支付接口</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>pay_getPayList</td>
+          </tr>
+          <tr>
+            <td class="label">id</td>
+            <td>int</td>
+            <td>id</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_edit.php<br/>
+        DEMO:http://www.rich2020.com/move/api_edit.php?action=pay_getPayList<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+              
+          "498":{<br>
+                  
+          "pay_logo":"498.png",<br>
+                  
+          "pay_type":"pc",<br>
+                  
+          "pay_desc":"498"<br>
+              
+          },<br>
+              
+          "alipay":{<br>
+                  
+          "pay_logo":"logo.png",<br>
+                  
+          "pay_type":"pc",<br>
+                  
+          "pay_desc":"支付宝"<br>
+              
+          },<br>
+              
+          "wxpay":{<br>
+                  
+          "pay_logo":"logo.png",<br>
+                  
+          "pay_type":"mini",<br>
+                  
+          "pay_desc":"微信支付"<br>
+              
+          },<br>
+              
+          "allinpay":{<br>
+                  
+          "pay_logo":"allinpaylogo.gif",<br>
+                  
+          "pay_type":"pc",<br>
+                  
+          "pay_desc":"通联支付"<br>
+              
+          },<br>
+              
+          "shengpay":{<br>
+                  
+          "pay_logo":"logo_shengpay.png",<br>
+                  
+          "pay_type":"pc",<br>
+                  
+          "pay_desc":"盛付通"<br>
+              
+          },<br>
+              
+          "cmbchina":{<br>
+                  
+          "pay_logo":"cmbchina_logo.gif",<br>
+                  
+          "pay_type":"pc",<br>
+                  
+          "pay_desc":"招商银行"<br>
+              
+          },<br>
+              
+          "99bill":{<br>
+                  
+          "pay_logo":"99bill.gif",<br>
+                  
+          "pay_type":"pc",<br>
+                  
+          "pay_desc":"快钱"<br>
+              
+          },<br>
+              
+          "baofoo":{<br>
+                  
+          "pay_logo":"baofoo.gif",<br>
+                  
+          "pay_type":"pc",<br>
+                  
+          "pay_desc":"宝付支付"<br>
+              
+          },<br>
+              
+          "yeepay":{<br>
+                  
+          "pay_logo":"logo.jpg",<br>
+                  
+          "pay_type":"pc",<br>
+                  
+          "pay_desc":"易宝支付"<br>
+              
+          },<br>
+              
+          "chinabank":{<br>
+                  
+          "pay_logo":"chinabank_logo.gif",<br>
+                  
+          "pay_type":"pc",<br>
+                  
+          "pay_desc":"网银在线"<br>
+              
+          },<br>
+              
+          "beijing":{<br>
+                  
+          "pay_logo":"beijing_logo.gif",<br>
+                  
+          "pay_type":"pc",<br>
+                  
+          "pay_desc":"首信支付"<br>
+              
+          },<br>
+              
+          "tenpay":{<br>
+                  
+          "pay_logo":"tenpay_logo.gif",<br>
+                  
+          "pay_type":"pc",<br>
+                  
+          "pay_desc":"财付通"<br>
+              
+          },<br>
+              
+          "paypal":{<br>
+                  
+          "pay_logo":"paypal_logo.gif",<br>
+                  
+          "pay_type":"pc",<br>
+                  
+          "pay_desc":"贝宝"<br>
+              
+          }<br>
+        }</p>
+      </div>
+		<br><br>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<p><br>
+		  <br>
+		  <br>
+		  <br>
 		
 		
 		
@@ -3550,7 +4987,7 @@ datamanager_classlist	列出所有分类<br>
           //		8:压缩文档<br>
           //		99:其它</p>
 		  <div>
-			DEMO: http://www.rich2020.com/block/api_edit.php?action=filemanager_list
+			DEMO: http://www.rich2020.com/move/api_edit.php?action=filemanager_list
 		  </div>
 		  <div>
 			{"status":1,"message":"\u64cd\u4f5c\u6210\u529f","total":1,"page":1,"maxpage":1,"body":[{"id":"164","user":"1","pic":"111111111.jpg","original":"a.jpg","filetype":"1","size":"0","time":"2020-05-14 15:53:39","classid":"0","appid":"1","path":"http:\/\/www.rich2020.com\/userlist\/1\/1\/userpic\/111111111.jpg"}]}

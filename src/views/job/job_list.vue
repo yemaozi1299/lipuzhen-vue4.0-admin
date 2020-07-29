@@ -273,10 +273,10 @@ export default {
                 this.page = page
                 return this.dataInitial()
             }
-            this.$route.push({})
+            this.$router.push({})
         },
         pathEdit () {
-            this.$route.push({
+            this.$router.push({
                 name: "addJob",
                 params: {
                     pageid: this.page
