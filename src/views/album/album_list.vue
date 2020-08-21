@@ -31,6 +31,9 @@
             <template slot="sider"></template>
             <template slot="footer"></template>
         </tables>
+        <Modal title="查看图片" v-model="visible">
+            <img :src="imgName" v-if="visible" style="width: 100%;" />
+        </Modal>
     </Card>
 </template>
 
@@ -107,6 +110,8 @@ export default {
             total: 0,
             loading: false,
             isSelectAll: false,
+            visible: false,
+            imgName: ""
         }
     },
     created () {
@@ -123,6 +128,11 @@ export default {
         "$route": "fetchData"
     },
     methods: {
+        handleView (name) {
+            console.log(name)
+            this.imgName = name
+            this.visible = true
+        },
         fetchData () {
             this.page = this.$route.params.pageid ? parseInt(this.$route.params.pageid) : 1;
             this.dataInitial()

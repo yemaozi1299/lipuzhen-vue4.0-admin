@@ -180,6 +180,9 @@
 		  <li><a href="#17">发表留言</a> </li>
 
 		  <li><a href="#18">支付列表</a> </li>
+		  <li><a href="#19">获取产品详细数据</a> </li>
+		  <li><a href="#20">投票调查__投票</a> </li>
+		  <li><a href="#21">投票调查__获取</a> </li>
 
 		  <li><a href="#other">其它API</a> </li>
 
@@ -920,11 +923,133 @@ total:0,<br>
 		
 		
 		
+      <a name="19"></a><hr />
+      <div class="m_title">获取产品详细数据</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>product_get</td>
+          </tr>
+          <tr>
+            <td class="label">id</td>
+            <td>int</td>
+            <td>必填 产品ID</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_member.php<br/>
+        DEMO:http://www.rich2020.com/move/api_member.php?action=product_get&id=1<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;,<br>
+body:[],<br>
+total:0,<br>
+        } </p>
+      </div>
+		<br><br>
+
 		
 		
 		
 		
 		
+      <a name="20"></a><hr />
+      <div class="m_title">投票调查__投票</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>survey</td>
+          </tr>
+          <tr>
+            <td class="label">surveyid</td>
+            <td>int</td>
+            <td>必填 问题ID</td>
+          </tr>
+          <tr>
+            <td class="label">answerID</td>
+            <td>单选为int 多选为数组array</td>
+            <td>必填 投票ID </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_member.php<br/>
+        DEMO:http://www.rich2020.com/move/api_member.php?action=survey&surveyid=1&answerID=2<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;,<br>
+body:[],<br>
+        } </p><br>{"status":0,"message":"查无此记录"}
+      </div>
+		<br><br>
+
+		
+		
+		
+		
+		
+		
+		
+		
+      <a name="21"></a><hr />
+      <div class="m_title">投票调查_获取</div>
+      <table cellpadding="0" cellspacing="0" width="100%">
+        <tbody>
+          <tr>
+            <td class="label">参数</td>
+            <td class="label">类型</td>
+            <td class="label_more">说明</td>
+          </tr>
+          <tr>
+            <td class="label">action</td>
+            <td>string</td>
+            <td>survey_get</td>
+          </tr>
+          <tr>
+            <td class="label">surveyid</td>
+            <td>int</td>
+            <td>必填 问题ID</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="readme"> 调用方式:HTTP POST<br/>
+        URL:http://www.rich2020.com/move/api_member.php<br/>
+        DEMO:http://www.rich2020.com/move/api_member.php?action=survey_get&surveyid=1<br>
+        返回结果:JSON字符串<br/>
+        ----------返回的结果有如下几种：----------<br/>
+      </div>
+      <div class="pre">
+        <p>{<br>
+&quot;status&quot;:1,<br>
+&quot;message&quot;:&quot;ok&quot;,<br>
+body:[],<br>
+        } </p><br>{"status":0,"message":"查无此记录"}
+      </div>
+		<br><br>
+
 		
 		
 		

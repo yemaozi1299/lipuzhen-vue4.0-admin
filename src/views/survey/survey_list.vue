@@ -23,7 +23,7 @@
                     class="ant-btn mg-r-20"
                     v-on:click="pathEdit"
                 >
-                    <Icon type="md-add" />添加图文网页
+                    <Icon type="md-add" />添加投票调查
                 </Button>
             </template>
             <template slot="footer"></template>
@@ -43,26 +43,30 @@ export default {
     data () {
         return {
             columns: [{
-                title: "标题",
-                key: "title"
+                title: "投票标题",
+                key: "question",
             }, {
-                title: '操作',
-                width: 300,
-                render: (h, params) => {
+                'title': '类别',
+                'render': (h, params) => {
+                    return h('div', {}, params.row.choice == "1" ? "多选" : "单选")
+                }
+            }, {
+                'title': '操作',
+                'render': (h, params) => {
+                    var isTop = 0
                     return h('div', [
                         h(Buttons, {
                             props: {
                                 border: true
                             },
-                            style: {
-                            },
                             on: {
                                 'click': (val) => {
+                                    console.log(val)
                                     this.$router.push({
-                                        name: "textpicAdd",
+                                        name: "addSurvey",
                                         params: {
                                             pageid: this.page,
-                                            textid: params.row.id
+                                            sid: params.row.id
                                         }
                                     });
                                 }
@@ -70,19 +74,43 @@ export default {
                         }, '编辑'),
                         h(Buttons, {
                             props: {
-                                border: false,
-                                type: 'error'
-                            },
-                            style: {
-
+                                border: true,
+                                type: 'warning'
                             },
                             on: {
                                 'click': (val) => {
-                                    this.delText(params.row);
+                                    this.$Modal.confirm({
+                                        title: '确认清除',
+                                        content: '<p>确认清除投票数据?</p>',
+                                        onOk: () => {
+                                            this.surveyClear(params.row);
+                                        },
+                                        onCancel: () => {
+                                        }
+                                    });
+                                    // this.removeLink(params.row)
+                                }
+                            }
+                        }, '清空数据'),
+                        h(Buttons, {
+                            props: {
+                                border: false,
+                                type: 'error'
+                            },
+                            on: {
+                                'click': (val) => {
+                                    this.$Modal.confirm({
+                                        title: '确认删除',
+                                        content: '<p>确认删除该投票吗?</p>',
+                                        onOk: () => {
+                                            this.removeSurvey(params.row)
+                                        },
+                                        onCancel: () => {
+                                        }
+                                    });
                                 }
                             }
                         }, '删除'),
-
                     ])
                 }
             }],
@@ -117,18 +145,14 @@ export default {
         dataInitial () {
             this.$http.request({
                 method: "POST",
-                url: "/api_edit.php?action=textpic_list",
+                url: "/api_edit.php?action=survey_list",
                 params: {
-                    page: this.page
+                    page: this.page,
                 }
             }).then((res) => {
-                if (res.data.status == 1) {
-                    this.tableData = res.data.body || [];
-                } else {
-
-                }
+                this.tableData = res.data.body || [];
                 console.log(res);
-            })
+            });
         },
         chooseEdit: function (selection) {
             var chooseID = []
@@ -142,35 +166,44 @@ export default {
                 this.page = page
                 return this.dataInitial()
             }
-            this.$router.push({
-                name: "textpic",
-                params: {
-                    pageid: this.page,
-                }
-            });
+            this.$route.push({})
         },
-
         pathEdit () {
             this.$router.push({
-                name: "textpicAdd",
+                name: "addSurvey",
                 params: {
                     pageid: this.page,
-                    textid: 0
+                    sid: 0
                 }
             });
         },
-        delText (params) {
-            console.log(params);
+        surveyClear (params) {
             this.$http.request({
                 method: "POST",
-                url: "/api_edit.php?action=textpic_del",
+                url: "/api_edit.php?action=survey_clear",
+                params: {
+                    id: params.id
+                }
+            }).then((res) => {
+                if (res.data.status == 1) {
+                    this.$Message.success("清除成功");
+                }
+                console.log(res);
+            });
+        },
+        removeSurvey (params) {
+            this.$http.request({
+                method: "POST",
+                url: "/api_edit.php?action=survey_del",
                 params: {
                     delid: params.id
                 }
             }).then((res) => {
-
+                if (res.data.status == 1) {
+                    this.$Message.success("删除成功");
+                }
                 console.log(res);
-            })
+            });
         }
     }
 }

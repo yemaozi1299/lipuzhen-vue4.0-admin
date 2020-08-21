@@ -64,10 +64,14 @@ class HttpRequest {
 			//删除url
 			this.destroy(url)
 			const { data, status } = res
-			if (data.status == 0) {
+			if (data && (data.status == 1 || data.message == "查无记录")) {
+				return { data, status }
+			} else {
 				console.log(data, url, res.config);
+
+				return Promise.reject(url)
 			}
-			return { data, status }
+
 		}, error => {
 			console.log(error, url);
 			LoadingBar.error();

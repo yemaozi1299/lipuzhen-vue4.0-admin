@@ -92,12 +92,12 @@ import minLogo from '@/assets/images/logo-min.png'
 import maxLogo from '@/assets/images/logo.png'
 // import TagsNav from './components/tags-nav'
 // import User from './components/user'
-import './main.less'
+import './agent.less'
 import {
     getMenuByRouter
 } from '@/libs/util'
 export default {
-    name: 'Main',
+    name: 'Agent',
     components: {
         SideMenu,
         HeaderBar
@@ -116,7 +116,7 @@ export default {
         '$route': 'fetchData',
     },
     created () {
-        console.log(this.$store.getters, 2222222222222222222222)
+        console.log(this.$store.getters.agentList);
     },
     computed: {
         rotateIcon () {
@@ -136,7 +136,7 @@ export default {
         //     return list
         // },
         menuList () {
-            return this.$store.getters.menuList
+            return this.$store.getters.agentList
         }
     },
     methods: {

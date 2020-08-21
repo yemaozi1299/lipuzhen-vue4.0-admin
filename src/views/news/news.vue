@@ -37,7 +37,8 @@
                         <label
                             class="ant-radio-button-wrapper"
                             :class="{
-                                'ant-radio-button-wrapper-checked': classid == 0
+                                'ant-radio-button-wrapper-checked':
+                                    classid == 0,
                             }"
                             v-on:click="classStateEdit(0)"
                         >
@@ -49,7 +50,7 @@
                                 :key="index"
                                 :class="{
                                     'ant-radio-button-wrapper-checked':
-                                        classid == item.id
+                                        classid == item.id,
                                 }"
                                 v-on:click="classStateEdit(item.id)"
                             >
@@ -77,7 +78,7 @@
                                     class="ant-radio-button-wrapper ant-wrapper-children"
                                     :class="{
                                         'ant-radio-button-wrapper-checked':
-                                            classid == items.id
+                                            classid == items.id,
                                     }"
                                     v-on:click="classStateEdit(items.id)"
                                 >
@@ -189,7 +190,7 @@
                                 @on-change="handleSelectAll"
                             >
                                 <span class="mg-l-10">已选</span
-                                ><span style="color:#3091F2">{{
+                                ><span style="color: #3091f2;">{{
                                     chooseID.length
                                 }}</span
                                 ><span> / {{ tableData.length }} 条新闻</span>
@@ -205,6 +206,9 @@
                 </Layout>
             </Layout>
         </Card>
+        <Modal title="查看图片" v-model="visible">
+            <img :src="imgName" v-if="visible" style="width: 100%;" />
+        </Modal>
     </div>
 </template>
 <script>
@@ -225,6 +229,26 @@ export default {
                 type: 'selection',
                 width: 80,
                 align: 'center'
+            }, {
+                title: "封面",
+                width: 90,
+                'render': (h, params) => {
+                    return h('img', {
+                        attrs: {
+                            src: '' + params.row.pic
+                        },
+                        style: {
+                            margin: '5px 0',
+                            width: '100%'
+                        },
+                        on: {
+                            click: () => {
+                                console.log(params.row);
+                                this.handleView(params.row.pic)
+                            }
+                        }
+                    })
+                }
             }, {
                 title: "新闻标题",
                 key: "title"
@@ -307,7 +331,9 @@ export default {
             loading: false,
             chooseID: [],
             isSelectAll: false,
-            uid: "0"
+            uid: "0",
+            visible: false,
+            imgName: ""
         }
     },
     created () {
@@ -325,6 +351,10 @@ export default {
         '$route': 'fetchData'
     },
     methods: {
+        handleView (name) {
+            this.imgName = name
+            this.visible = true
+        },
         fetchData () {
             this.page = this.$route.params.pageid ? parseInt(this.$route.params.pageid) : 1;
             this.dataInitial();

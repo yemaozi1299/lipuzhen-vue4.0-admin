@@ -1,4 +1,5 @@
-import Main from '@/components/main'
+import Main from '@/components/main';
+import Agent from '@/components/agent'
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
  * meta: {
@@ -23,11 +24,10 @@ import Main from '@/components/main'
 招聘系统
  * }
  */
-export default [
-	{
+export default {
+	main: [{
 		path: '/',
 		name: '_home',
-		redirect: '/home',
 		component: Main,
 		meta: {
 			notCache: true,
@@ -573,13 +573,48 @@ export default [
 				component: () => import('@/views/textpics/textpic_list.vue')
 			},
 			{
-				path: "/textpic/:pageid?/addTextpic/:textid?",
+				path: "/textpic/:pageid/addTextpic/:textid?",
 				name: "textpicAdd",
 				meta: {
 					title: "添加图文网页",
 					hideInMenu: true
 				},
 				component: () => import('@/views/textpics/textpic_add.vue')
+			},
+
+			{
+				path: "/weblink/:pageid?",
+				name: "weblink",
+				meta: {
+					title: "友情链接",
+				},
+				component: () => import('@/views/weblink/weblink_list.vue')
+			},
+			{
+				path: "/weblink/:pageid/addWeblink/:wid?",
+				name: "addWeblink",
+				meta: {
+					title: "添加友情链接",
+					hideInMenu: true
+				},
+				component: () => import('@/views/weblink/weblink_add.vue')
+			},
+			{
+				path: "/survey/:pageid?",
+				name: "survey",
+				meta: {
+					title: "投票调查",
+				},
+				component: () => import('@/views/survey/survey_list.vue')
+			},
+			{
+				path: "/survey/:pageid/addSurvey/:sid?",
+				name: "addSurvey",
+				meta: {
+					title: "添加投票调查",
+					hideInMenu: true
+				},
+				component: () => import('@/views/survey/survey_add.vue')
 			},
 
 		]
@@ -677,7 +712,6 @@ export default [
 		]
 	},
 
-
 	{
 		path: '/member',
 		component: Main,
@@ -736,8 +770,42 @@ export default [
 			hideInMenu: true
 		},
 		component: () => import('@/views/error-page/404.vue')
-	}
+	}],
+	agent: [
+		{
+			path: '/agent',
+			name: "agent_index",
+			component: Agent,
+			children: [
+				{
+					path: ':page?',
+					name: 'agent',
+					meta: {
+						title: '统计信息',
+						notCache: true,
+						icon: 'md-home'
+					},
+					component: () => import('@/views/agent-component/info.vue')
+				},
+			]
+		},
+		{
+			path: '/user',
+			name: 'agent_user',
+			component: Agent,
+			children: [
+				{
+					path: ':page?',
+					name: 'user',
+					meta: {
+						title: '企业列表',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/agent-component/user.vue')
+				},
+			]
 
-]
+		},
+	],
 
-
+}

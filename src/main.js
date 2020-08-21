@@ -29,7 +29,6 @@ Vue.use(iView);
 Vue.use(iviewArea);
 Vue.use(TreeTable)
 
-
 /* eslint-disable no-new */
 new Vue({
 	router,
