@@ -14,11 +14,7 @@ module.exports = {
 	// publicPath: "../../",
 	// 设为false打包时不生成.map文件
 	productionSourceMap: false,
-	chainWebpack: config => {
-		config.resolve.alias
-			.set('@', resolve('src')) // key,value自行定义，比如.set('@@', resolve('src/components'))
-			.set('_c', resolve('src/components'))
-	},
+
 	// 入口设置
 	devServer: {
 		// 告诉dev-server在服务器启动后打开浏览器，将其设置true为打开默认浏览器
@@ -45,6 +41,14 @@ module.exports = {
 				jquery: "jquery",
 				"window.jQuery": "jquery"
 			})
-		]
+		],
+		devtool: "source-map"
+	},
+	chainWebpack: config => {
+		config.resolve.alias
+			.set('@', resolve('src')) // key,value自行定义，比如.set('@@', resolve('src/components'))
+			.set('_c', resolve('src/components'));
+		//开发时用eval， 出现问题时用source-map调试
+		// config.devtool('source-map')
 	},
 }

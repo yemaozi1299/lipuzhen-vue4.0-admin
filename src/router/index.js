@@ -9,10 +9,10 @@ const { homeName } = config
 Vue.use(Router)
 
 
-var routesArr = [...routes.main, ...routes.agent];
+var routesArr = [...routes.main, ...routes.agent, ...routes.admin];
 const router = new Router({
 	routes: routesArr,
-	// mode: 'history',       //history模式，打包后在本地无法预览，需要上传到服务器上
+	// mode: 'history',       //history模式，路径上面不会出现/#/，打包后在本地无法预览，需要上传到服务器上
 	base: process.env.BASE_URL,
 	'linkActiveClass': 'active',
 });

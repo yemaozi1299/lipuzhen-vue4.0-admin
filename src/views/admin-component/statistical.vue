@@ -1,21 +1,21 @@
 <template>
     <div>
-        <div class="agent-info-content">
-            <div class="info-title">欢迎使用代理商平台</div>
-            <!-- <div class="info-user-table">
-				<Table :columns="userData.columns" :data="userData.data" style=""></Table>
-			</div> -->
-            <div class="info-agent-table">
-                <Table
-                    :columns="infoData.columns"
-                    :data="infoData.data"
-                ></Table>
-            </div>
-        </div>
+        <Card class="agent-info-content">
+            <p slot="title">欢迎使用超级管理员平台</p>
+            <tables v-model="infoData.data" :columns="infoData.columns">
+            </tables>
+        </Card>
     </div>
 </template>
 <script type="text/javascript">
+import Tables from "@/components/tables";
+import Buttons from "@/components/buttons";
 export default {
+    name: "",
+    components: {
+        Tables,
+        Buttons
+    },
     data: function () {
         return {
             infoData: {
@@ -27,8 +27,7 @@ export default {
                     },
                     {
                         title: ' ',
-                        key: 'level',
-                        className: 'demo-table-info-column',
+                        key: 'level'
                     }
                 ],
                 data: []
@@ -42,40 +41,32 @@ export default {
         get: function () {
             var _this = this;
             var data = {
-                action: 'agent_info',
+                action: 'system_info',
                 appid: this.vueAppid
             };
             this.$Loading.start();
-            _this.$http.post('/api_agent.php', _this.$qs.stringify(data)).then(function (response) {
+            _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
                 if (response.data.status == 1) {
                     var data = response.data;
-                    // console.log(data);
                     var centent = [
                         {
-                            info: '代理级别',
-                            level: data.agentjb
-                        },
-                        {
-                            info: '代理状态',
-                            level: data.agentstatus == 1 ? '开启' : '关闭'
+                            info: '企业数量',
+                            level: data.havecompany
                         },
                         {
                             info: '应用数量',
                             level: data.haveapp
                         },
                         {
-                            info: '企业数量',
-                            level: data.havecompany
-                        },
-                        {
-                            info: '余额',
-                            level: data.havemoney
-                        },
+                            info: '代理数量',
+                            level: data.haveagent
+                        }
                     ];
 
                     _this.infoData.data = centent;
 
                 }
+                console.log(response.data)
                 _this.$Loading.finish();
             }).catch(function (response) {
                 console.log(response);

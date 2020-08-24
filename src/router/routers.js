@@ -1,5 +1,7 @@
 import Main from '@/components/main';
-import Agent from '@/components/agent'
+import Agent from '@/components/agent';
+import Admin from '@/components/admin';
+
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
  * meta: {
@@ -804,8 +806,41 @@ export default {
 					component: () => import('@/views/agent-component/user.vue')
 				},
 			]
-
 		},
 	],
+	admin: [
+		{
+			path: '/admin_info',
+			name: 'adminInfo',
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'admin_info',
+					meta: {
+						title: '统计信息',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/statistical.vue')
+				},
+			]
+		},
+		{
+			path: '/admin_user',
+			name: 'admin_user',
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'admin_user',
+					meta: {
+						title: '企业管理',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/enterprise.vue')
+				},
+			]
+		},
+	]
 
 }
