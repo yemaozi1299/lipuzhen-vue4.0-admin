@@ -841,6 +841,128 @@ export default {
 				},
 			]
 		},
+		{
+			path: '/admin_apps',
+			name: 'adminApps',
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'admin_apps',
+					meta: {
+						title: '应用管理',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/admin_app_computer.vue')
+				},
+				{
+					path: ':page/:user',
+					name: 'admin_apps_2',
+					meta: {
+						title: '应用管理-查询',
+						icon: 'md-home',
+						hideInMenu: true
+					},
+					component: () => import('@/views/admin-component/admin_app_computer.vue')
+				},
+			]
+		},
+		{
+			path: '/agentlistof',
+			name: 'agentListof',
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'agentlistof',
+					meta: {
+						title: '代理商管理',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/agentlistof.vue')
+				},
+			]
+		},
+		{
+			path: '/admin_agentPrice',
+			name: 'adminAgentPrice',
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'admin_agentPrice',
+					meta: {
+						title: '代理商财务明细',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/admin_agentPrice.vue')
+				},
+			]
+		},
+		{
+			path: '/admin_model',
+			name: 'adminModel',
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'admin_model',
+					meta: {
+						title: '应用型号',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/app_model.vue')
+				},
+			]
+		},
+		{
+			path: '/admin_manager',
+			name: 'adminManager',
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'admin_manager',
+					meta: {
+						title: '管理员设置',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/admin_manager.vue')
+				},
+			]
+		},
+		{
+			path: '/templateList',
+			name: 'TemplateList',
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'templateList',
+					meta: {
+						title: '样板列表',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/templateList.vue')
+				},
+			]
+		},
+		{
+			path: '/page_manager',
+			name: 'pageManager',
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'page_manager',
+					meta: {
+						title: '模板管理',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/page_manager.vue')
+				},
+			]
+		},
 	]
 
 }

@@ -1,7 +1,7 @@
 <template>
-	<Card>
-		<p slot="title">企业管理</p>
-		<tables
+    <Card class="enterprise-page">
+        <p slot="title">企业管理</p>
+        <tables
             ref="tables"
             editable
             search-place="top"
@@ -18,152 +18,240 @@
             :loading="loading"
         >
             <template slot="header">
-				<div class="search-area">
+                <div class="search-area">
+                    <Button
+                        type="primary"
+                        class="ant-btn mg-r-20"
+                        v-on:click="isAddCompany = true"
+                    >
+                        <Icon type="md-add" />添加
+                    </Button>
+                    <Input
+                        v-model="keyword"
+                        placeholder="关键字"
+                        @on-keyup.enter="get(keyword)"
+                        clearable
+                        class="ant-search-input mg-r-10"
+                        style="width: 200px;"
+                    />
+                    <Button
+                        type="primary"
+                        @click="get(keyword)"
+                        icon="ios-search"
+                        class="ant-search-btn"
+                    ></Button>
+                </div>
+            </template>
+        </tables>
+
+        <Modal
+            v-model="isAddCompany"
+            title="添加企业"
+            @on-ok="addCompany('addCompanyData')"
+            @on-cancel=""
+            :loading="addCompanyData.loading"
+        >
+            <Form
+                ref="addCompanyData"
+                :model="addCompanyData"
+                :rules="ruleInline"
+                label-position="left"
+                :label-width="100"
+            >
+                <FormItem label="企业名称：" prop="name">
+                    <Input type="text" v-model="addCompanyData.name"></Input>
+                </FormItem>
+                <FormItem label="管理名姓名：" prop="realname">
+                    <Input
+                        type="text"
+                        v-model="addCompanyData.realname"
+                    ></Input>
+                </FormItem>
+                <FormItem label="手机：" prop="mobile">
+                    <Input type="text" v-model="addCompanyData.mobile"></Input>
+                </FormItem>
+                <FormItem label="密码：" prop="password">
+                    <Input
+                        type="password"
+                        v-model="addCompanyData.password"
+                    ></Input>
+                </FormItem>
+                <FormItem label="确认密码：" prop="isPassword">
+                    <Input
+                        type="password"
+                        v-model="addCompanyData.isPassword"
+                    ></Input>
+                </FormItem>
+            </Form>
+        </Modal>
+        <Modal
+            v-model="isEdit"
+            title="管理员设置"
+            @on-ok="addAdmin"
+            @on-cancel=""
+            width="1000"
+        >
+            <tables
+                ref="tables"
+                editable
+                search-place="top"
+                v-model="adminData.data"
+                :columns="adminData.columns"
+                showPage
+                :total="editAdmin.total"
+                :current="editAdmin.page"
+                :page-size="pageno"
+                show-total
+                show-elevator
+                @on-skippage="adminSkippage"
+                showlayout
+            >
+                <template slot="header">
+                    <div class="search-area">
                         <Button
                             type="primary"
                             class="ant-btn mg-r-20"
-                            v-on:click="isAddCompany = true"
+                            v-on:click="editAdmin.isModal = true"
                         >
                             <Icon type="md-add" />添加
                         </Button>
                         <Input
                             v-model="keyword"
                             placeholder="关键字"
-                            @on-keyup.enter="get(keyword)"
+                            @on-keyup.enter="getAdmin(keyword)"
                             clearable
                             class="ant-search-input mg-r-10"
                             style="width: 200px;"
                         />
                         <Button
                             type="primary"
-                            @click="get(keyword)"
+                            @click="getAdmin(keyword)"
                             icon="ios-search"
                             class="ant-search-btn"
                         ></Button>
                     </div>
-			</template>
-            <template slot="sider"></template>
-            <template slot="footer"></template>
-        </tables>
+                </template>
+            </tables>
+        </Modal>
+        <Modal
+            v-model="editAdmin.isModal"
+            title="添加管理员"
+            @on-ok="addManager('editAdmin')"
+            @on-cancel=""
+            :loading="editAdmin.loading"
+        >
+            <Form
+                ref="editAdmin"
+                :model="editAdmin"
+                :rules="adminLine"
+                label-position="left"
+                :label-width="100"
+            >
+                <FormItem label="管理名姓名：" prop="realname">
+                    <Input type="text" v-model="editAdmin.realname"></Input>
+                </FormItem>
+                <FormItem label="手机：" prop="mobile">
+                    <Input type="text" v-model="editAdmin.mobile"></Input>
+                </FormItem>
+                <FormItem label="密码：" prop="password">
+                    <Input type="password" v-model="editAdmin.password"></Input>
+                </FormItem>
+                <FormItem label="确认密码：" prop="isPassword">
+                    <Input
+                        type="password"
+                        v-model="editAdmin.isPassword"
+                    ></Input>
+                </FormItem>
+            </Form>
+        </Modal>
+        <Modal
+            v-model="editPassword.isModal"
+            title="修改密码"
+            @on-ok="editPasswordData('editPassword')"
+            :loading="editPassword.loading"
+        >
+            <Form
+                ref="editPassword"
+                :model="editPassword"
+                :rules="passwordLine"
+                label-position="left"
+                :label-width="100"
+            >
+                <FormItem label="账号/手机号：">
+                    <span>{{ editPassword.phone }}</span>
+                </FormItem>
+                <FormItem label="新密码：">
+                    <Input
+                        type="password"
+                        v-model="editPassword.password"
+                    ></Input>
+                </FormItem>
+                <FormItem label="确认密码：">
+                    <Input
+                        type="password"
+                        v-model="editPassword.isPassword"
+                    ></Input>
+                </FormItem>
+            </Form>
+        </Modal>
+        <Modal
+            v-model="agentEdit.isModal"
+            title="成为代理商"
+            @on-ok="enterUpgrade"
+        >
+            <div>
+                <span style="width: 80px; display: inline-block;"
+                    >代理商等级:</span
+                >
+                <Select v-model="agentEdit.value" style="width: 200px;">
+                    <Option
+                        v-for="item in agentEdit.body"
+                        :value="item.code"
+                        :key="item.value"
+                        >{{ item.name }}</Option
+                    >
+                </Select>
+            </div>
+            <div style="margin-top: 20px;">
+                <span style="width: 80px; display: inline-block;">地区:</span>
+                <Input
+                    type="text"
+                    v-model="agentEdit.area"
+                    style="width: 200px;"
+                />
+            </div>
+            <div style="margin-top: 20px;">
+                <span style="width: 80px; display: inline-block;"
+                    >开始时间:</span
+                >
+                <DatePicker
+                    type="datetime"
+                    placeholder="开始时间"
+                    style="width: 200px;"
+                    @on-change="start_time"
+                ></DatePicker>
+            </div>
+            <div style="margin-top: 20px;">
+                <span style="width: 80px; display: inline-block;"
+                    >结束时间:</span
+                >
+                <DatePicker
+                    type="datetime"
+                    placeholder="结束时间"
+                    style="width: 200px;"
+                    @on-change="end_time"
+                ></DatePicker>
+            </div>
+        </Modal>
 
-
-
-		
-	    <Modal
-	        v-model="isAddCompany"
-	        title="添加企业"
-	        @on-ok="addCompany('addCompanyData')"
-	        @on-cancel=""
-	        :loading="addCompanyData.loading">
-	        <Form ref="addCompanyData" :model="addCompanyData" :rules="ruleInline" label-position="left" :label-width="100">
-	        	<FormItem label="企业名称：" prop="name">
-	        		<Input type="text" v-model="addCompanyData.name"></Input>
-	        	</FormItem>
-	        	<FormItem label="管理名姓名：" prop="realname">
-	        		<Input type="text" v-model="addCompanyData.realname"></Input>
-	        	</FormItem>
-	        	<FormItem label="手机：" prop="mobile">
-	        		<Input type="text" v-model="addCompanyData.mobile"></Input>
-	        	</FormItem>
-	        	<FormItem label="密码：" prop="password">
-	        		<Input type="password" v-model="addCompanyData.password"></Input>
-	        	</FormItem>
-	        	<FormItem label="确认密码：" prop="isPassword">
-	        		<Input type="password" v-model="addCompanyData.isPassword"></Input>
-	        	</FormItem>
-	        </Form>
-	    </Modal>
-	    <Modal
-	        v-model="isEdit"
-	        title="管理员设置"
-	        @on-ok="addAdmin"
-	        @on-cancel=""
-	        width="1000">
-	        <div class="info-table-add">
-				<Button type="primary" style="margin-right:20px;"icon="plus" shape="circle" v-on:click="editAdmin.isModal = true"> 添加 </Button>
-				<Poptip placement="left" width="300"  v-model="editAdmin.searchPoptip">
-				    <Button type="info" shape="circle" icon="ios-search">搜索</Button>
-				    <div class="api" slot="content">
-				        <Input v-model="keyword" placeholder="关键字" style="width: 200px;" @keyup.enter="getAdmin(keyword)"></Input>
-				        <Button type="primary" shape="circle" icon="ios-search" @click="getAdmin(keyword)"></Button>
-				    </div>
-				</Poptip>
-			</div>
-	        <Table :columns="adminData.columns" :data="adminData.data" style="" :border="true"></Table>
-	        <Page :total="editAdmin.total" :current="editAdmin.page" show-total show-elevator @on-change="adminSkippage" style="margin-top:20px"></Page>
-	    </Modal>
-		<Modal
-	        v-model="editAdmin.isModal"
-	        title="添加管理员"
-	        @on-ok="addManager('editAdmin')"
-	        @on-cancel=""
-	        :loading="editAdmin.loading">
-	        <Form ref="editAdmin" :model="editAdmin" :rules="adminLine" label-position="left" :label-width="100">
-	        	<FormItem label="管理名姓名：" prop="realname">
-	        		<Input type="text" v-model="editAdmin.realname"></Input>
-	        	</FormItem>
-	        	<FormItem label="手机：" prop="mobile">
-	        		<Input type="text" v-model="editAdmin.mobile"></Input>
-	        	</FormItem>
-	        	<FormItem label="密码：" prop="password">
-	        		<Input type="password" v-model="editAdmin.password"></Input>
-	        	</FormItem>
-	        	<FormItem label="确认密码：" prop="isPassword">
-	        		<Input type="password" v-model="editAdmin.isPassword"></Input>
-	        	</FormItem>
-	        </Form>
-	    </Modal>
-	    <Modal
-	        v-model="editPassword.isModal"
-	        title="修改密码"
-	        @on-ok="editPasswordData('editPassword')"
-	        :loading="editPassword.loading">
-	        <Form ref="editPassword" :model="editPassword" :rules="passwordLine" label-position="left" :label-width="100">
-				<FormItem label="账号/手机号：" prop="">
-	        		<span>{{editPassword.phone}}</span>
-	        	</FormItem>
-	        	<FormItem label="新密码：" prop="password">
-	        		<Input type="password" v-model="editPassword.password"></Input>
-	        	</FormItem>
-	        	<FormItem label="确认密码：" prop="isPassword">
-	        		<Input type="password" v-model="editPassword.isPassword"></Input>
-	        	</FormItem>
-	        </Form>
-	    </Modal>
-	    <Modal
-	        v-model="agentEdit.isModal"
-	        title="成为代理商"
-	        @on-ok="enterUpgrade">
-	        <div>
-	        	<span style="width:80px;display:inline-block">代理商等级:</span>
-		        <Select v-model="agentEdit.value" style="width:200px">
-	                <Option v-for="item in agentEdit.body" :value="item.code" :key="item.value">{{ item.name }}</Option>
-	            </Select>
-	        </div>
-	        <div style="margin-top:20px">
-	        	<span style="width:80px;display:inline-block">地区:</span>
-		        <Input type="text" v-model="agentEdit.area" style="width:200px"/>
-	        </div>
-	        <div style="margin-top:20px">
-	        	<span style="width:80px;display:inline-block">开始时间:</span>
-		        <DatePicker type="date" placeholder="请选择日期" style="width: 200px" format="yyyy-MM-dd" @on-change="start_time"></DatePicker>
-		        <TimePicker type="time" placeholder="Select time" style="width: 168px" v-model="agentEdit.start_date"></TimePicker>
-	        </div>
-	        <div style="margin-top:20px">
-	        	<span style="width:80px;display:inline-block">结束时间:</span>
-		        <DatePicker type="date" placeholder="请选择日期" style="width: 200px" format="yyyy-MM-dd" @on-change="end_time"></DatePicker>
-		        <TimePicker type="time" placeholder="Select time" style="width: 168px" v-model="agentEdit.end_date"></TimePicker>
-	        </div>
-	    </Modal>
-
-
-		<Modal
-	        v-model="isModal"
-	        title="添加应用"
-			width="860"
-	        @on-ok="enterUpgrade">
-			<Layout class="layout-wrapper">
-				<Header class="header-wrapper">
+        <Modal
+            v-model="isModal"
+            title="添加应用"
+            width="860"
+            @on-ok="enterUpgrade"
+        >
+            <Layout class="layout-wrapper">
+                <Header class="header-wrapper">
                     <div class="search-area">
                         <Input
                             v-model="searchAppList.keyword"
@@ -181,55 +269,75 @@
                         ></Button>
                     </div>
                 </Header>
-				<Content>
-					<ul class="tpl-container" @scroll='getGroundList' id="enterScrollList" style="height: calc(100% - 145px);">
-	    				<li @click="selectApp({id:''})" style="cursor:pointer">
-	    					<div class="cover-null" style="border:1px solid #bbb">
-								<Icon type="plus"></Icon>
-	    					</div>
-	    					<p class="name">空白模板</p>
-	    				</li>
-	    				<li v-for="item in appList">
-	    					<img class="cover" style="width:100%;height: auto;" :src="moves + '/images/loading-animate.gif'" v-lazy="item.coverUrl">
-	    					<p class="name">{{item.name}}</p>
-	    					<div class="code-mask">
-	    						<div class="rolename">{{item.rolename}}</div>
-	    						<img class="logo" alt="" :src="item.logo">
-	    						<span class="select-btn use-btn" @click="selectApp(item)">使用</span>
-	    						<span class="select-btn js-preview-btn" @click="previewApp(item)">预览</span>
-	    					</div>
-	    				</li>
-	    				<div class="list-no-more">没有更多数据了</div>
-        				<div class="list-loading" v-show="scrollList" style="opacity:0.5;cursor: default;"><i class="ivu-load-loop ivu-icon ivu-icon-load-c"></i> Loading...</div>
-	    			</ul>
-				</Content>
-				
-			</Layout>
-		</Modal>
-
-	    
-	    
-	    <div class="angular-dialog">
-	    	<div class="add-collect-dialog rich-dialog add-example-dialog" v-if="addAppData.isModal">
-	    		<div class="rich-content" style="width:400px;height:232px;margin-top: -126px;margin-left: -200px;">
-	    			<header class="rich-title"><span class="rich-title-content">添加应用</span><i class="icon-cross" v-on:click="addAppData.isModal = false">×</i></header>
-	    			<ul class="collect-page-wrap">
-						<li>
-							<label for="">应用名称：</label>
-							<input type="text" style="width:200px;" v-model="addAppData.name"></input>
-						</li>
-						<li>
-							<label for="">应用型号：</label>
-							<Select style="width:200px;" v-model="addAppData.rolecode">
-								<Option :value="item.rolecode" v-for="item in pariceList" :key="item.rolecode">{{item.rolename}}</Option>
-							</Select>
-						</li>
-					</ul>
-					<span class="rich-submit-btn" @click="addPriseApp">确定</span>
-	    		</div>
-	    	</div>
-	    </div>
-	</Card>
+                <Content>
+                    <div
+                        class="tpl-container"
+                        @scroll="getGroundList"
+                        id="enterScrollList"
+                        style="height: calc(100% - 145px);"
+                    >
+                        <Card class="enter-item">
+                            <div
+                                class="cover-null"
+                                v-on:click="selectApp({ id: '' })"
+                            >
+                                <Icon type="md-add" />
+                            </div>
+                            <p class="name">空白模板</p>
+                        </Card>
+                        <Card class="enter-item" v-for="item in appList">
+                            <img
+                                class="cover"
+                                style="width: 100%; height: auto;"
+                                :src="item.coverUrl"
+                            />
+                            <p class="name">{{ item.name }}</p>
+                            <div class="code-mask">
+                                <div class="rolename">{{ item.rolename }}</div>
+                                <img class="logo" alt="" :src="item.logo" />
+                                <span
+                                    class="select-btn use-btn"
+                                    @click="selectApp(item)"
+                                    >使用</span
+                                >
+                                <span
+                                    class="select-btn js-preview-btn"
+                                    @click="previewApp(item)"
+                                    >预览</span
+                                >
+                            </div>
+                        </Card>
+                        <div class="list-no-more">没有更多数据了</div>
+                    </div>
+                </Content>
+            </Layout>
+        </Modal>
+        <Modal
+            v-model="addAppData.isModal"
+            title="添加应用"
+            @on-ok="addPriseApp"
+        >
+            <Form ref="addPriseApp" label-position="left" :label-width="100">
+                <FormItem label="应用名称：" prop="">
+                    <Input
+                        type="text"
+                        style="width: 200px;"
+                        v-model="addAppData.name"
+                    ></Input>
+                </FormItem>
+                <FormItem label="应用型号：" prop="">
+                    <Select style="width: 200px;" v-model="addAppData.rolecode">
+                        <Option
+                            :value="item.rolecode"
+                            v-for="item in pariceList"
+                            :key="item.rolecode"
+                            >{{ item.rolename }}</Option
+                        >
+                    </Select>
+                </FormItem>
+            </Form>
+        </Modal>
+    </Card>
 </template>
 <script type="text/javascript">
 import Tables from '@/components/tables'
@@ -255,7 +363,7 @@ export default {
             searching: false,
             loading: false,
             keyword: '',
-            pariceList: {},
+            pariceList: [],
             pageData: {
                 total: 0,
                 page: 1,
@@ -335,7 +443,6 @@ export default {
                                         click: () => {
                                             var mode = params.row.yesno == 1 ? 'no' : 'ok';
                                             this.editManager(params.row, mode);
-                                            console.log(params.row);
                                         }
                                     }
                                 }, params.row.yesno == 1 ? '正常' : '关闭')
@@ -361,7 +468,6 @@ export default {
                                             this.editPassword.id = params.row.id;
                                             this.editPassword.phone = params.row.mobile;
                                             this.editPassword.isModal = true;
-                                            console.log(params.row);
                                         }
                                     }
                                 }, '修改'),
@@ -375,7 +481,6 @@ export default {
                                     on: {
                                         click: () => {
                                             this.editManager(params.row, 'del');
-                                            console.log(params.row);
                                         }
                                     }
                                 }, '删除')
@@ -455,7 +560,6 @@ export default {
                                             this.editAdmin.id = params.row.id;
                                             this.isEdit = true;
                                             this.getAdmin();
-                                            console.log(params.row);
                                         }
                                     }
                                 }, '设置')
@@ -489,12 +593,11 @@ export default {
                                     on: {
                                         click: () => {
                                             this.$router.push({
-                                                path: '/admin_computer',
+                                                path: '/admin_apps',
                                                 query: {
                                                     user: params.row.id
                                                 }
                                             });
-                                            console.log(params.row);
                                         }
                                     }
                                 }, params.row.appcount)
@@ -522,7 +625,6 @@ export default {
                                         click: () => {
                                             this.isModal = true;
                                             this.addAppData.user = params.row.id;
-                                            console.log(params.row);
                                         }
                                     }
                                 }, '添加')
@@ -545,7 +647,6 @@ export default {
                                         click: () => {
                                             this.agentEdit.isModal = true;
                                             this.agentEdit.id = params.row.id;
-                                            console.log(params.row);
                                         }
                                     }
                                 }, '确认')
@@ -567,7 +668,6 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                            console.log(params.row);
                                             var _this = this;
                                             this.$Modal.confirm({
                                                 content: '确定要删除该企业吗？删除后数据无法恢复',
@@ -607,8 +707,6 @@ export default {
                 contentH = $this.scrollHeight,
                 //内容高度  
                 scrollTop = $this.scrollTop; //滚动高度  
-
-            // console.log($this.getAttribute("class").indexOf('js-on-more'));
             if ($this.getAttribute("class").indexOf('js-on-more') >= 0) {
                 return false;
             }
@@ -616,7 +714,6 @@ export default {
             if (scrollTop / (contentH - viewH) >= 1) { //到达底部100px时,加载新内容  
                 this.pageNum++;
                 this.getAppList();
-                //console.log(me.page,me.maxPage);
             }
         },
         delApp: function (params) {
@@ -627,7 +724,6 @@ export default {
             };
             this.$Loading.start();
             _this.$http.post('/api_admin.php', _this.$qs.stringify(json)).then(function (response) {
-                console.log(response);
                 if (response.data.status == 1) {
                     _this.infoData.data.splice(params._index, 1);
                     _this.$Message.info(response.data.message);
@@ -655,7 +751,6 @@ export default {
             };
             _this.searching = keyword ? true : false;
             _this.infoData.data = [];
-            // console.log(data);
             this.$Loading.start();
             _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
                 if (response.data.status == 1) {
@@ -664,7 +759,6 @@ export default {
                 } else {
                     _this.$Message.info(response.data.message);
                 }
-                // console.log(response.data);
                 _this.$Loading.finish();
             }).catch(function (response) {
                 console.log(response);
@@ -683,10 +777,8 @@ export default {
                 pageno: 30
             };
 
-            // console.log(data);
             this.$Loading.start();
             _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
-                // console.log(response.data);
                 if (response.data.status == 1) {
                     if (response.data.body == null || response.data.body.length < 0) {
                         document.getElementById('scrollList').classList.add("js-on-more");
@@ -724,11 +816,9 @@ export default {
             };
             this.appList = [];
             this.scrollList = true;
-            console.log(data);
             this.searchAppList.keyword ? this.searchAppList.search = true : this.searchAppList.search = false;
             this.$Loading.start();
             _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
-                console.log(response.data);
                 // if(response.data.body == null || response.data.body.length < 30){
                 // 	document.getElementById('scrollList').classList.add("js-on-more");
                 // }else{
@@ -760,16 +850,15 @@ export default {
                 rolecode: this.addAppData.rolecode,
                 example_appid: this.addAppData.example_appid
             };
-            // console.log(data);
             this.$Loading.start();
             _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
+                console.log(response);
                 if (response.data.status == 1) {
                     _this.get();
                     _this.addAppData.name = '';
                     _this.isModal = false;
                     _this.addAppData.isModal = false;
                 }
-                console.log(response);
                 _this.$Loading.finish();
             }).catch(function (response) {
                 console.log(response);
@@ -786,7 +875,6 @@ export default {
             var params = this.addCompanyData;
 
             this.$refs[name].validate((valid) => {
-                console.log(params);
                 if (valid) {
                     if (params.password != params.isPassword) {
                         this.isAddCompany = true;
@@ -806,14 +894,12 @@ export default {
                     this.$Loading.start();
                     _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
                         _this.addCompanyData.loading = false;
-                        // console.log(response);
                         if (response.data.status == 1) {
                             _this.get();
                             _this.addCompanyData.name = '';
                             _this.addCompanyData.password = '';
                             _this.isAddCompany = false;
                         } else {
-                            console.log(response);
                             _this.$Message.error(response.data.message);
                             _this.$nextTick(() => {
                                 _this.addCompanyData.loading = true;
@@ -857,9 +943,8 @@ export default {
             this.$Loading.start();
             _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
                 if (response.data.status == 1) {
-                    _this.pariceList = response.data.body;
+                    _this.pariceList = response.data.body || [];
                 }
-                console.log(response.data);
                 _this.$Loading.finish();
             }).catch(function (response) {
                 console.log(response);
@@ -885,7 +970,6 @@ export default {
                     _this.adminData.data = response.data.body;
                     _this.editAdmin.total = Number(response.data.total);
                 }
-                console.log(response.data);
                 _this.$Loading.finish();
             }).catch(function (response) {
                 console.log(response);
@@ -907,7 +991,6 @@ export default {
                 if (response.data.status == 1) {
                     _this.pariceList = response.data.body;
                 }
-                console.log(response.data);
                 _this.$Loading.finish();
             }).catch(function (response) {
                 console.log(response);
@@ -939,7 +1022,6 @@ export default {
                         user: this.editAdmin.id
                     };
                     this.$Loading.start();
-                    console.log(data);
                     _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
                         _this.editAdmin.loading = false;
                         if (response.data.status == 1) {
@@ -953,7 +1035,6 @@ export default {
                             });
                             _this.$Message.error(response.data.message);
                         }
-                        console.log(response.data);
                         _this.$Loading.finish();
                     }).catch(function (response) {
                         console.log(response);
@@ -1003,7 +1084,6 @@ export default {
                             });
                             _this.$Message.error(response.data.message);
                         }
-                        console.log(response.data);
                         _this.$Loading.finish();
                     }).catch(function (response) {
                         console.log(response);
@@ -1023,8 +1103,9 @@ export default {
         },
         enterUpgrade: function () {
             var _this = this;
-            var start = this.agentEdit.start_time + (this.agentEdit.start_date ? this.agentEdit.start_date : '00:00:00');
-            var end = this.agentEdit.end_time + (this.agentEdit.end_date ? this.agentEdit.end_date : '00:00:00');
+            var start = this.agentEdit.start_time;
+            var end = this.agentEdit.end_time;
+            console.log(start);
             var data = {
                 action: 'agent_add',
                 companyid: this.agentEdit.id,
@@ -1033,14 +1114,11 @@ export default {
                 endtime: end,
                 area: this.agentEdit.area
             };
-            // console.log(data);
             this.$Loading.start();
-            console.log(data);
             _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
                 if (response.data.status == 1) {
                     _this.get();
                 }
-                console.log(response.data);
                 _this.$Loading.finish();
             }).catch(function (response) {
                 console.log(response);
@@ -1100,12 +1178,9 @@ export default {
             var data = {
                 action: 'agent_jb',
             }
-            console.log(data);
             this.$Loading.start();
             _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
                 _this.agentEdit.body = _this.editCode(response.data);
-                console.log(response);
-                // console.log(response.data);
                 _this.$Loading.finish();
             }).catch(function (response) {
                 console.log(response);
@@ -1124,15 +1199,67 @@ export default {
                     name: list[key]
                 });
             }
-            console.log(obj)
             return obj;
         }
     }
 }
 </script>
-<style type="text/css">
-.label-div span {
-    display: inline-block;
-    width: 80px;
+<style lang="less">
+.enterprise-page {
+    .label-div span {
+        display: inline-block;
+        width: 80px;
+    }
+}
+#enterScrollList {
+    .enter-item {
+        position: relative;
+        width: 185px;
+        height: 294px;
+        margin: 0px 14px 20px 14px;
+        .cover-null {
+            width: 100%;
+            height: 254px;
+            text-align: center;
+            line-height: 254px;
+            font-size: 60px;
+            color: #999;
+        }
+        .name {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #fff;
+            color: #333;
+            font-size: 14px;
+            line-height: 30px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: center;
+        }
+        .cover {
+            width: 100%;
+            height: auto;
+            vertical-align: middle;
+        }
+        .code-mask {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+        }
+        &:hover {
+            display: block;
+        }
+    }
+    .list-no-more {
+        text-align: center;
+        font-size: 14px;
+        color: #aaa;
+    }
 }
 </style>
