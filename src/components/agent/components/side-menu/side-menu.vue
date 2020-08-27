@@ -44,6 +44,11 @@
                     >
                 </template>
             </template>
+            <template>
+                <menu-item name="welcome"
+                    ><common-icon type="md-exit" /><span>返回</span>
+                </menu-item>
+            </template>
         </Menu>
         <!-- 缩小后 -->
         <div class="menu-collapsed" v-show="collapsed" :list="menuList">
@@ -80,7 +85,7 @@
                             :color="textColor"
                             :type="
                                 item.icon ||
-                                    (item.children && item.children[0].icon)
+                                (item.children && item.children[0].icon)
                             "
                     /></a>
                 </Tooltip>

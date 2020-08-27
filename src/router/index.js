@@ -8,7 +8,6 @@ const { homeName } = config
 
 Vue.use(Router)
 
-
 var routesArr = [...routes.main, ...routes.agent, ...routes.admin];
 const router = new Router({
 	routes: routesArr,

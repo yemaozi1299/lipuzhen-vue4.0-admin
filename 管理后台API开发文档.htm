@@ -1027,7 +1027,7 @@
 
 	  
       <a name="9"></a><hr />
-      <div class="m_title">保存各个模块 区域 行列 样式的参数 _已关闭</div>
+      <div class="m_title">保存各个模块 区域 行列 样式的参数 _已关闭功能已由保存页面代替savePage</div>
       <table cellpadding="0" cellspacing="0" width="100%">
         <tbody>
           <tr>
@@ -1068,7 +1068,8 @@
               &nbsp;&#39;bd_left_style&#39;,&#39;bd_left_width&#39;,&#39;bd_left_color&#39;,#左<span style="color: rgb(68, 68, 68); font-size: 13px; background-color: rgb(255, 255, 255);">边框样式参数</span><br/>
               &#39;bd_radius&#39;,#圆角<br/>
               &nbsp;&#39;bg_position&#39;,&#39;bg_image&#39;,&#39;bg_size&#39;,<br>
-              &#39;bg_attachment&#39;,&#39;bg_repeat&#39;,&#39;bg_color&#39;#背景样式参数<br/>
+              &#39;bg_attachment&#39;,&#39;bg_repeat&#39;,&#39;bg_color&#39;#背景样式参数,<br>
+              'animate','duration','delaytime','iteration' #动画参数 分别是动画类别,持续时间,延迟时间,迭代<br/>
               &nbsp;)</td>
           </tr>
         </tbody>
@@ -3763,11 +3764,6 @@ $param['hide_bottom']=页面隐藏底部区</td>
             <td>survey_list</td>
           </tr>
           <tr>
-            <td class="label">groupid</td>
-            <td>int</td>
-            <td>分类ID =0则显示全部</td>
-          </tr>
-          <tr>
             <td class="label">page</td>
             <td>int</td>
             <td>页码</td>
@@ -5112,6 +5108,72 @@ fenxiao_tixian_list($uid,$page,$pageno,$status) 提现列表  $uid=只显示指�
           参数说明: $page=第几页,$pageno=每页显示多少条, $keyword=搜索关键字,$starttime=搜索加入分销开始时间,$endtime=搜索加入分销结束时间,$moneyStart=分润最低,$moneyEnd=分润最高</p>
         <p> fenxiao_user_status($uid,$status) 管理人员设置分销会员的状态 $status 0=关闭 1=正常</p>
         <p> */</p>
+        <p>&nbsp;</p>
+        <p> #===============超级后台相关API========================================================================<br>
+system_info 统计信息<br>
+companylistof($page=1,$pageno=20,$keyword='')  //列出或者查找代理商下面的企业			page=页码 pageno=一页显示多少记录 keyword 关键字搜索<br>
+wxapplistof($user=0,$page=1,$pageno=20,$keyword='')  //列出或者查找微信小程序应用管理 user=商家ID,为0则显示所有应用,不为0则显示此商家名下所有的应用 <br>
+agentlistof($page=1,$pageno=20,$keyword='')  //列出或者查找代理商<br>
+company_add($agentid,$name,$realname,$mobile,$password)  //添加商户<br>
+app_add($user,$name='',$roleID='',$example_appid=0);  //添加应用 $user=用户id,$name='应用名称',$roleID='应用型号,如果是克隆则为空',$example_appid=要克隆的应用模板ID<br>
+moneylistof($agentid,$page=1,$pageno=20,$keyword='')  //列出或者查找财务明细 $agentid 代理商ID<br>
+money_edit($agentid,$money,$io,$memo)//修改代理商财务记录 代理商ID 金额 $io=+入账 -扣款 memo=备注        </p>
+        <p>//软件=====================================<br>
+soft_listof();  //列出所有的软件<br>
+soft_add($softname,$softcode,$description,$yc);//添加软件 $softname 名称,$description 说明,yc=是否隐藏 0=显示 1=隐藏<br>
+soft_edit($id,$softname,$description,$yc);//编辑软件信息 $softID 软件ID,$softname 名称,$description 说明,yc=是否隐藏 0=显示 1=隐藏<br>
+soft_del($softID);  //删除软件 $softID 软件ID,<br>
+soft_hidde($softID,$hidde);  //软件隐藏或者显示 $softID 软件ID, $hidde=1隐藏  =0显示</p>
+        <p>//功能=====================================</p>
+        <p> privilege_listof($softID);  //列出所有的功能 $softID=软件ID<br>
+          privilege_add($p_name,$p_code,$softID,$yc);	//添加功能 $p_name 功能名称 $p_code 功能代号,$softID 软件ID,yc=是否隐藏 0=显示 1=隐藏<br>
+          privilege_edit($p_id,$p_name);  //修改功能 $p_id 功能ID,$p_name功能名称<br>
+          privilege_del($p_code);			//删除功能  $p_code 功能代号<br>
+          privilege_hidde($p_id,$hidde);  //功能隐藏或者显示 $p_id 功能ID $hidde=1隐藏  =0显示</p>
+        <p>//型号=====================================<br>
+          role_listof($softID); //列出网站型号  $softID=软件ID<br>
+          role_add($rolename,$softID,$p_code_arr,$marketprice,$description,$yc); //添加型号 rolename=型号名称 $softID=软件ID $p_code_arr=数组,存储要授权的功能代号 $marketprice=市场价格 description=型号描述  yc=是否隐藏 0=显示 1=隐藏<br>
+          role_edit($id,$rolename,$p_code_arr,$marketprice,$description,$yc)  //型号编辑 roleID=型号代码  rolename=型号名称 $p_code_arr=数组,存储要授权的功能代号 $marketprice=市场价格 description=型号描述  yc=是否隐藏 0=显示 1=隐藏<br>
+          role_del($roleID)  //删除型号 $roleID= 型号代码<br>
+          role_accredit(roleID,$p_code_arr)  //型号授权功能 $roleID= 型号代号 $p_code_arr这个是数组,存储要授权的功能代号<br>
+          role_hidde($roleID,$hidde)  //型号隐藏或者显示 $roleID=型号ID  $hidde=1 隐藏 =0 显示</p>
+        <p></p>
+        <p><br>
+          <br>
+          //代理等级=====================================<br>
+          level_listof();  //列出所有代理等级<br>
+          level_add($level,$description,$yc);//添加代理等级 $level 等级名称,$description 说明,yc=是否隐藏 0=显示 1=隐藏<br>
+          level_edit($levelID,$level,$description,$yc);//编辑代理等级 $levelID 等级ID,$level 名称,$description 说明,yc=是否隐藏 0=显示 1=隐藏<br>
+          level_del($levelID);			//删除功能  $levelID 等级ID<br>
+          level_hidde($levelID,$hidde);  //功能隐藏或者显示 $levelID 等级ID $hidde=1隐藏  =0显示<br>
+        </p>
+        <p></p>
+        <p>//代理=====================================</p>
+        <p> agent_add($companyid,$levelID,$starttime='',$endtime='',$area='')  //添加代理商 $companyid 企业ID,$levelID 代理级别ID,$starttime='' 开始时间,$endtime=''结束时间,$area=''地区<br>
+agent_edit($companyid,$levelID,$starttime='',$endtime='',$area='')  //修改代理商 同上<br>
+agent_del($id);删除代理 $id=代理商ID <br>
+        </p>
+        <p> app_edit($appid,$appname,$roleID,$endtime)  //修改小程序应用 $appname应用名称 $roleID型号 $endtime结束时间 0为永久<br>
+          app_del($id) 删除应用 $id=应用ID <br>
+          company_del($user);删除企业 $user=企业ID<br>
+          app_year($appid,$year=1)  //给应用续费 <br>
+          */</p>
+        <p>&nbsp;</p>
+        <p> #===============代理后台相关API========================================================================</p>
+        <p> agent_info()  //统计代理概要信息<br>
+companylistof($page=1,$pageno=20,$keyword='')  //列出或者查找代理商下面的企业			page=页码 pageno=一页显示多少记录 keyword 关键字搜索<br>
+manager_listof($user,$page=1,$pageno=20,$keyword='')  //列出或者查找企业账号下的管理员<br>
+manager_check($user,$chooseID,$editmode)  // 审核或者删除指定用户的管理员 $user企业ID $chooseID=为数组传输要操作的管理员ID $editmode =ok no del 三种要操作的意思分别为正常 关闭 删除<br>
+wxapplistof($user=0,$page=1,$pageno=20,$keyword='',$apptype)  //列出或者查找微信小程序应用管理 user=商家ID,为0则显示所有应用,不为0则显示此商家名下所有的应用 <br>
+moneylistof($page=1,$pageno=20,$keyword='')  //列出或者查找财务明细<br>
+agentprice()  //取出APP的型号 代码 代理商的拿货价<br>
+app_year($appid,$year=1)  //给应用续费 $appid =应用ID $year =续费年数<br>
+app_add($user,$app_name,$roleID)  //添加应用 user=企业ID name=应用名称 $roleID 应用型号<br>
+company_add($name,$realname,$mobile,$password)  //添加用户 name=企业名称 realname 管理名姓名 mobile=手机 password=密码<br>
+company_status($id,$status) 企业状态设置 $status0关闭 1正常<br>
+app_status($id,$status) 应用状态设置 0关闭 1正常<br>
+app_del($id,$user) 删除应用 $id=应用ID $user=企业ID<br>
+company_del($user);删除企业 $user=企业ID</p>
         <p>&nbsp;</p>
         <p>&nbsp;</p>
         <p>&nbsp;</p>

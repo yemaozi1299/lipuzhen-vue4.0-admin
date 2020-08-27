@@ -149,38 +149,26 @@
                     >开始时间:</span
                 >
                 <DatePicker
-                    type="date"
-                    placeholder="请选择日期"
+                    type="datetime"
+                    placeholder="开始时间"
                     style="width: 200px;"
-                    format="yyyy-MM-dd"
+                    format="yyyy-MM-dd HH:mm:ss"
                     @on-change="start_date"
                     :value="agent_edit_data.startdate"
                 ></DatePicker>
-                <TimePicker
-                    type="time"
-                    placeholder="请选择时间"
-                    style="width: 168px;"
-                    v-model="agent_edit_data.starttime"
-                ></TimePicker>
             </div>
             <div style="margin-top: 20px;">
                 <span style="width: 80px; display: inline-block;"
                     >结束时间:</span
                 >
                 <DatePicker
-                    type="date"
-                    placeholder="请选择日期"
+                    type="datetime"
+                    placeholder="结束时间"
                     style="width: 200px;"
-                    format="yyyy-MM-dd"
+                    format="yyyy-MM-dd HH:mm:ss"
                     @on-change="end_date"
                     :value="agent_edit_data.enddate"
                 ></DatePicker>
-                <TimePicker
-                    type="time"
-                    placeholder="请选择时间"
-                    style="width: 168px;"
-                    v-model="agent_edit_data.endtime"
-                ></TimePicker>
             </div>
         </Modal>
     </Card>
@@ -310,20 +298,16 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                            var data = this.agent_edit_data, starttime, endtime, start, end;
-                                            params.row.starttime && (starttime = params.row.starttime.split(" ")[0], start = params.row.starttime.split(" ")[1]);
-                                            params.row.endtime && (endtime = params.row.endtime.split(" ")[0], end = params.row.endtime.split(" ")[1]);
+                                            var data = this.agent_edit_data;
 
                                             data.isModal = true;
                                             data.agentjbcode = params.row.agentjbcode;
                                             data.companyid = params.row.user;
-                                            data.startdate = starttime;
-                                            data.enddate = endtime;
-                                            data.starttime = start;
-                                            data.endtime = end;
+                                            data.startdate = params.row.starttime;
+                                            data.enddate = params.row.endtime;
                                             data.area = params.row.area;
                                             this.agent_edit_data = data;
-                                            // console.log(params.row);
+                                            console.log(params.row);
                                         }
                                     }
                                 }, '修改'),
@@ -441,84 +425,10 @@ export default {
                 _this.$Loading.error();
             });
         },
-        // getRolecode:function(){
-        // 	var _this = this;
-        // 	var data = {
-        // 	    action: 'role_listof'
-        // 	}
-        // 	this.$Loading.start();
-        // 	_this.$http.post('/api_admin.php',_this.$qs.stringify(data)).then(function(response){
-        // 	    if(response.data.status == 1){
-        // 	    	_this.agent_edit_data.body = response.data.body;
-        // 	    }else{
-        // 	    	_this.$Message.info(response.data.message);
-        // 	    }
-        // 	    // console.log(JSON.stringify(response.data));
-        // 	    _this.$Loading.finish();
-        // 	}).catch(function(response){       
-        // 		console.log(response);           
-        //            _this.$Notice.error({
-        //                  title: '错误提示',
-        //                  desc:  '无法访问服务器,请重试'
-        //              });
-        //            _this.$Loading.error();
-        //        });
-        // },
         skippage: function (page) {
             this.pageData.page = page;
             this.get();
         },
-        // addCompany:function(name){
-        // 	var _this = this;
-        // 	var params = this.addCompanyData;
-
-        // 	this.$refs[name].validate((valid) => {
-        // 		if(valid){
-        // 			if(params.password != params.isPassword){
-        // 				this.addCompanyData.loading = false;
-        // 				this.$nextTick(() => {
-        //                        this.addCompanyData.loading = true;
-        //                    });
-        // 				return this.$Message.warning('两次密码不一致，请重新输入');
-        // 			}
-        // 			var data = {
-        // 			    action: 'company_add',
-        // 			    name: params.name,
-        // 			    realname: params.realname,
-        // 			    mobile: params.mobile,
-        // 			    password: params.password
-        // 			}
-        // 			console.log(data)
-        // 			_this.$http.post('/api_admin.php',_this.$qs.stringify(data)).then(function(response){
-        // 			    _this.addCompanyData.loading = false;
-        // 			    if(response.data.status == 1){
-        // 			    	_this.get();
-        // 			    	_this.addCompanyData.name = '';
-        // 			    	_this.addCompanyData.password = '';
-        // 			    	_this.isAddCompany = false;
-        // 			    }else{
-        // 					_this.$nextTick(() => {
-        //                         _this.addCompanyData.loading = true;
-        //                     });
-        // 			    }
-        // 			    console.log(JSON.stringify(response.data));
-        // 			    _this.$Loading.finish();
-        // 			}).catch(function(response){
-        // 				console.log(response);           
-        // 	            _this.$Notice.error({
-        // 	                  title: '错误提示',
-        // 	                  desc:  '无法访问服务器,请重试'
-        // 	              });
-        // 	            _this.$Loading.error();
-        // 	        });
-        // 		}else{
-        // 			this.addCompanyData.loading = false;
-        // 			this.$nextTick(() => {
-        //                       this.addCompanyData.loading = true;
-        //                   });
-        // 		}
-        // 	})
-        // },
         agentDel: function (params) {
             var _this = this;
             var data = {
@@ -553,7 +463,6 @@ export default {
                 io: params.io,
                 memo: params.bei
             }
-            // console.log(data);
             this.$Loading.start();
             _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
                 if (response.data.status == 1) {
@@ -593,7 +502,6 @@ export default {
                 } else {
                     _this.$Message.info(response.data.message);
                 }
-                // console.log(response.data);
                 _this.$Loading.finish();
             }).catch(function (response) {
                 console.log(response);

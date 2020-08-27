@@ -29,6 +29,22 @@ import Admin from '@/components/admin';
 export default {
 	main: [{
 		path: '/',
+		redirect: '/welcome',
+		meta: {
+			hideInMenu: true
+		},
+	}, {
+		path: '/welcome',
+		name: 'welcome',
+		meta: {
+			title: '管理中心',
+			icon: 'md-home',
+			hideInMenu: true
+		},
+		component: () => import('@/views/welcome/welcome.vue'),
+
+	}, {
+		path: '/home',
 		name: '_home',
 		component: Main,
 		meta: {
@@ -36,7 +52,7 @@ export default {
 		},
 		children: [
 			{
-				path: '/home',
+				path: ':page?',
 				name: 'home',
 				meta: {
 					title: '首页',
@@ -775,13 +791,13 @@ export default {
 	}],
 	agent: [
 		{
-			path: '/agent',
+			path: '/agent_info',
 			name: "agent_index",
 			component: Agent,
 			children: [
 				{
 					path: ':page?',
-					name: 'agent',
+					name: 'agent_info',
 					meta: {
 						title: '统计信息',
 						notCache: true,
@@ -807,6 +823,56 @@ export default {
 				},
 			]
 		},
+		{
+			path: '/agent_details',
+			name: 'agentDetails',
+			component: Agent,
+			children: [
+				{
+					path: ':page?',
+					name: 'agent_details',
+					meta: {
+						title: '应用管理',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/agent-component/details.vue')
+				},
+			]
+		},
+		{
+			path: '/agent_financial',
+			name: 'agentFinancial',
+			component: Agent,
+			children: [
+				{
+					path: ':page?',
+					name: 'agent_financial',
+					meta: {
+						title: '代理商财务明细',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/agent-component/financial.vue')
+				},
+			]
+		},
+		{
+			path: '/agent_price',
+			name: 'agentPrice',
+			component: Agent,
+			children: [
+				{
+					path: ':page?',
+					name: 'agent_price',
+					meta: {
+						title: '代理商价格',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/agent-component/price.vue')
+				},
+			]
+		},
+
+
 	],
 	admin: [
 		{
@@ -841,6 +907,7 @@ export default {
 				},
 			]
 		},
+
 		{
 			path: '/admin_apps',
 			name: 'adminApps',
@@ -924,7 +991,7 @@ export default {
 					path: ':page?',
 					name: 'admin_manager',
 					meta: {
-						title: '管理员设置',
+						title: '超级管理员设置',
 						icon: 'md-home'
 					},
 					component: () => import('@/views/admin-component/admin_manager.vue')
@@ -961,6 +1028,43 @@ export default {
 					},
 					component: () => import('@/views/admin-component/page_manager.vue')
 				},
+			]
+		},
+
+		{
+			path: '/admin_soft',
+			name: 'adminSoft',
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'admin_soft',
+					meta: {
+						title: '软件管理',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/admin_soft/admin_soft.vue')
+				},
+				{
+					path: '/admin_soft/admin_privilege/:softID',
+					name: 'admin_privilege',
+					meta: {
+						title: '功能管理',
+						icon: 'md-home',
+						hideInMenu: true
+					},
+					component: () => import('@/views/admin-component/admin_soft/admin_privilege.vue')
+				},
+				{
+					path: '/admin_soft/admin_role/:softID',
+					name: 'admin_role',
+					meta: {
+						title: '型号管理',
+						icon: 'md-home',
+						hideInMenu: true
+					},
+					component: () => import('@/views/admin-component/admin_soft/admin_role.vue')
+				}
 			]
 		},
 	]

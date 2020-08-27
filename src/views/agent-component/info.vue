@@ -1,21 +1,25 @@
 <template>
-    <div>
-        <div class="agent-info-content">
-            <div class="info-title">欢迎使用代理商平台</div>
-            <!-- <div class="info-user-table">
-				<Table :columns="userData.columns" :data="userData.data" style=""></Table>
-			</div> -->
-            <div class="info-agent-table">
-                <Table
-                    :columns="infoData.columns"
-                    :data="infoData.data"
-                ></Table>
-            </div>
-        </div>
-    </div>
+    <Card>
+        <p slot="title">欢迎使用代理商平台</p>
+
+        <tables
+            ref="tables"
+            editable
+            search-place="top"
+            v-model="infoData.data"
+            :columns="infoData.columns"
+        >
+        </tables>
+    </Card>
 </template>
 <script type="text/javascript">
+import Tables from '@/components/tables'
+import Buttons from '@/components/buttons'
 export default {
+    components: {
+        Tables,
+        Buttons,
+    },
     data: function () {
         return {
             infoData: {
@@ -45,11 +49,10 @@ export default {
                 action: 'agent_info',
                 appid: this.vueAppid
             };
-            this.$Loading.start();
             _this.$http.post('/api_agent.php', _this.$qs.stringify(data)).then(function (response) {
+                console.log(response);
                 if (response.data.status == 1) {
                     var data = response.data;
-                    // console.log(data);
                     var centent = [
                         {
                             info: '代理级别',
@@ -74,9 +77,7 @@ export default {
                     ];
 
                     _this.infoData.data = centent;
-
                 }
-                _this.$Loading.finish();
             }).catch(function (response) {
                 console.log(response);
                 _this.$Notice.error({
