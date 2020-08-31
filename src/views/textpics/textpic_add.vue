@@ -65,6 +65,12 @@ export default {
     },
     data () {
         return {
+            options: {
+                mode: "single",
+                _displayMode: 'grid',  // grid 和 list
+                type: 'image',
+                appid: this.$cookieStore.get("CookVueAppid")
+            },
             loading: false,
             formValidate: {
                 id: 0,

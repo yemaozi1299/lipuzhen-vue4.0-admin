@@ -21,7 +21,7 @@
                 ></Input>
             </Form-item>
             <Form-item label="封面图片" prop="face">
-                <Row style="width: 500px">
+                <Row style="width: 500px;">
                     <Col span="12">
                         <div class="goods-upload-list" v-if="formValidate.face">
                             <img :src="formValidate.face" />
@@ -40,7 +40,7 @@
                         </div>
                         <Button
                             @click="handleBeforeUpload('face')"
-                            style="vertical-align:top;"
+                            style="vertical-align: top;"
                         >
                             <div style>
                                 <Icon
@@ -111,7 +111,7 @@
                     type="date"
                     format="yyyy-MM-dd"
                     placeholder=""
-                    style="width: 200px"
+                    style="width: 200px;"
                     :value="formValidate.date"
                     @on-change="changeDateTime"
                     :disabled="newid > 0"
@@ -133,7 +133,7 @@
                     <span v-if="!loading">提交</span>
                     <span v-else>Loading...</span>
                 </Button>
-                <Button @click="$router.go(-1)" style="margin-left: 8px"
+                <Button @click="$router.go(-1)" style="margin-left: 8px;"
                     >取消</Button
                 >
             </Form-item>
@@ -148,7 +148,7 @@
             <div slot="footer"></div>
         </Modal>
         <Modal title="查看图片" v-model="visible">
-            <img :src="imgName" v-if="visible" style="width: 100%" />
+            <img :src="imgName" v-if="visible" style="width: 100%;" />
         </Modal>
     </Card>
 </template>
@@ -163,6 +163,12 @@ export default {
     },
     data () {
         return {
+            options: {
+                mode: "single",
+                _displayMode: 'grid',  // grid 和 list
+                type: '',
+                appid: this.$cookieStore.get("CookVueAppid")
+            },
             loading: false,
             formValidate: {
                 id: 0,
@@ -194,11 +200,6 @@ export default {
             },
             uploadType: "ico",
             isUpload: false,
-            options: {
-                mode: "single",
-                _displayMode: 'grid',  // grid 和 list
-                type: 'image'
-            },
             editorContent: '',
             imgName: '',
             visible: false,

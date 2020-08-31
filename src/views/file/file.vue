@@ -19,7 +19,8 @@ export default {
             options: {
                 mode: "view",
                 _displayMode: 'grid',  // grid 和 list
-                type: ''
+                type: '',
+                appid: this.$cookieStore.get("CookVueAppid")
             },
             showFile: true
         }

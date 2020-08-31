@@ -20,7 +20,7 @@
                 >
                     <Icon type="md-add" />添加功能
                 </Button>
-                <Button class="ant-btn mg-r-20">
+                <Button class="ant-btn mg-r-20" to="/admin_soft">
                     <Icon type="ios-undo" />返回
                 </Button>
             </template>
@@ -264,10 +264,11 @@ export default {
                 }
             }).then((res) => {
                 if (res.data.status == 1) {
-                    this.dataInitial();
                 } else {
                     this.$Message.warning(res.data.message);
                 }
+                this.dataInitial();
+
                 console.log(res.data);
             });
         }

@@ -22,7 +22,7 @@
                 <Button
                     type="primary"
                     class="ant-btn mg-r-20"
-                    v-on:click="addCompanyData.isModal = true"
+                    v-on:click="showAddRole"
                 >
                     <Icon type="md-add" />添加软件
                 </Button>
@@ -41,6 +41,12 @@
                     <Input
                         type="text"
                         v-model="addCompanyData.softname"
+                    ></Input>
+                </FormItem>
+                <FormItem label="软件代码：">
+                    <Input
+                        type="text"
+                        v-model="addCompanyData.softcode"
                     ></Input>
                 </FormItem>
                 <FormItem label="描述：">
@@ -72,6 +78,7 @@ export default {
                 id: 0,
                 isModal: false,
                 loading: false,
+                softcode: "",
                 softname: "",
                 description: "",
                 yc: false
@@ -108,7 +115,8 @@ export default {
                 },
                 {
                     title: '操作',
-                    align: 'center',
+                    align: 'left',
+                    width: 400,
                     render: (h, params) => {
                         return h('div', [
                             h('Button', {
@@ -124,6 +132,7 @@ export default {
                                             isModal: true,
                                             id: params.row.id,
                                             softname: params.row.softname,
+                                            softcode: params.row.softcode,
                                             description: params.row.description,
                                             yc: params.row.yc == "1" ? true : false
                                         }
@@ -154,6 +163,27 @@ export default {
                             }, '添加功能'),
                             h('Button', {
                                 props: {
+                                    type: 'warning'
+                                },
+                                style: {
+                                    margin: '5px'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.$router.push({
+                                            name: "admin_role",
+                                            params: {
+                                                softID: params.row.id
+                                            },
+                                            query: {
+                                                softname: params.row.softname
+                                            }
+                                        });
+                                    }
+                                }
+                            }, '添加型号'),
+                            h('Button', {
+                                props: {
                                     type: 'error'
                                 },
                                 style: {
@@ -161,6 +191,16 @@ export default {
                                 },
                                 on: {
                                     click: () => {
+                                        this.$Modal.confirm({
+                                            title: '提示',
+                                            content: "确定删除所选记录吗?",
+                                            onOk: () => {
+                                                this.del(params.row.id);
+                                            },
+                                            onCancel: () => {
+                                                // this.$Message.info('点击了取消');
+                                            }
+                                        });
                                     }
                                 }
                             }, '删除')
@@ -183,7 +223,6 @@ export default {
         this.fetchData()
     },
     watch: {
-
         chooseID: function (val) {
             if (val.length >= this.tableData.length) {
                 this.isSelectAll = true
@@ -194,6 +233,16 @@ export default {
         "$route": "fetchData"
     },
     methods: {
+        showAddRole () {
+            this.addCompanyData = {
+                id: 0,
+                isModal: true,
+                loading: false,
+                softname: "",
+                description: "",
+                yc: false
+            }
+        },
         addSoft () {
             var data = this.addCompanyData;
             this.$http.request({
@@ -203,6 +252,7 @@ export default {
                     id: data.id,
                     action: data.id ? "soft_edit" : "soft_add",
                     softname: data.softname,
+                    softcode: data.softcode,
                     description: data.description,
                     yc: data.yc ? "1" : "0"
                 }
@@ -267,7 +317,25 @@ export default {
                 }
                 console.log(res.data);
             });
-        }
+        },
+        del (softID) {
+            this.$http.request({
+                method: "POST",
+                url: "/api_admin.php",
+                params: {
+                    softID: softID,
+                    action: "soft_del",
+                }
+            }).then((res) => {
+                if (res.data.status == 1) {
+                } else {
+                    this.$Message.warning(res.data.message);
+                }
+                this.dataInitial();
+
+                console.log(res.data);
+            });
+        },
     }
 }
 </script>

@@ -764,6 +764,64 @@ export default {
 		]
 	},
 
+	{
+		path: '/wxxcx',
+		name: '_wxxcx',
+		component: Main,
+		meta: {
+			notCache: true,
+			hideInMenu: true,
+		},
+		children: [
+			{
+				path: ':page?',
+				name: 'wxxcx',
+				meta: {
+					title: '小程序设置',
+					notCache: true,
+					icon: 'md-home'
+				},
+				redirect: '/wxxcx/sharezip',
+				component: () => import('@/views/setPage/wxxcx.vue'),
+				children: [
+					{
+						path: '/wxxcx/sharezip',
+						name: 'sharezip',
+						meta: {
+							title: '打包发布',
+							notCache: true,
+							icon: 'md-home'
+						},
+						component: () => import('@/views/setPage/components/sharezip.vue')
+					},
+				]
+			},
+
+		]
+	},
+	{
+		path: '/responsive',
+		name: '_responsive',
+		component: Main,
+		meta: {
+			notCache: true,
+			hideInMenu: true,
+		},
+		children: [
+			{
+				path: ':page?',
+				name: 'responsive',
+				meta: {
+					title: '响应式设置',
+					notCache: true,
+					icon: 'md-home'
+				},
+				component: () => import('@/views/setPage/responsive.vue')
+			},
+		]
+	},
+
+
 
 	{
 		path: '/401',
@@ -1030,7 +1088,6 @@ export default {
 				},
 			]
 		},
-
 		{
 			path: '/admin_soft',
 			name: 'adminSoft',

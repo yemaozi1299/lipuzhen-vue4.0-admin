@@ -31,15 +31,20 @@
                     :collapsed="collapsed"
                     @on-coll-change="handleCollapsedChange"
                 >
-                    <!-- <user
-                        :message-unread-count="unreadCount"
-                        :user-avatar="userAvatar"
-                    /> -->
+                    <user
+                        :message-unread-count="3"
+                        user-avatar="https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png"
+                    />
+                    <headerSoft
+                        @on-lang-change="setSoft"
+                        style="margin-right: 10px;"
+                        :lang="``"
+                    />
                     <!-- <fullscreen
                         v-model="isFullscreen"
                         style="margin-right: 10px;"
                     /> -->
-                    <div class="link-wrap-right">
+                    <!-- <div class="link-wrap-right">
                         <a
                             :href="'/appeditor/preview.php?appid='"
                             target="_blank"
@@ -59,6 +64,7 @@
                             >
                         </a>
                     </div>
+					 -->
                 </header-bar>
             </Header>
             <Content class="main-content-con">
@@ -91,7 +97,8 @@ import HeaderBar from './components/header-bar'
 import minLogo from '@/assets/images/logo-min.png'
 import maxLogo from '@/assets/images/logo.png'
 // import TagsNav from './components/tags-nav'
-// import User from './components/user'
+import User from './components/user'
+import HeaderSoft from './components/header-soft'
 import './main.less'
 import {
     getMenuByRouter
@@ -100,7 +107,9 @@ export default {
     name: 'Main',
     components: {
         SideMenu,
-        HeaderBar
+        HeaderBar,
+        User,
+        HeaderSoft
     },
     data () {
         return {
@@ -166,6 +175,12 @@ export default {
                 params,
                 query
             })
+        },
+        setSoft (name) {
+            this.$router.push({
+                name: name,
+            });
+            console.log(name);
         }
     }
 }

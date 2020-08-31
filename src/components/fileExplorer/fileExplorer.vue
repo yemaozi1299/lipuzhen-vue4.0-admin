@@ -2,7 +2,7 @@
     <div
         id="file-explorer"
         data-url="/api_edit.php?action=filemanager_list"
-        :class="mode"
+        :class="options.mode"
     >
         <div class="file-panel" data-count="25/58">
             <div class="file-explorer-header">
@@ -126,12 +126,16 @@
                     >
                         {{ item.name }}
                     </li>
-                    <li id="select-multiple" v-show="false">
+                    <li
+                        id="select-multiple"
+                        v-show="options.mode == 'multiple'"
+                    >
                         <a
-                            href="#"
+                            href="javascript:void(0);"
                             :class="{
-                                disabled: selectedFile == 0
+                                disabled: selectedFile.length == 0,
                             }"
+                            @click="multipleSelectToUse"
                             >选择使用</a
                         >
                     </li>
@@ -242,11 +246,11 @@
                                     :src="item.path"
                                     :title="
                                         '类型: ' +
-                                            item.suffix +
-                                            '\n大小: ' +
-                                            item.bytes +
-                                            '\n修改日期: ' +
-                                            item.time
+                                        item.suffix +
+                                        '\n大小: ' +
+                                        item.bytes +
+                                        '\n修改日期: ' +
+                                        item.time
                                     "
                                     :data-url="item.itemPath"
                                     :data-type="item.typeName"
@@ -319,7 +323,7 @@ export default {
         value: {
             type: Boolean,
             default: true
-        }
+        },
     },
     data () {
         return {
@@ -431,7 +435,8 @@ export default {
             currentTab: "",
             multipleSelectBtn: "",
             selectedFile: [],
-            showMode: ""
+            showMode: "",
+            appid: this.options.appid
 
         }
     },
@@ -439,9 +444,6 @@ export default {
         this.init();
     },
     watch: {
-        value: function (val) {
-            // val && this.init()
-        }
     },
     methods: {
         _initParam: function () {
@@ -456,7 +458,6 @@ export default {
                     this.fileCount = this.container.find(".file-count"),
                     this.multipleSelectBtn = this.container.find("#select-multiple a");
                 this._enableMultipleSelect();
-
             });
         },
         init: function () {
@@ -477,8 +478,6 @@ export default {
                 me.currentTab = me.typeList[0];
             }
             me._getFiles(me._getFolderURL(""));
-
-
         },
 
         _getFolderURL: function (folder) {
@@ -503,7 +502,7 @@ export default {
                 method: "POST",
                 url: url,
                 params: {
-                    appid: 1
+                    appid: this.appid
                 }
             }).then((data) => {
                 var data = data.data;
@@ -635,12 +634,18 @@ export default {
                             return $('<div class="drag-helper"><i class="iconfont">&#xe60b;</i></div>')
                         }
                     });
-                    i.data("seq", ++me.selectedSeq)
+                    me.selectedFile.push({
+                        name: i.attr("data-name"),
+                        url: i.attr("data-url")
+                    });
+                    console.log("2=============================", me.selectedFile.length);
+                    i.attr("data-seq", ++me.selectedSeq)
                 },
                 unselected: function (t, n) {
                     var i = $(n.unselected);
                     i.data("uiDraggable") && i.draggable("destroy"),
                         me.selectedSeq = 0,
+                        me.selectedFile = [],
                         me._updateSeqUI()
                 }
             })
@@ -659,8 +664,16 @@ export default {
                         url: img.attr("data-url")
                     })
                 }));
-            this.selectedFile = list;
+            // this.selectedFile = list;
             return list
+        },
+        _sortFilesBySeq: function (list) {
+            var domList = [].sort.call(list, (function (e, t) {
+                var n = $(e),
+                    i = $(t);
+                return n.attr("data-seq") > i.attr("data-seq") ? 1 : -1
+            }));
+            return $(domList)
         },
         // 刷新dom列表上的seq数字
         _updateSeqUI: function (e) {
@@ -689,7 +702,7 @@ export default {
             me.$http.request({
                 url: me.moveURL,
                 params: {
-                    appid: 1,
+                    appid: this.appid,
                     filename: file,
                     classid: classid
                 },
@@ -926,11 +939,11 @@ export default {
                             url: me.deleteURL,
                             params: {
                                 filename: file,
-                                appid: 1
+                                appid: this.appid
                             },
                         }).then((data) => {
                             var data = data.data;
-                            data && 1 == data.status && (that.$Message.info(data.message || "删除成功"), me._refresh())
+                            data && 1 == data.status && (that.$Message.info(data.message || "删除成功"), me._refresh(), me.selectedSeq = 0, me.selectedFile = [])
                         });
 
 
@@ -1023,6 +1036,20 @@ export default {
                     url: file.attr("data-url")
                 };
             this._success(i)
+        },
+        multipleSelectToUse: function (event) {
+            var me = this;
+            this._success(this._getSelectedFile());
+            this.fileList.find(this.selectedClass).each(function (index, item) {
+                var i = $(item);
+                i.data("uiDraggable") && i.draggable("destroy");
+                i.removeClass("ui-selected");
+            });
+            this.selectedSeq = 0;
+            this.selectedFile = [];
+            this._updateSeqUI()
+            // this.selectedFile = [];
+            // console.log(this._getSelectedFile());
         },
         _success: function (t) {
             var me = this;

@@ -178,7 +178,8 @@ export default {
             options: {
                 mode: "single",
                 _displayMode: 'grid',  // grid 和 list
-                type: 'image'
+                type: 'image',
+                appid: this.$cookieStore.get("CookVueAppid")
             },
             example_data: {
                 isModal: false,

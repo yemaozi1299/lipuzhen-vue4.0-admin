@@ -59,6 +59,7 @@
 
 <script>
 import welcome_logo from '@/assets/images/welcome_logo.png'
+import applogo from '@/assets/images/welcome/applogo.png'
 import Tables from '@/components/tables'
 import Buttons from '@/components/buttons'
 export default {
@@ -70,6 +71,7 @@ export default {
         return {
             loading: false,
             welcome_logo,
+            applogo,
             selectData: [],
             tabActive: 'xcx',
             isAgent: 0,
@@ -120,7 +122,7 @@ export default {
                             return h('div', [
                                 h('img', {
                                     attrs: {
-                                        src: params.row.logo || '/images/applogo.png',
+                                        src: params.row.logo || this.applogo,
                                     },
                                     style: {
                                         margin: '10px',
@@ -163,17 +165,16 @@ export default {
                         }
                     },
                     {
+                        title: '所属软件',
+                        align: 'center',
+                        key: 'soft'
+                    },
+                    {
                         title: '版本',
                         align: 'center',
                         key: 'rolename'
-
-
                     },
-                    {
-                        title: '结束时间',
-                        key: 'endtime',
-                        align: 'center'
-                    },
+
                     {
                         title: '状态',
                         width: 100,
@@ -183,9 +184,15 @@ export default {
                         }
                     },
                     {
+                        title: '结束时间',
+                        key: 'endtime',
+                        align: 'center'
+                    },
+                    {
                         title: '操作',
                         key: 'opr',
                         align: 'center',
+                        width: 100,
                         render: (h, params) => {
                             return h('div', [
                                 h('Button', {
@@ -250,22 +257,20 @@ export default {
                 action: 'check_isAgent'
             }
             _this.$http.post('/api_home.php', _this.$qs.stringify(data)).then(function (response) {
-                _this.isAgent = response.data;
+                _this.isAgent = response.data.isAgent;
                 _this.$Loading.finish();
-            })
-                .catch(function (response) {
-                    _this.$Notice.error({
-                        title: '错误提示',
-                        desc: '无法访问服务器,请重试'
-                    });
-                    _this.$Loading.error();
+            }).catch(function (response) {
+                _this.$Notice.error({
+                    title: '错误提示',
+                    desc: '无法访问服务器,请重试'
                 });
+                _this.$Loading.error();
+            });
             var data = {
                 action: 'check_isAdmin'
             }
             _this.$http.post('/api_home.php', _this.$qs.stringify(data)).then(function (response) {
-                _this.isAdmin = response.data;
-
+                _this.isAdmin = response.data.isAdmin;
                 _this.$Loading.finish();
             })
                 .catch(function (response) {

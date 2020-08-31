@@ -55,17 +55,20 @@
                 </RadioGroup>
             </Form-item>
             <Form-item label="年龄要求" prop="age">
-                <Input v-model="formValidate.age" style="width:200px"></Input
+                <Input v-model="formValidate.age" style="width: 200px;"></Input
                 ><span class="notes">空则默认为不限</span>
             </Form-item>
             <Form-item label="学历要求" prop="degree">
-                <Input v-model="formValidate.degree" style="width:200px"></Input
+                <Input
+                    v-model="formValidate.degree"
+                    style="width: 200px;"
+                ></Input
                 ><span class="notes">空则默认为不限</span>
             </Form-item>
             <Form-item label="工作经验" prop="workage">
                 <Input
                     v-model="formValidate.workage"
-                    style="width:200px"
+                    style="width: 200px;"
                 ></Input
                 ><span class="notes">年</span>
                 <span class="notes">空则默认为不限</span>
@@ -85,7 +88,7 @@
                     type="date"
                     format="yyyy-MM-dd"
                     placeholder=""
-                    style="width: 200px"
+                    style="width: 200px;"
                     :value="formValidate.day"
                     @on-change="changeDateTime"
                     :disabled="jobid > 0"
@@ -120,7 +123,7 @@
                     <span v-if="!loading">提交</span>
                     <span v-else>Loading...</span>
                 </Button>
-                <Button @click="$router.go(-1)" style="margin-left: 8px"
+                <Button @click="$router.go(-1)" style="margin-left: 8px;"
                     >取消</Button
                 >
             </Form-item>
@@ -145,6 +148,12 @@ export default {
     },
     data () {
         return {
+            options: {
+                mode: "single",
+                _displayMode: 'grid',  // grid 和 list
+                type: '',
+                appid: this.$cookieStore.get("CookVueAppid")
+            },
             formValidate: {
                 id: 0,
                 name: "",

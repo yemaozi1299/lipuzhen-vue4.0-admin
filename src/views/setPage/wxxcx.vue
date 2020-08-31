@@ -1,23 +1,20 @@
 <template>
-    <div class="shopinfo-content">
-        <div class="page-title">店铺管理</div>
+    <div class="wxxcx-content">
         <div class="wrap">
             <div class="tab-container">
-                <div class="tab-item">
-                    <router-link :to="{ path: '/shopinfo/shopinfo' }"
-                        >店铺设置</router-link
-                    >
+                <div class="link-wrap-left">
+                    <a :href="'/appeditor/?appid='" target="_blank">
+                        <Button type="text" icon="ios-construct" size="large"
+                            >小程序界面编辑</Button
+                        >
+                    </a>
                 </div>
-                <div class="tab-item">
-                    <router-link :to="{ path: '/shopinfo/location' }"
-                        >座位设置</router-link
-                    >
-                </div>
-                <!-- <div class="tab-item"><router-link :to="{path: '/shopinfo/ticket'}">小票设置</router-link></div> -->
-                <div class="tab-item">
-                    <router-link :to="{ path: '/shopinfo/ticketlist' }"
-                        >小票机列表</router-link
-                    >
+                <div class="link-wrap-right">
+                    <a :href="'/appeditor/preview.php?appid='" target="_blank">
+                        <Button type="text" icon="md-play" size="large"
+                            >预览</Button
+                        >
+                    </a>
                 </div>
             </div>
             <div class="content">
@@ -27,24 +24,16 @@
             </div>
         </div>
     </div>
-</template> 
-<script type="text/javascript">
+</template>
+
+<script>
 export default {
-    data () {
-        return {
-            content: "439px"
-        }
-    },
-    created () {
-        this.content = (document.body.clientHeight - 147) + "px";
-    }
+
 }
 </script>
 
-
-
 <style lang="stylus" rel="stylesheet/stylus">
-.shopinfo-content {
+.wxxcx-content {
     background-color: #fff;
     .page-title {
         padding: 16px;
@@ -87,4 +76,3 @@ export default {
     }
 }
 </style>
-

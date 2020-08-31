@@ -7,7 +7,7 @@
                 :rules="{
                     required: true,
                     message: '必填',
-                    trigger: 'blur'
+                    trigger: 'blur',
                 }"
             >
                 <Input
@@ -21,7 +21,7 @@
                 :rules="{
                     required: true,
                     message: '必填',
-                    trigger: 'blur'
+                    trigger: 'blur',
                 }"
             >
                 <div class="goods-upload-list" v-if="formValidate.face">
@@ -35,7 +35,7 @@
                 </div>
                 <Button
                     @click="handleBeforeUpload('face')"
-                    style="vertical-align:top;"
+                    style="vertical-align: top;"
                 >
                     <div style>
                         <Icon type="ios-cloud-upload-outline" size="20"></Icon
@@ -52,7 +52,7 @@
                 :rules="{
                     required: true,
                     message: '必填',
-                    trigger: 'blur'
+                    trigger: 'blur',
                 }"
             >
                 <Row :gutter="24">
@@ -75,7 +75,7 @@
                         </div>
                         <Button
                             @click="handleBeforeUpload('items', index)"
-                            style="vertical-align:top;"
+                            style="vertical-align: top;"
                         >
                             <div style>
                                 <Icon
@@ -108,7 +108,7 @@
                 <Button type="primary" @click="handleSubmit('formValidate')"
                     >提交</Button
                 >
-                <Button @click="$router.go(-1)" style="margin-left: 8px"
+                <Button @click="$router.go(-1)" style="margin-left: 8px;"
                     >返回</Button
                 >
             </FormItem>
@@ -123,7 +123,7 @@
             <div slot="footer"></div>
         </Modal>
         <Modal title="查看图片" v-model="visible">
-            <img :src="imgName" v-if="visible" style="width: 100%" />
+            <img :src="imgName" v-if="visible" style="width: 100%;" />
         </Modal>
     </Card>
 </template>
@@ -153,7 +153,8 @@ export default {
             options: {
                 mode: "single",
                 _displayMode: 'grid',  // grid 和 list
-                type: 'image'
+                type: 'image',
+                appid: this.$cookieStore.get("CookVueAppid")
             },
             isUpload: false,
             currentIndex: 0,

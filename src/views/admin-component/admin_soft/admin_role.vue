@@ -16,15 +16,104 @@
                 <Button
                     type="primary"
                     class="ant-btn mg-r-20"
-                    v-on:click="addCompanyData.isModal = true"
+                    v-on:click="showAddRole"
                 >
                     <Icon type="md-add" />添加型号
                 </Button>
-                <Button class="ant-btn mg-r-20">
+                <Button class="ant-btn mg-r-20" to="/admin_soft">
                     <Icon type="ios-undo" />返回
                 </Button>
             </template>
         </tables>
+        <Modal
+            v-model="addCompanyData.isModal"
+            title="添加型号"
+            @on-ok="add"
+            @on-cancel=""
+        >
+            <Form label-position="left" :label-width="100">
+                <FormItem label="软件名称：">
+                    <Input
+                        type="text"
+                        v-model="addCompanyData.rolename"
+                    ></Input>
+                </FormItem>
+                <FormItem label="代码名称：">
+                    <Input
+                        type="text"
+                        v-model="addCompanyData.rolecode"
+                    ></Input>
+                </FormItem>
+                <FormItem label="市场价格：">
+                    <Input
+                        type="text"
+                        v-model="addCompanyData.marketprice"
+                    ></Input>
+                </FormItem>
+                <FormItem label="功能选择：">
+                    <CheckboxGroup v-model="addCompanyData.p_code_arr">
+                        <Checkbox
+                            border
+                            :label="item.p_code"
+                            v-for="item in codeList"
+                            style="margin-bottom: 10px;"
+                            >{{ item.p_name }}</Checkbox
+                        >
+                    </CheckboxGroup>
+                </FormItem>
+                <FormItem label="描述：">
+                    <Input
+                        type="text"
+                        v-model="addCompanyData.description"
+                    ></Input>
+                </FormItem>
+                <FormItem label="是否隐藏：">
+                    <i-switch v-model="addCompanyData.yc" />
+                </FormItem>
+            </Form>
+        </Modal>
+
+        <Modal
+            v-model="edit_isModal"
+            title="添加型号"
+            @on-ok="edit"
+            @on-cancel=""
+        >
+            <Form label-position="left" :label-width="100">
+                <FormItem label="软件名称：">
+                    <Input
+                        type="text"
+                        v-model="addCompanyData.rolename"
+                    ></Input>
+                </FormItem>
+                <FormItem label="市场价格：">
+                    <Input
+                        type="text"
+                        v-model="addCompanyData.marketprice"
+                    ></Input>
+                </FormItem>
+                <FormItem label="功能选择：">
+                    <CheckboxGroup v-model="addCompanyData.p_code_arr">
+                        <Checkbox
+                            border
+                            :label="item.p_code"
+                            v-for="item in codeList"
+                            style="margin-bottom: 10px;"
+                            >{{ item.p_name }}</Checkbox
+                        >
+                    </CheckboxGroup>
+                </FormItem>
+                <FormItem label="描述：">
+                    <Input
+                        type="text"
+                        v-model="addCompanyData.description"
+                    ></Input>
+                </FormItem>
+                <FormItem label="是否隐藏：">
+                    <i-switch v-model="addCompanyData.yc" />
+                </FormItem>
+            </Form>
+        </Modal>
     </Card>
 </template>
 
@@ -41,15 +130,113 @@ export default {
         return {
             softname: "",
             edit_isModal: false,
+            codeList: [],
+            selectedCode: [],
             addCompanyData: {
-                p_id: 0,
+                roleID: 0,
                 isModal: false,
-                p_name: "",
-                p_code: "",
                 softID: "",
-                yc: false
+                yc: false,
+                description: "",
+                marketprice: "",
+                rolename: "",
+                rolecode: "",
+                p_code_arr: []
             },
-            columns: [],
+            columns: [
+                {
+                    key: "rolename",
+                    title: "型号名称"
+                },
+                {
+                    key: "rolecode",
+                    title: "代码名称"
+                },
+                {
+                    key: "marketprice",
+                    title: "市场价格"
+                },
+                {
+                    key: "description",
+                    title: "描述"
+                },
+                {
+                    key: "yc",
+                    title: "是否隐藏",
+                    render: (h, params) => {
+                        return h("div", [
+                            h("Button", {
+                                props: {
+                                    type: params.row.yc == 1 ? 'error' : 'success'
+                                },
+                                style: {
+                                    margin: '5px'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.changeShow(params.row);
+                                    }
+                                }
+                            }, params.row.yc == 1 ? '隐藏' : '显示')
+                        ])
+                    }
+                },
+                {
+                    title: '操作',
+                    align: 'left',
+                    render: (h, params) => {
+                        return h('div', [
+                            h('Button', {
+                                props: {
+                                    type: 'info'
+                                },
+                                style: {
+                                    margin: '5px'
+                                },
+                                on: {
+                                    click: () => {
+                                        var param = {
+                                            isModal: false,
+                                            roleID: params.row.id,
+                                            softID: this.softID,
+                                            yc: params.row.yc == "1" ? true : false,
+                                            description: params.row.description,
+                                            marketprice: params.row.marketprice,
+                                            rolename: params.row.rolename,
+                                            p_code_arr: params.row.p_code_arr
+                                        }
+                                        this.edit_isModal = true;
+                                        this.addCompanyData = param;
+                                    }
+                                }
+                            }, '修改'),
+
+                            h('Button', {
+                                props: {
+                                    type: 'error'
+                                },
+                                style: {
+                                    margin: '5px'
+                                },
+                                on: {
+                                    click: () => {
+                                        this.$Modal.confirm({
+                                            title: '提示',
+                                            content: "确定删除所选记录吗?",
+                                            onOk: () => {
+                                                this.del(params.row.id);
+                                            },
+                                            onCancel: () => {
+                                                // this.$Message.info('点击了取消');
+                                            }
+                                        });
+                                    }
+                                }
+                            }, '删除')
+                        ]);
+                    }
+                }
+            ],
             tableData: [],
             chooseID: [],
             classid: "0",
@@ -75,7 +262,21 @@ export default {
         fetchData () {
             this.softID = this.$route.params.softID ? parseInt(this.$route.params.softID) : 1;
             this.softname = this.$route.query.softname || "";
-            this.dataInitial()
+            this.dataInitial();
+            this.getPrivilege();
+        },
+        showAddRole () {
+            this.addCompanyData = {
+                roleID: 0,
+                isModal: true,
+                softID: "",
+                yc: false,
+                description: "",
+                marketprice: "",
+                rolename: "",
+                rolecode: "",
+                p_code_arr: this.selectedCode
+            }
         },
         dataInitial () {
             this.$http.request({
@@ -85,8 +286,117 @@ export default {
                     softID: this.softID
                 }
             }).then((res) => {
-
+                if (res.data.status == 1) {
+                    this.tableData = res.data.body || [];
+                } else {
+                    this.tableData = [];
+                }
+                console.log(res.data);
+            });
+        },
+        getPrivilege () {
+            this.$http.request({
+                method: "POST",
+                url: "/api_admin.php?action=privilege_listof",
+                params: {
+                    softID: this.softID
+                }
+            }).then((res) => {
+                console.log(res);
+                if (res.data.status == 1) {
+                    var body = res.data.body || [], code = [];
+                    body.forEach(function (item) {
+                        code.push(item.p_code);
+                    });
+                    this.codeList = body;
+                    this.addCompanyData.p_code_arr = code;
+                    this.selectedCode = code;
+                }
             })
+        },
+        add () {
+            var data = this.addCompanyData || {};
+            this.$http.request({
+                method: "POST",
+                url: "/api_admin.php?action=role_add",
+                params: {
+                    rolename: data.rolename,
+                    softID: this.softID,
+                    p_code_arr: data.p_code_arr,
+                    rolecode: data.rolecode,
+                    marketprice: data.marketprice,
+                    description: data.description,
+                    yc: data.yc ? "1" : "0"
+                }
+            }).then((res) => {
+                console.log(res);
+                if (res.data.status == 1) {
+                    this.addCompanyData = {
+                        isModal: false,
+                        softID: this.softID,
+                        yc: false,
+                        description: "",
+                        marketprice: "",
+                        rolename: "",
+                        p_code_arr: this.selectedCode
+                    };
+                } else {
+                    this.$Message.error(res.data.message);
+                }
+                this.dataInitial()
+
+            });
+        },
+        edit () {
+            var data = this.addCompanyData || {};
+            this.$http.request({
+                method: "POST",
+                url: "/api_admin.php?action=role_edit",
+                params: {
+                    roleID: data.roleID,
+                    rolename: data.rolename,
+                    softID: this.softID,
+                    p_code_arr: data.p_code_arr,
+                    marketprice: data.marketprice,
+                    description: data.description,
+                    yc: data.yc ? "1" : "0"
+                }
+            }).then((res) => {
+                console.log(res.data);
+                if (res.data.status == 1) {
+                    this.addCompanyData = {
+                        isModal: false,
+                        softID: this.softID,
+                        yc: false,
+                        description: "",
+                        marketprice: "",
+                        rolename: "",
+                        p_code_arr: this.selectedCode
+                    };
+                } else {
+                    this.$Message.error(res.data.message);
+                }
+                this.dataInitial();
+
+            });
+        },
+        del (roleID) {
+            this.$http.request({
+                method: "POST",
+                url: "/api_admin.php",
+                params: {
+                    roleID: roleID,
+                    action: "role_del",
+                }
+            }).then((res) => {
+                if (res.data.status == 1) {
+                } else {
+                    this.$Message.warning(res.data.message);
+                }
+                this.dataInitial();
+
+                console.log(res.data);
+            });
         },
         chooseEdit: function (selection) {
             var chooseID = []
@@ -102,6 +412,21 @@ export default {
             }
             this.$route.push({})
         },
+        changeShow (param) {
+            this.$http.request({
+                method: "POST",
+                url: "/api_admin.php?action=role_hidde",
+                params: {
+                    softID: param.id,
+                    hidde: param.yc == "1" ? "0" : "1"
+                }
+            }).then((res) => {
+                if (res.data.status == 1) {
+                    this.dataInitial();
+                }
+                console.log(res.data);
+            });
+        }
     }
 }
 </script>
