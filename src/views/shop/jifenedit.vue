@@ -7,14 +7,10 @@
             :label-width="80"
             style="padding-bottom: 30px;"
         >
-            <div style="margin-bottom:10px;font-size:16px">
-                {{ goodsid == 0 ? "添加商品" : "编辑商品" }}
+            <div style="margin-bottom: 10px; font-size: 16px;">
+                {{ goodsid == 0 ? "添加外卖" : "编辑外卖" }}
             </div>
-            <!-- <Form-item label="分类" prop="classid">
-	            <Checkbox-group v-model="formValidate.classid">
-	                <Checkbox v-for="item in classitems" :label="item.id" :key="item.id">{{item.classname}}</Checkbox>
-	            </Checkbox-group>
-	        </Form-item> -->
+
             <Form-item label="名称" prop="name">
                 <Input
                     v-model="formValidate.name"
@@ -63,7 +59,7 @@
                             <div>规格图片</div>
                         </Col>
                         <Col span="3">
-                            <div>所需积分</div>
+                            <div>价格</div>
                         </Col>
                         <Col span="3">
                             <div>库存</div>
@@ -81,7 +77,7 @@
                         :rules="{
                             required: true,
                             message: '不能为空',
-                            trigger: 'blur'
+                            trigger: 'blur',
                         }"
                     >
                         <Row
@@ -114,24 +110,24 @@
                                     />
                                 </div>
                                 <!-- <Upload
-			                        :show-upload-list="false"
-			                        :on-success="handleGuiGeSuccess"
-			                        :format="['jpg','jpeg','png','gif']"
-			                        :max-size="2048"
-			                        :on-format-error="handleFormatError"
-			                        :on-exceeded-size="handleMaxSize"
-			                        :on-error="handleErrorTips"
-			                        :before-upload="handleUpload"
-			                        type="drag"
-			                        accept="image/*" 
-			                        :action="'/api_edit.php?action=goods_uploadImage&index='+gindex"
-			                        style="display: inline-block;width:158px;">
-			                        <div style="width: 158px;height:40px;line-height: 40px;">
-			                            <Icon type="ios-cloud-upload-outline" size="20"></Icon>上传图片,支持拖拽
-			                        </div>
-			                    </Upload> -->
+		                        :show-upload-list="false"
+		                        :on-success="handleGuiGeSuccess"
+		                        :format="['jpg','jpeg','png','gif']"
+		                        :max-size="2048"
+		                        :on-format-error="handleFormatError"
+		                        :on-exceeded-size="handleMaxSize"
+		                        :on-error="handleErrorTips"
+		                        :before-upload="handleUpload"
+		                        type="drag"
+		                        accept="image/*" 
+		                        :action="'/api_edit.php?action=goods_uploadImage&index='+gindex"
+		                        style="display: inline-block;width:158px;">
+		                        <div style="width: 158px;height:40px;line-height: 40px;">
+		                            <Icon type="ios-cloud-upload-outline" size="20"></Icon>上传图片,支持拖拽
+		                        </div>
+		                    </Upload> -->
                                 <Button
-                                    style="vertical-align:top;"
+                                    style="vertical-align: top;"
                                     v-on:click="guiGeComputer(gindex)"
                                 >
                                     <div style="">
@@ -142,23 +138,17 @@
                                         >选择图片
                                     </div>
                                 </Button>
-                                <Resource
-                                    v-model="isUploadGuiGe"
-                                    :on-success="handleGuiGeSuccess"
-                                    :param="{ index: uploadGuiGeID }"
-                                ></Resource>
                             </Col>
                             <Col span="3">
                                 <Input
                                     v-model="gitem.price"
                                     type="number"
-                                    placeholder="所需积分"
+                                    placeholder="价格"
                                 ></Input>
                             </Col>
                             <Col span="3">
                                 <Input
                                     v-model="gitem.kc"
-                                    type="number"
                                     placeholder="库存"
                                 ></Input>
                             </Col>
@@ -188,11 +178,11 @@
                 </div>
             </Form-item>
             <template v-if="formValidate.guigehave == 0">
-                <Form-item label="所需积分" prop="price">
+                <Form-item label="价格" prop="price">
                     <Input
                         v-model="formValidate.price"
                         type="number"
-                        placeholder="请输入所需积分"
+                        placeholder="请输入价格"
                     ></Input>
                 </Form-item>
                 <Form-item label="库存" prop="kc">
@@ -206,48 +196,39 @@
 
             <Form-item label="封面图片">
                 <div class="goods-upload-list" v-for="item in uploadListOne">
-                    <template v-if="item.status === 'finished'">
-                        <img :src="item.url" />
-                        <div class="goods-upload-list-cover">
-                            <Icon
-                                type="ios-eye-outline"
-                                @click.native="handleView(item.url)"
-                            ></Icon>
-                            <Icon
-                                type="ios-trash-outline"
-                                @click.native="handleRemoveOne(item)"
-                            ></Icon>
-                        </div>
-                    </template>
-                    <template v-else>
-                        <Progress
-                            v-if="item.showProgress"
-                            :percent="item.percentage"
-                            hide-info
-                        ></Progress>
-                    </template>
+                    <img :src="item.url" />
+                    <div class="goods-upload-list-cover">
+                        <Icon
+                            type="ios-eye-outline"
+                            @click.native="handleView(item.url)"
+                        ></Icon>
+                        <Icon
+                            type="ios-trash-outline"
+                            @click.native="handleRemoveOne(item)"
+                        ></Icon>
+                    </div>
                 </div>
                 <!-- <Upload
-			        ref="uploadOne"
-			        :show-upload-list="false"
-			        :default-file-list="face"
-			        :on-success="handleSuccess"
-			        :format="['jpg','jpeg','png','gif']"
-			        :max-size="2048"
-			        :on-format-error="handleFormatError"
-			        :on-exceeded-size="handleMaxSize"
-			        :before-upload="handleBeforeUploadOne"
-			        type="drag" 
-	                accept="image/*" 
-			        action="/api_edit.php?action=goods_uploadImage"
-			        style="display: inline-block;width:158px;">
-			        <div style="width: 158px;height:58px;line-height: 58px;">
-	                      <Icon type="ios-cloud-upload-outline" size="20"></Icon>上传图片,支持拖拽
-	                </div>
-			    </Upload> -->
+		        ref="uploadOne"
+		        :show-upload-list="false"
+		        :default-file-list="face"
+		        :on-success="handleSuccess"
+		        :format="['jpg','jpeg','png','gif']"
+		        :max-size="2048"
+		        :on-format-error="handleFormatError"
+		        :on-exceeded-size="handleMaxSize"
+		        :before-upload="handleBeforeUploadOne"
+		        type="drag" 
+                accept="image/*" 
+		        action="/api_edit.php?action=goods_uploadImage"
+		        style="display: inline-block;width:158px;">
+		        <div style="width: 158px;height:58px;line-height: 58px;">
+                      <Icon type="ios-cloud-upload-outline" size="20"></Icon>上传图片,支持拖拽
+                </div>
+		    </Upload> -->
                 <Button
                     @click="handleBeforeUploadOne"
-                    style="vertical-align:top;"
+                    style="vertical-align: top;"
                 >
                     <div style="">
                         <Icon type="ios-cloud-upload-outline" size="20"></Icon
@@ -260,186 +241,53 @@
                     :default-file-lists="face"
                 ></Resource>
             </Form-item>
-            <Form-item label="轮换图片">
-                <div class="goods-upload-list" v-for="item in uploadList">
-                    <template v-if="item.status === 'finished'">
-                        <img :src="item.url" />
-                        <div class="goods-upload-list-cover">
-                            <Icon
-                                type="ios-eye-outline"
-                                @click.native="handleView(item.url)"
-                            ></Icon>
-                            <Icon
-                                type="ios-trash-outline"
-                                @click.native="handleRemove(item)"
-                            ></Icon>
-                        </div>
-                    </template>
-                    <template v-else>
-                        <Progress
-                            v-if="item.showProgress"
-                            :percent="item.percentage"
-                            hide-info
-                        ></Progress>
-                    </template>
+            <!-- <Form-item label="轮换图片">
+		    <div class="goods-upload-list" v-for="item in uploadList">
+		        <template v-if="item.status === 'finished'">
+		            <img :src="item.url">
+		            <div class="goods-upload-list-cover">
+		                <Icon type="ios-eye-outline" @click.native="handleView(item.url)"></Icon>
+		                <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
+		            </div>
+		        </template>
+		        <template v-else>
+		            <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
+		        </template>
+		    </div>
+		    <Upload
+		        ref="upload"
+		        :show-upload-list="false"
+		        :default-file-list="facemore"
+		        :on-success="handleSuccess"
+		        :format="['jpg','jpeg','png','gif']"
+		        :max-size="2048"
+		        :on-format-error="handleFormatError"
+		        :on-exceeded-size="handleMaxSize"
+		        :before-upload="handleBeforeUpload"
+		        multiple
+		        type="drag" 
+                accept="image/*" 
+		        action="/api_edit.php?action=goods_uploadImage"
+		        style="display: inline-block;width:158px;">
+		        <div style="width: 158px;height:58px;line-height: 58px;">
+                      <Icon type="ios-cloud-upload-outline" size="20"></Icon>上传图片,支持拖拽
                 </div>
-                <!-- <Upload
-			        ref="upload"
-			        :show-upload-list="false"
-			        :default-file-list="facemore"
-			        :on-success="handleSuccess"
-			        :format="['jpg','jpeg','png','gif']"
-			        :max-size="2048"
-			        :on-format-error="handleFormatError"
-			        :on-exceeded-size="handleMaxSize"
-			        :before-upload="handleBeforeUpload"
-			        multiple
-			        type="drag" 
-	                accept="image/*" 
-			        action="/api_edit.php?action=goods_uploadImage"
-			        style="display: inline-block;width:158px;">
-			        <div style="width: 158px;height:58px;line-height: 58px;">
-	                      <Icon type="ios-cloud-upload-outline" size="20"></Icon>上传图片,支持拖拽
-	                </div>
-			    </Upload> -->
-                <Button @click="handleBeforeUpload" style="vertical-align:top;">
-                    <div style="">
-                        <Icon type="ios-cloud-upload-outline" size="20"></Icon
-                        >选择图片
-                    </div>
-                </Button>
-                <Resource
-                    v-model="isUpload"
-                    ref="upload"
-                    :default-file-lists="facemore"
-                ></Resource>
-            </Form-item>
-
-            <Form-item label="* 运费设置">
-                <div style="margin-bottom:10px;">
-                    <label
-                        ><input
-                            type="radio"
-                            value="0"
-                            v-model="formValidate.posttype"
-                            name="posttype"
-                        />统一运费
-                    </label>
-                    <Input
-                        v-model="formValidate.postmoney"
-                        :disabled="formValidate.posttype == '1'"
-                        type="number"
-                        placeholder="价格"
-                        size="small"
-                        style="width:200px"
-                    ></Input>
-                    <span>0为包邮</span>
+		    </Upload>
+			<Button @click="handleBeforeUpload" style="vertical-align:top;">
+				<div style="">
+                    <Icon type="ios-cloud-upload-outline" size="20"></Icon>选择图片
                 </div>
+			</Button>
+			<Resource v-model="isUpload" ref="upload" :default-file-lists="facemore"></Resource>
+        </Form-item> -->
 
-                <div>
-                    <label
-                        ><input
-                            type="radio"
-                            value="1"
-                            v-model="formValidate.posttype"
-                            name="posttype"
-                        />运费模版
-                    </label>
-                    <Select
-                        v-model="formValidate.posttplid"
-                        :disabled="formValidate.posttype == '0'"
-                        placeholder="请选择"
-                        size="small"
-                        style="width:200px"
-                    >
-                        <Option
-                            v-for="pitem in postList"
-                            :value="pitem.value"
-                            :key="pitem.value"
-                            >{{ pitem.label }}</Option
-                        >
-                    </Select>
-                    <router-link :to="'/shoppost/1'">管理</router-link>
-                </div>
-
-                <template v-if="postTplZhongliang == 1">
-                    <div>
-                        当前运费模版，按物流重量（含包装）计费
-                    </div>
-
-                    <template v-if="formValidate.guigehave == 0">
-                        <div style="width:200px">
-                            <Input v-model="formValidate.zhongliang">
-                                <span slot="prepend">物流重量</span>
-                                <span slot="append">千克</span>
-                            </Input>
-                        </div>
-                    </template>
-
-                    <template v-else-if="formValidate.guigehave == 1">
-                        <div style="width:600px">
-                            <Row
-                                type="flex"
-                                justify="center"
-                                align="top"
-                                class="code-row-bg"
-                            >
-                                <Col span="8">
-                                    <div>{{ formValidate.guigename1 }}</div>
-                                </Col>
-                                <Col span="8">
-                                    <div>{{ formValidate.guigename2 }}</div>
-                                </Col>
-                                <Col span="8">
-                                    <div>物流重量(Kg)</div>
-                                </Col>
-                            </Row>
-
-                            <Form-item
-                                class="linebg"
-                                v-for="(gitem,
-                                gindex) in formValidate.guigeitems"
-                                :key="gindex"
-                            >
-                                <Row
-                                    type="flex"
-                                    justify="center"
-                                    align="top"
-                                    class="code-row-bg2"
-                                    :gutter="8"
-                                >
-                                    <Col span="8">
-                                        {{ gitem.name1 }}
-                                    </Col>
-                                    <Col span="8">
-                                        {{ gitem.name2 }}
-                                    </Col>
-                                    <Col span="8">
-                                        <Input
-                                            type="text"
-                                            v-model="gitem.zhongliang"
-                                            placeholder="重量"
-                                        ></Input>
-                                    </Col>
-                                </Row>
-                            </Form-item>
-                        </div>
-                    </template>
-                </template>
-            </Form-item>
-
-            <Form-item label="详细介绍" prop="readme">
-                <!-- <Input v-model="formValidate.readme" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入..."></Input> -->
-                <!-- <Editor class="editor" v-model="formValidate.readme"></Editor>   -->
-                <editor
-                    ref="editor"
-                    :value="editorContent"
-                    @on-change="handleChange"
-                />
-            </Form-item>
+            <!-- <Form-item label="详细介绍" prop="readme">
+            <Input v-model="formValidate.readme" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入..."></Input>
+            <Editor class="editor" v-model="formValidate.readme"></Editor>  
+        </Form-item> -->
             <!--         <div>
-	        	<textarea class='tinymce-textarea' id="tinymceEditer"></textarea>
-	        </div> -->
+        	<textarea class='tinymce-textarea' id="tinymceEditer"></textarea>
+        </div> -->
 
             <Form-item label="下架" prop="deleted">
                 <i-switch v-model="formValidate.deleted"></i-switch>
@@ -453,44 +301,56 @@
                     <span v-if="!loading">提交</span>
                     <span v-else>Loading...</span>
                 </Button>
-                <Button @click="cancel" style="margin-left: 8px">取消</Button>
+                <Button @click="cancel" style="margin-left: 8px;">取消</Button>
             </Form-item>
         </Form>
 
         <Modal title="查看图片" v-model="visible">
-            <img :src="imgName" v-if="visible" style="width: 100%" />
+            <img :src="imgName" v-if="visible" style="width: 100%;" />
+        </Modal>
+        <Modal v-model="isUpload" width="860">
+            <p slot="header">选择图片</p>
+            <fileExplorer
+                :options="options"
+                @successCallback="uploadListFun"
+            ></fileExplorer>
+            <div slot="footer"></div>
         </Modal>
     </Card>
 </template>
 <script>
-import Resource from '@/components/files/imagesModal.vue';
-import Editor from '@/components/textEditor/editor.vue';
+import fileExplorer from '@/components/fileExplorer/fileExplorer';
 export default {
     components: {
-        Resource,
-        Editor
+        fileExplorer
     },
     data () {
         return {
-            is_group_buy_goods: 0,
-            editorContent: '',
-            vueAppid: '21',
+            options: {
+                mode: "single",
+                _displayMode: 'grid',  // grid 和 list
+                type: 'image',
+                appid: this.$cookieStore.get("CookVueAppid")
+            },
+            vueAppid: this.$cookieStore.get("CookVueAppid"),
             moves: window.vueAppUrl + '/userlist/' + window.vueAppUser + '/' + this.$cookieStore.get("CookVueAppid") + '/userpic/',
-            formValidate: {                "id": "0", "name": "", "jianjie": "", "readme": "", "price": 0.00, "kc": 0, "face": [], "facemore": [], "guigehave": "0", "guigename1": "", "guigename2": "", "posttype": 0, "postmoney": "0.00", "posttplid": 0, "zhongliang": 0, "uptime": "0", "orderid": "0", "deleted": false, "click": "0", "classid": [], "guigeitems": [{
+            formValidate: {
+                "id": "0", "name": "", "jianjie": "", "readme": "", "price": 0.00, "kc": 0, "face": [], "facemore": [], "guigehave": "0", "guigename1": "", "guigename2": "", "posttype": 0, "postmoney": "0.00", "posttplid": 0, "zhongliang": 0, "uptime": "0", "orderid": "0", "deleted": false, "click": "0", "classid": [], "guigeitems": [{
                     name1: '',
                     name2: '',
                     picture: '',
                     price: 0.00,
                     zhongliang: 0,
-                    kc: 0                }]
+                    kc: 0
+                }]
             },
             ruleValidate: {
                 name: [
                     { required: true, message: '商品名称不能为空', trigger: 'blur' }
                 ],
                 price: [
-                    { required: true, message: '所需积分不能为空', trigger: 'blur' },
-                    { type: 'string', message: '所需积分不正确', trigger: 'blur' }
+                    { required: true, message: '价格不能为空', trigger: 'blur' },
+                    { type: 'string', message: '价格不正确', trigger: 'blur' }
                 ],
                 kc: [
                     { required: true, message: '请输入库存', trigger: 'blur' },
@@ -499,10 +359,10 @@ export default {
                 // face: [
                 //     { required: true, message: '请上传图片', trigger: 'change' }
                 // ],
-                readme: [
-                    { required: true, message: '请输入详细介绍', trigger: 'blur' },
-                    { type: 'string', message: '请输入详细介绍', trigger: 'blur' }
-                ]
+                // readme: [
+                //     { required: true, message: '请输入详细介绍', trigger: 'blur' },
+                //     { type: 'string', message: '请输入详细介绍', trigger: 'blur' }
+                // ]
             },
             goodsid: 0,
             imgName: '',
@@ -518,17 +378,8 @@ export default {
             isUpload: false,
             isUploadOne: false,
             isUploadGuiGe: false,
-            uploadGuiGeID: '',
-            page: 1
+            uploadGuiGeID: void 0
         }
-    },
-    mounted () {
-    },
-    updated () {
-        // console.log(this.$refs.upload.fileList);
-        // console.log(this.$refs.uploadOne.fileList);
-        this.uploadList = this.$refs.upload.fileList;
-        this.uploadListOne = this.$refs.uploadOne.fileList;
     },
     computed: {
         postTplZhongliang: function () {//根据给出的运费模板ID,判断他是否是按重量计费
@@ -542,14 +393,12 @@ export default {
             }
         }
     },
-
     created () {
-        this.goodsid = this.$route.params.id;
-        this.goodsid = this.goodsid == 'undefined' ? 0 : this.goodsid;
-        this.shoptype = this.$route.params.shoptype || 'ec';
-        console.log(this.goodsid);
-        this.get(this.goodsid);
-
+        // this.goodsid = this.$route.params.id;
+        // this.goodsid = this.goodsid == 'undefined' ? 0 : this.goodsid;
+        // this.shoptype = this.$route.params.shoptype || 'ec';
+        // this.get(this.goodsid);
+        this.fetchData();
 
 
         // console.log(JSON.stringify(this.formValidate));
@@ -566,25 +415,38 @@ export default {
         '$route': 'fetchData'
     },
     methods: {
-        handleChange (html, text) {
-            this.formValidate.readme = html;
+        uploadListFun (files) {
+            this.isUpload = false;
+            if (this.options.mode == "single") {
+                if (this.uploadGuiGeID != void 0) {
+                    this.formValidate.guigeitems[this.uploadGuiGeID].picture = files.name
+                    this.formValidate.guigeitems[this.uploadGuiGeID].picturename = files.url
+                } else {
+                    this.uploadListOne = [files];
+                }
+
+            } else if (this.options.mode == "multiple") {
+                this.uploadList.push(...files);
+            }
         },
-        changeContent (content) {
-            this.$refs.editor.setHtml(content);
+        handleBeforeUploadOne () {
+            this.isUpload = true;
+            this.options.mode = "single";
+            this.uploadGuiGeID = void 0;
+        },
+        guiGeComputer: function (index) {
+            this.isUpload = true;
+            this.uploadGuiGeID = index;
         },
         handleSubmit: function (name) {
             var _this = this;
             this.$refs[name].validate((valid) => {
                 if (valid) {
-                    //如果已经是参团商品则不能编辑
-                    if (_this.is_group_buy_goods == 1) {
-                        return _this.$Message.error("该商品已经参加了拼团活动，无法编辑");
-                    }
 
                     //特殊字段检测
                     if (this.formValidate.guigehave == 0) {
                         if (this.formValidate.price <= 0) {
-                            _this.$Message.error('所需积分必须大于0');
+                            _this.$Message.error('价格必须大于0');
                             return false;
                         }
 
@@ -629,11 +491,11 @@ export default {
                                 return false;
                             }
                             if (this.formValidate.guigeitems[i].price == '') {
-                                _this.$Message.error('规格第' + (i + 1) + '行 所需积分不对');
+                                _this.$Message.error('规格第' + (i + 1) + '行 价格不对');
                                 return false;
                             }
                             if (this.formValidate.guigeitems[i].price <= 0) {
-                                _this.$Message.error('规格第' + (i + 1) + '行 所需积分不对');
+                                _this.$Message.error('规格第' + (i + 1) + '行 价格不对');
                                 return false;
                             }
                             // if(this.formValidate.guigeitems[i].kc == '') 
@@ -729,10 +591,9 @@ export default {
 
                     data.action = "goods_edit";
                     data.id = this.formValidate.id;
-
                     data.items = this.formValidate;
 
-                    // console.log(JSON.stringify(data));
+
                     _this.$Loading.start();
 
 
@@ -744,7 +605,7 @@ export default {
 
                         if (response.data.status == 1) {
                             _this.$Message.success('提交成功!');
-                            _this.$router.push({ path: '/shop/1/waimai' });
+                            _this.$router.push({ path: '/shop/1/wai' });
                         }
                         else {
                             _this.$Modal.error({
@@ -763,19 +624,31 @@ export default {
                         _this.loading = false;
                     });
 
+
+
                 } else {
                     this.$Message.error('表单验证失败!');
                 }
             })
         },
-        guiGeComputer: function (index) {
-            this.isUploadGuiGe = true;
-            this.uploadGuiGeID = index;
-        },
+
         fetchData: function () {
             this.goodsid = this.$route.params.id;
-            this.page = this.$route.params.page;
+            this.goodsid = this.goodsid == undefined ? 0 : this.goodsid;
+            this.shoptype = this.$route.params.shoptype || 'ec';
+
+            console.log("goodsid=", this.goodsid);
+            // console.log(this.goodsid);
             this.get(this.goodsid);
+        },
+
+        changeshoptype: function (name) {
+            if (name == '2') {
+                this.$router.push({ path: '/shop/1/waimai' });
+            }
+            else {
+                this.$router.push({ path: '/shop/1/ec' });
+            }
         },
         get: function (goodsid) {//获取指定记录
             var _this = this;
@@ -785,9 +658,8 @@ export default {
 
             goodsid = goodsid == undefined ? 0 : goodsid;
 
-
             if (!goodsid || goodsid == '0') {
-                return false;//添加
+                return false// 添加
             }
 
             //  /api_edit.php?action=goods_getone&goodsid=3
@@ -796,20 +668,19 @@ export default {
 
             _this.$Loading.start();
 
-            var apiurl = "/api_edit.php?action=goods_getone&goodsid=" + goodsid + "&appid=" + this.vueAppid + "&shoptype=0";
+            var apiurl = "/api_edit.php?action=goods_getone&goodsid=" + goodsid + "&appid=" + this.vueAppid + "&shoptype=1";
             _this.$http.get(apiurl).then(function (response) {
 
 
                 _this.$Loading.finish();
                 console.log(response);
                 if (response.data.status == 1) {
-                    _this.is_group_buy_goods = response.data.group_buy_info.is_group_buy_goods;
                     _this.formValidate = response.data.goodsitem;
-                    _this.changeContent(_this.formValidate.readme);
-                    console.log(_this.formValidate.readme);
+                    console.log(_this.formValidate);
 
                     _this.face = _this.formValidate.face;
                     _this.facemore = _this.formValidate.facemore;
+                    _this.uploadListOne = _this.formValidate.face;
                     console.log(_this.formValidate.face);
                 }
                 else {
@@ -852,7 +723,7 @@ export default {
             var apiurl = "/api_edit.php";
             var data = {
                 appid: this.vueAppid,
-                shoptype: 0
+                shoptype: 1
             };
             data.action = "goods_postListName";
 
@@ -872,19 +743,17 @@ export default {
             });
         },
         handleView (name) {
-            console.log(name);
             this.imgName = name;
             this.visible = true;
         },
         handleRemove (file) {
             // 从 upload 实例删除数据
-            const fileList = this.$refs.upload.fileList;
-            this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+            const fileList = this.uploadList;
+            this.uploadList.splice(fileList.indexOf(file), 1)
         },
         handleRemoveOne (file) {
             // 从 upload 实例删除数据
-            const fileList = this.$refs.uploadOne.fileList;
-            this.$refs.uploadOne.fileList.splice(fileList.indexOf(file), 1);
+            this.uploadListOne = [];
         },
         handleSuccess (res, file) {
             // 因为上传过程为实例，这里模拟添加 url
@@ -894,25 +763,7 @@ export default {
             file.url = res.url;
             file.name = res.name;
         },
-        handleGuiGeSuccess: function (res, file) {
-            console.log(res.name);
 
-            var _this = this;
-            if (res.status == 1) {
-                _this.formValidate.guigeitems[res.index].picture = res.name;
-                _this.formValidate.guigeitems[res.index].picturename = res.url;
-                console.log(res);
-            }
-            else {
-                _this.$Notice.warning({
-                    title: '上传失败',
-                    desc: ''
-                });
-            }
-
-            _this.$Message.destroy();
-
-        },
         handleFormatError (file) {
             this.$Notice.warning({
                 title: '文件格式不正确',
@@ -931,15 +782,7 @@ export default {
                 desc: '文件 ' + file.name + ' 太大，不能超过 2M。'
             });
         },
-        handleBeforeUploadOne () {
-            const checkOne = this.uploadListOne.length < 1;
-            if (!checkOne) {
-                return this.$Notice.warning({
-                    title: '只能上传 1 张图片。'
-                });
-            }
-            this.isUploadOne = true;
-        },
+
         handleBeforeUpload () {
             const check = this.uploadList.length < 5;
             if (!check) {
@@ -982,6 +825,34 @@ export default {
         },
         cancel: function () {
             this.$router.push({ path: '/shop/' + this.page + '/' + this.shoptype });
+        },
+        remove (item) {
+            if (item) {
+                this.$Modal.confirm({
+                    title: "删除提示",
+                    content: "确定要删除该条新闻吗",
+                    onOk: () => {
+                        var apiurl = '/api_edit.php?action=news_del'
+                        var data = {
+                            appid: this.vueAppid,
+                            del: [item.id]
+                        }
+                        console.log(data);
+                        var _this = this
+                        _this.$http.post(apiurl, data).then(function (response) {
+                            if (response.data.status == 1) {
+                                _this.dataInitial()
+                            } else {
+                                _this.$Message.error(response.data.message)
+                            }
+                        })
+                    }
+                })
+
+            } else {
+                this.$Message.info('请选择要操作的记录')
+                return false
+            }
         }
 
 
@@ -991,7 +862,7 @@ export default {
 
 
 
-<style>
+<style scoped>
 .goods-upload-list {
     display: inline-block;
     width: 60px;
@@ -1007,8 +878,14 @@ export default {
     margin-right: 4px;
 }
 .goods-upload-list img {
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
 }
 .goods-upload-list-cover {
     display: none;
@@ -1050,10 +927,10 @@ export default {
 
 .guige-upload-list {
     display: inline-block;
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     text-align: center;
-    line-height: 40px;
+    line-height: 60px;
     border: 1px solid transparent;
     border-radius: 4px;
     overflow: hidden;
@@ -1063,7 +940,13 @@ export default {
     margin-right: 4px;
 }
 .guige-upload-list img {
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
 }
 </style>

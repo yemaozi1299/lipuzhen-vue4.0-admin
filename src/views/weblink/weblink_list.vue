@@ -202,6 +202,7 @@ export default {
             loading: false,
             isSelectAll: false,
             visible: false,
+            vueAppid: this.$cookieStore.get("CookVueAppid"),
             imgName: ""
         }
     },
@@ -251,7 +252,7 @@ export default {
             this.$http.request({
                 url: "/api_edit.php?action=weblink_groupList",
                 params: {
-                    appid: 1,
+                    appid: this.vueAppid,
                 }
             }).then((res) => {
                 if (res.data.status == 1) {

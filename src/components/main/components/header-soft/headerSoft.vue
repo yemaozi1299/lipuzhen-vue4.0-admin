@@ -20,9 +20,6 @@
 <script>
 export default {
     name: 'Language',
-    props: {
-        lang: String
-    },
     data () {
         return {
             langList: {

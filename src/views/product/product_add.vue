@@ -157,6 +157,7 @@
 <script>
 import fileExplorer from '@/components/fileExplorer/fileExplorer';
 import Editor from '@/components/textEditor/editor.vue';
+import { formatDate } from '@/libs/tools'
 export default {
     components: {
         Editor,
@@ -207,7 +208,9 @@ export default {
             imgName: '',
             visible: false,
             classidList: [],
-            pid: 0
+            pid: 0,
+            vueAppid: this.$cookieStore.get("CookVueAppid"),
+            nowDate: ""
 
         }
     },
@@ -224,6 +227,8 @@ export default {
             if (this.pid > 0) {
                 this.dataInitial();
             }
+            this.nowDate = formatDate(new Date(), 'yyyy-MM-dd');
+            this.formValidate.date = this.nowDate;
         },
         dataInitial () {
             this.$http.request({
@@ -242,7 +247,7 @@ export default {
                     title: data.name,
                     tj: data.tj == 1 ? true : false,
                     keyword: data.keyword,
-                    date: data.date,
+                    date: data.date || this.nowDate,
                     readme: data.readme,
                     face: data.face_url,
                     faceName: data.face,
@@ -263,7 +268,7 @@ export default {
             this.$http.request({
                 url: "/api_edit.php?action=product_class_get",
                 params: {
-                    appid: 1
+                    appid: this.vueAppid
                 }
             }).then((res) => {
                 this.classidList = res.data.body;
@@ -325,7 +330,7 @@ export default {
                     var params = {},
                         data = this.formValidate;
                     params = {
-                        appid: 1,
+                        appid: this.vueAppid,
                         id: data.id,
                         items: {
                             classid: data.classid,
@@ -369,7 +374,7 @@ export default {
     }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .goods-upload-list {
     display: inline-block;
     width: 60px;

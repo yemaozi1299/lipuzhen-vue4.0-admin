@@ -135,7 +135,9 @@
                         @on-change="handleSelectAll"
                     >
                         <span class="mg-l-10">已选</span
-                        ><span style="color:#3091F2">{{ chooseID.length }}</span
+                        ><span style="color: #3091f2;">{{
+                            chooseID.length
+                        }}</span
                         ><span> / {{ tableData.length }} 个商品</span>
                     </Checkbox>
                     <Button
@@ -334,7 +336,7 @@ export default {
             ],
             tableData: [],
 
-            vueAppid: '1',
+            vueAppid: this.$cookieStore.get("CookVueAppid"),
             loading: false,
             selected: '1',
             formItem: {

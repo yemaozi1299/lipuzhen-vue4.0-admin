@@ -64,14 +64,12 @@ class HttpRequest {
 			//删除url
 			this.destroy(url)
 			const { data, status } = res
-			if (data && (data.status == 1 || data.message == "查无记录") && status == 200) {
+			if (data && (data.status == 1 || data.message == "查无记录" || data.message == "查无此外卖商家") && status == 200) {
 				return { data, status }
 			} else {
 				console.log(data, url, res.config, status);
-
 				return Promise.reject(res)
 			}
-
 		}, error => {
 			console.log(error, url);
 			LoadingBar.error();

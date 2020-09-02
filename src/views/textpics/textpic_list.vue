@@ -78,7 +78,16 @@ export default {
                             },
                             on: {
                                 'click': (val) => {
-                                    this.delText(params.row);
+                                    this.$Modal.confirm({
+                                        title: '确认删除',
+                                        content: '<p>确认删除该图文网页吗?</p>',
+                                        onOk: () => {
+                                            this.delText(params.row);
+                                        },
+                                        onCancel: () => {
+                                        }
+                                    });
+
                                 }
                             }
                         }, '删除'),
@@ -165,10 +174,11 @@ export default {
                 method: "POST",
                 url: "/api_edit.php?action=textpic_del",
                 params: {
-                    delid: params.id
+                    delid: [params.id]
                 }
             }).then((res) => {
-
+                this.$Message.success("删除成功");
+                this.dataInitial();
                 console.log(res);
             })
         }

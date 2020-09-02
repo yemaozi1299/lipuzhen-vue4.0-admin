@@ -142,11 +142,6 @@
                                         >选择图片
                                     </div>
                                 </Button>
-                                <Resource
-                                    v-model="isUploadGuiGe"
-                                    :on-success="handleGuiGeSuccess"
-                                    :param="{ index: uploadGuiGeID }"
-                                ></Resource>
                             </Col>
                             <Col span="3">
                                 <Input
@@ -228,15 +223,6 @@
                         >选择图片
                     </div>
                 </Button>
-
-                <!-- <Modal v-model="isUploadOne" width="860">
-                    <p slot="header">添加图片</p>
-                    <fileExplorer
-                        :options="options"
-                        @successCallback="uploadListOneFun"
-                    ></fileExplorer>
-                    <div slot="footer"></div>
-                </Modal> -->
             </Form-item>
             <Form-item label="轮换图片">
                 <div class="goods-upload-list" v-for="item in uploadList">
@@ -418,11 +404,9 @@
 </template>
 <script>
 import fileExplorer from '@/components/fileExplorer/fileExplorer';
-import Resource from '@/components/files/imagesModal.vue'
 import Editor from '@/components/textEditor/editor.vue'
 export default {
     components: {
-        Resource,
         Editor,
         fileExplorer
     },
@@ -436,7 +420,7 @@ export default {
             },
             is_group_buy_goods: 0,
             editorContent: '',
-            vueAppid: '1',
+            vueAppid: this.$cookieStore.get("CookVueAppid"),
             formValidate: {
                 'id': '0',
                 'name': '',
@@ -501,7 +485,7 @@ export default {
             isUpload: false,
             isUploadOne: false,
             isUploadGuiGe: false,
-            uploadGuiGeID: '',
+            uploadGuiGeID: void 0,
             page: 1
         }
     },
@@ -539,18 +523,41 @@ export default {
         '$route': 'fetchData'
     },
     methods: {
-        uploadListOneFun: function (files) {
-            this.isUploadOne = false;
-            this.uploadListOne = [files];
-        },
-        uploadListFun: function (files) {
+        uploadListFun (files) {
             this.isUpload = false;
             if (this.options.mode == "single") {
-                this.uploadListOne = [files];
+                if (this.uploadGuiGeID != void 0) {
+                    this.formValidate.guigeitems[this.uploadGuiGeID].picture = files.name
+                    this.formValidate.guigeitems[this.uploadGuiGeID].picturename = files.url
+                } else {
+                    this.uploadListOne = [files];
+                }
+
             } else if (this.options.mode == "multiple") {
                 this.uploadList.push(...files);
             }
         },
+        handleBeforeUploadOne () {
+            this.isUpload = true;
+            this.options.mode = "single";
+            this.uploadGuiGeID = void 0;
+        },
+        handleBeforeUpload () {
+            const check = this.uploadList.length < 5;
+            this.uploadGuiGeID = void 0;
+            if (!check) {
+                return this.$Notice.warning({
+                    title: '最多只能上传 5 张图片。'
+                })
+            }
+            this.options.mode = "multiple";
+            this.isUpload = true
+        },
+        guiGeComputer: function (index) {
+            this.isUpload = true;
+            this.uploadGuiGeID = index;
+        },
+
         handleChange (html, text) {
             this.formValidate.readme = html
         },
@@ -558,14 +565,13 @@ export default {
             this.$refs.editor.setHtml(content)
         },
         handleSubmit: function (name) {
-            var _this = this
+            var _this = this;
             this.$refs[name].validate((valid) => {
                 if (valid) {
                     // 如果已经是参团商品则不能编辑
                     if (_this.is_group_buy_goods == 1) {
                         return _this.$Message.error('该商品已经参加了拼团活动，无法编辑')
                     }
-
                     // 特殊字段检测
                     if (this.formValidate.guigehave == 0) {
                         if (this.formValidate.price <= 0) {
@@ -728,10 +734,7 @@ export default {
                 }
             })
         },
-        guiGeComputer: function (index) {
-            this.isUploadGuiGe = true
-            this.uploadGuiGeID = index
-        },
+
         fetchData: function () {
             this.goodsid = this.$route.params.id
             this.page = this.$route.params.page
@@ -846,23 +849,7 @@ export default {
             file.url = res.url
             file.name = res.name
         },
-        handleGuiGeSuccess: function (res, file) {
-            console.log(res.name)
 
-            var _this = this
-            if (res.status == 1) {
-                _this.formValidate.guigeitems[res.index].picture = res.name
-                _this.formValidate.guigeitems[res.index].picturename = res.url
-                console.log(res)
-            } else {
-                _this.$Notice.warning({
-                    title: '上传失败',
-                    desc: ''
-                })
-            }
-
-            _this.$Message.destroy()
-        },
         handleFormatError (file) {
             this.$Notice.warning({
                 title: '文件格式不正确',
@@ -881,20 +868,7 @@ export default {
                 desc: '文件 ' + file.name + ' 太大，不能超过 2M。'
             })
         },
-        handleBeforeUploadOne () {
-            this.isUpload = true;
-            this.options.mode = "single";
-        },
-        handleBeforeUpload () {
-            const check = this.uploadList.length < 5
-            if (!check) {
-                return this.$Notice.warning({
-                    title: '最多只能上传 5 张图片。'
-                })
-            }
-            this.options.mode = "multiple";
-            this.isUpload = true
-        },
+
         handleAdd: function () {
             // alert(this.formValidate.guigeitems.length);
             if (this.formValidate.guigeitems == null) {
@@ -933,7 +907,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .goods-upload-list {
     display: inline-block;
     width: 60px;
@@ -998,10 +972,10 @@ export default {
 
 .guige-upload-list {
     display: inline-block;
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     text-align: center;
-    line-height: 40px;
+    line-height: 60px;
     border: 1px solid transparent;
     border-radius: 4px;
     overflow: hidden;
@@ -1011,7 +985,13 @@ export default {
     margin-right: 4px;
 }
 .guige-upload-list img {
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
 }
 </style>

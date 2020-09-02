@@ -1,6 +1,10 @@
 <template>
     <div
-        style="position:relative;margin:10px 10px 10px 10px;padding-bottom:50px"
+        style="
+            position: relative;
+            margin: 10px 10px 10px 10px;
+            padding-bottom: 50px;
+        "
     >
         <div style="margin-right: 10px; line-height: 55px;">
             <h2>店铺设置</h2>
@@ -16,7 +20,7 @@
                 <Input
                     v-model="formValidate.name"
                     placeholder="请输入店铺名称"
-                    style="width:180px"
+                    style="width: 180px;"
                 ></Input>
             </Form-item>
             <Form-item label="店铺图标：" prop="ico">
@@ -27,42 +31,49 @@
                     />
                 </div>
 
-                <Button @click="isUploadOne = true" style="vertical-align:top;">
+                <Button
+                    @click="isUploadOne = true"
+                    style="vertical-align: top;"
+                >
                     <div style="">
                         <Icon type="ios-cloud-upload-outline" size="20"></Icon
                         >选择图片
                     </div>
                 </Button>
-                <Resource
-                    v-model="isUploadOne"
-                    :on-success="handleSuccess"
-                ></Resource>
+                <Modal v-model="isUploadOne" width="860">
+                    <p slot="header">选择图片</p>
+                    <fileExplorer
+                        :options="options"
+                        @successCallback="handleSuccess"
+                    ></fileExplorer>
+                    <div slot="footer"></div>
+                </Modal>
             </Form-item>
             <Form-item label="店铺介绍：" prop="desc">
                 <Input
                     v-model="formValidate.desc"
                     type="textarea"
                     placeholder="请输入店铺介绍"
-                    style="width:180px"
+                    style="width: 180px;"
                 ></Input>
             </Form-item>
             <Form-item label="店铺电话：" prop="tel">
                 <Input
                     v-model="formValidate.tel"
                     placeholder="请输入店铺电话"
-                    style="width:180px"
+                    style="width: 180px;"
                 ></Input>
             </Form-item>
             <Form-item label="配送时间：" prop="posttime">
                 <span>平均配送</span>
                 <Input
                     v-model="formValidate.posttime"
-                    style="width:70px"
+                    style="width: 70px;"
                 ></Input>
                 <span>分钟</span>
             </Form-item>
             <Form-item label="配送方式：" prop="posttype">
-                <Select v-model="formValidate.posttype" style="width:180px">
+                <Select v-model="formValidate.posttype" style="width: 180px;">
                     <Option value="0">商家配送</Option>
                     <!-- <Option value='1'>第三方配送</Option> -->
                 </Select>
@@ -72,7 +83,7 @@
                     v-model="formValidate.postendmoney"
                     type="number"
                     placeholder="单位：元"
-                    style="width:180px"
+                    style="width: 180px;"
                 ></Input>
             </Form-item>
             <Form-item label="配送价：" prop="postmoney">
@@ -80,7 +91,7 @@
                     v-model="formValidate.postmoney"
                     type="number"
                     placeholder="单位：元"
-                    style="width:180px"
+                    style="width: 180px;"
                 ></Input>
             </Form-item>
             <Form-item label="茶位费：" prop="chaWeiFei">
@@ -88,7 +99,7 @@
                     v-model="formValidate.chaWeiFei"
                     type="number"
                     placeholder="单位：元"
-                    style="width:180px"
+                    style="width: 180px;"
                 ></Input>
                 元 / 人 (0元为不收取)
             </Form-item>
@@ -103,18 +114,18 @@
                 label="店铺营业时间："
                 prop="businesshours"
             >
-                <div class="amDiv" style="margin-bottom:10px">
+                <div class="amDiv" style="margin-bottom: 10px;">
                     <span>上午：</span>
                     <TimePicker
                         type="time"
                         v-model="am.starttime"
-                        style="width: 100px;display:inline-block"
+                        style="width: 100px; display: inline-block;"
                     ></TimePicker>
                     -
                     <TimePicker
                         type="time"
                         v-model="am.endtime"
-                        style="width: 100px;display:inline-block"
+                        style="width: 100px; display: inline-block;"
                     ></TimePicker>
                 </div>
                 <div class="pmDiv">
@@ -122,13 +133,13 @@
                     <TimePicker
                         type="time"
                         v-model="pm.starttime"
-                        style="width: 100px;display:inline-block"
+                        style="width: 100px; display: inline-block;"
                     ></TimePicker>
                     -
                     <TimePicker
                         type="time"
                         v-model="pm.endtime"
-                        style="width: 100px;display:inline-block"
+                        style="width: 100px; display: inline-block;"
                     ></TimePicker>
                 </div>
             </Form-item>
@@ -143,7 +154,7 @@
                     v-model="formValidate.address"
                     type="text"
                     placeholder="请输入店铺详细地址"
-                    style="width:440px"
+                    style="width: 440px;"
                     @on-blur="setAddressInfo('enter', $event)"
                     @on-enter="setAddressInfo('enter', $event)"
                 />
@@ -200,26 +211,36 @@
                     v-model="formValidate.radius"
                     type="number"
                     placeholder="送餐范围"
-                    style="width:200px;"
+                    style="width: 200px;"
                 ></Input>
                 <span> 米</span>
             </Form-item>
         </Form>
-        <div align="center" style="margin-top:10px">
+        <div align="center" style="margin-top: 10px;">
             <Button type="primary" @click="handleSubmit('formValidate')"
                 >提交</Button
             >
         </div>
         <Modal title="查看图片" v-model="visible">
-            <img :src="imgName" v-if="visible" style="width: 100%" />
+            <img :src="imgName" v-if="visible" style="width: 100%;" />
         </Modal>
     </div>
 </template>
 <script>
+import fileExplorer from '@/components/fileExplorer/fileExplorer';
 import maps from "qqmap"
 export default {
+    components: {
+        fileExplorer
+    },
     data () {
         return {
+            options: {
+                mode: "single",
+                _displayMode: 'grid',  // grid 和 list
+                type: 'image',
+                appid: this.$cookieStore.get("CookVueAppid")
+            },
             map: '',
             lat: '39.90604926575327',
             lng: '116.39671325683594',
@@ -595,23 +616,10 @@ export default {
             });
         },
 
-        handleSuccess: function (res, file) {
-            var _this = this;
-            console.log(res, file);
-
-            if (res.status == 1) {
-                this.formValidate.ico = res.name;
-                this.formValidate.url_ico = res.url;
-                this.$Message.info('上传成功');
-            }
-            else {
-                _this.$Notice.warning({
-                    title: '上传失败',
-                    desc: '' + res.message
-                });
-            }
-
-
+        handleSuccess: function (file) {
+            this.isUploadOne = false;
+            this.formValidate.ico = file.name;
+            this.formValidate.url_ico = file.url;
 
         },
         handleView: function (name) {
@@ -639,8 +647,14 @@ export default {
     margin-right: 4px;
 }
 .shopinfo-upload-list > img {
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
 }
 #qq-map-wrapper {
     width: 90%;

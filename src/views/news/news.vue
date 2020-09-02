@@ -333,6 +333,7 @@ export default {
             isSelectAll: false,
             uid: "0",
             visible: false,
+            vueAppid: this.$cookieStore.get("CookVueAppid"),
             imgName: ""
         }
     },
@@ -367,7 +368,7 @@ export default {
             this.$http.request({
                 url: "/api_edit.php?action=news_list",
                 params: {
-                    appid: 1,
+                    appid: this.vueAppid,
                     classid: this.classid,
                     keyword: this.keyword,
                     page: this.page,
@@ -418,7 +419,7 @@ export default {
             this.$http.request({
                 url: "/api_edit.php?action=news_class_add",
                 params: {
-                    appid: 1,
+                    appid: this.vueAppid,
                     upid: this.uid,
                     sortname: this.classname
                 }
@@ -437,7 +438,7 @@ export default {
             this.$http.request({
                 url: "/api_edit.php?action=news_class_add",
                 params: {
-                    appid: 1,
+                    appid: this.vueAppid,
                     upid: this.uid,
                     sortname: this.classname
                 }
@@ -501,7 +502,7 @@ export default {
                 onOk: function () {
                     var apiurl = "/api_edit.php?action=news_class_del";
                     var data = {
-                        appid: 1,
+                        appid: this.vueAppid,
                         id: item.id
                     };
                     that.$http.post(apiurl, that.$qs.stringify(data)).then(function (response) {
@@ -557,7 +558,7 @@ export default {
             if (this.chooseID.length > 0) {
                 var apiurl = '/api_edit.php?action=news_del'
                 var data = {
-                    appid: 1,
+                    appid: this.vueAppid,
                     del: this.chooseID
                 }
                 console.log(data);
@@ -583,7 +584,7 @@ export default {
                     onOk: () => {
                         var apiurl = '/api_edit.php?action=news_del'
                         var data = {
-                            appid: 1,
+                            appid: this.vueAppid,
                             del: [item.id]
                         }
                         console.log(data);

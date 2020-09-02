@@ -63,9 +63,9 @@
                     <div class="ext-support">
                         <Tooltip
                             max-width="200"
-                            :content="filterExt.all.join(',')"
+                            :content="filetypeisokAll.join(',')"
                         >
-                            <a href="#">
+                            <a href="javascript:void(0);">
                                 <i class="ico"></i>
                             </a>
                         </Tooltip>
@@ -384,6 +384,8 @@ export default {
             getFolder: "/api_edit.php?action=filemanager_classlist",
             moveURL: "/api_edit.php?action=filemanager_move",
             lockURL: "/Admin/FileExplorer/lock",
+            filetypeisok: "/api_edit.php?action=filemanager_filetypeisok",
+            filetypeisokAll: [],
             filterExt: {
                 all: [".gif", ".jpg", ".png", ".bmp", ".jpeg", ".swf", ".mp3", ".mp4", ".flv", ".webm", ".txt", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".pdf", ".odt", ".csv", ".rar", ".zip", ".xml"],
                 image: [".gif", ".jpg", ".png", ".bmp", ".jpeg"],
@@ -396,6 +398,7 @@ export default {
                 rar: [".rar", ".zip"],
                 material: [".gif", ".jpg", ".png", ".bmp", ".jpeg", ".mp3", ".wma", ".ra"]
             },
+
             currentFolder: "",
             currentType: this.options.type ? this.options.type : "all",
             currentTab: "",
@@ -472,14 +475,25 @@ export default {
                     }
                 });
                 me.typeList = li;
-                me.currentTab = li;
+                me.currentTab = li[0];
                 // me._setFileAccept()
             } else {
                 me.currentTab = me.typeList[0];
             }
             me._getFiles(me._getFolderURL(""));
+            me._getFiletypeisok();
         },
-
+        _getFiletypeisok: function () {
+            this.$http.request({
+                method: "POST",
+                url: this.filetypeisok,
+                params: {
+                    appid: this.appid
+                }
+            }).then((data) => {
+                this.filetypeisokAll = data.data.body || []
+            })
+        },
         _getFolderURL: function (folder) {
             return parse(this.baseURL, {
                 classid: folder,
@@ -638,7 +652,6 @@ export default {
                         name: i.attr("data-name"),
                         url: i.attr("data-url")
                     });
-                    console.log("2=============================", me.selectedFile.length);
                     i.attr("data-seq", ++me.selectedSeq)
                 },
                 unselected: function (t, n) {
@@ -734,11 +747,16 @@ export default {
                 size: file.size,
                 uid: file.uid
             });
+            console.log("handleBeforeUpload==", file);
         },
         handleProgressUpload: function (event, file, fileList) {
-
+            this.$nextTick(() => {
+                this.uploadList[fileList.indexOf(file)].percentage = file.percentage;
+            })
+            console.log("handleProgressUpload=========", fileList.indexOf(file));
         },
         handleSuccessUpload: function (response, file, fileList) {
+            console.log("handleSuccessUpload===========================", file);
             if (file.response.status == 0) {
                 this.$Notice.error({
                     title: '错误提示',
@@ -747,16 +765,14 @@ export default {
             }
             this.alreadyList.push({
                 name: file.name,
-                percentage: file.percentage,
                 size: file.size,
                 uid: file.uid,
-                status: file.response.status
             });
             if (this.uploadList.length == this.alreadyList.length) {
                 var list = this.uploadList;
-                list.forEach((item, index) => {
-                    item.percentage = 100;
-                });
+                // list.forEach((item, index) => {
+                //     item.percentage = 100;
+                // });
                 this.uploadList = list;
                 this._refresh();
                 setTimeout(() => {
@@ -766,9 +782,19 @@ export default {
             }
         },
         handleErrorUpload: function (error, file, fileList) {
+            this.alreadyList.push({
+                name: file.name,
+                size: file.size,
+                uid: file.uid,
+            });
             console.log("error=", file);
         },
         handleExceededSize: function (file, fileList) {
+            this.alreadyList.push({
+                name: file.name,
+                size: file.size,
+                uid: file.uid,
+            });
             this.$Notice.warning({
                 title: '提示',
                 desc: '文件大小超过限定大小(2M)'
@@ -1589,7 +1615,7 @@ export default {
     border-spacing: 0;
     margin-right: 10px;
     position: relative;
-    width: 290px;
+    width: 200px;
     vertical-align: bottom;
     user-select: none;
     -moz-user-select: none;

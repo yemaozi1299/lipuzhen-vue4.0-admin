@@ -160,7 +160,8 @@ export default {
             currentIndex: 0,
             visible: false,
             imgName: "",
-            id: 0
+            id: 0,
+            vueAppid: this.$cookieStore.get("CookVueAppid"),
         }
     },
     created () {
@@ -215,7 +216,7 @@ export default {
                         }
                     });
                     params = {
-                        appid: 1,
+                        appid: _this.vueAppid,
                         id: this.id,
                         title: data.title,
                         face: data.face,

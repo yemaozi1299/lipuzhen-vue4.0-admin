@@ -47,7 +47,7 @@
         </Form-item> -->
         </Form>
 
-        <div align="center" style="margin-top:10px">
+        <div align="center" style="margin-top: 10px;">
             <Button type="primary" @click="handleSubmit('formValidate')"
                 >提交</Button
             >
@@ -59,7 +59,7 @@
 export default {
     data () {
         return {
-            vueAppid: 1,
+            vueAppid: this.$cookieStore.get("CookVueAppid"),
             formValidate: {
                 name: '',
                 wxappid: '',

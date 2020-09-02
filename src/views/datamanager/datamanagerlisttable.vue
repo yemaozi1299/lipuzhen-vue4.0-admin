@@ -37,7 +37,7 @@
                     @on-change="handleSelectAll"
                 >
                     <span class="mg-l-10">已选</span
-                    ><span style="color:#3091F2">{{ chooseID.length }}</span
+                    ><span style="color: #3091f2;">{{ chooseID.length }}</span
                     ><span> / {{ items.length }} 个数据库</span>
                 </Checkbox>
                 <Button
@@ -113,7 +113,8 @@ export default {
                             },
                             on: {
                                 'click': (val) => {
-
+                                    this.chooseID.push(params.row.id);
+                                    this.del();
                                 }
                             }
                         }, '删除'),

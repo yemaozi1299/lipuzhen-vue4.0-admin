@@ -1,5 +1,5 @@
 <template>
-    <Card>
+    <Card dis-hover>
         <fileExplorer
             v-model="showFile"
             :options="options"

@@ -91,6 +91,7 @@ export default {
             imgName: '',
             visible: false,
             classidList: [],
+            vueAppid: this.$cookieStore.get("CookVueAppid"),
             pid: 0
 
         }
@@ -141,7 +142,7 @@ export default {
                     var params = {},
                         data = this.formValidate;
                     params = {
-                        appid: 1,
+                        appid: this.vueAppid,
                         id: data.id,
                         title: data.title,
                         body: data.body,
@@ -175,7 +176,7 @@ export default {
     }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .goods-upload-list {
     display: inline-block;
     width: 60px;

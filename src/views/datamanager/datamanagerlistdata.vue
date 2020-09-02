@@ -98,7 +98,7 @@
                         icon="ios-search"
                         class="ant-search-btn"
                     ></Button>
-                    <Button style="float:right" @click="$router.go(-1)"
+                    <Button style="float: right;" @click="$router.go(-1)"
                         >返回</Button
                     >
                 </div>
@@ -121,12 +121,12 @@
                 @on-close="classdel"
                 >{{ classitem.classname }}</Tag
             >
-            <div style="margin-top:10px;display:flex;flex-direction:row;">
+            <div style="margin-top: 10px; display: flex; flex-direction: row;">
                 <Input
                     v-model="classname"
                     size="small"
                     placeholder="请输入分类名称"
-                    style="width:150px;margin-right:10px;"
+                    style="width: 150px; margin-right: 10px;"
                 ></Input>
                 <Button size="small" @click="classedit">保存</Button>
             </div>
@@ -400,7 +400,8 @@ export default {
                                     width: params.row[params.column.key] ? '150px' : '50px'
                                 }
                             });
-                        }                    };
+                        }
+                    };
 
                     if (typeof e.render == 'undefined') {
                         this.$set(e, 'render', renderimg.render); //局部
@@ -469,7 +470,6 @@ export default {
             var delline = this.items[index].line;
 
             var _this = this;
-
             var apiurl = "/api_edit.php?action=datamanager_delline&tableid=" + table + "&delline=" + delline + "&appid=" + this.vueAppid;
             this.$http.get(apiurl)
                 .then((response) => {

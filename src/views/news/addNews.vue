@@ -112,9 +112,8 @@
                     format="yyyy-MM-dd"
                     placeholder=""
                     style="width: 200px;"
-                    :value="formValidate.date"
+                    :value="formValidate.date || nowDate"
                     @on-change="changeDateTime"
-                    :disabled="newid > 0"
                 ></DatePicker>
             </Form-item>
             <Form-item label="新闻正文" prop="body">
@@ -156,6 +155,7 @@
 <script>
 import fileExplorer from '@/components/fileExplorer/fileExplorer';
 import Editor from '@/components/textEditor/editor.vue';
+import { formatDate } from '@/libs/tools'
 export default {
     components: {
         Editor,
@@ -203,7 +203,9 @@ export default {
             editorContent: '',
             imgName: '',
             visible: false,
-            classidList: []
+            classidList: [],
+            vueAppid: this.$cookieStore.get("CookVueAppid"),
+            nowDate: ""
 
         }
     },
@@ -220,6 +222,7 @@ export default {
             if (this.newid > 0) {
                 this.dataInitial();
             }
+            this.nowDate = formatDate(new Date(), 'yyyy-MM-dd');
         },
         dataInitial () {
             this.$http.request({
@@ -252,7 +255,7 @@ export default {
             this.$http.request({
                 url: "/api_edit.php?action=news_class_get",
                 params: {
-                    appid: 1
+                    appid: this.vueAppid
                 }
             }).then((res) => {
                 this.classidList = res.data.body;
@@ -305,7 +308,7 @@ export default {
                     var params = {},
                         data = this.formValidate;
                     params = {
-                        appid: 1,
+                        appid: _this.vueAppid,
                         id: data.id,
                         items: {
                             classid: data.classid,
@@ -349,7 +352,7 @@ export default {
     }
 }
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .goods-upload-list {
     display: inline-block;
     width: 60px;

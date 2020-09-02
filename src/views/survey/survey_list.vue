@@ -196,7 +196,7 @@ export default {
                 method: "POST",
                 url: "/api_edit.php?action=survey_del",
                 params: {
-                    delid: params.id
+                    delid: [params.id]
                 }
             }).then((res) => {
                 if (res.data.status == 1) {

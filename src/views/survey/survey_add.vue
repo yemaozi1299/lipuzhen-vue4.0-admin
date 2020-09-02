@@ -93,6 +93,7 @@ export default {
             currentIndex: 0,
             visible: false,
             imgName: "",
+            vueAppid: this.$cookieStore.get("CookVueAppid"),
             id: 0
         }
     },
@@ -114,11 +115,10 @@ export default {
                 }
             }).then((res) => {
                 console.log(res);
-
                 var data = res.data.body, body = [];
                 data.answer && data.answer.forEach((item) => {
                     body.push({
-                        title: item,
+                        title: item.question,
                         status: 1
                     })
                 });
@@ -127,8 +127,7 @@ export default {
                     choice: data.choice,
                     items: body
                 }
-
-            })
+            });
         },
         handleSubmit (name) {
             var _this = this
@@ -145,7 +144,7 @@ export default {
                         }
                     });
                     params = {
-                        appid: 1,
+                        appid: this.vueAppid,
                         id: this.id,
                         question: data.question,
                         choice: data.choice,

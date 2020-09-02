@@ -6,7 +6,7 @@
             :rules="ruleValidate"
             label-position="top"
         >
-            <div style="margin-bottom:10px;font-size:16px">
+            <div style="margin-bottom: 10px; font-size: 16px;">
                 数据表信息编辑
             </div>
 
@@ -23,24 +23,22 @@
 
             <Row>
                 <Col span="7">
-                    <div style="margin-bottom:10px;font-size:16px;">
+                    <div style="margin-bottom: 10px; font-size: 16px;">
                         字段信息
                     </div>
                 </Col>
                 <Col span="17">
-                    <div style="color:#f30">
+                    <div style="color: #f30;">
                         提示:修改字段英文名会清空此字段的数据,请谨慎操作.
                     </div>
                 </Col>
             </Row>
 
             <Row type="flex" justify="center" align="top" class="code-row-bg">
-                <Col span="7">
+                <Col span="15">
                     <div>字段名称</div>
                 </Col>
-                <Col span="8">
-                    <div>字段英文名</div>
-                </Col>
+
                 <Col span="3">
                     <div>类型</div>
                 </Col>
@@ -63,7 +61,7 @@
                 :rules="{
                     required: true,
                     message: '不能为空',
-                    trigger: 'blur'
+                    trigger: 'blur',
                 }"
             >
                 <Row
@@ -73,22 +71,14 @@
                     class="code-row-bg2"
                     :gutter="8"
                 >
-                    <Col span="7">
+                    <Col span="15">
                         <Input
                             type="text"
                             v-model="item.fieldcname"
                             placeholder="请输入..."
                         ></Input>
                     </Col>
-                    <Col span="8">
-                        <Input
-                            type="text"
-                            v-model="item.fieldename"
-                            @on-keyup="watchFileName(item)"
-                            :maxlength="28"
-                            placeholder="只能是英文字母、下划线,不可输入true null false undefined和数字"
-                        ></Input>
-                    </Col>
+
                     <Col span="3">
                         <Select placeholder="请选择" v-model="item.fieldtype">
                             <Option value="1">一行文字</Option>
@@ -134,7 +124,7 @@
                     </Button>
 
                     <!-- <Button @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button> -->
-                    <Button @click="esc" style="margin-left: 8px">取消</Button>
+                    <Button @click="esc" style="margin-left: 8px;">取消</Button>
                 </div>
             </Form-item>
         </Form>
@@ -185,7 +175,6 @@ export default {
         handleAdd: function () {
             this.formValidate.items.push({
                 fieldcname: '',
-                fieldename: '',
                 fieldtype: '',
                 must: false,
                 search: false
@@ -265,14 +254,14 @@ export default {
                     }
 
                     var nary = fieldenameTemp.sort();
-                    for (var i = 0; i < fieldenameTemp.length; i++) {
-                        if (nary[i] == nary[i + 1]) {
-                            // alert("数组重复内容："+nary[i]);
-                            _this.$Message.error(nary[i] + '字段重复了');
-                            _this.loading = false;
-                            return false;
-                        }
-                    }
+                    // for (var i = 0; i < fieldenameTemp.length; i++) {
+                    //     if (nary[i] == nary[i + 1]) {
+                    //         // alert("数组重复内容："+nary[i]);
+                    //         _this.$Message.error(nary[i] + '字段重复了');
+                    //         _this.loading = false;
+                    //         return false;
+                    //     }
+                    // }
 
                     var apiurl = "/api_edit.php";
                     var data = {

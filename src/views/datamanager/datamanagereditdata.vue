@@ -23,7 +23,7 @@
                 :rules="{
                     required: item.must,
                     message: '不能为空',
-                    trigger: 'blur'
+                    trigger: 'blur',
                 }"
             >
                 <template v-if="item.fieldtype == 2">
@@ -31,8 +31,8 @@
 
                     <div class="demo-upload-list" v-if="item.body">
                         <img
-                            :src="moves + item.body"
-                            @click="handleView(moves + item.body)"
+                            :src="item.imgUrl"
+                            @click="handleView(item.imgUrl)"
                         />
                     </div>
 
@@ -55,7 +55,7 @@
               </Upload> -->
                     <Button
                         @click="handleBeforeUpload(item)"
-                        style="vertical-align:top;"
+                        style="vertical-align: top;"
                     >
                         <div style="">
                             <Icon
@@ -65,11 +65,14 @@
                             >选择图片
                         </div>
                     </Button>
-                    <Resource
-                        v-model="isUploadOne"
-                        :on-success="handleSuccess"
-                        :fileid="fileid"
-                    ></Resource>
+                    <Modal v-model="isUploadOne" width="860">
+                        <p slot="header">选择图片</p>
+                        <fileExplorer
+                            :options="options"
+                            @successCallback="handleSuccess"
+                        ></fileExplorer>
+                        <div slot="footer"></div>
+                    </Modal>
                 </template>
                 <template v-else-if="item.fieldtype == 3">
                     <editor
@@ -87,25 +90,33 @@
                     <Button type="primary" @click="handleSubmit('formValidate')"
                         >提交</Button
                     >
-                    <Button @click="esc" style="margin-left: 8px">取消</Button>
+                    <Button @click="esc" style="margin-left: 8px;">取消</Button>
                 </div>
             </Form-item>
 
             <Modal title="查看图片" v-model="visible">
-                <img :src="imgName" v-if="visible" style="width: 100%" />
+                <img :src="imgName" v-if="visible" style="width: 100%;" />
             </Modal>
         </Form>
     </Card>
 </template>
 <script>
 import Editor from '@/components/textEditor/editor.vue';
+import fileExplorer from '@/components/fileExplorer/fileExplorer';
 import { forEach } from '@/libs/tools';
 export default {
     components: {
-        Editor
+        Editor,
+        fileExplorer
     },
     data () {
         return {
+            options: {
+                mode: "single",
+                _displayMode: 'grid',  // grid 和 list
+                type: 'image',
+                appid: this.$cookieStore.get("CookVueAppid")
+            },
             moves: '/userlist/' + this.$cookieStore.get("CookVueAppUser") + '/' + this.$cookieStore.get("CookVueAppid") + '/userpic/',
             vueAppid: this.$cookieStore.get("CookVueAppid"),
             formValidate: {
@@ -190,7 +201,6 @@ export default {
             }
 
             //  /api_edit.php?action=datamanager_gettableline&tableid=4&line=1
-            console.log("datamanagereditdata111111111111");
             this.$http.request({
                 method: 'post',
                 url: "/api_edit.php",
@@ -201,6 +211,7 @@ export default {
                     appid: this.vueAppid
                 }
             }).then(function (response) {
+                console.log("============================", response);
                 _this.tablename = response.data.tablename;
                 _this.formValidate.items = response.data.items;
                 _this.getclass(table);
@@ -300,37 +311,21 @@ export default {
             this.fileid = item.fieldid;
             this.isUploadOne = true;
         },
-        handleSuccess: function (res, file) {
-            var _this = this;
-            console.log(res, file);
+        handleSuccess: function (file) {
             // 因为上传过程为实例，这里模拟添加 url
             // console.log(res);
             // console.log(file);
             // file.url = 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar';
             // file.name = 'ffffffff';
-
-            if (res.status == 1) {
-
-                //写入数据
-
-                this.formValidate.items.forEach((item, index) => {
-                    if (item.fieldid == res.fieldid) {
-                        console.log(this.formValidate.items);
-                        console.log(index);
-                        this.formValidate.items[index].body = res.name;
-                    }
-                });
-
-
-            }
-            else {
-                _this.$Notice.warning({
-                    title: '上传失败',
-                    desc: '' + res.message
-                });
-            }
-
-            _this.$Message.destroy();
+            this.isUploadOne = false;
+            this.formValidate.items.forEach((item, index) => {
+                if (item.fieldid == this.fileid) {
+                    console.log(this.formValidate.items);
+                    console.log(index);
+                    this.formValidate.items[index].body = file.name;
+                    this.formValidate.items[index].imgUrl = file.url;
+                }
+            });
 
         },
         handleFormatError: function (file) {

@@ -29,11 +29,16 @@
         </div>
 
         <div
-            style="margin-bottom:10px;font-size:16px;font-weight: bold;padding-top:10px"
+            style="
+                margin-bottom: 10px;
+                font-size: 16px;
+                font-weight: bold;
+                padding-top: 10px;
+            "
         >
             配送方式
             <div
-                style="display:inline;font-size:14px;font-weight: normal;"
+                style="display: inline; font-size: 14px; font-weight: normal;"
                 v-if="search"
             >
                 搜索:{{ keyword }}
@@ -50,7 +55,7 @@
         <div class="itembox" v-for="(item, index) in items" :key="">
             <div class="itembox_header">
                 {{ item.name }}
-                <div style="float:right">
+                <div style="float: right;">
                     <router-link :to="'/shoppost/1/edit/' + item.id"
                         ><Button
                             size="small"
@@ -138,7 +143,7 @@
 export default {
     data () {
         return {
-            vueAppid: 1,
+            vueAppid: this.$cookieStore.get("CookVueAppid"),
             items: [],
             keyword: '',
             search: false,

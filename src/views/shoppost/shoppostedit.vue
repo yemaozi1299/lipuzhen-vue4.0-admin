@@ -6,7 +6,7 @@
             :rules="ruleValidate"
             :label-width="80"
         >
-            <div style="margin-bottom:10px;font-size:16px">
+            <div style="margin-bottom: 10px; font-size: 16px;">
                 {{ postid == 0 ? "添加运费模板" : "编辑运费模板" }}
             </div>
             <Form-item label="模版名称">
@@ -66,7 +66,7 @@
                         :rules="{
                             required: true,
                             message: '不能为空',
-                            trigger: 'blur'
+                            trigger: 'blur',
                         }"
                     >
                         <Row
@@ -78,15 +78,17 @@
                         >
                             <Col span="12">
                                 {{ gitem.areaname }}
-                                <a
-                                    href="javascript:;"
+                                <Buttons
+                                    type="info"
                                     @click="handleAdd(gindex)"
-                                    >编辑</a
+                                    style="margin: 0 10px;"
+                                    >编辑</Buttons
                                 >
-                                <a
-                                    href="javascript:;"
+                                <Buttons
+                                    type="error"
                                     @click="handleRemove(gindex)"
-                                    >删除</a
+                                    style="margin: 0 10px;"
+                                    >删除</Buttons
                                 >
                             </Col>
                             <Col span="3">
@@ -141,7 +143,7 @@
                     <span v-if="!loading">提交</span>
                     <span v-else>Loading...</span>
                 </Button>
-                <Button @click="cancel" style="margin-left: 8px">取消</Button>
+                <Button @click="cancel" style="margin-left: 8px;">取消</Button>
             </div>
         </Form>
 
@@ -151,7 +153,7 @@
             @on-ok="postTplSave"
             @on-cancel="postTplcancel"
         >
-            <div style="padding-left:40px">
+            <div style="padding-left: 40px;">
                 <Transfer
                     :data="TransferData"
                     :target-keys="TransferTargetKeys"
@@ -163,15 +165,22 @@
     </Card>
 </template>
 <script>
+import Buttons from '@/components/buttons'
 export default {
+    components: {
+        Buttons,
+    },
     data () {
         return {
-            formValidate: {                "id": "0", "name": "", "posttype": "0", "postitems": [{                    areaname: '',
+            formValidate: {
+                "id": "0", "name": "", "posttype": "0", "postitems": [{
+                    areaname: '',
                     areaid: [],
                     first: '',
                     firstmoney: '',
                     second: '',
-                    secondmoney: ''                }]
+                    secondmoney: ''
+                }]
             },
             ruleValidate: {
                 name: [

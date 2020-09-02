@@ -182,7 +182,7 @@ export default {
                     return h('div', [
                         h(Buttons, {
                             props: {
-                                border: false
+                                border: true
                             },
                             style: {
                             },
@@ -198,6 +198,18 @@ export default {
                                 }
                             }
                         }, '编辑'),
+                        h(Buttons, {
+                            props: {
+                                type: "error"
+                            },
+                            style: {
+                            },
+                            on: {
+                                'click': (val) => {
+                                    this.classmovein("del", [params.row.id]);
+                                }
+                            }
+                        }, '删除'),
 
                     ])
                 }
@@ -369,12 +381,12 @@ export default {
         classmovein (type, id) {
             var editList = id || this.chooseID;
             if (editList.length == 0) {
-                this.$Message.warning('请选择要操作的留言')
+                this.$Message.warning('请选择要操作的产品')
                 return false
             }
             switch (type) {
                 case 'del':
-                    var content = '确定对所选留言进行：删除'
+                    var content = '确定对所选产品进行：删除'
                     break
             }
             this.$Modal.confirm({
@@ -399,6 +411,34 @@ export default {
                 }
             })
         },
+        remove (item) {
+            if (item) {
+                this.$Modal.confirm({
+                    title: "删除提示",
+                    content: "确定要删除该条新闻吗",
+                    onOk: () => {
+                        var apiurl = '/api_edit.php?action=news_del'
+                        var data = {
+                            appid: this.vueAppid,
+                            del: [item.id]
+                        }
+                        console.log(data);
+                        var _this = this
+                        _this.$http.post(apiurl, data).then(function (response) {
+                            if (response.data.status == 1) {
+                                _this.dataInitial()
+                            } else {
+                                _this.$Message.error(response.data.message)
+                            }
+                        })
+                    }
+                })
+
+            } else {
+                this.$Message.info('请选择要操作的记录')
+                return false
+            }
+        }
     },
 
 }

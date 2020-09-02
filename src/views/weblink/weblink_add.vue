@@ -138,6 +138,7 @@ export default {
             imgName: '',
             visible: false,
             classidList: [],
+            vueAppid: this.$cookieStore.get("CookVueAppid"),
             pid: 0
 
         }
@@ -181,7 +182,7 @@ export default {
             this.$http.request({
                 url: "/api_edit.php?action=weblink_groupList",
                 params: {
-                    appid: 1,
+                    appid: this.vueAppid,
                 }
             }).then((res) => {
                 if (res.data.status == 1) {
@@ -234,7 +235,7 @@ export default {
                     var params = {},
                         data = this.formValidate;
                     params = {
-                        appid: 1,
+                        appid: this.vueAppid,
                         id: data.id,
                         groupid: data.groupid,
                         urlname: data.title,
