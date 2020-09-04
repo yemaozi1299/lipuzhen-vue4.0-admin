@@ -34,7 +34,7 @@ export default {
     },
     computed: {
         title () {
-            return this.langList[this.lang] || "设置"
+            return this.langList[this.lang] || "应用场景"
         }
     },
     methods: {

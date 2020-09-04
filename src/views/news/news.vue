@@ -229,27 +229,29 @@ export default {
                 type: 'selection',
                 width: 80,
                 align: 'center'
-            }, {
-                title: "封面",
-                width: 90,
-                'render': (h, params) => {
-                    return h('img', {
-                        attrs: {
-                            src: '' + params.row.pic
-                        },
-                        style: {
-                            margin: '5px 0',
-                            width: '100%'
-                        },
-                        on: {
-                            click: () => {
-                                console.log(params.row);
-                                this.handleView(params.row.pic)
-                            }
-                        }
-                    })
-                }
-            }, {
+            },
+            // {
+            //     title: "封面",
+            //     width: 90,
+            //     'render': (h, params) => {
+            //         return h('img', {
+            //             attrs: {
+            //                 src: '' + params.row.pic
+            //             },
+            //             style: {
+            //                 margin: '5px 0',
+            //                 width: '100%'
+            //             },
+            //             on: {
+            //                 click: () => {
+            //                     console.log(params.row);
+            //                     this.handleView(params.row.pic)
+            //                 }
+            //             }
+            //         })
+            //     }
+            // }, 
+            {
                 title: "新闻标题",
                 key: "title"
             }, {

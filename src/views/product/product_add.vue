@@ -96,6 +96,12 @@
                         </template>
                     </template>
                 </Select>
+                <Buttons
+                    type="info"
+                    style="margin: 0 10px;"
+                    @click="isModal = true"
+                    >添加分类</Buttons
+                >
             </Form-item>
             <Form-item label="产品推荐" prop="tj">
                 <i-Switch v-model="formValidate.tj" /> 推荐
@@ -151,6 +157,22 @@
         <Modal title="查看图片" v-model="visible">
             <img :src="imgName" v-if="visible" style="width: 100%;" />
         </Modal>
+        <Modal
+            v-model="isModal"
+            title="添加分类"
+            @on-ok="addClassConfirm"
+            @on-cancel=""
+            :loading="classLoad"
+        >
+            <label style="display: block; margin-bottom: 10px;">
+                <span>分类名称：</span>
+                <Input
+                    type="text"
+                    style="width: 200px;"
+                    v-model="classname"
+                ></Input>
+            </label>
+        </Modal>
     </Card>
 </template>
 
@@ -158,15 +180,19 @@
 import fileExplorer from '@/components/fileExplorer/fileExplorer';
 import Editor from '@/components/textEditor/editor.vue';
 import { formatDate } from '@/libs/tools'
+import Buttons from '@/components/buttons'
 export default {
     components: {
         Editor,
         fileExplorer,
+        Buttons
     },
     data () {
         return {
-
+            isModal: false,
             loading: false,
+            classLoad: true,
+            classname: "",
             formValidate: {
                 id: 0,
                 classid: "",
@@ -262,7 +288,7 @@ export default {
                 this.uploadListName = facemoreName;
                 this.changeContent(data.readme);
                 // this.formValidate = res.data.body;
-            })
+            });
         },
         getNewClass: function () {
             this.$http.request({
@@ -272,6 +298,9 @@ export default {
                 }
             }).then((res) => {
                 this.classidList = res.data.body;
+                this.$nextTick(() => {
+                    this.classidList.length && (this.formValidate.classid = this.formValidate.classid ? this.formValidate.classid : this.classidList[0].id);
+                });
 
             }).catch(function (response) {
                 _this.$Loading.error()
@@ -344,8 +373,6 @@ export default {
                             summary: data.summary,
                             pr: data.pr
                         }
-
-
                     }
                     console.log(params);
                     //  _this.$qs.stringify(data)
@@ -368,6 +395,31 @@ export default {
                 } else {
                     this.$Message.error('表单验证失败!')
                 }
+            });
+        },
+        addClassConfirm () {
+            if (this.classname == '') {
+                this.$Message.error('请输入分类名称');
+                this.classLoad = false;
+                this.$nextTick(() => {
+                    this.classLoad = true;
+                });
+                return false;
+            }
+            this.$http.request({
+                url: "/api_edit.php?action=product_class_add",
+                params: {
+                    appid: this.vueAppid,
+                    upid: this.upid,
+                    sortname: this.classname
+                }
+            }).then((res) => {
+                this.classLoad = false;
+                this.isModal = false;
+                this.classname = "";
+                this.$Message.info("添加成功");
+                this.getNewClass();
+                console.log(res);
             });
         },
 

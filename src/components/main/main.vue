@@ -37,9 +37,10 @@
                     />
                     <headerSoft
                         @on-lang-change="setSoft"
-                        style="margin-right: 10px;"
+                        style="margin-right: 10px; float: left;"
                         :lang="``"
                     />
+
                     <!-- <fullscreen
                         v-model="isFullscreen"
                         style="margin-right: 10px;"
@@ -53,18 +54,8 @@
                                 >预览</Button
                             >
                         </a>
-                    </div>
-                    <div class="link-wrap-left">
-                        <a :href="'/appeditor/?appid='" target="_blank">
-                            <Button
-                                type="text"
-                                icon="ios-construct"
-                                size="large"
-                                >小程序界面编辑</Button
-                            >
-                        </a>
-                    </div>
-					 -->
+                    </div> -->
+                    <div class="link-wrap-left"></div>
                 </header-bar>
             </Header>
             <Content class="main-content-con">

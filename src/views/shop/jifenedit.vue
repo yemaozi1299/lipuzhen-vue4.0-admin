@@ -826,34 +826,7 @@ export default {
         cancel: function () {
             this.$router.push({ path: '/shop/' + this.page + '/' + this.shoptype });
         },
-        remove (item) {
-            if (item) {
-                this.$Modal.confirm({
-                    title: "删除提示",
-                    content: "确定要删除该条新闻吗",
-                    onOk: () => {
-                        var apiurl = '/api_edit.php?action=news_del'
-                        var data = {
-                            appid: this.vueAppid,
-                            del: [item.id]
-                        }
-                        console.log(data);
-                        var _this = this
-                        _this.$http.post(apiurl, data).then(function (response) {
-                            if (response.data.status == 1) {
-                                _this.dataInitial()
-                            } else {
-                                _this.$Message.error(response.data.message)
-                            }
-                        })
-                    }
-                })
 
-            } else {
-                this.$Message.info('请选择要操作的记录')
-                return false
-            }
-        }
 
 
     }

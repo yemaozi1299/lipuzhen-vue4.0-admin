@@ -12,7 +12,7 @@
                         <router-link to="">管理中心</router-link>
                     </li>
                     <li v-if="isAgent">
-                        <router-link to="/info">代理商平台</router-link>
+                        <router-link to="/agent_info">代理商平台</router-link>
                     </li>
                     <li v-if="isAdmin">
                         <router-link to="/admin_info"
@@ -204,7 +204,7 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                            this.routerPage(params)
+                                            this.routerPage(params.row)
                                         }
                                     }
                                 }, '管理')
@@ -317,6 +317,23 @@ export default {
                     });
                     _this.$Loading.error();
                 });
+        },
+        routerPage (params) {
+            this.$router.push({
+                name: "home"
+            });
+        },
+        show: function (params) {
+            if (params.row.logo) {
+                var pic = params.row.logo.split("/");
+                this.picname = pic[pic.length - 1];
+            }
+            this.isModal = !this.isModal;
+            this.path = params.row.logo || '/images/applogo.png';
+            this.wxAppName = params.row.name;
+            this.$cookieStore.set("CookVueAppid", params.row.id);
+            this.app_id = params.row.id;
+            console.log(params.row);
         },
     }
 }

@@ -21,13 +21,13 @@
             @on-search-change="get"
         >
             <template slot="addbtn">
-                <Button
+                <!-- <Button
                     type="primary"
                     class="ant-btn mg-r-20"
                     v-on:click="addMessage"
                 >
                     <Icon type="md-add" />添加留言
-                </Button>
+                </Button> -->
             </template>
             <template slot="sider">
                 <div class="category">
@@ -112,7 +112,7 @@
                     @on-change="handleSelectAll"
                 >
                     <span class="mg-l-10">已选</span
-                    ><span style="color:#3091F2">{{ chooseID.length }}</span
+                    ><span style="color: #3091f2;">{{ chooseID.length }}</span
                     ><span> / {{ tableData.length }} 条留言</span>
                 </Checkbox>
                 <Button
@@ -142,7 +142,7 @@
         </tables>
         <Modal v-model="isModal" width="660">
             <p slot="header">回复留言</p>
-            <div style="text-align:left">
+            <div style="text-align: left;">
                 <div class="expand-row">
                     <span class="expand-key">回复内容： </span>
                     <span class="expand-value">{{

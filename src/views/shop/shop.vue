@@ -300,6 +300,7 @@ export default {
                                 },
                                 on: {
                                     'click': (val) => {
+                                        // console.log(params);
                                         this.remove(params.index)
                                     }
                                 }
@@ -360,7 +361,6 @@ export default {
     },
     created () {
         this.fetchData();
-        this.getClass();
     },
     watch: {
         chooseID: function (val) {
@@ -379,6 +379,8 @@ export default {
             this.editType = this.shoptype == 'ec' ? 'shopedit' : 'waimaiedit'
             this.getType = this.shoptype == 'ec' ? 0 : 1
             this.dataInitial()
+            this.getClass();
+
         },
         chooseEdit: function (selection) {
             var chooseID = []
@@ -447,9 +449,9 @@ export default {
                 url: "/api_edit.php",
                 params: data
             }).then(function (res) {
-                that.tableData = res.data.body
-                that.total = res.data.total
-                that.chooseID = []
+                that.tableData = res.data.body || [];
+                that.total = res.data.total;
+                that.chooseID = [];
                 console.log(res)
             });
         },
@@ -588,11 +590,11 @@ export default {
                 path: '/shop/' + this.page + '/' + this.editType + '/' + goodsid
             })
         },
-        remove: function (index) { // 删除商品
+        remove (index) { // 删除商品
             var chooseID = []
-            chooseID.push(this.items[index].id)
-            this.chooseID = chooseID
-            this.goodsedit('delete')
+            chooseID.push(this.tableData[index].id);
+            this.chooseID = chooseID;
+            this.goodsedit('delete');
         },
         goodsedit: function (name) { // 提示是否确定要进行操作
             if (this.chooseID.length == 0) {
@@ -647,7 +649,8 @@ export default {
                 _this.$http.post(apiurl, data).then(function (response) {
                     _this.doing = 0
                     if (response.data.status == 1) {
-                        _this.dataInitial()
+                        _this.dataInitial();
+                        _this.$Message.info('操作成功')
                     } else {
                         _this.$Message.error(response.data.message)
                     }

@@ -1,5 +1,6 @@
 <template>
     <Card>
+        <p slot="title">添加招聘</p>
         <Form
             ref="formValidate"
             :model="formValidate"
@@ -91,7 +92,6 @@
                     style="width: 200px;"
                     :value="formValidate.day"
                     @on-change="changeDateTime"
-                    :disabled="jobid > 0"
                 ></DatePicker>
             </Form-item>
             <Form-item label="所属分类" prop="groupid">
@@ -100,6 +100,12 @@
                         <Option :value="item.id">{{ item.groupname }}</Option>
                     </template>
                 </Select>
+                <Buttons
+                    type="info"
+                    style="margin: 0 10px;"
+                    @click="isModal = true"
+                    >添加分类</Buttons
+                >
             </Form-item>
             <Form-item label="是否隐藏" prop="yc">
                 <RadioGroup v-model="formValidate.yc">
@@ -128,12 +134,30 @@
                 >
             </Form-item>
         </Form>
+        <Modal
+            v-model="isModal"
+            title="添加分类"
+            @on-ok="addJobClass"
+            @on-cancel=""
+            :loading="classLoad"
+        >
+            <label style="display: block; margin-bottom: 10px;">
+                <span>分类名称：</span>
+                <Input
+                    type="text"
+                    style="width: 200px;"
+                    v-model="classname"
+                ></Input>
+            </label>
+        </Modal>
     </Card>
 </template>
 
 <script>
 import fileExplorer from '@/components/fileExplorer/fileExplorer';
 import Editor from '@/components/textEditor/editor.vue'
+import { formatDate } from '@/libs/tools'
+import Buttons from '@/components/buttons'
 /*
 	获取分类api
 	保存信息
@@ -144,10 +168,14 @@ import Editor from '@/components/textEditor/editor.vue'
 export default {
     components: {
         Editor,
-        fileExplorer
+        fileExplorer,
+        Buttons
     },
     data () {
         return {
+            classname: "",
+            classLoad: true,
+            isModal: false,
             options: {
                 mode: "single",
                 _displayMode: 'grid',  // grid 和 list
@@ -196,7 +224,8 @@ export default {
             },
             jobid: "",
             editorContent: "",
-            classidList: []
+            classidList: [],
+            nowDate: ""
         }
     },
     created () {
@@ -213,6 +242,8 @@ export default {
             } else {
                 this.getClass();
             }
+            this.nowDate = formatDate(new Date(), 'yyyy-MM-dd');
+            this.formValidate.day = this.nowDate;
 
         },
         dataInitial () {
@@ -237,7 +268,7 @@ export default {
                     workkind: data.workkind,
                     yc: data.yc,
                     message: data.message,
-                    day: data.day,
+                    day: data.day || this.nowDate,
                     groupid: data.groupid
                 }
                 this.changeContent(this.formValidate.message);
@@ -254,9 +285,9 @@ export default {
             }).then((res) => {
                 this.classidList = res.data.body || [];
                 this.$nextTick(() => {
-                    this.classidList.length && (this.formValidate.groupid = this.classidList[0].id);
+                    this.classidList.length && (this.formValidate.groupid = this.formValidate.groupid ? this.formValidate.groupid : this.classidList[0].id);
                 });
-            })
+            });
         },
         chooseEdit: function (selection) {
             var chooseID = []
@@ -316,6 +347,35 @@ export default {
                 }
             });
         },
+        addJobClass () {
+            if (this.classname == '') {
+                this.$Message.error('请输入分类名称');
+                this.classLoad = false;
+                this.$nextTick(() => {
+                    this.classLoad = true;
+                });
+                return false
+            }
+            this.$http.request({
+                url: "/api_edit.php?action=job_groupADD",
+                params: {
+                    groupname: this.classname
+                }
+            }).then((res) => {
+                this.classLoad = false;
+                this.isModal = false;
+                this.classname = "";
+                this.$Message.info("添加成功");
+                this.getClass();
+            }).catch((response) => {
+                console.log(response);
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: '无法访问服务器,请重试'
+                });
+                this.$Loading.error();
+            });
+        }
 
     }
 }

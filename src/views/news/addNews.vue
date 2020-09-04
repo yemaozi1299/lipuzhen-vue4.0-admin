@@ -94,6 +94,12 @@
                         </template>
                     </template>
                 </Select>
+                <Buttons
+                    type="info"
+                    style="margin: 0 10px;"
+                    @click="isModal = true"
+                    >添加分类</Buttons
+                >
             </Form-item>
             <Form-item label="新闻推荐" prop="tj">
                 <i-Switch v-model="formValidate.tj" /> 推荐
@@ -112,7 +118,7 @@
                     format="yyyy-MM-dd"
                     placeholder=""
                     style="width: 200px;"
-                    :value="formValidate.date || nowDate"
+                    :value="formValidate.date"
                     @on-change="changeDateTime"
                 ></DatePicker>
             </Form-item>
@@ -149,6 +155,22 @@
         <Modal title="查看图片" v-model="visible">
             <img :src="imgName" v-if="visible" style="width: 100%;" />
         </Modal>
+        <Modal
+            v-model="isModal"
+            title="添加分类"
+            @on-ok="addClassConfirm"
+            @on-cancel=""
+            :loading="classLoad"
+        >
+            <label style="display: block; margin-bottom: 10px;">
+                <span>分类名称：</span>
+                <Input
+                    type="text"
+                    style="width: 200px;"
+                    v-model="classname"
+                ></Input>
+            </label>
+        </Modal>
     </Card>
 </template>
 
@@ -156,13 +178,18 @@
 import fileExplorer from '@/components/fileExplorer/fileExplorer';
 import Editor from '@/components/textEditor/editor.vue';
 import { formatDate } from '@/libs/tools'
+import Buttons from '@/components/buttons'
 export default {
     components: {
         Editor,
         fileExplorer,
+        Buttons
     },
     data () {
         return {
+            isModal: false,
+            classLoad: true,
+            classname: "",
             options: {
                 mode: "single",
                 _displayMode: 'grid',  // grid 和 list
@@ -205,7 +232,8 @@ export default {
             visible: false,
             classidList: [],
             vueAppid: this.$cookieStore.get("CookVueAppid"),
-            nowDate: ""
+            nowDate: "",
+            upid: 0
 
         }
     },
@@ -214,15 +242,17 @@ export default {
     },
     created () {
         this.fetchData();
-        this.getNewClass()
     },
     methods: {
         fetchData () {
             this.newid = this.$route.params.newid ? parseInt(this.$route.params.newid) : 0;
             if (this.newid > 0) {
                 this.dataInitial();
+            } else {
+                this.getNewClass();
             }
             this.nowDate = formatDate(new Date(), 'yyyy-MM-dd');
+            this.formValidate.date = this.nowDate;
         },
         dataInitial () {
             this.$http.request({
@@ -240,15 +270,15 @@ export default {
                     ico_url: "",
                     tj: data.tj == 0 ? false : true,
                     keyword: data.keyword,
-                    date: data.date,
+                    date: data.date || this.nowDate,
                     body: data.body,
                     face: data.face,
                     face2body: data.face2body == 0 ? false : true,
                     summary: data.summary
                 }
                 this.changeContent(data.body);
+                this.getNewClass();
                 // this.formValidate = res.data.body;
-                console.log(res.data.body)
             })
         },
         getNewClass: function () {
@@ -259,6 +289,9 @@ export default {
                 }
             }).then((res) => {
                 this.classidList = res.data.body;
+                this.$nextTick(() => {
+                    this.classidList.length && (this.formValidate.classid = this.formValidate.classid ? this.formValidate.classid : this.classidList[0].id);
+                });
 
             }).catch(function (response) {
                 _this.$Loading.error()
@@ -346,6 +379,33 @@ export default {
                 } else {
                     this.$Message.error('表单验证失败!')
                 }
+            });
+        },
+
+        addClassConfirm () {
+            if (this.classname == '') {
+                this.$Message.error('请输入分类名称');
+                this.classLoad = false;
+                this.$nextTick(() => {
+                    this.classLoad = true;
+                });
+                return false;
+            }
+            this.$http.request({
+                url: "/api_edit.php?action=news_class_add",
+                params: {
+                    appid: this.vueAppid,
+                    upid: this.upid,
+                    sortname: this.classname
+                }
+            }).then((res) => {
+                this.classLoad = false;
+                this.isModal = false;
+                this.upid = "0";
+                this.classname = "";
+                this.$Message.info("添加成功");
+                this.getNewClass();
+                console.log(res);
             });
         },
 

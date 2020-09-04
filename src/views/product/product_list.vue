@@ -357,11 +357,13 @@ export default {
             this.$http.request({
                 url: "/api_edit.php?action=product_class_add",
                 params: {
+                    appid: this.vueAppid,
                     sortname: this.classname,
                     upid: this.uid
                 }
             }).then((res) => {
                 this.classname = "";
+                this.uid = 0;
                 this.showClass = false;
                 this.getClass();
             });
