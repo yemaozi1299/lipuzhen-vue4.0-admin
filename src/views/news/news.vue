@@ -1,7 +1,27 @@
 <template>
     <div>
         <Card class="new-list-card" style="" dis-hover>
-            <p slot="title">新闻列表</p>
+            <p slot="title" style="height: auto">
+                <span>新闻列表</span>
+                <Dropdown
+                    trigger="click"
+                    placement="top"
+                    class="mg-l-20"
+                    @on-click="changeLange"
+                >
+                    <Button class="table-btn" icon="ios-arrow-down">{{
+                        selectedLang.name
+                    }}</Button>
+                    <DropdownMenu slot="list">
+                        <template v-for="item in langList">
+                            <DropdownItem :name="item.id" :key="item.id">{{
+                                item.name
+                            }}</DropdownItem>
+                        </template>
+                    </DropdownMenu>
+                </Dropdown>
+            </p>
+
             <Layout class="layout-wrapper">
                 <Header class="header-wrapper">
                     <div class="search-area">
@@ -18,7 +38,7 @@
                             @on-keyup.enter="dataInitial"
                             clearable
                             class="ant-search-input mg-r-10"
-                            style="width: 200px;"
+                            style="width: 200px"
                         />
                         <Button
                             type="primary"
@@ -32,7 +52,7 @@
                     <Sider
                         class="sider-wrapper"
                         width="198"
-                        style="overflow-y: auto;"
+                        style="overflow-y: auto"
                     >
                         <label
                             class="ant-radio-button-wrapper"
@@ -57,14 +77,14 @@
                                 <Icon
                                     class="ant-icon"
                                     type="md-settings"
-                                    style="left: 0px;"
+                                    style="left: 0px"
                                     v-on:click.stop="handleEdit(item)"
                                 />
                                 <span>{{ item.sortname }}</span>
                                 <Icon
                                     class="ant-icon"
                                     type="ios-close-circle-outline"
-                                    style="right: 0px;"
+                                    style="right: 0px"
                                     v-on:click.stop="
                                         delGroundState(item, index)
                                     "
@@ -85,14 +105,14 @@
                                     <Icon
                                         class="ant-icon"
                                         type="md-settings"
-                                        style="left: 0px;"
+                                        style="left: 0px"
                                         v-on:click.stop="handleEdit(items)"
                                     />
                                     <span>—— {{ items.sortname }}</span>
                                     <Icon
                                         class="ant-icon"
                                         type="ios-close-circle-outline"
-                                        style="right: 0px;"
+                                        style="right: 0px"
                                         v-on:click.stop="
                                             delGroundState(items, indexs)
                                         "
@@ -115,7 +135,7 @@
                                 type="flex"
                                 justify="center"
                                 align="middle"
-                                style="margin: 10px 5px 0 5px;"
+                                style="margin: 10px 5px 0 5px"
                             >
                                 <Col span="8">选择分类:</Col>
                                 <Col span="16">
@@ -133,7 +153,7 @@
                                 type="flex"
                                 justify="center"
                                 align="middle"
-                                style="margin: 10px 5px 0 5px;"
+                                style="margin: 10px 5px 0 5px"
                             >
                                 <Col span="8">分类名称:</Col>
                                 <Col span="16">
@@ -147,7 +167,7 @@
                                 type="flex"
                                 justify="center"
                                 align="middle"
-                                style="margin: 10px; text-align: center;"
+                                style="margin: 10px; text-align: center"
                             >
                                 <Col span="12">
                                     <Button
@@ -190,16 +210,73 @@
                                 @on-change="handleSelectAll"
                             >
                                 <span class="mg-l-10">已选</span
-                                ><span style="color: #3091f2;">{{
+                                ><span style="color: #3091f2">{{
                                     chooseID.length
                                 }}</span
-                                ><span> / {{ tableData.length }} 条新闻</span>
+                                ><span> / {{ tableData.length }} 个商品</span>
                             </Checkbox>
+                            <Button
+                                class="table-btn mg-r-20"
+                                :disabled="chooseID.length == 0"
+                                @click="goodsedit('show')"
+                                >显示</Button
+                            >
+                            <Button
+                                class="table-btn mg-r-20"
+                                :disabled="chooseID.length == 0"
+                                @click="goodsedit('hide')"
+                                >隐藏</Button
+                            >
                             <Button
                                 class="table-btn mg-r-20"
                                 :disabled="chooseID.length == 0"
                                 @click="goodsedit('delete')"
                                 >删除</Button
+                            >
+                            <Dropdown
+                                trigger="click"
+                                placement="top"
+                                class="mg-r-20"
+                                @on-click="classmovein"
+                            >
+                                <Button
+                                    class="table-btn"
+                                    :disabled="chooseID.length == 0"
+                                    icon="ios-arrow-dropup"
+                                    >移入分类</Button
+                                >
+                                <DropdownMenu slot="list">
+                                    <template v-for="classitem in classList">
+                                        <DropdownItem
+                                            :key="classitem.id"
+                                            :name="classitem.id"
+                                        >
+                                            {{
+                                                classitem.sortname
+                                            }}</DropdownItem
+                                        >
+                                        <template
+                                            v-if="classitem.children"
+                                            v-for="classitem2 in classitem.children"
+                                        >
+                                            <DropdownItem
+                                                :key="classitem2.id"
+                                                :name="classitem2.id"
+                                            >
+                                                ——
+                                                {{
+                                                    classitem2.sortname
+                                                }}</DropdownItem
+                                            >
+                                        </template>
+                                    </template>
+                                </DropdownMenu>
+                            </Dropdown>
+                            <Button
+                                class="table-btn mg-r-20"
+                                :disabled="chooseID.length == 0"
+                                @click="classmoveout"
+                                >移出分类</Button
                             >
                         </Footer>
                     </Layout>
@@ -207,7 +284,7 @@
             </Layout>
         </Card>
         <Modal title="查看图片" v-model="visible">
-            <img :src="imgName" v-if="visible" style="width: 100%;" />
+            <img :src="imgName" v-if="visible" style="width: 100%" />
         </Modal>
     </div>
 </template>
@@ -222,6 +299,11 @@ export default {
     },
     data () {
         return {
+            langList: [],
+            selectedLang: {
+                id: 0,
+                name: "Chinese"
+            },
             page: "",
             classList: [],
             tableData: [],
@@ -252,6 +334,18 @@ export default {
             //     }
             // }, 
             {
+                width: 90,
+                title: "排序",
+                key: "pr"
+            },
+            {
+                width: 120,
+                title: "所属分类",
+                align: "center",
+                key: "classname"
+            },
+            {
+                width: 200,
                 title: "新闻标题",
                 key: "title"
             }, {
@@ -262,7 +356,7 @@ export default {
             }, {
                 title: "新闻日期",
                 key: "date",
-                width: 200
+                width: 150
             }, {
                 width: 96,
                 title: "是否推荐",
@@ -275,10 +369,22 @@ export default {
                     }, params.row.tj == 1 ? '是' : '否');
                 }
             }, {
+                width: 96,
+                title: "状态",
+                align: "center",
+                render: (h, params) => {
+                    return h('div', {
+                        style: {
+                            color: params.row.yc == 1 ? '#ed4014' : '#47cb89'
+                        }
+                    }, params.row.yc == 1 ? '隐藏' : '显示');
+                }
+            }, {
                 'title': '操作',
                 'key': 'action',
                 'align': 'center',
                 "width": 200,
+                "fixed": "right",
                 'render': (h, params) => {
                     var isTop = 0
                     return h('div', [
@@ -296,7 +402,11 @@ export default {
                                             pageid: this.page || 1,
                                             newid: params.row.id
                                         },
-
+                                        query: {
+                                            classid: this.classid,
+                                            languageid: this.selectedLang.id,
+                                            languagename: this.selectedLang.name,
+                                        }
                                     })
                                 }
                             }
@@ -328,7 +438,7 @@ export default {
             total: 0,
             keyword: "",
             showClass: false,
-            classid: '0',
+            classid: 0,
             classname: "",
             loading: false,
             chooseID: [],
@@ -341,7 +451,7 @@ export default {
     },
     created () {
         this.fetchData();
-        this.getClass();
+        this.getLanguage();
     },
     watch: {
         chooseID: function (val) {
@@ -351,7 +461,7 @@ export default {
                 this.isSelectAll = false
             }
         },
-        '$route': 'fetchData'
+        '$route': 'fetchData',
     },
     methods: {
         handleView (name) {
@@ -360,7 +470,40 @@ export default {
         },
         fetchData () {
             this.page = this.$route.params.pageid ? parseInt(this.$route.params.pageid) : 1;
+            this.classid = this.$route.query.classid ? parseInt(this.$route.query.classid) : 0;
+            this.selectedLang = {
+                id: this.$route.query.languageid || 0,
+                name: this.$route.query.languagename || "Chinese"
+            };
             this.dataInitial();
+            this.getClass();
+        },
+        getLanguage () {
+            this.$http.request({
+                url: "/api_edit.php?action=getHaveLanguage",
+                params: {
+                    appid: this.vueAppid,
+                }
+            }).then((res) => {
+                this.langList = res.data.body || [];
+                console.log(res);
+            });
+        },
+        changeLange (id) {
+            this.langList.forEach((item) => {
+                if (item.id == id) {
+                    this.selectedLang = item;
+                    this.$router.push({
+                        query: {
+                            classid: 0,
+                            languageid: item.id,
+                            languagename: item.name,
+                        },
+                    });
+                    this.fetchData();
+                    return
+                }
+            });
         },
         dataInitial () {
             this.loading = true;
@@ -374,7 +517,8 @@ export default {
                     classid: this.classid,
                     keyword: this.keyword,
                     page: this.page,
-                    pageno: this.pageno
+                    pageno: this.pageno,
+                    language: this.selectedLang.id
                 }
             }).then((res) => {
                 this.tableData = res.data.body || [];
@@ -382,14 +526,17 @@ export default {
                 this.total = parseInt(res.data.total);
                 this.page = parseInt(res.data.page);
                 this.loading = false;
+                this.chooseID = [];
             });
         },
         getClass () {
             this.$http.request({
                 url: "/api_edit.php?action=news_class_get",
-                params: {}
+                params: {
+                    language: this.selectedLang.id
+                }
             }).then((res) => {
-                this.classList = res.data.body;
+                this.classList = res.data.body || [];
             });
         },
         pathEdit () {
@@ -398,6 +545,11 @@ export default {
                 params: {
                     pageid: this.page,
                     newid: 0
+                },
+                query: {
+                    classid: this.classid,
+                    languageid: this.selectedLang.id,
+                    languagename: this.selectedLang.name,
                 }
             });
         },
@@ -411,6 +563,11 @@ export default {
                 name: "news",
                 params: {
                     pageid: page
+                },
+                query: {
+                    classid: this.classid,
+                    languageid: this.selectedLang.id,
+                    languagename: this.selectedLang.name,
                 }
             })
         },
@@ -423,7 +580,8 @@ export default {
                 params: {
                     appid: this.vueAppid,
                     upid: this.uid,
-                    sortname: this.classname
+                    sortname: this.classname,
+                    language: this.selectedLang.id
                 }
             }).then((res) => {
                 this.uid = "0";
@@ -442,7 +600,8 @@ export default {
                 params: {
                     appid: this.vueAppid,
                     upid: this.uid,
-                    sortname: this.classname
+                    sortname: this.classname,
+                    language: this.selectedLang.id
                 }
             }).then((res) => {
                 this.uid = "0";
@@ -453,7 +612,17 @@ export default {
         },
         classStateEdit (id) {
             this.classid = id;
-            this.dataInitial();
+            this.$router.push({
+                params: {
+                    pageid: 1
+                },
+                query: {
+                    classid: id,
+                    languageid: this.selectedLang.id,
+                    languagename: this.selectedLang.name,
+                },
+            });
+            // this.dataInitial();
         },
         handleEdit (item) {
             var _this = this;
@@ -539,29 +708,43 @@ export default {
                 this.$Message.warning('请选择要操作的记录')
                 return false
             }
-            const title = '提醒'
+            const title = '提醒';
+            var mode = "";
 
             switch (name) {
                 case 'delete':
                     var content = '确定对所选新闻进行：删除'
-                    var mode = 'delete'
+                    var action = 'news_del'
+                    break
+                case 'show':
+                    var content = '确定对所选新闻进行：显示'
+                    var action = 'news_updown'
+                    mode = 0;
+                    break
+                case 'hide':
+                    var content = '确定对所选新闻进行：隐藏'
+                    var action = 'news_updown'
+                    mode = 1;
                     break
             }
             this.$Modal.confirm({
                 title: title,
                 content: content,
                 onOk: () => {
-                    this.choose2edit(mode)
+                    this.choose2edit(action, mode)
                 }
-            })
+            });
         },
-        choose2edit: function (mode) { // 将要进行的操作提交到服务器API
+        choose2edit: function (action, mode) { // 将要进行的操作提交到服务器API
             // console.log(name+'='+this.chooseID);
             if (this.chooseID.length > 0) {
-                var apiurl = '/api_edit.php?action=news_del'
+                var apiurl = '/api_edit.php';
                 var data = {
                     appid: this.vueAppid,
-                    del: this.chooseID
+                    items: this.chooseID,
+                    del: this.chooseID,
+                    action: action,
+                    mode: mode
                 }
                 console.log(data);
 
@@ -578,6 +761,71 @@ export default {
                 return false
             }
         },
+        classmovein: function (classid) { // 移入分类
+            var _this = this
+
+            if (_this.chooseID.length == 0) {
+                _this.$Message.warning('请选择要操作的记录')
+                return false
+            }
+
+            var apiurl = '/api_edit.php'
+            var data = {
+                appid: this.vueAppid
+            }
+
+            data.action = 'news_move_class'
+            data.items = this.chooseID
+            data.classid = classid
+            _this.$http.post(apiurl, _this.$qs.stringify(data)).then(function (response) {
+                _this.doing = 0
+                if (response.data.status == 1) {
+                    _this.$Message.info('操作成功')
+                    _this.dataInitial()
+                } else {
+                    _this.$Message.error(response.data.message)
+                }
+            }).catch(function (response) {
+                _this.$Notice.error({
+                    title: '错误提示',
+                    desc: '无法访问服务器,请重试'
+                })
+            })
+        },
+
+        classmoveout: function () { // 移出分类
+            var _this = this
+
+            if (_this.chooseID.length == 0) {
+                _this.$Message.warning('请选择要操作的记录')
+                return false
+            }
+            var apiurl = '/api_edit.php'
+            var data = {
+                appid: this.vueAppid
+            }
+
+            data.action = 'news_move_class'
+            data.items = this.chooseID
+            data.classid = 0
+            _this.$Loading.start()
+            _this.$http.post(apiurl, _this.$qs.stringify(data)).then(function (response) {
+
+                if (response.data.status == 1) {
+                    _this.$Message.info('操作成功')
+                    _this.dataInitial()
+                } else {
+                    _this.$Message.error(response.data.message)
+                }
+            }).catch(function (response) {
+
+                _this.$Notice.error({
+                    title: '错误提示',
+                    desc: '无法访问服务器,请重试'
+                })
+            })
+        },
+
         remove (item) {
             if (item) {
                 this.$Modal.confirm({

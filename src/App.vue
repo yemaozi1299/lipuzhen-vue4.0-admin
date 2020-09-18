@@ -84,7 +84,7 @@ body {
         width: 150px;
         border: 1px solid #d9d9d9;
         margin: 0 15px 0 0px;
-        height: 600px;
+        min-height: 600px;
         background: #FFF;
         .category {
             background: #F6F7FB;

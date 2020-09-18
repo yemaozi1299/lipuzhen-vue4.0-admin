@@ -22,8 +22,8 @@ Vue.prototype.$qs = qs;
 Vue.config.productionTip = false;
 
 
-Cookies.set("CookVueAppid", 1);
-Cookies.set("CookRolecode", 'vip'); //版本号
+// Cookies.set("CookVueAppid", 1);
+// Cookies.set("CookRolecode", 'vip'); //版本号
 Vue.component('Resource', imgResourceLoaded);
 Vue.use(iView);
 Vue.use(iviewArea);

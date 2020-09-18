@@ -1,6 +1,6 @@
 <template>
     <div class="wxxcx-content">
-        <div class="wrap">
+        <!-- <div class="wrap">
             <div class="tab-container">
                 <div class="link-wrap-left">
                     <a :href="'/appeditor/?appid='" target="_blank">
@@ -22,7 +22,34 @@
                     <router-view></router-view>
                 </keep-alive>
             </div>
-        </div>
+        </div> -->
+        <Row :gutter="16">
+            <Col :xs="24" :lg="8" style="padding-bottom: 10px">
+                <Card
+                    ><a
+                        href="/rich2020/edit.html?appid="
+                        target="_blank"
+                        class="card-item"
+                        >小程序界面编辑</a
+                    ></Card
+                >
+            </Col>
+            <Col :xs="24" :lg="8" style="padding-bottom: 10px">
+                <Card
+                    ><a
+                        href="/rich2020/preview.php?appid="
+                        target="_blank"
+                        class="card-item"
+                        >预览</a
+                    ></Card
+                >
+            </Col>
+            <Col :xs="24" :lg="8" style="padding-bottom: 10px">
+                <Card :to="{ name: 'sharezip' }">
+                    <div class="card-item">打包</div>
+                </Card>
+            </Col>
+        </Row>
     </div>
 </template>
 
@@ -34,45 +61,11 @@ export default {
 
 <style lang="stylus" rel="stylesheet/stylus">
 .wxxcx-content {
-    background-color: #fff;
-    .page-title {
-        padding: 16px;
-        font-size: 15px;
-        border-bottom: 1px solid #d5d6da;
-    }
-    .wrap {
-        width: 100%;
-        .tab-container {
-            display: flex;
-            align-items: center;
-            width: 100%;
-            height: 52px;
-            border-bottom: 1px solid #d5d5de;
-            .tab-item {
-                margin-right: 10px;
-                height: 49px;
-                cursor: pointer;
-                line-height: 49px;
-                outline: 0;
-                a {
-                    display: block;
-                    cursor: pointer;
-                    padding: 0 20px;
-                    color: #59607b;
-                    font-size: 12px;
-                    border-bottom: 2px solid transparent;
-                    &.active {
-                        border-bottom: 2px solid #3091f2;
-                        transition: all 0.3s;
-                    }
-                }
-            }
-        }
-        .content {
-            width: 100%;
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
+    .card-item {
+        display: block;
+        height: 120px;
+        line-height: 120px;
+        text-align: center;
     }
 }
 </style>

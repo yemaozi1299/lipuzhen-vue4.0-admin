@@ -68,7 +68,9 @@ class HttpRequest {
 				return { data, status }
 			} else {
 				console.log(data, url, res.config, status);
-				return Promise.reject(res)
+				var message = typeof data == "Object" ? data.message : data;
+
+				return Promise.reject(message)
 			}
 		}, error => {
 			console.log(error, url);

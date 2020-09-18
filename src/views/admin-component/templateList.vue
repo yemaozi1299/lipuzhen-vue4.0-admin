@@ -1,85 +1,300 @@
 <template>
-    <Card class="add-example-dialog">
-        <div class="search-area">
-            <Input
-                v-model="keyword"
-                placeholder="关键字"
-                @on-keyup.enter="get(keyword)"
-                clearable
-                class="ant-search-input mg-r-10"
-                style="width: 200px;"
-            />
-            <Button
-                type="primary"
-                @click="get"
-                icon="ios-search"
-                class="ant-search-btn"
-            ></Button>
-        </div>
-
-        <ul
-            class="tpl-container"
-            style="padding-bottom: 72px;"
-            v-if="isrefresh"
-        >
-            <li v-for="item in appList">
-                <img :src="item.coverUrl" class="cover" />
-                <p class="name">{{ item.name }}</p>
-                <div class="code-mask">
-                    <div class="rolename">{{ item.rolename }}</div>
-                    <img class="logo" alt="" :src="item.logo" />
-                    <span
-                        class="select-btn js-preview-btn"
-                        @click="previewApp(item)"
-                        >预览</span
-                    >
-                    <span
-                        class="select-btn js-delect-btn"
-                        @click="jsDelect(item)"
-                        >删除</span
-                    >
-                </div>
-            </li>
-        </ul>
-        <div class="info-page-btn info-example-btn">
-            <Page
-                :total="total"
-                :current="page"
-                show-total
-                show-elevator
-                @on-change="skippage"
-            ></Page>
-        </div>
+    <Card dis-hover class="template-def-style">
+        <Layout class="layout-wrapper">
+            <Header class="header-wrapper">
+                <!-- 搜索框 -->
+                <Input
+                    v-model="keyword"
+                    placeholder="关键字"
+                    @on-keyup.enter="get(keyword)"
+                    clearable
+                    class="ant-search-input mg-r-10"
+                    style="width: 200px"
+                />
+                <Button
+                    type="primary"
+                    @click="get"
+                    icon="ios-search"
+                    class="ant-search-btn"
+                ></Button>
+            </Header>
+            <Header class="header-wrapper">
+                <RadioGroup v-model="selected">
+                    <Radio label="0">
+                        <span>全选</span>
+                    </Radio>
+                    <Radio label="1">
+                        <span>电脑网站</span>
+                    </Radio>
+                    <Radio label="2">
+                        <span>手机网站</span>
+                    </Radio>
+                    <Radio label="3">
+                        <span>微信小程序</span>
+                    </Radio>
+                    <Radio label="4">
+                        <span>电脑网站 + 手机网站</span>
+                    </Radio>
+                    <Radio label="5">
+                        <span>电脑网站 + 微信小程序</span>
+                    </Radio>
+                    <Radio label="6">
+                        <span>手机网站 + 微信小程序</span>
+                    </Radio>
+                </RadioGroup>
+                <!-- <Checkbox v-model="getAppType.pc">电脑网站</Checkbox>
+                <Checkbox v-model="getAppType.mobile">手机网站</Checkbox>
+                <Checkbox v-model="getAppType.mina">微信小程序</Checkbox> -->
+            </Header>
+            <Layout class="layout-wrapper">
+                <Layout class="layout-wrapper">
+                    <Content>
+                        <div class="cti-cardlist">
+                            <Row :gutter="16">
+                                <Col
+                                    :xs="12"
+                                    :lg="8"
+                                    style="padding-bottom: 10px"
+                                    v-for="item in appList"
+                                >
+                                    <Card :padding="0">
+                                        <div style="position: relative">
+                                            <div
+                                                class="cti-align-center"
+                                                :style="mobileBgStyle"
+                                            >
+                                                <a
+                                                    href="javascript:void(0)"
+                                                    class="preview_link"
+                                                    :style="pcPreviewStyle"
+                                                >
+                                                    <span
+                                                        class="bg_span"
+                                                    ></span>
+                                                    <img
+                                                        class="qrcode"
+                                                        height="164"
+                                                        width="164"
+                                                        style="
+                                                            height: 164px;
+                                                            width: 164px;
+                                                        "
+                                                        v-if="
+                                                            (getAppType.mobile ||
+                                                                getAppType.mina) &&
+                                                            getAppType.pc ==
+                                                                false
+                                                        "
+                                                        :src="item.QrUrl"
+                                                    /><span
+                                                        class="bg_round"
+                                                        v-if="getAppType.pc"
+                                                    ></span
+                                                    ><span
+                                                        class="txt_span ng-binding"
+                                                        v-if="getAppType.pc"
+                                                        >预览</span
+                                                    ><img
+                                                        class="mobile-preview-img"
+                                                        :style="
+                                                            previewWidthStyle
+                                                        "
+                                                        :src="
+                                                            (getAppType.mobile ==
+                                                                true ||
+                                                                getAppType.mina ==
+                                                                    true) &&
+                                                            getAppType.pc ==
+                                                                false
+                                                                ? item.cover_mobile
+                                                                : item.cover_pc
+                                                        "
+                                                        alt=" "
+                                                    />
+                                                </a>
+                                            </div>
+                                            <div
+                                                class="mobile-preview"
+                                                v-if="
+                                                    (getAppType.mobile ==
+                                                        false &&
+                                                        getAppType.mina ==
+                                                            false &&
+                                                        getAppType.pc ==
+                                                            false) ||
+                                                    (getAppType.pc == true &&
+                                                        (getAppType.mobile ==
+                                                            true ||
+                                                            getAppType.mina ==
+                                                                true))
+                                                "
+                                            >
+                                                <a
+                                                    href="javascript:void(0)"
+                                                    class="preview_link mob"
+                                                    style="
+                                                        width: 80px;
+                                                        height: 130px;
+                                                        margin-top: 30px;
+                                                        margin-left: auto;
+                                                        margin-right: auto;
+                                                    "
+                                                >
+                                                    <img
+                                                        class="qrcode"
+                                                        height="164"
+                                                        width="164"
+                                                        style="
+                                                            height: 164px;
+                                                            width: 164px;
+                                                        "
+                                                        :src="item.QrUrl"
+                                                    />
+                                                    <span
+                                                        class="bg_span"
+                                                    ></span>
+                                                    <img
+                                                        :src="item.cover_mobile"
+                                                        alt=" "
+                                                        style="
+                                                            width: 80px;
+                                                            height: 130px;
+                                                        "
+                                                    />
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="card-info">
+                                            <div class="card-title">
+                                                <div class="ac-title-level3">
+                                                    {{ item.name }}
+                                                </div>
+                                                <div class="number">
+                                                    编号: {{ item.id }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="deleteBtn">
+                                            <Button
+                                                type="error"
+                                                @click="jsDelect(item)"
+                                                >删除</Button
+                                            >
+                                        </div>
+                                    </Card>
+                                </Col>
+                            </Row>
+                        </div>
+                        <div class="page-content" v-if="total > pageno">
+                            <Page
+                                :total="total"
+                                :current="page"
+                                show-total
+                                show-elevator
+                                @on-change="skippage"
+                            ></Page>
+                        </div>
+                    </Content>
+                    <Footer class="table-footer"> </Footer>
+                </Layout>
+            </Layout>
+        </Layout>
     </Card>
 </template>
 
 <script type="text/javascript">
+import mobileBg from '@/assets/images/templateList/mobileBg.png';
 export default {
     data: function () {
         return {
             isrefresh: true,
             moves: window.vueAppUrl,
-            appList: [
-                { coverUrl: '/images/loading-animate.gif', logo: '//a.richapps.cn/images/loading.gif' },
-                { coverUrl: '/images/loading-animate.gif', logo: '//a.richapps.cn/images/loading.gif' },
-                { coverUrl: '/images/loading-animate.gif', logo: '//a.richapps.cn/images/loading.gif' },
-                { coverUrl: '/images/loading-animate.gif', logo: '//a.richapps.cn/images/loading.gif' },
-                { coverUrl: '/images/loading-animate.gif', logo: '//a.richapps.cn/images/loading.gif' },
-                { coverUrl: '/images/loading-animate.gif', logo: '//a.richapps.cn/images/loading.gif' },
-                { coverUrl: '/images/loading-animate.gif', logo: '//a.richapps.cn/images/loading.gif' },
-                { coverUrl: '/images/loading-animate.gif', logo: '//a.richapps.cn/images/loading.gif' },
-                { coverUrl: '/images/loading-animate.gif', logo: '//a.richapps.cn/images/loading.gif' },
-                { coverUrl: '/images/loading-animate.gif', logo: '//a.richapps.cn/images/loading.gif' },
-            ],
+            appList: [],
             keyword: '',
             search: false,
             page: 1,
             total: 0,
-            searchPoptip: false
+            pageno: 10,
+            searchPoptip: false,
+            getAppType: {
+                pc: true,
+                mobile: true,
+                mina: true,
+            },
+            selected: "0",
+        }
+    },
+    computed: {
+        mobileBgStyle () {
+            return (this.getAppType.mobile == true || this.getAppType.mina == true) && this.getAppType.pc == false ? { 'background': 'url(' + mobileBg + ') no-repeat center', 'height': '404px' } : ''
+        },
+        previewWidthStyle () {
+            return (this.getAppType.mobile == true || this.getAppType.mina == true) && this.getAppType.pc == false ? { 'width': '180px', 'height': '280px' } : { 'position': 'absolute', 'left': 0, 'top': 0 }
+        },
+        pcPreviewStyle () {
+            return (this.getAppType.mobile == true || this.getAppType.mina == true) && this.getAppType.pc == false ? { 'width': '180px', 'height': '280px', 'margin-top': '50px', 'margin-left': 'auto', 'margin-right': 'auto' } : ''
         }
     },
     created: function () {
         this.get();
+    },
+    watch: {
+        selected (val) {
+            switch (val) {
+                case '0':
+                    this.getAppType = {
+                        pc: true,
+                        mobile: true,
+                        mina: true
+                    }
+                    break;
+                case '1':
+                    this.getAppType = {
+                        pc: true,
+                        mobile: false,
+                        mina: false
+                    }
+                    break;
+                case '2':
+                    this.getAppType = {
+                        pc: false,
+                        mobile: true,
+                        mina: false
+                    }
+                    break;
+                case '3':
+                    this.getAppType = {
+                        pc: false,
+                        mobile: false,
+                        mina: true
+                    }
+                    break;
+                case '4':
+                    this.getAppType = {
+                        pc: true,
+                        mobile: true,
+                        mina: false
+                    }
+                    break;
+                case '5':
+                    this.getAppType = {
+                        pc: true,
+                        mobile: false,
+                        mina: true
+                    }
+                    break;
+                case '6':
+                    this.getAppType = {
+                        pc: false,
+                        mobile: true,
+                        mina: true
+                    }
+                    break;
+            }
+            this.appList = [];
+            this.page = 1;
+            this.get();
+        }
     },
     methods: {
         get: function () {
@@ -89,7 +304,10 @@ export default {
                 action: 'example_applist',
                 keyword: this.keyword,
                 page: this.page,
-                pageno: 10
+                pageno: 10,
+                pc: this.getAppType.pc ? 1 : 0,
+                mobile: this.getAppType.mobile ? 1 : 0,
+                mina: this.getAppType.mina ? 1 : 0,
             };
             console.log(data);
             this.keyword ? this.search = true : this.search = false;
@@ -103,29 +321,20 @@ export default {
                     _this.$Message.info(response.data.message);
                 }
                 _this.$Loading.finish();
-            }).catch(function (response) {
-                console.log(response);
-                _this.$Notice.error({
-                    title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+            }).catch((res) => {
+                this.$Notice.error({
+                    title: '提示',
+                    desc: res,
+                    duration: 10
                 });
-                _this.$Loading.error();
             });
+        },
+        getAppList () {
+
         },
         skippage: function (page) {
             this.page = page;
-            this.appList = [
-                { coverUrl: '/images/loading-animate.gif', logo: '//a.richapps.cn/images/loading.gif' },
-                { coverUrl: '/images/loading-animate.gif', logo: '//a.richapps.cn/images/loading.gif' },
-                { coverUrl: '/images/loading-animate.gif', logo: '//a.richapps.cn/images/loading.gif' },
-                { coverUrl: '/images/loading-animate.gif', logo: '//a.richapps.cn/images/loading.gif' },
-                { coverUrl: '/images/loading-animate.gif', logo: '//a.richapps.cn/images/loading.gif' },
-                { coverUrl: '/images/loading-animate.gif', logo: '//a.richapps.cn/images/loading.gif' },
-                { coverUrl: '/images/loading-animate.gif', logo: '//a.richapps.cn/images/loading.gif' },
-                { coverUrl: '/images/loading-animate.gif', logo: '//a.richapps.cn/images/loading.gif' },
-                { coverUrl: '/images/loading-animate.gif', logo: '//a.richapps.cn/images/loading.gif' },
-                { coverUrl: '/images/loading-animate.gif', logo: '//a.richapps.cn/images/loading.gif' },
-            ];
+            this.appList = [];
             this.get();
         },
         cancelSearch: function () {
@@ -139,7 +348,16 @@ export default {
                 id: item.id
             };
             // this.isrefresh = false;
-            this.$Loading.start();
+            this.$http.post("/api_admin.php", params).then((res) => {
+                this.appList.splice(item._index, 1);
+            }).catch((res) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: res.message,
+                    duration: 0
+                });
+            });
+
             _this.$http.post('/api_admin.php', _this.$qs.stringify(params)).then(function (response) {
                 console.log(response.data);
                 if (response.data.status == 1) {
@@ -147,110 +365,149 @@ export default {
                 } else {
                     _this.$Message.info(response.data.message);
                 }
-                // _this.isrefresh = true;
-                _this.$Loading.finish();
             }).catch(function (response) {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
                     desc: '无法访问服务器,请重试'
                 });
-                _this.$Loading.error();
             });
         },
         previewApp: function (params) {
-            window.open('//a.richapps.cn/appeditor/preview.php?appid=' + params.fromappid);
+            this.$emit("previewApp", params);
+            // window.open('//a.richapps.cn/appeditor/preview.php?appid=' + params.fromappid);
         }
     }
 }
 </script>
 
 <style lang="stylus" scoped>
-.add-example-dialog .tpl-container {
-    width: 100%;
-    height: calc(100% - 126px);
-    /* padding-bottom: 50px; */
-    overflow-y: scroll;
-}
-.add-example-dialog .tpl-container li {
-    position: relative;
-    width: 185px;
-    height: 294px;
-    margin: 0px 14px 20px 14px;
-    background-color: #fff;
-    vertical-align: top;
-    display: inline-block;
-    flex-direction: row;
-    flex-wrap: wrap;
-    border: 1px solid #333;
-    overflow: hidden;
-}
-.add-example-dialog .tpl-container li .cover {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    max-width: 100%;
-    max-height: 100%;
-}
-.add-example-dialog .tpl-container li .name {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: #FFF;
-    color: #333;
-    font-size: 14px;
-    line-height: 30px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    text-align: center;
-}
-.add-example-dialog .tpl-container li .code-mask {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-}
-.add-example-dialog .rolename {
-    width: 100%;
-    line-height: 30px;
-    color: #FFF;
-    text-align: center;
-    font-size: 16px;
-}
-.add-example-dialog .tpl-container li .code-mask .logo {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-left: -50px;
-    margin-top: -100px;
-    width: 100px;
-    height: 100px;
-}
-.select-btn {
-    display: inline-block;
-    width: 60px;
-    line-height: 25px;
-    margin-top: 216px;
-    margin-left: 24px;
-    color: #fff;
-    font-size: 14px;
-    border-radius: 2px;
-    text-align: center;
-    cursor: pointer;
-    border: 1px solid white;
-    border-color: rgba(255, 255, 255, 0.7);
-}
-.select-btn.js-preview-btn {
-    background-color: #fdcb2e;
-    border: 1px solid #fdcb2e;
-    color: #3f4125;
+.template-def-style {
+    .ivu-card-head {
+        padding: 0;
+    }
+    .cti-align-center {
+        text-align: center;
+        overflow: hidden;
+    }
+    .preview_link {
+        display: inline-block;
+        max-width: 320px;
+        width: 100%;
+        height: 240px;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        .bg_round, .bg_span, .txt_span {
+            display: none;
+        }
+        &.mob {
+            .qrcode {
+                width: 50px !important;
+                height: 50px !important;
+                left: 15px;
+                top: 42px;
+            }
+        }
+        .qrcode {
+            position: absolute;
+            z-index: 11;
+            left: 48px;
+            top: 100px;
+            display: none;
+            width: 80px !important;
+            height: 80px !important;
+        }
+        &:hover {
+            .bg_span {
+                z-index: 9;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                background: #000;
+                display: block;
+                opacity: 0.4;
+            }
+            .bg_round {
+                z-index: 10;
+                position: absolute;
+                top: 80px;
+                left: 115px;
+                width: 90px;
+                height: 90px;
+                border-radius: 90px;
+                background: #5673d6;
+                display: block;
+                opacity: 0.5;
+            }
+            .txt_span {
+                z-index: 11;
+                position: absolute;
+                top: 90px;
+                left: 125px;
+                width: 70px;
+                height: 70px;
+                border-radius: 70px;
+                background: #5673d6;
+                color: #fff;
+                text-align: center;
+                display: block;
+                line-height: 70px;
+            }
+            .qrcode {
+                display: block;
+            }
+        }
+        .mobile-preview-img {
+            max-width: 320px;
+            heiget: auto;
+        }
+    }
+    .mobile-preview {
+        z-index: 99;
+        width: 100px;
+        height: 200px;
+        text-align: center;
+        position: absolute;
+        top: 52px;
+        right: 0;
+        background: url('../../assets/images/templateList/mobileBg.png') no-repeat right;
+        background-size: 100%;
+    }
+    .card-info {
+        padding: 10px 15px;
+        .card-title {
+            overflow: hidden;
+            .ac-title-level3 {
+                float: left;
+                display: block;
+                max-width: 60%;
+                font-size: 12px;
+            }
+            .number {
+                float: left;
+                display: block;
+                margin-top: 0;
+                padding-left: 5px;
+            }
+        }
+    }
+    .ac-title-level3, .ac-title-level4 {
+        color: #252b3a;
+        font-weight: 700;
+    }
+    .ac-title-level3 {
+        overflow: hidden;
+        -o-text-overflow: ellipsis;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .number {
+        color: #8a8e99;
+        margin-top: 5px;
+    }
 }
 </style>
 

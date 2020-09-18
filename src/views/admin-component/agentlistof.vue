@@ -389,7 +389,7 @@ export default {
     },
     created: function () {
         this.get();
-        this.getAgentJibie();
+        // this.getAgentJibie();
         // this.getRolecode();
         // this.getAgentprice();
         // this.addPriseApp();

@@ -6,7 +6,7 @@
             :model="formValidate"
             :rules="ruleValidate"
             :label-width="200"
-            style="padding-bottom: 30px;"
+            style="padding-bottom: 30px"
         >
             <Form-item label="链接标题" prop="title">
                 <Input
@@ -21,7 +21,7 @@
                 ></Input>
             </Form-item>
             <Form-item label="图标" prop="face">
-                <Row style="width: 500px;">
+                <Row style="width: 500px">
                     <Col span="12">
                         <div class="goods-upload-list" v-if="formValidate.face">
                             <img :src="formValidate.face" />
@@ -40,7 +40,7 @@
                         </div>
                         <Button
                             @click="handleBeforeUpload('face')"
-                            style="vertical-align: top;"
+                            style="vertical-align: top"
                         >
                             <div style>
                                 <Icon
@@ -55,14 +55,14 @@
             </Form-item>
 
             <Form-item label="链接分类" prop="groupid">
-                <Select v-model="formValidate.groupid" style="width: 200px;">
+                <Select v-model="formValidate.groupid" style="width: 200px">
                     <template v-for="item in classidList">
                         <Option :value="item.id">{{ item.groupname }}</Option>
                     </template>
                 </Select>
                 <Buttons
                     type="info"
-                    style="margin: 0 10px;"
+                    style="margin: 0 10px"
                     @click="isModal = true"
                     >添加分类</Buttons
                 >
@@ -77,7 +77,7 @@
                     <span v-if="!loading">提交</span>
                     <span v-else>Loading...</span>
                 </Button>
-                <Button @click="$router.go(-1)" style="margin-left: 8px;"
+                <Button @click="$router.go(-1)" style="margin-left: 8px"
                     >取消</Button
                 >
             </Form-item>
@@ -92,7 +92,7 @@
             <div slot="footer"></div>
         </Modal>
         <Modal title="查看图片" v-model="visible">
-            <img :src="imgName" v-if="visible" style="width: 100%;" />
+            <img :src="imgName" v-if="visible" style="width: 100%" />
         </Modal>
         <Modal
             v-model="isModal"
@@ -101,11 +101,11 @@
             @on-cancel=""
             :loading="classLoad"
         >
-            <label style="display: block; margin-bottom: 10px;">
+            <label style="display: block; margin-bottom: 10px">
                 <span>分类名称：</span>
                 <Input
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="classname"
                 ></Input>
             </label>
@@ -240,7 +240,6 @@ export default {
         uploadIcon: function (file) {
             this.formValidate.face = file.url;
             this.formValidate.picture = file.name;
-
             this.isUpload = false;
         },
 

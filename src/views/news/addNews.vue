@@ -6,7 +6,7 @@
             :model="formValidate"
             :rules="ruleValidate"
             :label-width="200"
-            style="padding-bottom: 30px;"
+            style="padding-bottom: 30px"
         >
             <Form-item label="新闻标题" prop="title">
                 <Input
@@ -21,7 +21,7 @@
                 ></Input>
             </Form-item>
             <Form-item label="封面图片" prop="face">
-                <Row style="width: 500px;">
+                <Row style="width: 500px">
                     <Col span="12">
                         <div class="goods-upload-list" v-if="formValidate.face">
                             <img :src="formValidate.face" />
@@ -40,7 +40,7 @@
                         </div>
                         <Button
                             @click="handleBeforeUpload('face')"
-                            style="vertical-align: top;"
+                            style="vertical-align: top"
                         >
                             <div style>
                                 <Icon
@@ -81,22 +81,22 @@
                 </RadioGroup>
             </Form-item>
             <Form-item label="新闻分类" prop="classid">
-                <Select v-model="formValidate.classid" style="width: 200px;">
+                <Select v-model="formValidate.classid" style="width: 200px">
                     <template v-for="item in classidList">
                         <Option :value="item.id">{{ item.sortname }}</Option>
                         <template
                             v-if="item.children"
                             v-for="items in item.children"
                         >
-                            <Option :value="items.id">{{
-                                items.sortname
-                            }}</Option>
+                            <Option :value="items.id"
+                                >—— {{ items.sortname }}</Option
+                            >
                         </template>
                     </template>
                 </Select>
                 <Buttons
                     type="info"
-                    style="margin: 0 10px;"
+                    style="margin: 0 10px"
                     @click="isModal = true"
                     >添加分类</Buttons
                 >
@@ -104,11 +104,22 @@
             <Form-item label="新闻推荐" prop="tj">
                 <i-Switch v-model="formValidate.tj" /> 推荐
             </Form-item>
+            <Form-item
+                label="新闻排序（值越高排序越前）"
+                prop="pr"
+                v-if="newid > 0"
+            >
+                <InputNumber
+                    v-model="formValidate.pr"
+                    placeholder="请输入排序值"
+                    style="width: 300px"
+                ></InputNumber>
+            </Form-item>
             <Form-item label="相关新闻关键字" prop="keyword">
                 <Input
                     v-model="formValidate.keyword"
                     placeholder="请输入关键字"
-                    style="width: 300px;"
+                    style="width: 300px"
                 ></Input>
                 <span class="notes">多个关键字之间请用空格隔开</span>
             </Form-item>
@@ -117,7 +128,7 @@
                     type="date"
                     format="yyyy-MM-dd"
                     placeholder=""
-                    style="width: 200px;"
+                    style="width: 200px"
                     :value="formValidate.date"
                     @on-change="changeDateTime"
                 ></DatePicker>
@@ -138,7 +149,7 @@
                     <span v-if="!loading">提交</span>
                     <span v-else>Loading...</span>
                 </Button>
-                <Button @click="$router.go(-1)" style="margin-left: 8px;"
+                <Button @click="$router.go(-1)" style="margin-left: 8px"
                     >取消</Button
                 >
             </Form-item>
@@ -153,7 +164,7 @@
             <div slot="footer"></div>
         </Modal>
         <Modal title="查看图片" v-model="visible">
-            <img :src="imgName" v-if="visible" style="width: 100%;" />
+            <img :src="imgName" v-if="visible" style="width: 100%" />
         </Modal>
         <Modal
             v-model="isModal"
@@ -162,11 +173,11 @@
             @on-cancel=""
             :loading="classLoad"
         >
-            <label style="display: block; margin-bottom: 10px;">
+            <label style="display: block; margin-bottom: 10px">
                 <span>分类名称：</span>
                 <Input
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="classname"
                 ></Input>
             </label>
@@ -209,7 +220,8 @@ export default {
                 body: "",
                 face: "",
                 face2body: false,
-                summary: ""
+                summary: "",
+                pr: 0
             },
             ruleValidate: {
                 title: [
@@ -233,8 +245,11 @@ export default {
             classidList: [],
             vueAppid: this.$cookieStore.get("CookVueAppid"),
             nowDate: "",
-            upid: 0
-
+            upid: 0,
+            selectedLang: {
+                id: 0,
+                name: "Chinese"
+            },
         }
     },
     watch: {
@@ -246,6 +261,11 @@ export default {
     methods: {
         fetchData () {
             this.newid = this.$route.params.newid ? parseInt(this.$route.params.newid) : 0;
+            // this.formValidate.classid = this.$route.query.classid ? this.$route.query.classid : "0";
+            this.selectedLang = {
+                id: this.$route.query.languageid || 0,
+                name: this.$route.query.languagename || "Chinese"
+            };
             if (this.newid > 0) {
                 this.dataInitial();
             } else {
@@ -274,8 +294,10 @@ export default {
                     body: data.body,
                     face: data.face,
                     face2body: data.face2body == 0 ? false : true,
-                    summary: data.summary
+                    summary: data.summary,
+                    pr: data.pr
                 }
+                console.log(data);
                 this.changeContent(data.body);
                 this.getNewClass();
                 // this.formValidate = res.data.body;
@@ -285,15 +307,15 @@ export default {
             this.$http.request({
                 url: "/api_edit.php?action=news_class_get",
                 params: {
-                    appid: this.vueAppid
+                    appid: this.vueAppid,
+                    language: this.selectedLang.id
                 }
             }).then((res) => {
-                this.classidList = res.data.body;
+                this.classidList = res.data.body || [];
                 this.$nextTick(() => {
-                    this.classidList.length && (this.formValidate.classid = this.formValidate.classid ? this.formValidate.classid : this.classidList[0].id);
+                    this.classidList.length && (this.formValidate.classid = this.$route.query.classid ? String(this.$route.query.classid) : this.classidList[0].id);
                 });
-
-            }).catch(function (response) {
+            }).catch((response) => {
                 _this.$Loading.error()
                 _this.$Notice.error({
                     title: '错误提示',
@@ -354,12 +376,12 @@ export default {
                             body: data.body,
                             face: data.face,
                             face2body: data.face2body ? "1" : "0",
-                            summary: data.summary
-                        }
-
+                            summary: data.summary,
+                            pr: data.pr,
+                            language: this.selectedLang.id
+                        },
                     }
                     console.log(params);
-                    //  _this.$qs.stringify(data)
 
                     this.$http.post(apiurl, params).then(function (response) {
                         if (response.data.status == 1) {

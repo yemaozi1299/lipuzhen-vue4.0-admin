@@ -32,7 +32,7 @@
                         @on-keyup.enter="get(keyword)"
                         clearable
                         class="ant-search-input mg-r-10"
-                        style="width: 200px;"
+                        style="width: 200px"
                     />
                     <Button
                         type="primary"
@@ -87,7 +87,7 @@
         <Modal
             v-model="isEdit"
             title="管理员设置"
-            @on-ok="addAdmin"
+            @on-ok="isEdit = false"
             @on-cancel=""
             width="1000"
         >
@@ -121,7 +121,7 @@
                             @on-keyup.enter="getAdmin(keyword)"
                             clearable
                             class="ant-search-input mg-r-10"
-                            style="width: 200px;"
+                            style="width: 200px"
                         />
                         <Button
                             type="primary"
@@ -200,10 +200,10 @@
             @on-ok="enterUpgrade"
         >
             <div>
-                <span style="width: 80px; display: inline-block;"
+                <span style="width: 80px; display: inline-block"
                     >代理商等级:</span
                 >
-                <Select v-model="agentEdit.value" style="width: 200px;">
+                <Select v-model="agentEdit.value" style="width: 200px">
                     <Option
                         v-for="item in agentEdit.body"
                         :value="item.code"
@@ -212,33 +212,33 @@
                     >
                 </Select>
             </div>
-            <div style="margin-top: 20px;">
-                <span style="width: 80px; display: inline-block;">地区:</span>
+            <div style="margin-top: 20px">
+                <span style="width: 80px; display: inline-block">地区:</span>
                 <Input
                     type="text"
                     v-model="agentEdit.area"
-                    style="width: 200px;"
+                    style="width: 200px"
                 />
             </div>
-            <div style="margin-top: 20px;">
-                <span style="width: 80px; display: inline-block;"
+            <div style="margin-top: 20px">
+                <span style="width: 80px; display: inline-block"
                     >开始时间:</span
                 >
                 <DatePicker
                     type="datetime"
                     placeholder="开始时间"
-                    style="width: 200px;"
+                    style="width: 200px"
                     @on-change="start_time"
                 ></DatePicker>
             </div>
-            <div style="margin-top: 20px;">
-                <span style="width: 80px; display: inline-block;"
+            <div style="margin-top: 20px">
+                <span style="width: 80px; display: inline-block"
                     >结束时间:</span
                 >
                 <DatePicker
                     type="datetime"
                     placeholder="结束时间"
-                    style="width: 200px;"
+                    style="width: 200px"
                     @on-change="end_time"
                 ></DatePicker>
             </div>
@@ -259,14 +259,21 @@
                             @on-keyup.enter="getSearchAppList"
                             clearable
                             class="ant-search-input mg-r-10"
-                            style="width: 200px;"
+                            style="width: 200px"
                         />
                         <Button
                             type="primary"
                             @click="getSearchAppList"
                             icon="ios-search"
-                            class="ant-search-btn"
+                            class="ant-search-btn mg-r-20"
                         ></Button>
+                        <Checkbox v-model="getAppType.pc">电脑网站</Checkbox>
+                        <Checkbox v-model="getAppType.mobile"
+                            >手机网站</Checkbox
+                        >
+                        <Checkbox v-model="getAppType.mina"
+                            >微信小程序</Checkbox
+                        >
                     </div>
                 </Header>
                 <Content>
@@ -274,39 +281,52 @@
                         class="tpl-container"
                         @scroll="getGroundList"
                         id="enterScrollList"
-                        style="height: calc(100% - 145px);"
+                        style="height: calc(100% - 145px)"
                     >
-                        <Card class="enter-item">
-                            <div
-                                class="cover-null"
-                                v-on:click="selectApp({ id: '' })"
+                        <Row :gutter="24">
+                            <Col :span="6">
+                                <Card class="enter-item">
+                                    <div
+                                        class="cover-null"
+                                        v-on:click="selectApp({ id: '' })"
+                                    >
+                                        <Icon type="md-add" />
+                                    </div>
+                                    <p class="name">空白模板</p>
+                                </Card>
+                            </Col>
+                            <Col :span="6" v-for="item in appList">
+                                <Card class="enter-item" :padding="0">
+                                    <img
+                                        class="cover"
+                                        style="width: 100%; height: auto"
+                                        :src="item.coverUrl"
+                                    />
+                                    <p class="name">{{ item.name }}</p>
+                                    <div class="code-mask">
+                                        <div class="rolename">
+                                            {{ item.rolename }}
+                                        </div>
+                                        <img
+                                            class="logo"
+                                            alt=""
+                                            :src="item.logo"
+                                        />
+                                        <span
+                                            class="select-btn use-btn"
+                                            @click="selectApp(item)"
+                                            >使用</span
+                                        >
+                                        <span
+                                            class="select-btn js-preview-btn"
+                                            @click="previewApp(item)"
+                                            >预览</span
+                                        >
+                                    </div>
+                                </Card></Col
                             >
-                                <Icon type="md-add" />
-                            </div>
-                            <p class="name">空白模板</p>
-                        </Card>
-                        <Card class="enter-item" v-for="item in appList">
-                            <img
-                                class="cover"
-                                style="width: 100%; height: auto;"
-                                :src="item.coverUrl"
-                            />
-                            <p class="name">{{ item.name }}</p>
-                            <div class="code-mask">
-                                <div class="rolename">{{ item.rolename }}</div>
-                                <img class="logo" alt="" :src="item.logo" />
-                                <span
-                                    class="select-btn use-btn"
-                                    @click="selectApp(item)"
-                                    >使用</span
-                                >
-                                <span
-                                    class="select-btn js-preview-btn"
-                                    @click="previewApp(item)"
-                                    >预览</span
-                                >
-                            </div>
-                        </Card>
+                        </Row>
+
                         <div class="list-no-more">没有更多数据了</div>
                     </div>
                 </Content>
@@ -321,16 +341,26 @@
                 <FormItem label="应用名称：" prop="">
                     <Input
                         type="text"
-                        style="width: 200px;"
+                        style="width: 200px"
                         v-model="addAppData.name"
                     ></Input>
                 </FormItem>
-                <FormItem label="应用型号：" prop="">
-                    <Select style="width: 200px;" v-model="addAppData.rolecode">
+                <FormItem label="软件类型：" prop="">
+                    <Select style="width: 200px" v-model="selectedSoft">
                         <Option
-                            :value="item.rolecode"
+                            :value="item.id"
+                            v-for="item in softList"
+                            :key="item.id"
+                            >{{ item.softname }}</Option
+                        >
+                    </Select>
+                </FormItem>
+                <FormItem label="软件型号：" prop="">
+                    <Select style="width: 200px" v-model="addAppData.rolecode">
+                        <Option
+                            :value="item.id"
                             v-for="item in pariceList"
-                            :key="item.rolecode"
+                            :key="item.id"
                             >{{ item.rolename }}</Option
                         >
                     </Select>
@@ -349,6 +379,13 @@ export default {
     },
     data: function () {
         return {
+            getAppType: {
+                pc: false,
+                mobile: false,
+                mina: false,
+            },
+            softList: [],
+            selectedSoft: "",
             scrollList: false,
             pageNum: 1,
             total: 1,
@@ -695,11 +732,49 @@ export default {
     created: function () {
         this.get();
         this.getAppList();
-        this.getAgentprice();
-        this.getAgentJibie();
+        this.getSoftList();
+        // this.getAgentJibie();
         // this.addPriseApp();
     },
+    watch: {
+        selectedSoft (val) {
+            this.getAgentprice();
+        },
+        'getAppType.pc' (val) {
+            this.appList = [];
+            this.pageNum = 1;
+            this.getAppList();
+        },
+        'getAppType.mobile' (val) {
+            this.appList = [];
+            this.pageNum = 1;
+            this.getAppList();
+        },
+        'getAppType.mina' (val) {
+            this.appList = [];
+            this.pageNum = 1;
+            this.getAppList();
+        },
+    },
     methods: {
+        getSoftList () {
+            this.$http.request({
+                url: "/api_admin.php?action=soft_listof",
+                params: {
+                    appid: this.vueAppid,
+                }
+            }).then((res) => {
+                this.softList = res.data.body || [];
+                console.log(res.data);
+            }).catch((res) => {
+                console.log(res);
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: '无法访问服务器,请重试'
+                });
+                this.$Loading.error();
+            });
+        },
         getGroundList: function (e) {
             var $this = e.target,
                 viewH = $this.offsetHeight,
@@ -774,7 +849,11 @@ export default {
             var data = {
                 action: 'example_applist',
                 page: this.pageNum,
-                pageno: 30
+                pageno: 30,
+                keyword: this.searchAppList.keyword,
+                pc: this.getAppType.pc ? 1 : 0,
+                mobile: this.getAppType.mobile ? 1 : 0,
+                mina: this.getAppType.mina ? 1 : 0,
             };
 
             this.$Loading.start();
@@ -801,45 +880,13 @@ export default {
                 _this.$Loading.error();
             });
         },
-        cancelSearch: function () {
-            this.pageNum = 1;
-            this.searchAppList.keyword = '';
-            this.getSearchAppList();
-        },
-        getSearchAppList: function () {
-            var _this = this;
-            var data = {
-                action: 'example_applist',
-                page: 1,
-                pageno: 30,
-                keyword: this.searchAppList.keyword
-            };
+
+        getSearchAppList () {
             this.appList = [];
-            this.scrollList = true;
-            this.searchAppList.keyword ? this.searchAppList.search = true : this.searchAppList.search = false;
-            this.$Loading.start();
-            _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
-                // if(response.data.body == null || response.data.body.length < 30){
-                // 	document.getElementById('scrollList').classList.add("js-on-more");
-                // }else{
-                // 	document.getElementById('scrollList') && document.getElementById('scrollList').classList.remove("js-on-more");
-                // }
-                if (response.data.status == 1) {
-                    _this.appList = response.data.body;
-                    _this.total = response.data.total;
-                } else {
-                    _this.$Message.info(response.data.message);
-                }
-                _this.scrollList = false;
-                _this.$Loading.finish();
-            }).catch(function (response) {
-                console.log(response);
-                _this.$Notice.error({
-                    title: '错误提示',
-                    desc: '无法访问服务器,请重试'
-                });
-                _this.$Loading.error();
-            });
+            this.pageNum = 1;
+            this.getAppList();
+
+
         },
         addPriseApp: function () {
             var _this = this;
@@ -847,7 +894,7 @@ export default {
                 action: 'app_add',
                 user: this.addAppData.user,
                 app_name: this.addAppData.name,
-                rolecode: this.addAppData.rolecode,
+                roleID: this.addAppData.rolecode,
                 example_appid: this.addAppData.example_appid
             };
             this.$Loading.start();
@@ -939,15 +986,13 @@ export default {
             var data = {
                 action: 'role_listof',
                 appid: this.vueAppid,
+                softID: this.selectedSoft
             };
-            this.$Loading.start();
-            _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
-                if (response.data.status == 1) {
-                    _this.pariceList = response.data.body || [];
-                }
-                _this.$Loading.finish();
-            }).catch(function (response) {
-                console.log(response);
+            _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (res) {
+                _this.pariceList = res.data.body || [];
+                console.log(_this.pariceList);
+            }).catch(function (res) {
+                console.log(res);
                 _this.$Notice.error({
                     title: '错误提示',
                     desc: '无法访问服务器,请重试'
@@ -980,27 +1025,7 @@ export default {
                 _this.$Loading.error();
             });
         },
-        addAdmin: function () {
-            var _this = this;
-            var data = {
-                action: 'role_listof',
-                appid: this.vueAppid,
-            };
-            this.$Loading.start();
-            _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
-                if (response.data.status == 1) {
-                    _this.pariceList = response.data.body;
-                }
-                _this.$Loading.finish();
-            }).catch(function (response) {
-                console.log(response);
-                _this.$Notice.error({
-                    title: '错误提示',
-                    desc: '无法访问服务器,请重试'
-                });
-                _this.$Loading.error();
-            });
-        },
+
         addManager: function (name) {
             var _this = this;
             var params = this.editAdmin;
@@ -1099,7 +1124,7 @@ export default {
                         this.editAdmin.loading = true;
                     });
                 }
-            })
+            });
         },
         enterUpgrade: function () {
             var _this = this;
@@ -1214,7 +1239,7 @@ export default {
 #enterScrollList {
     .enter-item {
         position: relative;
-        width: 185px;
+        width: 100%;
         height: 294px;
         margin: 0px 14px 20px 14px;
         .cover-null {

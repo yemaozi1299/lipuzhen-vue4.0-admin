@@ -25,7 +25,7 @@
                         @on-keyup.enter="get(keyword)"
                         clearable
                         class="ant-search-input mg-r-10"
-                        style="width: 200px;"
+                        style="width: 200px"
                     />
                     <Button
                         type="primary"
@@ -38,34 +38,34 @@
         </tables>
         <Modal v-model="isModal" title="续费" @on-ok="appPrice" @on-cancel="">
             <label
-                style="display: block; margin-bottom: 10px;"
+                style="display: block; margin-bottom: 10px"
                 class="label-price"
             >
                 <span class="label-span">版本</span>
                 <span>{{ addAppData.rolename }}</span>
             </label>
             <label
-                style="display: block; margin-bottom: 10px;"
+                style="display: block; margin-bottom: 10px"
                 class="label-price"
             >
                 <span class="label-span">开始时间</span>
                 <span>{{ addAppData.starttime }}</span>
             </label>
             <label
-                style="display: block; margin-bottom: 10px;"
+                style="display: block; margin-bottom: 10px"
                 class="label-price"
             >
                 <span class="label-span">结束时间</span>
                 <span>{{ addAppData.endtime }}</span>
             </label>
             <label
-                style="display: block; margin-bottom: 10px;"
+                style="display: block; margin-bottom: 10px"
                 class="label-price"
             >
                 <span class="label-span">续费</span>
                 <Input
                     type="text"
-                    style="width: 50px;"
+                    style="width: 50px"
                     v-model="addAppData.year"
                 ></Input>
                 <span>年</span>
@@ -78,15 +78,15 @@
             @on-ok="editPriseApp"
             @on-cancel=""
         >
-            <label style="display: block; margin-bottom: 10px;">
+            <label style="display: block; margin-bottom: 10px">
                 <span>应用名称：</span>
                 <Input
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="editAppData.name"
                 ></Input>
             </label>
-            <label style="display: block; margin-bottom: 10px;">
+            <label style="display: block; margin-bottom: 10px">
                 <span>到期时间：</span>
                 <label for=""
                     ><Checkbox v-model="editAppData.single"
@@ -105,18 +105,29 @@
                     ></DatePicker
                     ><TimePicker
                         type="time"
-                        style="width: 170px; display: inline-block;"
+                        style="width: 170px; display: inline-block"
                         v-model="editAppData.time"
                     ></TimePicker
                 ></label>
             </label>
-            <label style="display: block;">
-                <span>应用型号：</span>
-                <Select style="width: 200px;" v-model="editAppData.rolecode">
+            <label style="display: block; margin-bottom: 10px">
+                <span>软件类型：</span>
+                <Select style="width: 200px" v-model="selectedSoft">
                     <Option
-                        :value="item.rolecode"
+                        :value="item.id"
+                        v-for="item in softList"
+                        :key="item.id"
+                        >{{ item.softname }}</Option
+                    >
+                </Select>
+            </label>
+            <label style="display: block">
+                <span>软件型号：</span>
+                <Select style="width: 200px" v-model="editAppData.rolecode">
+                    <Option
+                        :value="item.id"
                         v-for="item in pariceList"
-                        :key="item.rolecode"
+                        :key="item.id"
                         >{{ item.rolename }}</Option
                     >
                 </Select>
@@ -174,6 +185,8 @@ export default {
     },
     data: function () {
         return {
+            softList: [],
+            selectedSoft: "",
             isUpload: false,
             options: {
                 mode: "single",
@@ -286,6 +299,29 @@ export default {
                         key: 'companyname',
                     },
                     {
+                        title: '试用',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: (params.row.status == 1 ? 'success' : 'error'),
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        color: '#fff',
+                                    },
+                                    on: {
+                                        click: () => {
+                                            console.log("=============================");
+                                        }
+                                    }
+                                }, params.row.status == 0 ? '试用' : (params.row.status == 1 ? '正常' : '待审核'))
+                            ]);
+                        },
+                        width: '90px'
+
+                    },
+                    {
                         title: '状态',
                         render: (h, params) => {
                             return h('div', [
@@ -372,10 +408,22 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                            this.example_data.isModal = true;
-                                            this.example_data.fromappid = params.row.id;
-                                            this.example_data.name = params.row.name;
+                                            console.log(params.row);
+                                            // this.example_data.isModal = true;
+                                            // this.example_data.fromappid = params.row.id;
+                                            // this.example_data.name = params.row.name;
                                             // this.example_data.logo = params.row.logo;
+                                            this.$router.push({
+                                                name: "example_appadd",
+                                                params: {
+                                                    page: 1,
+                                                },
+                                                query: {
+                                                    fromappid: params.row.id,
+                                                    name: params.row.name,
+                                                    appid: params.row.id
+                                                }
+                                            });
                                         }
                                     }
                                 }, '设为样板'),
@@ -413,9 +461,32 @@ export default {
     },
     created: function () {
         this.get();
-        this.getAgentprice();
+        this.getSoftList();
+    },
+    watch: {
+        selectedSoft (val) {
+            this.getAgentprice();
+        }
     },
     methods: {
+        getSoftList () {
+            this.$http.request({
+                url: "/api_admin.php?action=soft_listof",
+                params: {
+                    appid: this.vueAppid,
+                }
+            }).then((res) => {
+                this.softList = res.data.body || [];
+                console.log(res.data);
+            }).catch((res) => {
+                console.log(res);
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: '无法访问服务器,请重试'
+                });
+                this.$Loading.error();
+            });
+        },
         uploadListFun: function (files) {
             this.isUpload = false;
             this.example_data.cover = files.url;
@@ -525,7 +596,7 @@ export default {
                 appid: this.editAppData.appid,
                 appname: this.editAppData.name,
                 endtime: this.editAppData.single ? '0' : date,
-                rolecode: this.editAppData.rolecode
+                roleID: this.editAppData.rolecode
             };
             console.log(data);
             this.$Loading.start();
@@ -550,7 +621,8 @@ export default {
         getAgentprice: function () {
             var _this = this;
             var data = {
-                action: 'role_listof'
+                action: 'role_listof',
+                softID: this.selectedSoft
             };
             this.$Loading.start();
             _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {

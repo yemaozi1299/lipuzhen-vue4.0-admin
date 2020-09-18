@@ -46,7 +46,11 @@
                 >
                     <template slot="header">
                         <div class="search-area">
-                            <Button type="primary" class="ant-btn mg-r-20">
+                            <Button
+                                type="primary"
+                                class="ant-btn mg-r-20"
+                                @click="softData.isModal = true"
+                            >
                                 <Icon type="md-add" />添加应用
                             </Button>
                         </div>
@@ -54,14 +58,37 @@
                 </tables>
             </Card>
         </Content>
+        <Modal
+            v-model="softData.isModal"
+            title="设为样板"
+            @on-ok="addSoft"
+            @on-cancel=""
+            :loading="softData.loading"
+        >
+            <Form label-position="left" :label-width="100">
+                <FormItem label="应用名称：">
+                    <Input type="text" v-model="softData.name"></Input>
+                </FormItem>
+                <FormItem label="softID">
+                    <Select
+                        v-model="softData.softID"
+                        placeholder="选择软件类型"
+                    >
+                        <Option v-for="item in softList" :value="item.id">{{
+                            item.softname
+                        }}</Option>
+                    </Select>
+                </FormItem>
+            </Form>
+        </Modal>
     </Layout>
 </template>
-
 <script>
 import welcome_logo from '@/assets/images/welcome_logo.png'
 import applogo from '@/assets/images/welcome/applogo.png'
 import Tables from '@/components/tables'
 import Buttons from '@/components/buttons'
+import Cookies from 'js-cookie';
 export default {
     components: {
         Tables,
@@ -69,6 +96,13 @@ export default {
     },
     data () {
         return {
+            softData: {
+                name: "",
+                isModal: false,
+                softID: 0,
+                loading: true
+            },
+            softList: [],
             loading: false,
             welcome_logo,
             applogo,
@@ -197,7 +231,8 @@ export default {
                             return h('div', [
                                 h('Button', {
                                     props: {
-                                        type: 'success'
+                                        type: 'success',
+                                        disabled: params.row.overdue == 1 ? true : false
                                     },
                                     style: {
                                         margin: '5px'
@@ -219,9 +254,22 @@ export default {
     created: function () {
         window.document.title = '欢迎使用';
         this.getAppList();
+        this.getSoftList();
         this.isAgentorAdmin();
     },
     methods: {
+        getSoftList () {
+            this.$http.request({
+                method: "POST",
+                url: "/api_home.php?action=soft_listof",
+                params: {
+
+                }
+            }).then((res) => {
+                this.softList = res.data.body || [];
+                console.log(res.data);
+            });
+        },
         loadingOut () {
             var _this = this;
             _this.$Modal.confirm({
@@ -281,6 +329,7 @@ export default {
                     _this.$Loading.error();
                 });
         },
+
         getAppList: function (page) {
             var _this = this;
             var data = {
@@ -319,6 +368,8 @@ export default {
                 });
         },
         routerPage (params) {
+            Cookies.set("CookVueAppid", params.id);
+            Cookies.set("CookRolecode", params.rolename);
             this.$router.push({
                 name: "home"
             });
@@ -335,6 +386,32 @@ export default {
             this.app_id = params.row.id;
             console.log(params.row);
         },
+        addSoft () {
+            if (this.softData.softID == 0) {
+                this.softData.loading = false;
+                this.$nextTick(() => {
+                    this.softData.loading = true;
+                });
+                return this.$Message.warning("请选择软件类型");
+            }
+            this.$http.request({
+                method: "POST",
+                url: "/api_home.php?action=wxapp_add",
+                params: {
+                    appname: this.softData.name,
+                    softID: this.softData.softID
+                }
+            }).then((res) => {
+                this.softData = {
+                    name: "",
+                    isModal: false,
+                    softID: 0,
+                    loading: true
+                }
+                this.getAppList();
+                console.log(res.data);
+            });
+        }
     }
 }
 </script>

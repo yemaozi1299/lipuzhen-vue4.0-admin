@@ -51,14 +51,14 @@
                         <Icon
                             class="ant-icon"
                             type="md-settings"
-                            style="left: 0px;"
+                            style="left: 0px"
                             v-on:click.stop="handleEdit(item)"
                         />
                         <span>{{ item.groupname }}</span>
                         <Icon
                             class="ant-icon"
                             type="ios-close-circle-outline"
-                            style="right: 0px;"
+                            style="right: 0px"
                             v-on:click.stop="delGroundState(item)"
                         />
                     </MenuItem>
@@ -78,7 +78,7 @@
                         type="flex"
                         justify="center"
                         align="middle"
-                        style="margin: 10px 5px 0 5px;"
+                        style="margin: 10px 5px 0 5px"
                     >
                         <Col span="8">分类名称:</Col>
                         <Col span="16">
@@ -92,7 +92,7 @@
                         type="flex"
                         justify="center"
                         align="middle"
-                        style="margin: 10px; text-align: center;"
+                        style="margin: 10px; text-align: center"
                     >
                         <Col span="12">
                             <Button type="primary" @click="addClassConfirm"
@@ -112,14 +112,67 @@
                     @on-change="handleSelectAll"
                 >
                     <span class="mg-l-10">已选</span
-                    ><span style="color:#3091F2">{{ chooseID.length }}</span
-                    ><span> / {{ tableData.length }} 条留言</span>
+                    ><span style="color: #3091f2">{{ chooseID.length }}</span
+                    ><span> / {{ tableData.length }} 个商品</span>
                 </Checkbox>
                 <Button
                     class="table-btn mg-r-20"
                     :disabled="chooseID.length == 0"
-                    @click="delJob(chooseID)"
+                    @click="goodsedit('show')"
+                    >显示</Button
+                >
+                <Button
+                    class="table-btn mg-r-20"
+                    :disabled="chooseID.length == 0"
+                    @click="goodsedit('hide')"
+                    >隐藏</Button
+                >
+                <Button
+                    class="table-btn mg-r-20"
+                    :disabled="chooseID.length == 0"
+                    @click="goodsedit('delete')"
                     >删除</Button
+                >
+                <Dropdown
+                    trigger="click"
+                    placement="top"
+                    class="mg-r-20"
+                    @on-click="classmovein"
+                >
+                    <Button
+                        class="table-btn"
+                        :disabled="chooseID.length == 0"
+                        icon="ios-arrow-dropup"
+                        >移入分类</Button
+                    >
+                    <DropdownMenu slot="list">
+                        <template v-for="classitem in classList">
+                            <DropdownItem
+                                :key="classitem.id"
+                                :name="classitem.id"
+                            >
+                                {{ classitem.groupname }}</DropdownItem
+                            >
+                            <template
+                                v-if="classitem.children"
+                                v-for="classitem2 in classitem.children"
+                            >
+                                <DropdownItem
+                                    :key="classitem2.id"
+                                    :name="classitem2.id"
+                                >
+                                    ——
+                                    {{ classitem2.groupname }}</DropdownItem
+                                >
+                            </template>
+                        </template>
+                    </DropdownMenu>
+                </Dropdown>
+                <Button
+                    class="table-btn mg-r-20"
+                    :disabled="chooseID.length == 0"
+                    @click="classmoveout"
+                    >移出分类</Button
                 >
             </template>
         </tables>
@@ -371,7 +424,145 @@ export default {
         },
         addClassCancel () {
             this.showClass = false
-        }
+        },
+
+
+
+
+
+
+        goodsedit (name) {
+            if (this.chooseID.length == 0) {
+                this.$Message.warning('请选择要操作的记录')
+                return false
+            }
+            const title = '提醒';
+            var mode = "";
+            switch (name) {
+                case 'delete':
+                    var content = '确定对所选招聘进行：删除'
+                    var action = 'job_del'
+                    break
+                case 'show':
+                    var content = '确定对所选招聘进行：显示'
+                    var action = 'job_updown'
+                    mode = 0;
+                    break
+                case 'hide':
+                    var content = '确定对所选招聘进行：隐藏'
+                    var action = 'job_updown'
+                    mode = 1;
+                    break
+            }
+            this.$Modal.confirm({
+                title: title,
+                content: content,
+                onOk: () => {
+                    this.choose2edit(action, mode)
+                }
+            });
+        },
+        choose2edit: function (action, mode) { // 将要进行的操作提交到服务器API
+            // console.log(name+'='+this.chooseID);
+            if (this.chooseID.length > 0) {
+                var apiurl = '/api_edit.php';
+                var data = {
+                    appid: this.vueAppid,
+                    items: this.chooseID,
+                    delid: this.chooseID,
+                    action: action,
+                    mode: mode
+                }
+                console.log(data);
+
+                var _this = this
+                _this.$http.post(apiurl, data).then(function (response) {
+                    if (response.data.status == 1) {
+                        _this.dataInitial()
+                    } else {
+                        _this.$Message.error(response.data.message)
+                    }
+                })
+            } else {
+                _this.$Message.info('请选择要操作的记录')
+                return false
+            }
+        },
+        classmovein: function (classid) { // 移入分类
+            var _this = this
+
+            if (_this.chooseID.length == 0) {
+                _this.$Message.warning('请选择要操作的记录')
+                return false
+            }
+
+            var apiurl = '/api_edit.php'
+            var data = {
+                appid: this.vueAppid
+            }
+
+            data.action = 'job_move_class'
+            data.items = this.chooseID
+            data.classid = classid
+            _this.$http.post(apiurl, _this.$qs.stringify(data)).then(function (response) {
+                _this.doing = 0
+                if (response.data.status == 1) {
+                    _this.$Message.info('操作成功')
+                    _this.dataInitial()
+                } else {
+                    _this.$Message.error(response.data.message)
+                }
+            }).catch(function (response) {
+                _this.$Notice.error({
+                    title: '错误提示',
+                    desc: '无法访问服务器,请重试'
+                })
+            })
+        },
+
+        classmoveout: function () { // 移出分类
+            var _this = this
+
+            if (_this.chooseID.length == 0) {
+                _this.$Message.warning('请选择要操作的记录')
+                return false
+            }
+            var apiurl = '/api_edit.php'
+            var data = {
+                appid: this.vueAppid
+            }
+            data.action = 'job_move_class'
+            data.items = this.chooseID
+            data.classid = 0
+            _this.$Loading.start()
+            _this.$http.post(apiurl, _this.$qs.stringify(data)).then(function (response) {
+                if (response.data.status == 1) {
+                    _this.$Message.info('操作成功')
+                    _this.dataInitial()
+                } else {
+                    _this.$Message.error(response.data.message)
+                }
+            }).catch(function (response) {
+                _this.$Notice.error({
+                    title: '错误提示',
+                    desc: '无法访问服务器,请重试'
+                })
+            })
+        },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
 </script>

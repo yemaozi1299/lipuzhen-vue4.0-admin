@@ -1,7 +1,10 @@
 <template>
     <div
         id="file-explorer"
-        data-url="/api_edit.php?action=filemanager_list"
+        :data-url="
+            (this.options.php ? this.options.php : '/api_edit.php') +
+            '?action=filemanager_list'
+        "
         :class="options.mode"
     >
         <div class="file-panel" data-count="25/58">
@@ -375,16 +378,16 @@ export default {
             }],
             vueFileList: [],
             floderList: [],
-            baseURL: "/api_edit.php?action=filemanager_list",
-            explorerURL: "/api_edit.php?action=filemanager_list",
-            deleteURL: "/api_edit.php?action=filemanager_del",
-            renameURL: "/api_edit.php?action=filemanager_memo",
-            mkdirURL: "/api_edit.php?action=filemanager_classedit",
-            deleteMkdirURL: "/api_edit.php?action=filemanager_classdel",
-            getFolder: "/api_edit.php?action=filemanager_classlist",
-            moveURL: "/api_edit.php?action=filemanager_move",
+            baseURL: (this.options.php ? this.options.php : '/api_edit.php') + "?action=filemanager_list",
+            explorerURL: (this.options.php ? this.options.php : '/api_edit.php') + "?action=filemanager_list",
+            deleteURL: (this.options.php ? this.options.php : '/api_edit.php') + "?action=filemanager_del",
+            renameURL: (this.options.php ? this.options.php : '/api_edit.php') + "?action=filemanager_memo",
+            mkdirURL: (this.options.php ? this.options.php : '/api_edit.php') + "?action=filemanager_classedit",
+            deleteMkdirURL: (this.options.php ? this.options.php : '/api_edit.php') + "?action=filemanager_classdel",
+            getFolder: (this.options.php ? this.options.php : '/api_edit.php') + "?action=filemanager_classlist",
+            moveURL: (this.options.php ? this.options.php : '/api_edit.php') + "?action=filemanager_move",
             lockURL: "/Admin/FileExplorer/lock",
-            filetypeisok: "/api_edit.php?action=filemanager_filetypeisok",
+            filetypeisok: (this.options.php ? this.options.php : '/api_edit.php') + "?action=filemanager_filetypeisok",
             filetypeisokAll: [],
             filterExt: {
                 all: [".gif", ".jpg", ".png", ".bmp", ".jpeg", ".swf", ".mp3", ".mp4", ".flv", ".webm", ".txt", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".pdf", ".odt", ".csv", ".rar", ".zip", ".xml"],
@@ -416,7 +419,7 @@ export default {
             selectedSeq: 0,
             cutCache: {},
             cutClass: ".file-cut",
-            uploadURL: "/move/api_edit.php?action=filemanager_upload",
+            uploadURL: "/move/" + (this.options.php ? this.options.php : '/api_edit.php') + "?action=filemanager_upload" + "&appid=" + this.options.appid,
             uploadFileSizeLimit: 2048,
             formData: { //{Object} [可选] [默认值：{}] 文件上传请求的参数表，每次发送都会发送此对象中的参数。
                 classid: ""

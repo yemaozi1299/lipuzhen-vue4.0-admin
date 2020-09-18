@@ -464,9 +464,6 @@ export default {
 				},
 				]
 			},
-
-
-
 		]
 	},
 
@@ -781,21 +778,18 @@ export default {
 					notCache: true,
 					icon: 'md-home'
 				},
-				redirect: '/wxxcx/sharezip',
 				component: () => import('@/views/setPage/wxxcx.vue'),
-				children: [
-					{
-						path: '/wxxcx/sharezip',
-						name: 'sharezip',
-						meta: {
-							title: '打包发布',
-							notCache: true,
-							icon: 'md-home'
-						},
-						component: () => import('@/views/setPage/components/sharezip.vue')
-					},
-				]
 			},
+			{
+				path: '/sharezip',
+				name: 'sharezip',
+				meta: {
+					title: '打包发布',
+					notCache: true,
+					icon: 'md-home'
+				},
+				component: () => import('@/views/setPage/components/sharezip.vue')
+			}
 
 		]
 	},
@@ -961,10 +955,13 @@ export default {
 						title: '企业管理',
 						icon: 'md-home'
 					},
-					component: () => import('@/views/admin-component/enterprise.vue')
+					component: () => import('@/views/admin-component/admin_user.vue')
 				},
+
 			]
 		},
+
+
 
 		{
 			path: '/admin_apps',
@@ -978,7 +975,7 @@ export default {
 						title: '应用管理',
 						icon: 'md-home'
 					},
-					component: () => import('@/views/admin-component/admin_app_computer.vue')
+					component: () => import('@/views/admin-component/admin_apps.vue')
 				},
 				{
 					path: ':page/:user',
@@ -988,7 +985,17 @@ export default {
 						icon: 'md-home',
 						hideInMenu: true
 					},
-					component: () => import('@/views/admin-component/admin_app_computer.vue')
+					component: () => import('@/views/admin-component/admin_apps.vue')
+				},
+				{
+					path: ':page/admin_apps/example_appadd/',
+					name: 'example_appadd',
+					meta: {
+						title: '添加应用样板',
+						icon: 'md-home',
+						hideInMenu: true
+					},
+					component: () => import('@/views/admin-component/example_appadd.vue')
 				},
 			]
 		},
@@ -1122,6 +1129,33 @@ export default {
 					},
 					component: () => import('@/views/admin-component/admin_soft/admin_role.vue')
 				}
+			]
+		},
+
+		{
+			path: '/admin_block_template',
+			name: 'blockTemplate',
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'block_template',
+					meta: {
+						title: '模块样式管理',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/block_template/block_list.vue')
+				},
+				{
+					path: '/admin_block_template/template_list/:blockname/:pageid',
+					name: 'block_template_list',
+					meta: {
+						title: '模块样式列表',
+						icon: 'md-home',
+						hideInMenu: true
+					},
+					component: () => import('@/views/admin-component/block_template/template_list.vue')
+				},
 			]
 		},
 	]
