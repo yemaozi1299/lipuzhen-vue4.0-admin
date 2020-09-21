@@ -13,13 +13,13 @@
             <span class="field-item-label">设置减价：</span>
             <div class="field-item-panel">
                 <RadioGroup v-model="header">
-                    <Radio label="0" style="margin-right:15px;" disabled>
+                    <Radio label="0" style="margin-right: 15px" disabled>
                         <span>团长无优惠</span>
                     </Radio>
-                    <Radio label="1" style="margin-right:15px;" disabled>
+                    <Radio label="1" style="margin-right: 15px" disabled>
                         <span>团长优惠</span>
                     </Radio>
-                    <Radio label="2" style="margin-right:15px;" disabled>
+                    <Radio label="2" style="margin-right: 15px" disabled>
                         <span>团长免单</span>
                     </Radio>
                 </RadioGroup>
@@ -44,7 +44,7 @@
                     ></Table>
                 </div>
             </div>
-            <div style="margin-top:100px;margin-left: 125px;">
+            <div style="margin-top: 100px; margin-left: 125px">
                 <Button @click="$router.go(-1)">返回</Button>
             </div>
         </div>
@@ -213,7 +213,7 @@ export default {
                 _this.$Loading.error();
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.loading = false;
             });

@@ -13,55 +13,55 @@
                 >
                     <Form-item
                         label="储值项目名称："
-                        style="margin-top:10px"
+                        style="margin-top: 10px"
                         prop="title"
                     >
                         <Input
                             type="text"
                             v-model="formValidate.title"
                             size="small"
-                            style="width:200px"
+                            style="width: 200px"
                             disabled
                         ></Input>
                     </Form-item>
                     <Form-item
                         label="储值金额："
-                        style="margin-top:10px"
+                        style="margin-top: 10px"
                         prop="price"
                     >
                         <Input
                             type="text"
                             v-model="formValidate.price"
                             size="small"
-                            style="width:200px"
+                            style="width: 200px"
                             disabled
                         ></Input>
                         元
                     </Form-item>
                     <Form-item
                         label="赠送金额："
-                        style="margin-top:10px"
+                        style="margin-top: 10px"
                         prop="g_price"
                     >
                         <Input
                             type="text"
                             v-model="formValidate.g_price"
                             size="small"
-                            style="width:200px"
+                            style="width: 200px"
                             disabled
                         ></Input>
                         元
                     </Form-item>
                     <Form-item
                         label="储值说明："
-                        style="margin-top:10px"
+                        style="margin-top: 10px"
                         prop="description"
                     >
                         <Input
                             type="textarea"
                             v-model="formValidate.description"
                             size="small"
-                            style="width:200px"
+                            style="width: 200px"
                         ></Input>
                     </Form-item>
                 </Form>
@@ -70,7 +70,7 @@
                 <Button
                     type="primary"
                     @click="handleSubmit('formValidate')"
-                    style="margin-right:10px"
+                    style="margin-right: 10px"
                     >提交</Button
                 >
                 <Button @click="$router.go(-1)">取消</Button>
@@ -149,7 +149,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });
@@ -184,7 +184,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });

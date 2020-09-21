@@ -55,7 +55,7 @@ class HttpRequest {
 			LoadingBar.error();
 			Notice.error({
 				title: '错误提示',
-				desc: '无法访问服务器,请重试'
+				desc: response
 			});
 			return Promise.reject(error)
 		})
@@ -68,8 +68,7 @@ class HttpRequest {
 				return { data, status }
 			} else {
 				console.log(data, url, res.config, status);
-				var message = typeof data == "Object" ? data.message : data;
-
+				var message = typeof data == "object" ? data.message : data;
 				return Promise.reject(message)
 			}
 		}, error => {
@@ -77,7 +76,7 @@ class HttpRequest {
 			LoadingBar.error();
 			Notice.error({
 				title: '错误提示',
-				desc: '无法访问服务器,请重试'
+				desc: '无法连接数据库，请重试'
 			});
 			this.destroy(url)
 			let errorInfo = error.response

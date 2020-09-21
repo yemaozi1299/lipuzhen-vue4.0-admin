@@ -6,7 +6,7 @@
                 :lg="8"
                 v-for="(infor, i) in inforCardData"
                 :key="`infor-${i}`"
-                style="height: 120px; padding-bottom: 10px;"
+                style="height: 120px; padding-bottom: 10px"
             >
                 <infor-card
                     shadow
@@ -42,7 +42,7 @@
                 :lg="4"
                 v-for="(infor, i) in numCardData"
                 :key="`infor-${i}-1`"
-                style="height: 120px; padding-bottom: 10px;"
+                style="height: 120px; padding-bottom: 10px"
             >
                 <infor-card
                     shadow
@@ -163,7 +163,7 @@ export default {
                 _this.$Loading.error();
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.loading = false;
             });

@@ -16,7 +16,7 @@
                     <div
                         :class="{
                             'goods-info-multi': data.guigehave == 1,
-                            'goods-info': true
+                            'goods-info': true,
                         }"
                     >
                         <p>秒杀商品信息</p>
@@ -48,7 +48,12 @@
                                 </div>
                                 <router-link :to="{ path: '/seckill/add' }"
                                     ><Button
-                                        style="border-color: #3091f2;color: #3091f2;border-radius: 0;line-height: 1.15;"
+                                        style="
+                                            border-color: #3091f2;
+                                            color: #3091f2;
+                                            border-radius: 0;
+                                            line-height: 1.15;
+                                        "
                                         >更换商品</Button
                                     ></router-link
                                 >
@@ -150,7 +155,7 @@
                         <div class="button-group">
                             <Button
                                 type="primary"
-                                style="margin-right:10px"
+                                style="margin-right: 10px"
                                 @click="handleSubmit"
                                 >提交</Button
                             >
@@ -392,7 +397,7 @@ export default {
                 catch(function (response) {
                     that.$Notice.error({
                         title: '错误提示3',
-                        desc: '无法访问服务器,请重试'
+                        desc: response
                     });
                     that.$Loading.error();
                     console.log(response);
@@ -464,7 +469,7 @@ export default {
             }).catch(function (response) {
                 that.$Notice.error({
                     title: '错误提示3',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 that.$Loading.error();
             });
@@ -600,7 +605,7 @@ export default {
                 that.$Loading.error();
                 that.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
             });
         },

@@ -1,5 +1,5 @@
 <template>
-    <Card style="position: relative;">
+    <Card style="position: relative">
         <div>
             <router-link :to="'/shoppost/1/edit'">
                 <Button type="primary" icon="md-add" @click="" class="mg-r-20"
@@ -16,7 +16,7 @@
                         v-model="keyword"
                         placeholder="请输入..."
                         class="mg-r-10"
-                        style="width: 200px;"
+                        style="width: 200px"
                         @keyup.enter="get(keyword)"
                     ></Input>
                     <Button
@@ -38,7 +38,7 @@
         >
             配送方式
             <div
-                style="display: inline; font-size: 14px; font-weight: normal;"
+                style="display: inline; font-size: 14px; font-weight: normal"
                 v-if="search"
             >
                 搜索:{{ keyword }}
@@ -55,7 +55,7 @@
         <div class="itembox" v-for="(item, index) in items" :key="">
             <div class="itembox_header">
                 {{ item.name }}
-                <div style="float: right;">
+                <div style="float: right">
                     <router-link :to="'/shoppost/1/edit/' + item.id"
                         ><Button
                             size="small"
@@ -81,9 +81,7 @@
                     align="top"
                     class="code-row-bg3"
                 >
-                    <Col span="12">
-                        可配送区域
-                    </Col>
+                    <Col span="12"> 可配送区域 </Col>
                     <Col span="3">
                         <div>
                             {{
@@ -195,7 +193,7 @@ export default {
                     _this.$Notice.error({
                         title: '错误提示',
                         duration: 0,
-                        desc: '无法访问服务器,请重试'
+                        desc: response
                     });
                 });
 
@@ -229,7 +227,7 @@ export default {
                     }).catch(function (response) {
                         _this.$Notice.error({
                             title: '错误提示',
-                            desc: '无法访问服务器,请重试'
+                            desc: response
                         });
                         _this.$Loading.error();
                     });

@@ -30,7 +30,8 @@
                     <label
                         class="ant-radio-button-wrapper"
                         :class="{
-                            'ant-radio-button-wrapper-checked': activeClass == 0
+                            'ant-radio-button-wrapper-checked':
+                                activeClass == 0,
                         }"
                         v-on:click="classStateEdit(0)"
                     >
@@ -42,7 +43,7 @@
                         :key="index"
                         :class="{
                             'ant-radio-button-wrapper-checked':
-                                activeClass == item.id
+                                activeClass == item.id,
                         }"
                         v-on:click="classStateEdit(item.id)"
                     >
@@ -178,7 +179,7 @@ export default {
             }).catch(function (response) {
                 that.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 that.$Loading.error();
             });
@@ -222,7 +223,7 @@ export default {
             }).catch(function (response) {
                 that.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 that.$Loading.error();
             });
@@ -244,7 +245,7 @@ export default {
             }).catch(function (response) {
                 that.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 that.$Loading.error();
             });

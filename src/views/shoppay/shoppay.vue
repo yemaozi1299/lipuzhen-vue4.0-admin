@@ -1,8 +1,6 @@
 <template>
     <Card>
-        <p slot="title">
-            支付方式
-        </p>
+        <p slot="title">支付方式</p>
         <Form
             ref="formValidate"
             :model="formValidate"
@@ -47,7 +45,7 @@
         </Form-item> -->
         </Form>
 
-        <div align="center" style="margin-top: 10px;">
+        <div align="center" style="margin-top: 10px">
             <Button type="primary" @click="handleSubmit('formValidate')"
                 >提交</Button
             >
@@ -121,7 +119,7 @@ export default {
                     this.$Notice.error({
                         title: '错误提示',
                         duration: 0,
-                        desc: '无法访问服务器,请重试'
+                        desc: response
                     });
                 });
         },
@@ -165,7 +163,7 @@ export default {
                     }).catch(function (response) {
                         _this.$Notice.error({
                             title: '错误提示',
-                            desc: '无法访问服务器,请重试'
+                            desc: response
                         });
                     });
 

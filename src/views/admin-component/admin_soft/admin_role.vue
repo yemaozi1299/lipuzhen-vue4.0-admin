@@ -56,7 +56,7 @@
                             border
                             :label="item.p_code"
                             v-for="item in codeList"
-                            style="margin-bottom: 10px;"
+                            style="margin-bottom: 10px"
                             >{{ item.p_name }}</Checkbox
                         >
                     </CheckboxGroup>
@@ -98,7 +98,7 @@
                             border
                             :label="item.p_code"
                             v-for="item in codeList"
-                            style="margin-bottom: 10px;"
+                            style="margin-bottom: 10px"
                             >{{ item.p_name }}</Checkbox
                         >
                     </CheckboxGroup>

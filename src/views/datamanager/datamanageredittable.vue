@@ -6,7 +6,7 @@
             :rules="ruleValidate"
             label-position="top"
         >
-            <div style="margin-bottom: 10px; font-size: 16px;">
+            <div style="margin-bottom: 10px; font-size: 16px">
                 数据表信息编辑
             </div>
 
@@ -23,12 +23,12 @@
 
             <Row>
                 <Col span="7">
-                    <div style="margin-bottom: 10px; font-size: 16px;">
+                    <div style="margin-bottom: 10px; font-size: 16px">
                         字段信息
                     </div>
                 </Col>
                 <Col span="17">
-                    <div style="color: #f30;">
+                    <div style="color: #f30">
                         提示:修改字段英文名会清空此字段的数据,请谨慎操作.
                     </div>
                 </Col>
@@ -124,7 +124,7 @@
                     </Button>
 
                     <!-- <Button @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button> -->
-                    <Button @click="esc" style="margin-left: 8px;">取消</Button>
+                    <Button @click="esc" style="margin-left: 8px">取消</Button>
                 </div>
             </Form-item>
         </Form>
@@ -213,7 +213,7 @@ export default {
                     console.log(response);
                     _this.$Notice.error({
                         title: '错误提示3',
-                        desc: '无法访问服务器,请重试'
+                        desc: response
                     });
                 });
         },
@@ -301,7 +301,7 @@ export default {
                     }).catch(function (response) {
                         _this.$Notice.error({
                             title: '错误提示2',
-                            desc: '无法访问服务器,请重试'
+                            desc: response
                         });
                         _this.loading = false;
                     });

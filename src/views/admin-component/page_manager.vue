@@ -16,7 +16,7 @@
                         <Input
                             v-model="keyword"
                             placeholder="搜索,不支持模糊搜索..."
-                            style="width: 200px;"
+                            style="width: 200px"
                             @keyup.enter="get"
                         ></Input>
                         <Button
@@ -97,7 +97,7 @@ export default {
                 _this.$Loading.error();
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.loading = false;
             });
@@ -125,7 +125,7 @@ export default {
                 _this.$Loading.error();
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.loading = false;
             });

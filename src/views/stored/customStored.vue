@@ -1,8 +1,6 @@
 <template>
     <Card>
-        <p slot="title">
-            自定义储值设置
-        </p>
+        <p slot="title">自定义储值设置</p>
         <div class="stored-content">
             <div class="stored-form">
                 <Form
@@ -13,14 +11,14 @@
                 >
                     <Form-item
                         label="用户自定义储值金："
-                        style="margin-top:10px"
+                        style="margin-top: 10px"
                         prop="stored_name"
                     >
                         <i-switch v-model="formValidate.status"></i-switch>
                     </Form-item>
                     <Form-item
                         label="赠送储值金设置："
-                        style="margin-top:10px"
+                        style="margin-top: 10px"
                         prop="stored_name"
                         v-if="formValidate.status"
                     >
@@ -63,7 +61,7 @@
                 <Button
                     type="primary"
                     @click="handleSubmit('formValidate')"
-                    style="margin-right:10px"
+                    style="margin-right: 10px"
                     >提交</Button
                 >
                 <Button @click="$router.go(-1)">取消</Button>
@@ -154,7 +152,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });
@@ -186,7 +184,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });

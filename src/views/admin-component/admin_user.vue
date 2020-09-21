@@ -108,10 +108,12 @@
             >
                 <template slot="header">
                     <div class="search-area">
+                        <!-- v-on:click="editAdmin.isModal = true" -->
+
                         <Button
                             type="primary"
                             class="ant-btn mg-r-20"
-                            v-on:click="editAdmin.isModal = true"
+                            @click="goeditAdmin"
                         >
                             <Icon type="md-add" />添加
                         </Button>
@@ -247,90 +249,15 @@
         <Modal
             v-model="isModal"
             title="添加应用"
-            width="860"
+            width="1080"
             @on-ok="enterUpgrade"
         >
-            <Layout class="layout-wrapper">
-                <Header class="header-wrapper">
-                    <div class="search-area">
-                        <Input
-                            v-model="searchAppList.keyword"
-                            placeholder="关键字"
-                            @on-keyup.enter="getSearchAppList"
-                            clearable
-                            class="ant-search-input mg-r-10"
-                            style="width: 200px"
-                        />
-                        <Button
-                            type="primary"
-                            @click="getSearchAppList"
-                            icon="ios-search"
-                            class="ant-search-btn mg-r-20"
-                        ></Button>
-                        <Checkbox v-model="getAppType.pc">电脑网站</Checkbox>
-                        <Checkbox v-model="getAppType.mobile"
-                            >手机网站</Checkbox
-                        >
-                        <Checkbox v-model="getAppType.mina"
-                            >微信小程序</Checkbox
-                        >
-                    </div>
-                </Header>
-                <Content>
-                    <div
-                        class="tpl-container"
-                        @scroll="getGroundList"
-                        id="enterScrollList"
-                        style="height: calc(100% - 145px)"
-                    >
-                        <Row :gutter="24">
-                            <Col :span="6">
-                                <Card class="enter-item">
-                                    <div
-                                        class="cover-null"
-                                        v-on:click="selectApp({ id: '' })"
-                                    >
-                                        <Icon type="md-add" />
-                                    </div>
-                                    <p class="name">空白模板</p>
-                                </Card>
-                            </Col>
-                            <Col :span="6" v-for="item in appList">
-                                <Card class="enter-item" :padding="0">
-                                    <img
-                                        class="cover"
-                                        style="width: 100%; height: auto"
-                                        :src="item.coverUrl"
-                                    />
-                                    <p class="name">{{ item.name }}</p>
-                                    <div class="code-mask">
-                                        <div class="rolename">
-                                            {{ item.rolename }}
-                                        </div>
-                                        <img
-                                            class="logo"
-                                            alt=""
-                                            :src="item.logo"
-                                        />
-                                        <span
-                                            class="select-btn use-btn"
-                                            @click="selectApp(item)"
-                                            >使用</span
-                                        >
-                                        <span
-                                            class="select-btn js-preview-btn"
-                                            @click="previewApp(item)"
-                                            >预览</span
-                                        >
-                                    </div>
-                                </Card></Col
-                            >
-                        </Row>
-
-                        <div class="list-no-more">没有更多数据了</div>
-                    </div>
-                </Content>
-            </Layout>
+            <Card dis-hover>
+                <templateList
+                    :isAdd="isAdd"
+                    @successCallback="selectApp"
+                ></templateList>
+            </Card>
         </Modal>
         <Modal
             v-model="addAppData.isModal"
@@ -345,26 +272,41 @@
                         v-model="addAppData.name"
                     ></Input>
                 </FormItem>
-                <FormItem label="软件类型：" prop="">
-                    <Select style="width: 200px" v-model="selectedSoft">
-                        <Option
-                            :value="item.id"
-                            v-for="item in softList"
-                            :key="item.id"
-                            >{{ item.softname }}</Option
+                <template v-if="addAppData.example_appid">
+                    <FormItem label="软件型号：" prop="">
+                        <!-- <Input
+                            disabled
+                            :value="addAppData.rolename"
+                            style="width: 200px"
+                        ></Input> -->
+                        {{ addAppData.rolename }}
+                    </FormItem>
+                </template>
+                <template v-else>
+                    <FormItem label="软件类型：" prop="">
+                        <Select style="width: 200px" v-model="selectedSoft">
+                            <Option
+                                :value="item.id"
+                                v-for="item in softList"
+                                :key="item.id"
+                                >{{ item.softname }}</Option
+                            >
+                        </Select>
+                    </FormItem>
+                    <FormItem label="软件型号：" prop="">
+                        <Select
+                            style="width: 200px"
+                            v-model="addAppData.rolecode"
                         >
-                    </Select>
-                </FormItem>
-                <FormItem label="软件型号：" prop="">
-                    <Select style="width: 200px" v-model="addAppData.rolecode">
-                        <Option
-                            :value="item.id"
-                            v-for="item in pariceList"
-                            :key="item.id"
-                            >{{ item.rolename }}</Option
-                        >
-                    </Select>
-                </FormItem>
+                            <Option
+                                :value="item.id"
+                                v-for="item in pariceList"
+                                :key="item.id"
+                                >{{ item.rolename }}</Option
+                            >
+                        </Select>
+                    </FormItem>
+                </template>
             </Form>
         </Modal>
     </Card>
@@ -372,13 +314,16 @@
 <script type="text/javascript">
 import Tables from '@/components/tables'
 import Buttons from '@/components/buttons'
+import templateList from '@/views/admin-component/components/templateList.vue';
 export default {
     components: {
         Tables,
-        Buttons
+        Buttons,
+        templateList
     },
     data: function () {
         return {
+            isAdd: true,
             getAppType: {
                 pc: false,
                 mobile: false,
@@ -472,9 +417,6 @@ export default {
                                     props: {
                                         type: (params.row.yesno == 1 ? 'success' : 'error'),
                                         size: 'small'
-                                    },
-                                    style: {
-                                        color: "#FFF"
                                     },
                                     on: {
                                         click: () => {
@@ -571,9 +513,9 @@ export default {
                 user: '',
                 name: '',
                 rolecode: '',
-                example_appid: ''
+                example_appid: '',
+                rolename: ""
             },
-
             infoData: {
                 columns: [
                     {
@@ -757,6 +699,9 @@ export default {
         },
     },
     methods: {
+        success (params) {
+            console.log(params);
+        },
         getSoftList () {
             this.$http.request({
                 url: "/api_admin.php?action=soft_listof",
@@ -766,13 +711,11 @@ export default {
             }).then((res) => {
                 this.softList = res.data.body || [];
                 console.log(res.data);
-            }).catch((res) => {
-                console.log(res);
+            }).catch((response) => {
                 this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
-                this.$Loading.error();
             });
         },
         getGroundList: function (e) {
@@ -810,7 +753,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });
@@ -839,7 +782,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });
@@ -875,7 +818,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });
@@ -911,7 +854,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });
@@ -957,7 +900,7 @@ export default {
                         console.log(response);
                         _this.$Notice.error({
                             title: '错误提示',
-                            desc: '无法访问服务器,请重试'
+                            desc: response
                         });
                         _this.$Loading.error();
                     });
@@ -991,13 +934,11 @@ export default {
             _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (res) {
                 _this.pariceList = res.data.body || [];
                 console.log(_this.pariceList);
-            }).catch(function (res) {
-                console.log(res);
+            }).catch(function (response) {
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
-                _this.$Loading.error();
             });
         },
         getAdmin: function (keyword) {
@@ -1020,7 +961,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });
@@ -1065,7 +1006,7 @@ export default {
                         console.log(response);
                         _this.$Notice.error({
                             title: '错误提示',
-                            desc: '无法访问服务器,请重试'
+                            desc: response
                         });
                         _this.$Loading.error();
                     });
@@ -1114,7 +1055,7 @@ export default {
                         console.log(response);
                         _this.$Notice.error({
                             title: '错误提示',
-                            desc: '无法访问服务器,请重试'
+                            desc: response
                         });
                         _this.$Loading.error();
                     });
@@ -1149,7 +1090,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });
@@ -1172,7 +1113,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });
@@ -1184,14 +1125,16 @@ export default {
             this.agentEdit.end_time = val;
         },
         selectApp: function (item) {
+            console.log(item);
+            this.addAppData.isModal = true;
             if (item.id == '') {
-                this.addAppData.isModal = true;
                 this.addAppData.example_appid = '';
                 this.addAppData.name = '我的小程序';
             } else {
                 this.addAppData.example_appid = item.id;
                 this.addAppData.name = item.name;
-                this.addPriseApp();
+                this.addAppData.rolename = item.rolename;
+                // this.addPriseApp();
             }
 
         },
@@ -1211,7 +1154,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });
@@ -1225,6 +1168,14 @@ export default {
                 });
             }
             return obj;
+        },
+        goeditAdmin () {
+            this.$router.push({
+                name: "admin_add",
+                params: {
+                    page: 1
+                }
+            });
         }
     }
 }

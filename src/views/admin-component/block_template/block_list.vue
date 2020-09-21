@@ -53,11 +53,10 @@ export default {
             _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then((res) => {
                 this.blockList = res.data.body || [];
                 console.log(res);
-            }).catch((res) => {
-                console.log(res);
+            }).catch((response) => {
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
             });
         },

@@ -34,7 +34,8 @@
                     <label
                         class="ant-radio-button-wrapper"
                         :class="{
-                            'ant-radio-button-wrapper-checked': activeClass == 0
+                            'ant-radio-button-wrapper-checked':
+                                activeClass == 0,
                         }"
                         v-on:click="classStateEdit(0)"
                     >
@@ -46,14 +47,14 @@
                         :key="index"
                         :class="{
                             'ant-radio-button-wrapper-checked':
-                                activeClass == item.id
+                                activeClass == item.id,
                         }"
                         v-on:click="classStateEdit(item.id)"
                     >
                         <Icon
                             class="ant-icon"
                             type="md-settings"
-                            style="left: 0px;"
+                            style="left: 0px"
                             v-on:click.stop="handleEdit(item)"
                         />
                         <span
@@ -62,7 +63,7 @@
                         <Icon
                             class="ant-icon"
                             type="ios-close-circle-outline"
-                            style="right: 0px;"
+                            style="right: 0px"
                             v-on:click.stop="delGroundState(item, index)"
                         />
                     </label>
@@ -292,7 +293,7 @@ export default {
             }).catch(function (response) {
                 that.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 that.$Loading.error();
             });
@@ -342,7 +343,7 @@ export default {
             }).catch(function (response) {
                 that.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 that.$Loading.error();
             });
@@ -416,7 +417,7 @@ export default {
                     }).catch(function (response) {
                         that.$Notice.error({
                             title: '错误提示',
-                            desc: '无法访问服务器,请重试'
+                            desc: response
                         });
                         that.$Loading.error();
                     });
@@ -460,7 +461,7 @@ export default {
                     }).catch(function (response) {
                         that.$Notice.error({
                             title: '错误提示',
-                            desc: '无法访问服务器,请重试'
+                            desc: response
                         });
                         that.$Loading.error();
                     });
@@ -503,7 +504,7 @@ export default {
                     }).catch(function (response) {
                         that.$Notice.error({
                             title: '错误提示',
-                            desc: '无法访问服务器,请重试'
+                            desc: response
                         });
                         that.$Loading.error();
                     });
@@ -530,7 +531,7 @@ export default {
                 }).catch(function (response) {
                     that.$Notice.error({
                         title: '错误提示',
-                        desc: '无法访问服务器,请重试'
+                        desc: response
                     });
                     that.$Loading.error();
                 });
@@ -556,7 +557,7 @@ export default {
             }).catch(function (response) {
                 that.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 that.$Loading.error();
             });

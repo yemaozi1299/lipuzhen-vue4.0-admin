@@ -215,7 +215,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });
@@ -279,7 +279,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });
@@ -306,7 +306,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });

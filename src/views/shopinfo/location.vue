@@ -321,7 +321,7 @@ export default {
                         that.$Loading.error();
                         that.$Notice.error({
                             title: '错误提示',
-                            desc: '无法访问服务器,请重试'
+                            desc: response
                         });
                         that.loading2 = false;
                     });
@@ -354,7 +354,7 @@ export default {
                 that.$Loading.error();
                 that.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
             });
         },
@@ -385,7 +385,7 @@ export default {
                 that.$Loading.error();
                 that.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
             });
         },
@@ -405,7 +405,7 @@ export default {
                 that.$Loading.error();
                 that.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
             });
         },
@@ -427,7 +427,7 @@ export default {
                 that.$Loading.error();
                 that.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
             });
         }

@@ -6,7 +6,7 @@
                 <Button
                     type="info"
                     icon="md-add"
-                    style="margin-right:10px;"
+                    style="margin-right: 10px"
                     v-on:click="addGoods"
                     >添加商品</Button
                 >
@@ -169,7 +169,7 @@ export default {
                 _this.$Loading.error();
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.loading = false;
             });
@@ -208,7 +208,7 @@ export default {
                 .catch(function (response) {
                     _this.$Notice.error({
                         title: '错误提示',
-                        desc: '无法访问服务器,请重试'
+                        desc: response
                     });
                     _this.$Loading.error();
                 });

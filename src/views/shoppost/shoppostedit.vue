@@ -6,7 +6,7 @@
             :rules="ruleValidate"
             :label-width="80"
         >
-            <div style="margin-bottom: 10px; font-size: 16px;">
+            <div style="margin-bottom: 10px; font-size: 16px">
                 {{ postid == 0 ? "添加运费模板" : "编辑运费模板" }}
             </div>
             <Form-item label="模版名称">
@@ -29,9 +29,7 @@
                         align="top"
                         class="code-row-bg"
                     >
-                        <Col span="12">
-                            可配送区域
-                        </Col>
+                        <Col span="12"> 可配送区域 </Col>
                         <Col span="3">
                             <div>
                                 {{
@@ -81,13 +79,13 @@
                                 <Buttons
                                     type="info"
                                     @click="handleAdd(gindex)"
-                                    style="margin: 0 10px;"
+                                    style="margin: 0 10px"
                                     >编辑</Buttons
                                 >
                                 <Buttons
                                     type="error"
                                     @click="handleRemove(gindex)"
-                                    style="margin: 0 10px;"
+                                    style="margin: 0 10px"
                                     >删除</Buttons
                                 >
                             </Col>
@@ -143,7 +141,7 @@
                     <span v-if="!loading">提交</span>
                     <span v-else>Loading...</span>
                 </Button>
-                <Button @click="cancel" style="margin-left: 8px;">取消</Button>
+                <Button @click="cancel" style="margin-left: 8px">取消</Button>
             </div>
         </Form>
 
@@ -153,7 +151,7 @@
             @on-ok="postTplSave"
             @on-cancel="postTplcancel"
         >
-            <div style="padding-left: 40px;">
+            <div style="padding-left: 40px">
                 <Transfer
                     :data="TransferData"
                     :target-keys="TransferTargetKeys"
@@ -238,7 +236,7 @@ export default {
                 .catch(function (response) {
                     _this.$Notice.error({
                         title: '错误提示',
-                        desc: '无法访问服务器,请重试'
+                        desc: response
                     });
                     _this.$Loading.error();
                 });
@@ -344,7 +342,7 @@ export default {
                     }).catch(function (response) {
                         _this.$Notice.error({
                             title: '错误提示',
-                            desc: '无法访问服务器,请重试'
+                            desc: response
                         });
                         _this.loading = false;
                     });
@@ -376,7 +374,7 @@ export default {
             }).catch(function (response) {
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });

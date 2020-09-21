@@ -5,9 +5,9 @@
             :model="formValidate"
             :rules="ruleValidate"
             :label-width="80"
-            style="padding-bottom: 30px;"
+            style="padding-bottom: 30px"
         >
-            <div style="margin-bottom: 10px; font-size: 16px;">
+            <div style="margin-bottom: 10px; font-size: 16px">
                 {{ goodsid == 0 ? "添加商品" : "编辑商品" }}
             </div>
             <!-- <Form-item label="分类" prop="classid">
@@ -131,7 +131,7 @@
 			                        </div>
                                 </Upload>-->
                                 <Button
-                                    style="vertical-align: top;"
+                                    style="vertical-align: top"
                                     v-on:click="guiGeComputer(gindex)"
                                 >
                                     <div style>
@@ -216,7 +216,7 @@
 
                 <Button
                     @click="handleBeforeUploadOne"
-                    style="vertical-align: top;"
+                    style="vertical-align: top"
                 >
                     <div style>
                         <Icon type="ios-cloud-upload-outline" size="20"></Icon
@@ -238,10 +238,7 @@
                         ></Icon>
                     </div>
                 </div>
-                <Button
-                    @click="handleBeforeUpload"
-                    style="vertical-align: top;"
-                >
+                <Button @click="handleBeforeUpload" style="vertical-align: top">
                     <div style>
                         <Icon type="ios-cloud-upload-outline" size="20"></Icon
                         >选择图片
@@ -258,7 +255,7 @@
             </Form-item>
 
             <Form-item label="* 运费设置">
-                <div style="margin-bottom: 10px;">
+                <div style="margin-bottom: 10px">
                     <label>
                         <input
                             type="radio"
@@ -273,7 +270,7 @@
                         type="number"
                         placeholder="价格"
                         size="small"
-                        style="width: 200px;"
+                        style="width: 200px"
                     ></Input>
                     <span>0为包邮</span>
                 </div>
@@ -292,7 +289,7 @@
                         :disabled="formValidate.posttype == '0'"
                         placeholder="请选择"
                         size="small"
-                        style="width: 200px;"
+                        style="width: 200px"
                     >
                         <Option
                             v-for="pitem in postList"
@@ -308,7 +305,7 @@
                     <div>当前运费模版，按物流重量（含包装）计费</div>
 
                     <template v-if="formValidate.guigehave == 0">
-                        <div style="width: 200px;">
+                        <div style="width: 200px">
                             <Input v-model="formValidate.zhongliang">
                                 <span slot="prepend">物流重量</span>
                                 <span slot="append">千克</span>
@@ -317,7 +314,7 @@
                     </template>
 
                     <template v-else-if="formValidate.guigehave == 1">
-                        <div style="width: 600px;">
+                        <div style="width: 600px">
                             <Row
                                 type="flex"
                                 justify="center"
@@ -367,7 +364,7 @@
             <Form-item
                 label="详细介绍"
                 prop="readme"
-                style="position: relative; z-index: 1;"
+                style="position: relative; z-index: 1"
             >
                 <!-- <Input v-model="formValidate.readme" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入..."></Input> -->
                 <!-- <Editor class="editor" v-model="formValidate.readme"></Editor>   -->
@@ -393,12 +390,12 @@
                     <span v-if="!loading">提交</span>
                     <span v-else>Loading...</span>
                 </Button>
-                <Button @click="cancel" style="margin-left: 8px;">取消</Button>
+                <Button @click="cancel" style="margin-left: 8px">取消</Button>
             </Form-item>
         </Form>
 
         <Modal title="查看图片" v-model="visible">
-            <img :src="imgName" v-if="visible" style="width: 100%;" />
+            <img :src="imgName" v-if="visible" style="width: 100%" />
         </Modal>
     </Card>
 </template>
@@ -725,7 +722,7 @@ export default {
                         _this.$Loading.error()
                         _this.$Notice.error({
                             title: '错误提示',
-                            desc: '无法访问服务器,请重试'
+                            desc: response
                         })
                         _this.loading = false
                     })

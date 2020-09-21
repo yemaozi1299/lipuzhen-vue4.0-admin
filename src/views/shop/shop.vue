@@ -27,12 +27,8 @@
                         :active-name="shoptype == 'ec' ? '0' : '1'"
                         class="menu-box"
                     >
-                        <MenuItem name="0">
-                            普通商品
-                        </MenuItem>
-                        <MenuItem name="1">
-                            外卖商品
-                        </MenuItem>
+                        <MenuItem name="0"> 普通商品 </MenuItem>
+                        <MenuItem name="1"> 外卖商品 </MenuItem>
                     </Menu>
                     <div class="search-area">
                         <Button
@@ -55,7 +51,7 @@
                             @input="dataInitial"
                             clearable
                             class="ant-search-input mg-r-10"
-                            style="width: 200px;"
+                            style="width: 200px"
                         />
                         <Button
                             type="primary"
@@ -101,7 +97,7 @@
                             type="flex"
                             justify="center"
                             align="middle"
-                            style="margin: 10px 5px 0 5px;"
+                            style="margin: 10px 5px 0 5px"
                         >
                             <Col span="8">分类名称:</Col>
                             <Col span="16">
@@ -115,7 +111,7 @@
                             type="flex"
                             justify="center"
                             align="middle"
-                            style="margin: 10px; text-align: center;"
+                            style="margin: 10px; text-align: center"
                         >
                             <Col span="12">
                                 <Button type="primary" @click="addClassConfirm"
@@ -135,7 +131,7 @@
                         @on-change="handleSelectAll"
                     >
                         <span class="mg-l-10">已选</span
-                        ><span style="color: #3091f2;">{{
+                        ><span style="color: #3091f2">{{
                             chooseID.length
                         }}</span
                         ><span> / {{ tableData.length }} 个商品</span>
@@ -507,7 +503,7 @@ export default {
             }).catch(function (response) {
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 })
                 _this.doing = 0
             })
@@ -542,7 +538,7 @@ export default {
                 _this.$Loading.finish()
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 })
             })
         },
@@ -657,7 +653,7 @@ export default {
                 }).catch(function (response) {
                     _this.$Notice.error({
                         title: '错误提示',
-                        desc: '无法访问服务器,请重试'
+                        desc: response
                     })
                     _this.doing = 0
                 })
@@ -694,7 +690,7 @@ export default {
                 _this.doing = 0
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 })
             })
         },
@@ -733,7 +729,7 @@ export default {
                     _this.$Loading.error()
                     _this.$Notice.error({
                         title: '错误提示',
-                        desc: '无法访问服务器,请重试'
+                        desc: response
                     })
                     _this.doing = 0
                 })

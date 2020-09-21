@@ -65,7 +65,7 @@
                 <Button type="primary" @click="handleSubmit('formValidate')"
                     >提交</Button
                 >
-                <Button @click="$router.go(-1)" style="margin-left: 8px;"
+                <Button @click="$router.go(-1)" style="margin-left: 8px"
                     >返回</Button
                 >
             </FormItem>
@@ -164,7 +164,7 @@ export default {
                         _this.$Loading.error()
                         _this.$Notice.error({
                             title: '错误提示',
-                            desc: '无法访问服务器,请重试'
+                            desc: response
                         })
                         _this.loading = false
                     })

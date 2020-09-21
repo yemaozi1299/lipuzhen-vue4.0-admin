@@ -1,18 +1,16 @@
 <template>
     <Card>
-        <p slot="title">
-            储值列表
-        </p>
+        <p slot="title">储值列表</p>
         <Layout class="layout-wrapper">
             <Header class="header-wrapper">
                 <Button
                     type="success"
                     icon="md-add"
-                    style="margin-right:10px"
+                    style="margin-right: 10px"
                     v-on:click="addRecv"
                     >新建储值项目</Button
                 >
-                <Button style="margin-right:10px" v-on:click="custom"
+                <Button style="margin-right: 10px" v-on:click="custom"
                     >自定义储值设置</Button
                 >
             </Header>
@@ -194,12 +192,10 @@ export default {
                 console.log(response.data);
                 _this.$Loading.finish();
             }).catch(function (response) {
-                console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
-                _this.$Loading.error();
             });
         },
         skippage: function (page) {
@@ -226,7 +222,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });
@@ -253,7 +249,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });

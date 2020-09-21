@@ -6,7 +6,7 @@
             :model="formValidate"
             :rules="ruleValidate"
             :label-width="200"
-            style="padding-bottom: 30px;"
+            style="padding-bottom: 30px"
         >
             <Form-item label="标题" prop="title">
                 <Input
@@ -47,7 +47,7 @@
                     <span v-if="!loading">提交</span>
                     <span v-else>Loading...</span>
                 </Button>
-                <Button @click="$router.go(-1)" style="margin-left: 8px;"
+                <Button @click="$router.go(-1)" style="margin-left: 8px"
                     >取消</Button
                 >
             </Form-item>
@@ -163,7 +163,7 @@ export default {
                         _this.$Loading.error()
                         _this.$Notice.error({
                             title: '错误提示',
-                            desc: '无法访问服务器,请重试'
+                            desc: response
                         })
                         _this.loading = false
                     })

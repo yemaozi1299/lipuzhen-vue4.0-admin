@@ -35,7 +35,7 @@
                 </div>
                 <Button
                     @click="handleBeforeUpload('face')"
-                    style="vertical-align: top;"
+                    style="vertical-align: top"
                 >
                     <div style>
                         <Icon type="ios-cloud-upload-outline" size="20"></Icon
@@ -75,7 +75,7 @@
                         </div>
                         <Button
                             @click="handleBeforeUpload('items', index)"
-                            style="vertical-align: top;"
+                            style="vertical-align: top"
                         >
                             <div style>
                                 <Icon
@@ -108,7 +108,7 @@
                 <Button type="primary" @click="handleSubmit('formValidate')"
                     >提交</Button
                 >
-                <Button @click="$router.go(-1)" style="margin-left: 8px;"
+                <Button @click="$router.go(-1)" style="margin-left: 8px"
                     >返回</Button
                 >
             </FormItem>
@@ -123,7 +123,7 @@
             <div slot="footer"></div>
         </Modal>
         <Modal title="查看图片" v-model="visible">
-            <img :src="imgName" v-if="visible" style="width: 100%;" />
+            <img :src="imgName" v-if="visible" style="width: 100%" />
         </Modal>
     </Card>
 </template>
@@ -236,7 +236,7 @@ export default {
                         _this.$Loading.error()
                         _this.$Notice.error({
                             title: '错误提示',
-                            desc: '无法访问服务器,请重试'
+                            desc: response
                         })
                         _this.loading = false
                     })

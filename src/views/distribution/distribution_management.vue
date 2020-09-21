@@ -261,7 +261,7 @@ export default {
                 that.loading = false;
                 that.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 console.log(response);
             });
@@ -295,7 +295,7 @@ export default {
                 that.loading = false;
                 that.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 console.log(response);
             });
@@ -321,7 +321,7 @@ export default {
                 that.loading = false;
                 that.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 console.log(response);
             });

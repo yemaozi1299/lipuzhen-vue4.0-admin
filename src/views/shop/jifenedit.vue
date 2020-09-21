@@ -5,9 +5,9 @@
             :model="formValidate"
             :rules="ruleValidate"
             :label-width="80"
-            style="padding-bottom: 30px;"
+            style="padding-bottom: 30px"
         >
-            <div style="margin-bottom: 10px; font-size: 16px;">
+            <div style="margin-bottom: 10px; font-size: 16px">
                 {{ goodsid == 0 ? "添加外卖" : "编辑外卖" }}
             </div>
 
@@ -127,7 +127,7 @@
 		                        </div>
 		                    </Upload> -->
                                 <Button
-                                    style="vertical-align: top;"
+                                    style="vertical-align: top"
                                     v-on:click="guiGeComputer(gindex)"
                                 >
                                     <div style="">
@@ -228,7 +228,7 @@
 		    </Upload> -->
                 <Button
                     @click="handleBeforeUploadOne"
-                    style="vertical-align: top;"
+                    style="vertical-align: top"
                 >
                     <div style="">
                         <Icon type="ios-cloud-upload-outline" size="20"></Icon
@@ -301,12 +301,12 @@
                     <span v-if="!loading">提交</span>
                     <span v-else>Loading...</span>
                 </Button>
-                <Button @click="cancel" style="margin-left: 8px;">取消</Button>
+                <Button @click="cancel" style="margin-left: 8px">取消</Button>
             </Form-item>
         </Form>
 
         <Modal title="查看图片" v-model="visible">
-            <img :src="imgName" v-if="visible" style="width: 100%;" />
+            <img :src="imgName" v-if="visible" style="width: 100%" />
         </Modal>
         <Modal v-model="isUpload" width="860">
             <p slot="header">选择图片</p>
@@ -619,7 +619,7 @@ export default {
                         _this.$Loading.error();
                         _this.$Notice.error({
                             title: '错误提示',
-                            desc: '无法访问服务器,请重试'
+                            desc: response
                         });
                         _this.loading = false;
                     });

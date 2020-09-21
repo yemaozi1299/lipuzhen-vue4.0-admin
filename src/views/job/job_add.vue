@@ -6,7 +6,7 @@
             :model="formValidate"
             :rules="ruleValidate"
             :label-width="200"
-            style="padding-bottom: 30px;"
+            style="padding-bottom: 30px"
         >
             <!-- 
 			$items['name']=岗位名称
@@ -56,20 +56,20 @@
                 </RadioGroup>
             </Form-item>
             <Form-item label="年龄要求" prop="age">
-                <Input v-model="formValidate.age" style="width: 200px;"></Input
+                <Input v-model="formValidate.age" style="width: 200px"></Input
                 ><span class="notes">空则默认为不限</span>
             </Form-item>
             <Form-item label="学历要求" prop="degree">
                 <Input
                     v-model="formValidate.degree"
-                    style="width: 200px;"
+                    style="width: 200px"
                 ></Input
                 ><span class="notes">空则默认为不限</span>
             </Form-item>
             <Form-item label="工作经验" prop="workage">
                 <Input
                     v-model="formValidate.workage"
-                    style="width: 200px;"
+                    style="width: 200px"
                 ></Input
                 ><span class="notes">年</span>
                 <span class="notes">空则默认为不限</span>
@@ -89,20 +89,20 @@
                     type="date"
                     format="yyyy-MM-dd"
                     placeholder=""
-                    style="width: 200px;"
+                    style="width: 200px"
                     :value="formValidate.day"
                     @on-change="changeDateTime"
                 ></DatePicker>
             </Form-item>
             <Form-item label="所属分类" prop="groupid">
-                <Select v-model="formValidate.groupid" style="width: 200px;">
+                <Select v-model="formValidate.groupid" style="width: 200px">
                     <template v-for="item in classidList">
                         <Option :value="item.id">{{ item.groupname }}</Option>
                     </template>
                 </Select>
                 <Buttons
                     type="info"
-                    style="margin: 0 10px;"
+                    style="margin: 0 10px"
                     @click="isModal = true"
                     >添加分类</Buttons
                 >
@@ -129,7 +129,7 @@
                     <span v-if="!loading">提交</span>
                     <span v-else>Loading...</span>
                 </Button>
-                <Button @click="$router.go(-1)" style="margin-left: 8px;"
+                <Button @click="$router.go(-1)" style="margin-left: 8px"
                     >取消</Button
                 >
             </Form-item>
@@ -141,11 +141,11 @@
             @on-cancel=""
             :loading="classLoad"
         >
-            <label style="display: block; margin-bottom: 10px;">
+            <label style="display: block; margin-bottom: 10px">
                 <span>分类名称：</span>
                 <Input
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="classname"
                 ></Input>
             </label>
@@ -159,10 +159,10 @@ import Editor from '@/components/textEditor/editor.vue'
 import { formatDate } from '@/libs/tools'
 import Buttons from '@/components/buttons'
 /*
-	获取分类api
-	保存信息
-	必填项：
-		全部
+    获取分类api
+    保存信息
+    必填项：
+        全部
 	
 */
 export default {
@@ -338,7 +338,7 @@ export default {
                         _this.$Loading.error()
                         _this.$Notice.error({
                             title: '错误提示',
-                            desc: '无法访问服务器,请重试'
+                            desc: response
                         })
                         _this.loading = false
                     })
@@ -368,12 +368,10 @@ export default {
                 this.$Message.info("添加成功");
                 this.getClass();
             }).catch((response) => {
-                console.log(response);
                 this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
-                this.$Loading.error();
             });
         }
 

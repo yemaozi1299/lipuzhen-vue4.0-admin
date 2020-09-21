@@ -13,14 +13,14 @@
                     <div class="mode-switch">
                         <span
                             :class="{
-                                active: formValidate.distribution_type == 1
+                                active: formValidate.distribution_type == 1,
                             }"
                             v-on:click="formValidate.distribution_type = 1"
                             >一级分销推广</span
                         >
                         <span
                             :class="{
-                                active: formValidate.distribution_type == 2
+                                active: formValidate.distribution_type == 2,
                             }"
                             v-on:click="formValidate.distribution_type = 2"
                             >二级分销推广</span
@@ -202,7 +202,7 @@ export default {
                 that.$Loading.error();
                 that.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 console.log(response);
             });
@@ -237,7 +237,7 @@ export default {
                         that.$Loading.error();
                         that.$Notice.error({
                             title: '错误提示',
-                            desc: '无法访问服务器,请重试'
+                            desc: response
                         });
                         console.log(response);
                     });

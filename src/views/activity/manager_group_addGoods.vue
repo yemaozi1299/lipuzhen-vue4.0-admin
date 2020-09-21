@@ -1,8 +1,6 @@
 <template>
     <Card>
-        <p slot="title">
-            编辑商品拼团价
-        </p>
+        <p slot="title">编辑商品拼团价</p>
         <Button @click="$router.go(-1)">返回</Button>
         <div class="good-detail">
             <img class="detail-img" :src="goods.faceUrl" alt="" />
@@ -16,13 +14,13 @@
             <span class="field-item-label">设置减价：</span>
             <div class="field-item-panel">
                 <RadioGroup v-model="header">
-                    <Radio label="0" style="margin-right:15px;">
+                    <Radio label="0" style="margin-right: 15px">
                         <span>团长无优惠</span>
                     </Radio>
-                    <Radio label="1" style="margin-right:15px;">
+                    <Radio label="1" style="margin-right: 15px">
                         <span>团长优惠</span>
                     </Radio>
-                    <Radio label="2" style="margin-right:15px;">
+                    <Radio label="2" style="margin-right: 15px">
                         <span>团长免单</span>
                     </Radio>
                 </RadioGroup>
@@ -51,11 +49,11 @@
                     ></Table>
                 </div>
             </div>
-            <div style="margin-top:100px;margin-left: 125px;">
+            <div style="margin-top: 100px; margin-left: 125px">
                 <Button
                     type="primary"
                     @click="handleSubmit"
-                    style="margin-right:10px"
+                    style="margin-right: 10px"
                     >提交</Button
                 >
                 <Button @click="$router.go(-1)">取消</Button>
@@ -210,7 +208,7 @@ export default {
                 _this.$Loading.error();
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.loading = false;
             });
@@ -321,7 +319,7 @@ export default {
                 _this.$Loading.error();
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.loading = false;
             });

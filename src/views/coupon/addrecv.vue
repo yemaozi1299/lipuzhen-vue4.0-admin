@@ -1,5 +1,5 @@
 <template>
-    <div style="background-color:#f2f2f0;height:100%;overflow: auto;">
+    <div style="background-color: #f2f2f0; height: 100%; overflow: auto">
         <div class="manager-page-body">
             <div class="phone-preview-area">
                 <div class="phone-preview-title">手机预览：</div>
@@ -23,7 +23,7 @@
                             <div
                                 class="background-circle"
                                 :style="{
-                                    'background-color': formValidate.list_color
+                                    'background-color': formValidate.list_color,
                                 }"
                             ></div>
                             <!--  满减券    折扣券    代金券    兑换券  储值券    通用券 -->
@@ -67,7 +67,7 @@
                         <div
                             class="function-btn"
                             :style="{
-                                'background-color': formValidate.list_color
+                                'background-color': formValidate.list_color,
                             }"
                         >
                             立即领取
@@ -95,7 +95,7 @@
                             class="page"
                             id="coupon-detail"
                             :style="{
-                                'background-color': formValidate.background
+                                'background-color': formValidate.background,
                             }"
                         >
                             <div class="coupon-detail-wrap">
@@ -119,7 +119,7 @@
                                         class="receive-btn"
                                         :style="{
                                             'background-color':
-                                                formValidate.button_color
+                                                formValidate.button_color,
                                         }"
                                     >
                                         立即领取
@@ -145,7 +145,7 @@
                                                 class="time-duration"
                                                 v-if="
                                                     formValidate.start_use_time &&
-                                                        formValidate.end_use_time
+                                                    formValidate.end_use_time
                                                 "
                                             >
                                                 {{
@@ -160,7 +160,7 @@
                                 <div class="bottom-section">
                                     <div
                                         class="detail-item address"
-                                        style="display:block"
+                                        style="display: block"
                                     >
                                         <div class="item-name">店铺地址：</div>
                                         <div class="item-content">
@@ -169,7 +169,7 @@
                                     </div>
                                     <div
                                         class="detail-item phone"
-                                        style="display:block"
+                                        style="display: block"
                                     >
                                         <div class="item-name">联系电话：</div>
                                         <div class="item-content">
@@ -234,11 +234,11 @@
                         <Form-item label="优惠券标题：" style="" prop="title">
                             <Input
                                 type="text"
-                                style="width:200px"
+                                style="width: 200px"
                                 v-model="formValidate.title"
                                 size="small"
                             ></Input>
-                            <div style="line-height:24px;width:300px">
+                            <div style="line-height: 24px; width: 300px">
                                 建议填写“10元代金劵”、“满60元立减10元”
                                 等易于理解的具体优惠内容，限9个字以内
                             </div>
@@ -246,7 +246,7 @@
                         <Form-item label="优惠券副标题：" style="">
                             <Input
                                 type="text"
-                                style="width:200px"
+                                style="width: 200px"
                                 v-model="formValidate.sub_title"
                                 size="small"
                             ></Input>
@@ -270,14 +270,14 @@
                                         <span>满</span>
                                         <Input
                                             type="text"
-                                            style="width:70px"
+                                            style="width: 70px"
                                             v-model="formValidate.tiaojian"
                                             size="small"
                                         ></Input>
                                         <span>元，减</span>
                                         <Input
                                             type="text"
-                                            style="width:70px"
+                                            style="width: 70px"
                                             v-model="formValidate.value"
                                             size="small"
                                         ></Input>
@@ -345,7 +345,7 @@
                                         <span>打</span>
                                         <Input
                                             type="text"
-                                            style="width:70px"
+                                            style="width: 70px"
                                             v-model="formValidate.value"
                                             size="small"
                                         ></Input>
@@ -407,7 +407,7 @@
                                         <span>面值 </span>
                                         <Input
                                             type="text"
-                                            style="width:70px"
+                                            style="width: 70px"
                                             v-model="formValidate.value"
                                             size="small"
                                         ></Input>
@@ -470,7 +470,7 @@
                                             type="text"
                                             v-model="formValidate.value"
                                             size="small"
-                                            style="width:120px"
+                                            style="width: 120px"
                                         ></Input>
                                     </div>
                                 </div>
@@ -523,14 +523,14 @@
                                         type="text"
                                         v-model="formValidate.react"
                                         size="small"
-                                        style="width:70px"
+                                        style="width: 70px"
                                     ></Input>
                                     天生效，有效期
                                     <Input
                                         type="text"
                                         v-model="formValidate.expire"
                                         size="small"
-                                        style="width:70px"
+                                        style="width: 70px"
                                     ></Input>
                                     天
                                 </div>
@@ -571,7 +571,7 @@
                                 type="textarea"
                                 v-model="formValidate.address"
                                 size="small"
-                                style="width:200px"
+                                style="width: 200px"
                             ></Input>
                         </Form-item>
                         <Form-item label="电话：" prop="" style="">
@@ -579,7 +579,7 @@
                                 type="text"
                                 v-model="formValidate.phone"
                                 size="small"
-                                style="width:170px"
+                                style="width: 170px"
                             ></Input>
                         </Form-item>
                         <Form-item label="库存：" prop="stock" style="">
@@ -587,9 +587,9 @@
                                 type="text"
                                 v-model="formValidate.stock"
                                 size="small"
-                                style="width:120px"
+                                style="width: 120px"
                             ></Input>
-                            <span style="font-size:14px;"> 份</span>
+                            <span style="font-size: 14px"> 份</span>
                         </Form-item>
                         <!-- <Form-item label="获取途径：" prop="" style="">
 				    		<Checkbox v-model="in_show_list" ></Checkbox>
@@ -601,7 +601,7 @@
                                 type="text"
                                 v-model="formValidate.limit_num"
                                 size="small"
-                                style="width:100px"
+                                style="width: 100px"
                             ></Input>
                             张
                         </Form-item>
@@ -611,7 +611,7 @@
                     <Button
                         type="primary"
                         @click="handleSubmit('formValidate')"
-                        style="margin-right:10px"
+                        style="margin-right: 10px"
                         >提交</Button
                     >
                     <Button @click="$router.go(-1)">取消</Button>
@@ -652,9 +652,9 @@
                         v-on:change="getGoodsList"
                     >
                         <option value="0">全部</option>
-                        <option :value="item.id" v-for="item in classList">{{
-                            item.classname
-                        }}</option>
+                        <option :value="item.id" v-for="item in classList">
+                            {{ item.classname }}
+                        </option>
                     </select>
                     <div class="search">
                         <input
@@ -671,7 +671,7 @@
                 </div>
                 <div class="webapp-box-content">
                     <div class="resource-list-wrap">
-                        <div class="no-data" style="display: none;">
+                        <div class="no-data" style="display: none">
                             暂无数据，
                             <span class="goto-add-goods">点击此处添加商品</span>
                         </div>
@@ -681,7 +681,7 @@
                                 v-for="item in items"
                                 v-on:click="webappList(item)"
                                 v-bind:class="{
-                                    selected: item.id == goodsid.id
+                                    selected: item.id == goodsid.id,
                                 }"
                             >
                                 <img :src="item.face" />
@@ -1061,7 +1061,7 @@ export default {
         // 	console.log(response);
         //           _this.$Notice.error({
         //                 title: '错误提示',
-        //                 desc:  '无法访问服务器,请重试'
+        //                 desc:  response
         //           });
         //           _this.$Loading.error();
         //       });
@@ -1112,7 +1112,7 @@ export default {
                 catch(function (response) {
                     that.$Notice.error({
                         title: '错误提示',
-                        desc: '无法访问服务器,请重试'
+                        desc: response
                     });
                     that.$Loading.error();
                 });
@@ -1150,7 +1150,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });

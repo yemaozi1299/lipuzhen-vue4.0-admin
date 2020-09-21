@@ -90,7 +90,7 @@
                         @on-keyup.enter="get(table, 1, keyword)"
                         clearable
                         class="ant-search-input mg-r-10"
-                        style="width: 200px;"
+                        style="width: 200px"
                     />
                     <Button
                         type="primary"
@@ -98,7 +98,7 @@
                         icon="ios-search"
                         class="ant-search-btn"
                     ></Button>
-                    <Button style="float: right;" @click="$router.go(-1)"
+                    <Button style="float: right" @click="$router.go(-1)"
                         >返回</Button
                     >
                 </div>
@@ -121,12 +121,12 @@
                 @on-close="classdel"
                 >{{ classitem.classname }}</Tag
             >
-            <div style="margin-top: 10px; display: flex; flex-direction: row;">
+            <div style="margin-top: 10px; display: flex; flex-direction: row">
                 <Input
                     v-model="classname"
                     size="small"
                     placeholder="请输入分类名称"
-                    style="width: 150px; margin-right: 10px;"
+                    style="width: 150px; margin-right: 10px"
                 ></Input>
                 <Button size="small" @click="classedit">保存</Button>
             </div>
@@ -365,7 +365,7 @@ export default {
                     }).catch(function (response) {
                         _this.$Notice.error({
                             title: '错误提示',
-                            desc: '无法访问服务器,请重试'
+                            desc: response
                         });
                         _this.$Loading.error();
                     });
@@ -485,7 +485,7 @@ export default {
                 .catch(function (response) {
                     _this.$Notice.error({
                         title: '错误提示',
-                        desc: '无法访问服务器,请重试'
+                        desc: response
                     });
                 });
 

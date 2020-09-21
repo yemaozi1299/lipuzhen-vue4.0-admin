@@ -37,7 +37,7 @@
                     @on-change="handleSelectAll"
                 >
                     <span class="mg-l-10">已选</span
-                    ><span style="color: #3091f2;">{{ chooseID.length }}</span
+                    ><span style="color: #3091f2">{{ chooseID.length }}</span
                     ><span> / {{ items.length }} 个数据库</span>
                 </Checkbox>
                 <Button
@@ -219,7 +219,7 @@ export default {
                 .catch(function (response) {
                     _this.$Notice.error({
                         title: '错误提示1111',
-                        desc: '无法访问服务器,请重试'
+                        desc: response
                     });
                     _this.$Loading.error();
                 });
@@ -263,7 +263,7 @@ export default {
                     }).catch(function (response) {
                         _this.$Notice.error({
                             title: '错误提示',
-                            desc: '无法访问服务器,请重试'
+                            desc: response
                         });
                         _this.$Loading.error();
                     });

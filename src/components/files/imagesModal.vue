@@ -75,7 +75,7 @@
                                     <a
                                         href="javascript:;"
                                         title="确认删除"
-                                        style="background-color:#ed3f14"
+                                        style="background-color: #ed3f14"
                                     >
                                         <span class="glyphicon glyphicon-trash"
                                             >确认删除？</span
@@ -90,7 +90,7 @@
             <div class="webapp-model-footer">
                 <div class="box-operation-menu" v-if="boxState == 'default'">
                     <ul>
-                        <li class="upload-btn" style="position:relative">
+                        <li class="upload-btn" style="position: relative">
                             <Upload
                                 :show-upload-list="false"
                                 :on-success="handleGuiGeSuccess"
@@ -99,12 +99,12 @@
                                 accept="image/*"
                                 :action="
                                     '/move/api_edit.php?action=filemanager_upload&classid=' +
-                                        groupState.id +
-                                        '&appid=' +
-                                        wxappid
+                                    groupState.id +
+                                    '&appid=' +
+                                    wxappid
                                 "
                                 multiple
-                                style="display: inline-block;width:150px;"
+                                style="display: inline-block; width: 150px"
                             >
                                 <Button
                                     type="success"
@@ -113,7 +113,7 @@
                                 >
                             </Upload>
                         </li>
-                        <li style="margin-right: 41px;">
+                        <li style="margin-right: 41px">
                             <Page
                                 :total="total"
                                 :current="page"
@@ -126,7 +126,7 @@
                         <li class="">
                             <Button
                                 type="info"
-                                style="margin-right:10px;"
+                                style="margin-right: 10px"
                                 v-on:click="handleRender"
                                 >新建分组</Button
                             >
@@ -150,14 +150,15 @@
                         activeHideArr.length
                     }}</span
                     >张 移至
-                    <select v-model="model1" style="width:200px">
+                    <select v-model="model1" style="width: 200px">
                         <option :value="0">默认</option>
                         <option
                             v-for="item in classList"
                             :value="item.id"
                             :key="item.id"
-                            >{{ item.groupname }}</option
                         >
+                            {{ item.groupname }}
+                        </option>
                     </select>
                     <Button v-on:click="SelectClass">确定</Button>
                     <Button v-on:click="delActiveImage">删除选中图片</Button>
@@ -337,7 +338,7 @@ export default {
                 _this.$Loading.error();
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.loading = false;
             });
@@ -357,7 +358,7 @@ export default {
                 _this.$Loading.error();
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.loading = false;
             });
@@ -379,7 +380,7 @@ export default {
                 _this.$Loading.error();
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.loading = false;
             });
@@ -408,7 +409,7 @@ export default {
                 _this.$Loading.error();
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.loading = false;
             });
@@ -423,7 +424,7 @@ export default {
                 _this.$Loading.error();
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.loading = false;
             });
@@ -472,7 +473,7 @@ export default {
                 _this.$Loading.error();
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.loading = false;
             });
@@ -519,7 +520,7 @@ export default {
                 _this.$Loading.error();
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.loading = false;
             });
@@ -541,7 +542,7 @@ export default {
                 _this.$Loading.error();
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.loading = false;
             });
@@ -566,7 +567,7 @@ export default {
                 _this.$Loading.error();
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.loading = false;
             });

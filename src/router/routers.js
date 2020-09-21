@@ -957,6 +957,15 @@ export default {
 					},
 					component: () => import('@/views/admin-component/admin_user.vue')
 				},
+				{
+					path: '/admin_user/:page/admin_add',
+					name: 'admin_add',
+					meta: {
+						title: '管理员添加',
+						hideInMenu: true
+					},
+					component: () => import('@/views/admin-component/admin_manager/admin_add.vue')
+				},
 
 			]
 		},
@@ -1075,7 +1084,7 @@ export default {
 						title: '样板列表',
 						icon: 'md-home'
 					},
-					component: () => import('@/views/admin-component/templateList.vue')
+					component: () => import('@/views/admin-component/template_list.vue')
 				},
 			]
 		},

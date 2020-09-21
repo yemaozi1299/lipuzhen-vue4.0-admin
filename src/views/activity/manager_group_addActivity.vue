@@ -9,20 +9,20 @@
         >
             <Form-item
                 label="拼团名称："
-                style="margin-top:15px"
+                style="margin-top: 15px"
                 prop="activity_name"
             >
                 <Input
                     type="text"
                     v-model="formValidate.activity_name"
                     size="small"
-                    style="width:200px"
+                    style="width: 200px"
                 ></Input
                 ><span class="normal-tip"> 仅后台展示，方便管理</span>
             </Form-item>
             <Form-item
                 label="拼团人数(可添加多个)："
-                style="margin-top:15px"
+                style="margin-top: 15px"
                 prop="join_num"
             >
                 <div
@@ -32,12 +32,17 @@
                     <Input
                         type="text"
                         v-model="item.num"
-                        style="width:70px"
+                        style="width: 70px"
                         size="small"
                     ></Input>
                     <span
                         v-if="group_join_num.length > 1"
-                        style="display:inline-block;margin:0 5px;color:#cacaca;cursor: pointer;"
+                        style="
+                            display: inline-block;
+                            margin: 0 5px;
+                            color: #cacaca;
+                            cursor: pointer;
+                        "
                         @click="delectJoin(index)"
                         ><Icon type="ios-backspace-outline" size="16"
                     /></span>
@@ -46,7 +51,7 @@
             </Form-item>
             <Form-item
                 label="每个拼团的有效时间："
-                style="margin-top:15px"
+                style="margin-top: 15px"
                 prop="time_limit"
             >
                 <TimePicker
@@ -58,7 +63,7 @@
             </Form-item>
             <Form-item
                 label="活动时间："
-                style="margin-top:15px"
+                style="margin-top: 15px"
                 prop="activity_tiem"
             >
                 <div class="activity-time-div">
@@ -75,7 +80,7 @@
                 <div class="activity-time-div">
                     <span>结束时间 </span>
                     <RadioGroup v-model="end_panel">
-                        <div style="margin-bottom:5px;">
+                        <div style="margin-bottom: 5px">
                             <Radio label="0">长期</Radio>
                         </div>
                         <div>
@@ -93,14 +98,14 @@
             </Form-item>
             <Form-item
                 label="每位用户可同时进行的团数："
-                style="margin-top:15px;"
+                style="margin-top: 15px"
                 prop="user_limit_join"
             >
                 <Input
                     type="text"
                     v-model="formValidate.user_limit_join"
                     size="small"
-                    style="width:50px"
+                    style="width: 50px"
                 ></Input
                 ><span class="normal-tip">
                     为保证商家利益，请对团数进行限制。注：已成功或已失败的团不计入同时进行的团数</span
@@ -108,14 +113,14 @@
             </Form-item>
             <Form-item
                 label="每位用户每次参团时可购买件数："
-                style="margin-top:15px"
+                style="margin-top: 15px"
                 prop="user_limit_buy"
             >
                 <Input
                     type="text"
                     v-model="formValidate.user_limit_buy"
                     size="small"
-                    style="width:50px"
+                    style="width: 50px"
                 ></Input
                 ><span class="normal-tip">
                     为保证商家利益，请对用户参团时可购买件数进行限制。</span
@@ -123,7 +128,7 @@
             </Form-item>
             <Form-item
                 label="是否可与优惠券叠加用："
-                style="margin-top:15px"
+                style="margin-top: 15px"
                 prop="youhui"
             >
                 <i-switch v-model="can_use_youhui"></i-switch>
@@ -133,7 +138,7 @@
             <Button
                 type="primary"
                 @click="handleSubmit('formValidate')"
-                style="margin-right:10px"
+                style="margin-right: 10px"
                 >提交</Button
             >
             <Button @click="$router.go(-1)">取消</Button>
@@ -319,7 +324,7 @@ export default {
                 _this.$Loading.error();
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.loading = false;
             });

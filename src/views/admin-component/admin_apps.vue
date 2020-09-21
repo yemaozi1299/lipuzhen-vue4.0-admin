@@ -478,13 +478,12 @@ export default {
             }).then((res) => {
                 this.softList = res.data.body || [];
                 console.log(res.data);
-            }).catch((res) => {
-                console.log(res);
+            }).catch((response) => {
+
                 this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
-                this.$Loading.error();
             });
         },
         uploadListFun: function (files) {
@@ -512,7 +511,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });
@@ -530,15 +529,13 @@ export default {
             };
             _this.searching = keyword ? true : false;
             _this.infoData.data = [];
-            this.$Loading.start();
             _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
                 if (response.data.status == 1) {
                     _this.infoData.data = response.data.body || [];
                     _this.pageData.total = Number(response.data.total);
                 }
                 console.log(response.data);
-                _this.$Loading.finish();
-            })
+            });
         },
         skippage: function (page) {
             this.pageData.page = page;
@@ -583,7 +580,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });
@@ -613,7 +610,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });
@@ -637,7 +634,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });
@@ -705,7 +702,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });

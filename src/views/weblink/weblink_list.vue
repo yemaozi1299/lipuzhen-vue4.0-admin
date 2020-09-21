@@ -49,14 +49,14 @@
                         <Icon
                             class="ant-icon"
                             type="md-settings"
-                            style="left: 0px;"
+                            style="left: 0px"
                             v-on:click.stop="handleEdit(item)"
                         />
                         <span>{{ item.groupname }}</span>
                         <Icon
                             class="ant-icon"
                             type="ios-close-circle-outline"
-                            style="right: 0px;"
+                            style="right: 0px"
                             v-on:click.stop="delGroundState(item)"
                         />
                     </MenuItem>
@@ -76,7 +76,7 @@
                         type="flex"
                         justify="center"
                         align="middle"
-                        style="margin: 10px 5px 0 5px;"
+                        style="margin: 10px 5px 0 5px"
                     >
                         <Col span="8">分类名称:</Col>
                         <Col span="16">
@@ -90,7 +90,7 @@
                         type="flex"
                         justify="center"
                         align="middle"
-                        style="margin: 10px; text-align: center;"
+                        style="margin: 10px; text-align: center"
                     >
                         <Col span="12">
                             <Button type="primary" @click="addClassConfirm"
@@ -106,7 +106,7 @@
             <template slot="footer"></template>
         </tables>
         <Modal title="查看图片" v-model="visible">
-            <img :src="imgName" v-if="visible" style="width: 100%;" />
+            <img :src="imgName" v-if="visible" style="width: 100%" />
         </Modal>
     </Card>
 </template>
@@ -265,7 +265,7 @@ export default {
                 _this.$Loading.error()
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 })
                 _this.loading = false
             })

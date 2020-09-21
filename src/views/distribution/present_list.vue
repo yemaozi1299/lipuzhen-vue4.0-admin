@@ -39,21 +39,21 @@
                 <Col span="6">提现金额</Col>
                 <Col span="18">{{ fenxiao_info.money }}</Col>
             </Row>
-            <Row style="padding-top:10px">
+            <Row style="padding-top: 10px">
                 <Col span="6">用户姓名</Col>
                 <Col span="18">{{ fenxiao_info.accountTitle }}</Col>
             </Row>
-            <Row style="padding-top:10px">
+            <Row style="padding-top: 10px">
                 <Col span="6">提现方式</Col>
                 <Col span="18">{{
                     fenxiao_info.fx == 0 ? "储值卡" : "银行卡"
                 }}</Col>
             </Row>
-            <Row style="padding-top:10px">
+            <Row style="padding-top: 10px">
                 <Col span="6">银行</Col>
                 <Col span="18">{{ fenxiao_info.bank }}</Col>
             </Row>
-            <Row style="padding-top:10px">
+            <Row style="padding-top: 10px">
                 <Col span="6">银行卡号</Col>
                 <Col span="18">{{ fenxiao_info.accountNumber }}</Col>
             </Row>
@@ -69,21 +69,21 @@
                 <Col span="6">提现金额</Col>
                 <Col span="18">{{ fenxiao_info.money }}</Col>
             </Row>
-            <Row style="padding-top:10px">
+            <Row style="padding-top: 10px">
                 <Col span="6">用户姓名</Col>
                 <Col span="18">{{ fenxiao_info.accountTitle }}</Col>
             </Row>
-            <Row style="padding-top:10px">
+            <Row style="padding-top: 10px">
                 <Col span="6">提现方式</Col>
                 <Col span="18">{{
                     fenxiao_info.fx == 0 ? "储值卡" : "银行卡"
                 }}</Col>
             </Row>
-            <Row style="padding-top:10px">
+            <Row style="padding-top: 10px">
                 <Col span="6">银行</Col>
                 <Col span="18">{{ fenxiao_info.bank }}</Col>
             </Row>
-            <Row style="padding-top:10px">
+            <Row style="padding-top: 10px">
                 <Col span="6">银行卡号</Col>
                 <Col span="18">{{ fenxiao_info.accountNumber }}</Col>
             </Row>
@@ -232,7 +232,7 @@ export default {
                 that.loading = false;
                 that.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 console.log(response);
             });
@@ -255,7 +255,7 @@ export default {
                 that.$Loading.error();
                 that.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 console.log(response);
             });

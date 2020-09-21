@@ -55,7 +55,7 @@
               </Upload> -->
                     <Button
                         @click="handleBeforeUpload(item)"
-                        style="vertical-align: top;"
+                        style="vertical-align: top"
                     >
                         <div style="">
                             <Icon
@@ -90,12 +90,12 @@
                     <Button type="primary" @click="handleSubmit('formValidate')"
                         >提交</Button
                     >
-                    <Button @click="esc" style="margin-left: 8px;">取消</Button>
+                    <Button @click="esc" style="margin-left: 8px">取消</Button>
                 </div>
             </Form-item>
 
             <Modal title="查看图片" v-model="visible">
-                <img :src="imgName" v-if="visible" style="width: 100%;" />
+                <img :src="imgName" v-if="visible" style="width: 100%" />
             </Modal>
         </Form>
     </Card>
@@ -221,7 +221,7 @@ export default {
                 _this.$Loading.error();
                 _this.$Notice.error({
                     title: '错误提示#datamanagereditdata',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.loading = false;
             });
@@ -282,7 +282,7 @@ export default {
                         _this.loading = false;
                         _this.$Notice.error({
                             title: '错误提示',
-                            desc: '无法访问服务器,请重试'
+                            desc: response
                         });
                     });
 

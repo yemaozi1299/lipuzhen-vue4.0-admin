@@ -9,8 +9,8 @@
             </div>
         </div>
         <!-- =================================================== -->
-        <div style="position: relative; margin: 0 10px 10px 10px;" v-else>
-            <div style="line-height: 55px;"><h2>打包发布</h2></div>
+        <div style="position: relative; margin: 0 10px 10px 10px" v-else>
+            <div style="line-height: 55px"><h2>打包发布</h2></div>
 
             <div class="panel-body" v-if="sharefirst === 0">
                 <div class="share-box">
@@ -101,7 +101,7 @@
                                     中添加以下域名</span
                                 >
                                 <span
-                                    style="color: #22b5e5;"
+                                    style="color: #22b5e5"
                                     v-on:click="settingCarousel"
                                     >点击查看教程</span
                                 >
@@ -126,7 +126,7 @@
                             >
                         </div>
 
-                        <div align="center" style="margin-top: 10px;">
+                        <div align="center" style="margin-top: 10px">
                             <Button
                                 type="primary"
                                 @click="handleSubmit('formValidate')"
@@ -227,7 +227,7 @@ export default {
                     this.$Notice.error({
                         title: '错误提示',
                         duration: 0,
-                        desc: '无法访问服务器,请重试'
+                        desc: response
                     });
                 });
         },
@@ -301,7 +301,7 @@ export default {
                             }).catch(function (response) {
                                 _this.$Notice.error({
                                     title: '错误提示',
-                                    desc: '无法访问服务器,请重试'
+                                    desc: response
                                 });
                             });
 
@@ -316,7 +316,7 @@ export default {
                     }).catch(function (response) {
                         _this.$Notice.error({
                             title: '错误提示',
-                            desc: '无法访问服务器,请重试'
+                            desc: response
                         });
                     });
 
@@ -340,7 +340,7 @@ export default {
                     //     {                  
                     //         _this.$Notice.error({
                     //               title: '错误提示',
-                    //               desc:  '无法访问服务器,请重试'
+                    //               desc:  response
                     //           });
                     //     });
 

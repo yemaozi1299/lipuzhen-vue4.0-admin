@@ -1,5 +1,5 @@
 <template>
-    <Card dis-hover class="template-def-style">
+    <div class="template-def-style">
         <Layout class="layout-wrapper">
             <Header class="header-wrapper">
                 <!-- 搜索框 -->
@@ -55,6 +55,45 @@
                                     :xs="12"
                                     :lg="8"
                                     style="padding-bottom: 10px"
+                                >
+                                    <Card :padding="0">
+                                        <div style="position: relative">
+                                            <div
+                                                class="cti-align-center"
+                                                :style="mobileBgStyle"
+                                            >
+                                                <a
+                                                    href="javascript:void(0)"
+                                                    class="preview_link"
+                                                    :style="pcPreviewStyle"
+                                                >
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="card-info">
+                                            <div class="card-title">
+                                                <div class="ac-title-level3">
+                                                    空白模板
+                                                </div>
+                                                <div class="number">
+                                                    编号: 0
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="deleteBtn">
+                                            <Button
+                                                v-if="isAdd"
+                                                type="info"
+                                                @click="addTemplate({ id: 0 })"
+                                                >使用样板</Button
+                                            >
+                                        </div>
+                                    </Card>
+                                </Col>
+                                <Col
+                                    :xs="12"
+                                    :lg="8"
+                                    style="padding-bottom: 10px"
                                     v-for="item in appList"
                                 >
                                     <Card :padding="0">
@@ -67,6 +106,7 @@
                                                     href="javascript:void(0)"
                                                     class="preview_link"
                                                     :style="pcPreviewStyle"
+                                                    @click="previewApp(item)"
                                                 >
                                                     <span
                                                         class="bg_span"
@@ -176,6 +216,13 @@
                                         </div>
                                         <div class="deleteBtn">
                                             <Button
+                                                v-if="isAdd"
+                                                class="mg-r-20"
+                                                type="info"
+                                                @click="addTemplate(item)"
+                                                >使用样板</Button
+                                            >
+                                            <Button
                                                 type="error"
                                                 @click="jsDelect(item)"
                                                 >删除</Button
@@ -199,12 +246,20 @@
                 </Layout>
             </Layout>
         </Layout>
-    </Card>
+    </div>
 </template>
 
 <script type="text/javascript">
 import mobileBg from '@/assets/images/templateList/mobileBg.png';
 export default {
+    props: {
+        isAdd: {
+            type: Boolean,
+            default: (val) => {
+                return false
+            }
+        },
+    },
     data: function () {
         return {
             isrefresh: true,
@@ -321,10 +376,10 @@ export default {
                     _this.$Message.info(response.data.message);
                 }
                 _this.$Loading.finish();
-            }).catch((res) => {
+            }).catch((response) => {
                 this.$Notice.error({
                     title: '提示',
-                    desc: res,
+                    desc: response,
                     duration: 10
                 });
             });
@@ -347,35 +402,30 @@ export default {
                 action: 'example_appdel',
                 id: item.id
             };
-            // this.isrefresh = false;
-            this.$http.post("/api_admin.php", params).then((res) => {
-                this.appList.splice(item._index, 1);
-            }).catch((res) => {
-                this.$Notice.error({
-                    title: '错误提示',
-                    desc: res.message,
-                    duration: 0
-                });
+            this.$Modal.confirm({
+                title: '提示',
+                content: "确定删除所选样板吗?",
+                onOk: () => {
+                    this.$http.post("/api_admin.php", params).then((res) => {
+                        this.appList.splice(item._index, 1);
+                    }).catch((response) => {
+                        this.$Notice.error({
+                            title: '错误提示',
+                            desc: response,
+                        });
+                    });
+                },
+                onCancel: () => {
+                }
             });
 
-            _this.$http.post('/api_admin.php', _this.$qs.stringify(params)).then(function (response) {
-                console.log(response.data);
-                if (response.data.status == 1) {
-                    _this.appList.splice(item._index, 1);
-                } else {
-                    _this.$Message.info(response.data.message);
-                }
-            }).catch(function (response) {
-                console.log(response);
-                _this.$Notice.error({
-                    title: '错误提示',
-                    desc: '无法访问服务器,请重试'
-                });
-            });
         },
         previewApp: function (params) {
             this.$emit("previewApp", params);
             // window.open('//a.richapps.cn/appeditor/preview.php?appid=' + params.fromappid);
+        },
+        addTemplate (params) {
+            this.$emit("successCallback", params);
         }
     }
 }
@@ -473,7 +523,7 @@ export default {
         position: absolute;
         top: 52px;
         right: 0;
-        background: url('../../assets/images/templateList/mobileBg.png') no-repeat right;
+        background: url('../../../assets/images/templateList/mobileBg.png') no-repeat right;
         background-size: 100%;
     }
     .card-info {
@@ -493,6 +543,10 @@ export default {
                 padding-left: 5px;
             }
         }
+    }
+    .deleteBtn {
+        padding: 10px;
+        text-align: right;
     }
     .ac-title-level3, .ac-title-level4 {
         color: #252b3a;

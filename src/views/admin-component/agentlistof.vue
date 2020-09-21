@@ -25,7 +25,7 @@
                         @on-keyup.enter="get(keyword)"
                         clearable
                         class="ant-search-input mg-r-10"
-                        style="width: 200px;"
+                        style="width: 200px"
                     />
                     <Button
                         type="primary"
@@ -83,28 +83,28 @@
             @on-ok="moneyEdit"
             @on-cancel=""
         >
-            <label style="display: block; margin-bottom: 10px;">
+            <label style="display: block; margin-bottom: 10px">
                 <span>金额：</span>
                 <Input
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="money_edit.money"
                 ></Input>
             </label>
 
-            <label style="display: block;">
+            <label style="display: block">
                 <span>方向：</span>
-                <Select style="width: 200px;" v-model="money_edit.io">
+                <Select style="width: 200px" v-model="money_edit.io">
                     <Option value="+">入账</Option>
                     <Option value="-">扣款</Option>
                 </Select>
             </label>
-            <label style="display: block; margin-top: 20px;">
+            <label style="display: block; margin-top: 20px">
                 <span>备注：</span>
                 <Input
                     type="text"
                     v-model="money_edit.bei"
-                    style="width: 200px;"
+                    style="width: 200px"
                 ></Input>
             </label>
         </Modal>
@@ -115,12 +115,12 @@
             @on-cancel=""
         >
             <div>
-                <span style="width: 80px; display: inline-block;"
+                <span style="width: 80px; display: inline-block"
                     >代理商等级:</span
                 >
                 <Select
                     v-model="agent_edit_data.agentjbcode"
-                    style="width: 200px;"
+                    style="width: 200px"
                 >
                     <!-- <Option v-for="item in agent_edit_data.body" :value="item.rolecode" :key="item.rolecode">{{ item.rolename }}</Option>
 	                高级代理 -> 门店级代理
@@ -136,35 +136,35 @@
                     >
                 </Select>
             </div>
-            <div style="margin-top: 20px;">
-                <span style="width: 80px; display: inline-block;">地区:</span>
+            <div style="margin-top: 20px">
+                <span style="width: 80px; display: inline-block">地区:</span>
                 <Input
                     type="text"
                     v-model="agent_edit_data.area"
-                    style="width: 200px;"
+                    style="width: 200px"
                 ></Input>
             </div>
-            <div style="margin-top: 20px;">
-                <span style="width: 80px; display: inline-block;"
+            <div style="margin-top: 20px">
+                <span style="width: 80px; display: inline-block"
                     >开始时间:</span
                 >
                 <DatePicker
                     type="datetime"
                     placeholder="开始时间"
-                    style="width: 200px;"
+                    style="width: 200px"
                     format="yyyy-MM-dd HH:mm:ss"
                     @on-change="start_date"
                     :value="agent_edit_data.startdate"
                 ></DatePicker>
             </div>
-            <div style="margin-top: 20px;">
-                <span style="width: 80px; display: inline-block;"
+            <div style="margin-top: 20px">
+                <span style="width: 80px; display: inline-block"
                     >结束时间:</span
                 >
                 <DatePicker
                     type="datetime"
                     placeholder="结束时间"
-                    style="width: 200px;"
+                    style="width: 200px"
                     format="yyyy-MM-dd HH:mm:ss"
                     @on-change="end_date"
                     :value="agent_edit_data.enddate"
@@ -420,7 +420,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });
@@ -448,7 +448,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });
@@ -477,7 +477,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });
@@ -507,7 +507,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });
@@ -534,7 +534,7 @@ export default {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
-                    desc: '无法访问服务器,请重试'
+                    desc: response
                 });
                 _this.$Loading.error();
             });
