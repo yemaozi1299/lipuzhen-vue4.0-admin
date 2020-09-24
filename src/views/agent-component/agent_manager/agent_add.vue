@@ -153,7 +153,7 @@ export default {
                 apptype: 0,
                 user: this.editAdmin.userid
             }
-            _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then((res) => {
+            _this.$http.post('/api_agent.php', _this.$qs.stringify(data)).then((res) => {
                 console.log(res);
                 this.applist = res.data.body || [];
             }).catch((response) => {
@@ -166,7 +166,7 @@ export default {
         getPrivilege (appid) {
             this.$http.request({
                 method: "POST",
-                url: "/api_admin.php?action=app_accredit_listof",
+                url: "/api_agent.php?action=app_accredit_listof",
                 params: {
                     appid: appid
                 }
@@ -203,7 +203,7 @@ export default {
                         accreditArr: this.accreditArr
                     };
                     console.log(data);
-                    this.$http.post("/api_admin.php?action=manager_add", this.$qs.stringify(data)).then((res) => {
+                    this.$http.post("/api_agent.php?action=manager_add", this.$qs.stringify(data)).then((res) => {
                         this.$Message.info("添加成功");
                         this.$router.go(-1);
                         console.log(res);

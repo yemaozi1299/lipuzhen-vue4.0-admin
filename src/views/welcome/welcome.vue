@@ -19,6 +19,9 @@
                             >超级管理员平台</router-link
                         >
                     </li>
+                    <li>
+                        <span @click="showEditAdmin">管理员管理</span>
+                    </li>
                 </ul>
                 <ul class="account-wrap">
                     <li>
@@ -81,6 +84,96 @@
                 </FormItem>
             </Form>
         </Modal>
+
+        <Modal
+            v-model="isEdit"
+            title="管理员设置"
+            @on-ok="isEdit = false"
+            @on-cancel=""
+            width="1000"
+        >
+            <tables
+                ref="tables"
+                editable
+                search-place="top"
+                v-model="adminData.data"
+                :columns="adminData.columns"
+                showPage
+                :total="editAdmin.total"
+                :current="editAdmin.page"
+                :page-size="pageno"
+                show-total
+                show-elevator
+                @on-skippage="adminSkippage"
+                showlayout
+            >
+                <template slot="header">
+                    <div class="search-area">
+                        <!-- v-on:click="editAdmin.isModal = true" -->
+
+                        <Button
+                            type="primary"
+                            class="ant-btn mg-r-20"
+                            @click="goeditAdmin"
+                        >
+                            <Icon type="md-add" />添加
+                        </Button>
+                        <Input
+                            v-model="keyword"
+                            placeholder="关键字"
+                            @on-keyup.enter="getAdmin(keyword)"
+                            clearable
+                            class="ant-search-input mg-r-10"
+                            style="width: 200px"
+                        />
+                        <Button
+                            type="primary"
+                            @click="getAdmin(keyword)"
+                            icon="ios-search"
+                            class="ant-search-btn"
+                        ></Button>
+                    </div>
+                </template>
+            </tables>
+        </Modal>
+        <Modal
+            v-model="editPassword.isModal"
+            title="修改密码"
+            @on-ok="editPasswordData('editPassword')"
+            @on-cancel=""
+            :loading="editPassword.loading"
+        >
+            <Form
+                ref="editPassword"
+                :model="editPassword"
+                :rules="passwordLine"
+                label-position="left"
+                :label-width="100"
+            >
+                <FormItem label="账号/手机号：">
+                    <span>{{ editPassword.phone }}</span>
+                </FormItem>
+                <FormItem label="新密码：" prop="password">
+                    <Input
+                        type="password"
+                        v-model="editPassword.password"
+                    ></Input>
+                </FormItem>
+                <FormItem label="确认密码：" prop="isPassword">
+                    <Input
+                        type="password"
+                        v-model="editPassword.isPassword"
+                    ></Input>
+                </FormItem>
+            </Form>
+        </Modal>
+        <Modal v-model="addManagerData.isModal" title="添加管理员" width="960">
+            <addAdmin
+                @successCallback="successCallback"
+                @cancelCallback="cancelCallback"
+            ></addAdmin>
+            <p slot="footer"></p>
+        </Modal>
     </Layout>
 </template>
 <script>
@@ -89,10 +182,13 @@ import applogo from '@/assets/images/welcome/applogo.png'
 import Tables from '@/components/tables'
 import Buttons from '@/components/buttons'
 import Cookies from 'js-cookie';
+
+import addAdmin from './home_manager/home_add'
 export default {
     components: {
         Tables,
         Buttons,
+        addAdmin
     },
     data () {
         return {
@@ -248,7 +344,140 @@ export default {
                     }
                 ],
                 content: []
-            }
+            },
+
+            addManagerData: {
+                isModal: false
+            },
+            isEdit: false,
+            pageno: 10,
+            keyword: "",
+            passwordLine: {
+                password: [
+                    { required: true, message: '必填', trigger: 'blur' }
+                ],
+                isPassword: [
+                    { required: true, message: '必填', trigger: 'blur' }
+                ],
+            },
+            editAdmin: {
+                isModal: false,
+                searchPoptip: false,
+                id: '',
+                total: 0,
+                page: 1,
+                realname: '',
+                mobile: '',
+                password: '',
+                isPassword: '',
+                loading: true,
+                body: []
+            },
+            adminLine: {
+                realname: [
+                    { required: true, message: '必填', trigger: 'blur' }
+                ],
+                mobile: [
+                    { required: true, message: '必填', trigger: 'blur' }
+                ],
+                password: [
+                    { required: true, message: '必填', trigger: 'blur' }
+                ],
+                isPassword: [
+                    { required: true, message: '必填', trigger: 'blur' }
+                ],
+            },
+            editPassword: {
+                isModal: false,
+                loading: true,
+                password: '',
+                isPassword: '',
+                id: '',
+                phone: ''
+            },
+            adminData: {
+                columns: [
+                    { title: "管理员名称", key: "realname" },
+                    {
+                        title: "等级",
+                        render: (h, params) => {
+                            return h('div', {
+                                style: {
+                                    color: params.row.sort == 1 ? '#ed4014' : '#2d8cf0'
+                                }
+                            }, params.row.sort == 1 ? '高级管理员' : '普通管理员');
+                        },
+                        width: '120px'
+                    },
+                    {
+                        title: "状态",
+                        render: (h, params) => {
+                            return h('div', [
+                                h(Buttons, {
+                                    props: {
+                                        type: (params.row.yesno == 1 ? 'success' : 'error'),
+                                        size: 'small'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            var mode = params.row.yesno == 1 ? 'no' : 'ok';
+                                            this.editManager(params.row, mode);
+                                        }
+                                    }
+                                }, params.row.yesno == 1 ? '正常' : '关闭')
+                            ]);
+                        }
+                    },
+                    { title: "最近登录时间", key: "nowlogin" },
+                    { title: "最近登录IP", key: "nowip" },
+                    {
+                        title: "操作",
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'info',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        'margin-right': '10px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.editPassword.id = params.row.id;
+                                            this.editPassword.phone = params.row.mobile;
+                                            this.editPassword.isModal = true;
+                                        }
+                                    }
+                                }, '修改'),
+                                h('Button', {
+                                    props: {
+                                        type: 'error',
+                                        size: 'small'
+                                    },
+                                    style: {
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.$Modal.confirm({
+                                                title: "确认删除",
+                                                content: "确认删除该管理员吗，删除后，该管理员下的所有数据都会被删除",
+                                                type: "warning",
+                                                onOk: () => {
+                                                    this.editManager(params.row, 'del');
+                                                },
+                                                onCancel: () => {
+                                                }
+                                            })
+                                        }
+                                    }
+                                }, '删除')
+                            ]);
+                        }
+                    },
+                ],
+                data: []
+            },
         }
     },
     created: function () {
@@ -358,14 +587,13 @@ export default {
                     });
                 }
                 _this.$Loading.finish();
-            })
-                .catch(function (response) {
-                    _this.$Notice.error({
-                        title: '错误提示',
-                        desc: response
-                    });
-                    _this.$Loading.error();
+            }).catch(function (response) {
+                _this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
                 });
+            });
+
         },
         routerPage (params) {
             Cookies.set("CookVueAppid", params.id);
@@ -411,6 +639,117 @@ export default {
                 this.getAppList();
                 console.log(res.data);
             });
+        },
+        editPasswordData (name) {
+            var _this = this;
+            var params = this.editPassword;
+            this.$refs[name].validate((valid) => {
+                console.log(valid);
+                if (valid) {
+                    if (params.password != params.isPassword) {
+                        this.$nextTick(() => {
+                            this.editPassword.loading = true;
+                        });
+                        return this.$Message.warning('两次密码不一致，请重新输入');
+                    }
+
+                    var data = {
+                        action: 'manager_password',
+                        managerid: this.editPassword.id,
+                        password: this.editPassword.password
+                    };
+                    _this.$http.post('/api_home.php', _this.$qs.stringify(data)).then(function (response) {
+                        _this.editPassword.isModal = false;
+                        _this.editPassword.password = '';
+                        _this.editPassword.isPassword = '';
+                        _this.$Message.success("修改成功");
+                        _this.$Loading.finish();
+                    }).catch(function (response) {
+                        console.log(response);
+                        _this.$Notice.error({
+                            title: '错误提示',
+                            desc: response
+                        });
+                        _this.editPassword.loading = false;
+                        _this.$nextTick(() => {
+                            _this.editPassword.loading = true;
+                        });
+                    });
+                } else {
+                    _this.editPassword.loading = false;
+                    _this.$nextTick(() => {
+                        _this.editPassword.loading = true;
+                    });
+                }
+            });
+        },
+        goeditAdmin () {
+            // this.$router.push({
+            //     name: "welcomeAdmin",
+            // });
+            this.addManagerData.isModal = true;
+        },
+        successCallback () {
+            this.addManagerData.isModal = false;
+            this.getAdmin();
+        },
+        cancelCallback () {
+            this.addManagerData.isModal = false;
+        },
+        getAdmin: function (keyword) {
+            var _this = this;
+            var data = {
+                action: 'manager_listof',
+                pageno: 10,
+                page: this.editAdmin.page,
+                keyword: keyword
+            };
+            this.$Loading.start();
+            _this.$http.post('/api_home.php', _this.$qs.stringify(data)).then(function (response) {
+                if (response.data.status == 1) {
+                    _this.adminData.data = response.data.body;
+                    _this.editAdmin.total = Number(response.data.total);
+                }
+                _this.$Loading.finish();
+            }).catch(function (response) {
+                console.log(response);
+                _this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+                _this.$Loading.error();
+            });
+        },
+        editManager: function (params, mode) {
+            var _this = this;
+            var data = {
+                action: 'manager_check',
+                chooseID: params.id,
+                editmode: mode
+            };
+            this.$Loading.start();
+            _this.$http.post('/api_home.php', _this.$qs.stringify(data)).then(function (response) {
+                if (response.data.status == 1) {
+                    _this.getAdmin();
+                }
+                _this.$Loading.finish();
+            }).catch(function (response) {
+                console.log(response);
+                _this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+                _this.$Loading.error();
+            });
+        },
+        adminSkippage: function (page) {
+            this.editAdmin.page = page;
+            this.getAdmin();
+        },
+        showEditAdmin () {
+            // this.editAdmin.id = params.row.id;
+            this.isEdit = true;
+            this.getAdmin();
         }
     }
 }

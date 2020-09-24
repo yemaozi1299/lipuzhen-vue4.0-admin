@@ -44,6 +44,16 @@ export default {
 		component: () => import('@/views/welcome/welcome.vue'),
 
 	}, {
+		path: '/welcome/addAdmin',
+		name: 'welcomeAdmin',
+		meta: {
+			title: '管理员添加',
+			icon: 'md-home',
+			hideInMenu: true
+		},
+		component: () => import('@/views/welcome/home_manager/home_add.vue'),
+
+	}, {
 		path: '/home',
 		name: '_home',
 		component: Main,
@@ -872,6 +882,15 @@ export default {
 						icon: 'md-home'
 					},
 					component: () => import('@/views/agent-component/user.vue')
+				},
+				{
+					path: '/agent_user/:page/agent_add',
+					name: 'agent_add',
+					meta: {
+						title: '管理员添加',
+						hideInMenu: true
+					},
+					component: () => import('@/views/agent-component/agent_manager/agent_add.vue')
 				},
 			]
 		},

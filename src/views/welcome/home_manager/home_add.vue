@@ -1,6 +1,5 @@
 <template>
-    <Card>
-        <p slot="title">添加管理员</p>
+    <div>
         <Form
             ref="editAdmin"
             :model="editAdmin"
@@ -89,7 +88,7 @@
                 </FormItem>
             </Form>
         </Modal>
-    </Card>
+    </div>
 </template>
 
 <script>
@@ -141,19 +140,17 @@ export default {
     },
     methods: {
         fetchData () {
-            this.editAdmin.userid = this.$route.query.userid;
             this.getAppList();
         },
         getAppList: function (page) {
             var _this = this;
             var data = {
-                action: 'wxapplistof',
+                action: 'wxapp_listof',
                 page: page || 1,
                 pageno: 100,
                 apptype: 0,
-                user: this.editAdmin.userid
             }
-            _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then((res) => {
+            _this.$http.post('/api_home.php', _this.$qs.stringify(data)).then((res) => {
                 console.log(res);
                 this.applist = res.data.body || [];
             }).catch((response) => {
@@ -166,7 +163,7 @@ export default {
         getPrivilege (appid) {
             this.$http.request({
                 method: "POST",
-                url: "/api_admin.php?action=app_accredit_listof",
+                url: "/api_home.php?action=app_accredit_listof",
                 params: {
                     appid: appid
                 }
@@ -202,11 +199,10 @@ export default {
                         user: params.userid,
                         accreditArr: this.accreditArr
                     };
-                    console.log(data);
-                    this.$http.post("/api_admin.php?action=manager_add", this.$qs.stringify(data)).then((res) => {
+                    this.$http.post("/api_home.php?action=manager_add", this.$qs.stringify(data)).then((res) => {
                         this.$Message.info("添加成功");
-                        this.$router.go(-1);
-                        console.log(res);
+                        this.$emit("successCallback", res);
+                        // this.$router.go(-1);
                     }).catch((response) => {
                         this.$Notice.error({
                             title: '错误提示',
@@ -247,7 +243,7 @@ export default {
             }
         },
         cancel () {
-            this.$router.go(-1)
+            this.$emit("cancelCallback", {});
         },
     }
 }

@@ -176,7 +176,8 @@
 <script type="text/javascript">
 import Tables from '@/components/tables'
 import Buttons from '@/components/buttons'
-import fileExplorer from '@/components/fileExplorer/fileExplorer';
+import fileExplorer from '@/components/fileExplorer/fileExplorer'
+import noImage from '@/assets/images/noimage.jpg'
 export default {
     components: {
         Tables,
@@ -237,15 +238,14 @@ export default {
                     {
                         title: '应用图标',
                         render: (h, params) => {
-                            return h('div', [
+                            return h('div', {
+                                attrs: {
+                                    class: 'app-upload-list'
+                                }
+                            }, [
                                 h('img', {
                                     attrs: {
-                                        src: params.row.logo ? ('/userlist/' + params.row.user + '/' + params.row.id + '/userpic/' + params.row.logo) : '/images/noimage.gif',
-                                    },
-                                    style: {
-                                        margin: '10px 0px',
-                                        width: '50px',
-                                        height: '50px'
+                                        src: params.row.logo ? ('/userlist/' + params.row.user + '/' + params.row.id + '/userpic/' + params.row.logo) : noImage,
                                     },
                                     on: {
                                         click: () => {
@@ -256,7 +256,6 @@ export default {
                                 }, '设置')
                             ]);
                         },
-                        width: '90px'
 
                     },
                     {

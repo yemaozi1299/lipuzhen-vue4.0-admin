@@ -135,37 +135,7 @@
                 </template>
             </tables>
         </Modal>
-        <Modal
-            v-model="editAdmin.isModal"
-            title="添加管理员"
-            @on-ok="addManager('editAdmin')"
-            @on-cancel=""
-            :loading="editAdmin.loading"
-        >
-            <Form
-                ref="editAdmin"
-                :model="editAdmin"
-                :rules="adminLine"
-                label-position="left"
-                :label-width="100"
-            >
-                <FormItem label="管理名姓名：" prop="realname">
-                    <Input type="text" v-model="editAdmin.realname"></Input>
-                </FormItem>
-                <FormItem label="手机：" prop="mobile">
-                    <Input type="text" v-model="editAdmin.mobile"></Input>
-                </FormItem>
-                <FormItem label="密码：" prop="password">
-                    <Input type="password" v-model="editAdmin.password"></Input>
-                </FormItem>
-                <FormItem label="确认密码：" prop="isPassword">
-                    <Input
-                        type="password"
-                        v-model="editAdmin.isPassword"
-                    ></Input>
-                </FormItem>
-            </Form>
-        </Modal>
+
         <Modal
             v-model="editPassword.isModal"
             title="修改密码"
@@ -246,12 +216,7 @@
             </div>
         </Modal>
 
-        <Modal
-            v-model="isModal"
-            title="添加应用"
-            width="1080"
-            @on-ok="enterUpgrade"
-        >
+        <Modal v-model="isModal" title="添加应用" width="1080">
             <Card dis-hover>
                 <templateList
                     :isAdd="isAdd"
@@ -403,7 +368,7 @@ export default {
                         render: (h, params) => {
                             return h('div', {
                                 style: {
-                                    color: 'red'
+                                    color: params.row.sort == 1 ? '#ed4014' : '#2d8cf0'
                                 }
                             }, params.row.sort == 1 ? '高级管理员' : '普通管理员');
                         },
@@ -436,7 +401,7 @@ export default {
                             return h('div', [
                                 h('Button', {
                                     props: {
-                                        type: 'warning',
+                                        type: 'info',
                                         size: 'small'
                                     },
                                     style: {
@@ -673,7 +638,6 @@ export default {
     },
     created: function () {
         this.get();
-        this.getAppList();
         this.getSoftList();
         // this.getAgentJibie();
         // this.addPriseApp();
@@ -681,21 +645,6 @@ export default {
     watch: {
         selectedSoft (val) {
             this.getAgentprice();
-        },
-        'getAppType.pc' (val) {
-            this.appList = [];
-            this.pageNum = 1;
-            this.getAppList();
-        },
-        'getAppType.mobile' (val) {
-            this.appList = [];
-            this.pageNum = 1;
-            this.getAppList();
-        },
-        'getAppType.mina' (val) {
-            this.appList = [];
-            this.pageNum = 1;
-            this.getAppList();
         },
     },
     methods: {
@@ -717,22 +666,6 @@ export default {
                     desc: response
                 });
             });
-        },
-        getGroundList: function (e) {
-            var $this = e.target,
-                viewH = $this.offsetHeight,
-                //可见高度  
-                contentH = $this.scrollHeight,
-                //内容高度  
-                scrollTop = $this.scrollTop; //滚动高度  
-            if ($this.getAttribute("class").indexOf('js-on-more') >= 0) {
-                return false;
-            }
-            // console.log(viewH,contentH,scrollTop);
-            if (scrollTop / (contentH - viewH) >= 1) { //到达底部100px时,加载新内容  
-                this.pageNum++;
-                this.getAppList();
-            }
         },
         delApp: function (params) {
             var _this = this;
@@ -771,6 +704,7 @@ export default {
             _this.infoData.data = [];
             this.$Loading.start();
             _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
+                console.log(response);
                 if (response.data.status == 1) {
                     _this.infoData.data = response.data.body || [];
                     _this.pageData.total = Number(response.data.total);
@@ -787,50 +721,8 @@ export default {
                 _this.$Loading.error();
             });
         },
-        getAppList: function () {
-            var _this = this;
-            var data = {
-                action: 'example_applist',
-                page: this.pageNum,
-                pageno: 30,
-                keyword: this.searchAppList.keyword,
-                pc: this.getAppType.pc ? 1 : 0,
-                mobile: this.getAppType.mobile ? 1 : 0,
-                mina: this.getAppType.mina ? 1 : 0,
-            };
-
-            this.$Loading.start();
-            _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
-                if (response.data.status == 1) {
-                    if (response.data.body == null || response.data.body.length < 0) {
-                        document.getElementById('scrollList').classList.add("js-on-more");
-                    } else {
-                        document.getElementById('scrollList') && document.getElementById('scrollList').classList.remove("js-on-more");
-                    }
-                    _this.appList = _this.appList.concat(response.data.body || []);
-                    _this.total = response.data.total;
-                } else {
-                    _this.$Message.info(response.data.message);
-                }
-
-                _this.$Loading.finish();
-            }).catch(function (response) {
-                console.log(response);
-                _this.$Notice.error({
-                    title: '错误提示',
-                    desc: response
-                });
-                _this.$Loading.error();
-            });
-        },
-
-        getSearchAppList () {
-            this.appList = [];
-            this.pageNum = 1;
-            this.getAppList();
 
 
-        },
         addPriseApp: function () {
             var _this = this;
             var data = {
@@ -912,10 +804,6 @@ export default {
                 }
             })
         },
-        addskippage: function (page) {
-            this.page = page;
-            this.getAppList()
-        },
         skippage: function (page) {
             this.pageData.page = page;
             this.get();
@@ -967,57 +855,7 @@ export default {
             });
         },
 
-        addManager: function (name) {
-            var _this = this;
-            var params = this.editAdmin;
 
-            this.$refs[name].validate((valid) => {
-                if (valid) {
-                    if (params.password != params.isPassword) {
-                        this.editAdmin.loading = false;
-                        this.$nextTick(() => {
-                            this.editAdmin.loading = true;
-                        });
-                        return this.$Message.warning('两次密码不一致，请重新输入');
-                    }
-                    var data = {
-                        action: 'manager_add',
-                        realname: params.realname,
-                        mobile: params.mobile,
-                        password: params.password,
-                        user: this.editAdmin.id
-                    };
-                    this.$Loading.start();
-                    _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
-                        _this.editAdmin.loading = false;
-                        if (response.data.status == 1) {
-                            _this.getAdmin();
-                            _this.editAdmin.name = '';
-                            _this.editAdmin.password = '';
-                            _this.editAdmin.isModal = false;
-                        } else {
-                            _this.$nextTick(() => {
-                                _this.editAdmin.loading = true;
-                            });
-                            _this.$Message.error(response.data.message);
-                        }
-                        _this.$Loading.finish();
-                    }).catch(function (response) {
-                        console.log(response);
-                        _this.$Notice.error({
-                            title: '错误提示',
-                            desc: response
-                        });
-                        _this.$Loading.error();
-                    });
-                } else {
-                    this.editAdmin.loading = false;
-                    this.$nextTick(() => {
-                        this.editAdmin.loading = true;
-                    });
-                }
-            })
-        },
         editPasswordData: function (name) {
             var _this = this;
             var params = this.editPassword;
@@ -1060,9 +898,9 @@ export default {
                         _this.$Loading.error();
                     });
                 } else {
-                    this.editAdmin.loading = false;
-                    this.$nextTick(() => {
-                        this.editAdmin.loading = true;
+                    _this.editPassword.loading = false;
+                    _this.$nextTick(() => {
+                        _this.editPassword.loading = true;
                     });
                 }
             });
@@ -1174,6 +1012,9 @@ export default {
                 name: "admin_add",
                 params: {
                     page: 1
+                },
+                query: {
+                    userid: this.editAdmin.id
                 }
             });
         }

@@ -154,5 +154,24 @@ body {
         font-size: 13px;
         color: #666;
     }
+    .app-upload-list {
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        text-align: center;
+        line-height: 60px;
+        overflow: hidden;
+        position: relative;
+        img {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            max-width: 100%;
+            max-height: 100%;
+        }
+    }
 }
 </style>

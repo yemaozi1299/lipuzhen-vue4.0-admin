@@ -1,7 +1,7 @@
 <template>
-	<Card>
-		<p slot="title">企业管理</p>
-		<tables
+    <Card>
+        <p slot="title">企业管理</p>
+        <tables
             ref="tables"
             editable
             search-place="top"
@@ -19,7 +19,7 @@
         >
             <template slot="header">
                 <div class="search-area">
-					<Button
+                    <Button
                         type="primary"
                         class="ant-btn mg-r-20"
                         v-on:click="isAddCompany = true"
@@ -32,7 +32,7 @@
                         @on-keyup.enter="get(keyword)"
                         clearable
                         class="ant-search-input mg-r-10"
-                        style="width: 200px;"
+                        style="width: 200px"
                     />
                     <Button
                         type="primary"
@@ -44,175 +44,234 @@
             </template>
         </tables>
 
-	    <Modal
-	        v-model="isAddCompany"
-	        title="添加企业"
-	        @on-ok="addCompany('addCompanyData')"
-	        @on-cancel=""
-	        :loading="addCompanyData.loading">
-	        <Form ref="addCompanyData" :model="addCompanyData" :rules="ruleInline" label-position="left" :label-width="100">
-	        	<FormItem label="企业名称：" prop="name">
-	        		<Input type="text" v-model="addCompanyData.name"></Input>
-	        	</FormItem>
-	        	<FormItem label="管理名姓名：" prop="realname">
-	        		<Input type="text" v-model="addCompanyData.realname"></Input>
-	        	</FormItem>
-	        	<FormItem label="手机：" prop="mobile">
-	        		<Input type="text" v-model="addCompanyData.mobile"></Input>
-	        	</FormItem>
-	        	<FormItem label="密码：" prop="password">
-	        		<Input type="password" v-model="addCompanyData.password"></Input>
-	        	</FormItem>
-	        	<FormItem label="确认密码：" prop="isPassword">
-	        		<Input type="password" v-model="addCompanyData.isPassword"></Input>
-	        	</FormItem>
-	        </Form>
-	    </Modal>
-	    <Modal
-	        v-model="isEdit"
-	        title="管理员设置"
-	        @on-ok="addAdmin"
-	        @on-cancel=""
-	        width="1000">
-	        <div class="info-table-add">
-				<Button style="margin-right:20px;"icon="plus" shape="circle" v-on:click="editAdmin.isModal = true"> 添加 </Button>
-				<Poptip placement="left" width="300"  v-model="editAdmin.searchPoptip">
-				    <Button shape="circle" icon="ios-search">搜索</Button>
-				    <div class="api" slot="content">
-				        <Input v-model="keyword" placeholder="关键字" style="width: 200px;" @keyup.enter="getAdmin(keyword)"></Input>
-				        <Button shape="circle" icon="ios-search" @click="getAdmin(keyword)"></Button>
-				    </div>
-				</Poptip>
-			</div>
-	        <Table :columns="adminData.columns" :data="adminData.data" style="" :border="true"></Table>
-	        <Page :total="editAdmin.total" :current="editAdmin.page" show-total show-elevator @on-change="adminSkippage" style="margin-top:20px"></Page>
-	    </Modal>
-	    <Modal
-	        v-model="editAdmin.isModal"
-	        title="添加管理员"
-	        @on-ok="addManager('editAdmin')"
-	        @on-cancel=""
-	        :loading="editAdmin.loading">
-	        <Form ref="editAdmin" :model="editAdmin" :rules="adminLine" label-position="left" :label-width="100">
-	        	<FormItem label="管理名姓名：" prop="realname">
-	        		<Input type="text" v-model="editAdmin.realname"></Input>
-	        	</FormItem>
-	        	<FormItem label="手机：" prop="mobile">
-	        		<Input type="text" v-model="editAdmin.mobile"></Input>
-	        	</FormItem>
-	        	<FormItem label="密码：" prop="password">
-	        		<Input type="password" v-model="editAdmin.password"></Input>
-	        	</FormItem>
-	        	<FormItem label="确认密码：" prop="isPassword">
-	        		<Input type="password" v-model="editAdmin.isPassword"></Input>
-	        	</FormItem>
-	        </Form>
-	    </Modal>
-		<Modal
-	        v-model="editPassword.isModal"
-	        title="修改密码"
-	        @on-ok="editPasswordData('editPassword')"
-	        @on-cancel=""
-	        :loading="editPassword.loading">
-	        <Form ref="editPassword" :model="editPassword" :rules="passwordLine" label-position="left" :label-width="100">
-				<FormItem label="账号/手机号：" prop="">
-	        		<span>{{editPassword.phone}}</span>
-	        	</FormItem>
-	        	<FormItem label="新密码：" prop="password">
-	        		<Input type="password" v-model="editPassword.password"></Input>
-	        	</FormItem>
-	        	<FormItem label="确认密码：" prop="isPassword">
-	        		<Input type="password" v-model="editPassword.isPassword"></Input>
-	        	</FormItem>
-	        </Form>
-	    </Modal>
-        <div class="angular-dialog">
-        	<div class="add-collect-dialog rich-dialog add-example-dialog" v-if="isModal">
-        		<div class="rich-content">
-        			<header class="rich-title"><span class="rich-title-content">添加应用</span><i class="icon-cross" v-on:click="isModal = false">×</i></header>
+        <Modal
+            v-model="isAddCompany"
+            title="添加企业"
+            @on-ok="addCompany('addCompanyData')"
+            @on-cancel=""
+            :loading="addCompanyData.loading"
+        >
+            <Form
+                ref="addCompanyData"
+                :model="addCompanyData"
+                :rules="ruleInline"
+                label-position="left"
+                :label-width="100"
+            >
+                <FormItem label="企业名称：" prop="name">
+                    <Input type="text" v-model="addCompanyData.name"></Input>
+                </FormItem>
+                <FormItem label="管理名姓名：" prop="realname">
+                    <Input
+                        type="text"
+                        v-model="addCompanyData.realname"
+                    ></Input>
+                </FormItem>
+                <FormItem label="手机：" prop="mobile">
+                    <Input type="text" v-model="addCompanyData.mobile"></Input>
+                </FormItem>
+                <FormItem label="密码：" prop="password">
+                    <Input
+                        type="password"
+                        v-model="addCompanyData.password"
+                    ></Input>
+                </FormItem>
+                <FormItem label="确认密码：" prop="isPassword">
+                    <Input
+                        type="password"
+                        v-model="addCompanyData.isPassword"
+                    ></Input>
+                </FormItem>
+            </Form>
+        </Modal>
+        <Modal
+            v-model="isEdit"
+            title="管理员设置"
+            @on-ok="addAdmin"
+            @on-cancel=""
+            width="1000"
+        >
+            <div class="search-area">
+                <Button
+                    type="primary"
+                    class="ant-btn mg-r-20"
+                    @click="goeditAdmin"
+                >
+                    <Icon type="md-add" />添加
+                </Button>
+                <Input
+                    v-model="keyword"
+                    placeholder="关键字"
+                    @on-keyup.enter="getAdmin(keyword)"
+                    clearable
+                    class="ant-search-input mg-r-10"
+                    style="width: 200px"
+                />
+                <Button
+                    type="primary"
+                    @click="getAdmin(keyword)"
+                    icon="ios-search"
+                    class="ant-search-btn"
+                ></Button>
+            </div>
+            <Tables
+                :columns="adminData.columns"
+                v-model="adminData.data"
+            ></Tables>
+            <Page
+                :total="editAdmin.total"
+                :current="editAdmin.page"
+                show-total
+                show-elevator
+                @on-change="adminSkippage"
+                style="margin-top: 20px"
+            ></Page>
+        </Modal>
+        <Modal
+            v-model="editAdmin.isModal"
+            title="添加管理员"
+            @on-ok="addManager('editAdmin')"
+            @on-cancel=""
+            :loading="editAdmin.loading"
+        >
+            <Form
+                ref="editAdmin"
+                :model="editAdmin"
+                :rules="adminLine"
+                label-position="left"
+                :label-width="100"
+            >
+                <FormItem label="管理名姓名：" prop="realname">
+                    <Input type="text" v-model="editAdmin.realname"></Input>
+                </FormItem>
+                <FormItem label="手机：" prop="mobile">
+                    <Input type="text" v-model="editAdmin.mobile"></Input>
+                </FormItem>
+                <FormItem label="密码：" prop="password">
+                    <Input type="password" v-model="editAdmin.password"></Input>
+                </FormItem>
+                <FormItem label="确认密码：" prop="isPassword">
+                    <Input
+                        type="password"
+                        v-model="editAdmin.isPassword"
+                    ></Input>
+                </FormItem>
+            </Form>
+        </Modal>
+        <Modal
+            v-model="editPassword.isModal"
+            title="修改密码"
+            @on-ok="editPasswordData('editPassword')"
+            @on-cancel=""
+            :loading="editPassword.loading"
+        >
+            <Form
+                ref="editPassword"
+                :model="editPassword"
+                :rules="passwordLine"
+                label-position="left"
+                :label-width="100"
+            >
+                <FormItem label="账号/手机号：" prop="">
+                    <span>{{ editPassword.phone }}</span>
+                </FormItem>
+                <FormItem label="新密码：" prop="password">
+                    <Input
+                        type="password"
+                        v-model="editPassword.password"
+                    ></Input>
+                </FormItem>
+                <FormItem label="确认密码：" prop="isPassword">
+                    <Input
+                        type="password"
+                        v-model="editPassword.isPassword"
+                    ></Input>
+                </FormItem>
+            </Form>
+        </Modal>
 
-        			<div style="padding-top: 20px;padding-left: 20px;padding-bottom:20px;">
-        			    <Poptip placement="right" width="300"  v-model="searchAppList.searchPoptip">
-        			      <Button shape="circle" icon="ios-search">搜索</Button>
-        			      <div class="api" slot="content">
-        			          <Input v-model="searchAppList.keyword" placeholder="搜索,支持模糊搜索..." style="width: 200px;" @keyup.enter="getSearchAppList"></Input>
-        			          <Button shape="circle" icon="ios-search" @click="getSearchAppList"></Button>
-        			      </div>
-        			    </Poptip>
-        			    <div style="font-size:16px;font-weight: bold;display:inline-block;float:right;margin-right:20px;" v-if="searchAppList.search">搜索:{{searchAppList.keyword}}  <Button type="primary" size="small" shape="circle"  @click="cancelSearch">返回</Button></div>
-        			</div>
+        <Modal v-model="isModal" title="添加应用-选择样板" width="1080">
+            <Card dis-hover>
+                <templateList
+                    :isAdd="isAdd"
+                    @successCallback="selectApp"
+                ></templateList>
+            </Card>
+        </Modal>
 
-        			<ul class="tpl-container" @scroll='getGroundList' id="scrollList" style="height: calc(100% - 145px);">
-        				<li @click="selectApp({id:''})" style="cursor:pointer">
-        					<div class="cover-null">
-    							<Icon type="plus"></Icon>
-        					</div>
-        					<p class="name">空白模板</p>
-        				</li>
-        				<li v-for="item in appList">
-        					<img class="cover" style="width:100%;height: auto;" :src="moves + '/images/loading-animate.gif'" v-lazy="item.coverUrl">
-        					<p class="name">{{item.name}}</p>
-        					<div class="code-mask">
-        						<div class="rolename">{{item.rolename}}</div>
-        						<img class="logo" alt="" :src="item.logo">
-        						<span class="select-btn use-btn" @click="selectApp(item)">使用</span>
-        						<span class="select-btn js-preview-btn" @click="previewApp(item)">预览</span>
-        					</div>
-        				</li>
-        				<div class="list-no-more">没有更多数据了</div>
-        				<div class="list-loading" style="opacity:0.5;cursor: default;"><i class="ivu-load-loop ivu-icon ivu-icon-load-c"></i> Loading...</div>
-        			</ul>
-        			<!-- <div class="info-page-btn info-example-btn">
-	    				<Page :total="total" :current="page" show-total show-elevator @on-change="addskippage" ></Page>
-	    			</div> -->
-        		</div>
-        	</div>
-        </div>
-        
-        <div class="angular-dialog">
-        	<div class="add-collect-dialog rich-dialog add-example-dialog" v-if="addAppData.isModal">
-        		<div class="rich-content" style="width:400px;height:auto;margin-top: 200px;margin-left: -200px;">
-        			<header class="rich-title"><span class="rich-title-content">添加应用</span><i class="icon-cross" v-on:click="addAppData.isModal = false">×</i></header>
-        			<ul class="collect-page-wrap">
-    					<li>
-    						<label for="">应用名称：</label>
-    						<input type="text" style="width:200px;" v-model="addAppData.name"></input>
-    					</li>
-    					<li v-if="!addAppData.example_appid">
-    						<label for="">应用型号：</label>
-    						<Select style="width:200px;" v-model="addAppData.rolecode">
-    							<Option :value="item.rolecode" v-for="item in pariceList" :key="item.rolecode">{{item.rolename}}</Option>
-    						</Select>
-    					</li>
-    				</ul>
-    				<!-- <Button type="primary" :loading="loading" @click="addPriseApp" class="rich-submit-btn">
-				        <span v-if="!loading">确定</span>
-				        <span v-else class="ivu-load-loop ivu-icon ivu-icon-load-c">Loading...</span>
-				    </Button> -->
-    				<span class="rich-submit-btn" @click="addPriseApp" v-if="!loading">确定</span>
-    				<span class="rich-submit-btn" v-else style="opacity:0.5;cursor: default;"><i class="ivu-load-loop ivu-icon ivu-icon-load-c"></i> Loading...</span>
-        		</div>
-        	</div>
-        </div>
-	</Card>
+        <Modal
+            v-model="addAppData.isModal"
+            title="添加应用"
+            @on-ok="addPriseApp"
+        >
+            <Form label-position="right" :label-width="100">
+                <FormItem label="应用名称：" prop="">
+                    <Input
+                        type="text"
+                        style="width: 200px"
+                        v-model="addAppData.name"
+                    ></Input>
+                </FormItem>
+                <template v-if="addAppData.example_appid">
+                    <FormItem label="软件型号：" prop="">
+                        <!-- <Input
+                            disabled
+                            :value="addAppData.rolename"
+                            style="width: 200px"
+                        ></Input> -->
+                        {{ addAppData.rolename }}
+                    </FormItem>
+                </template>
+                <template v-else>
+                    <FormItem label="软件类型：" prop="">
+                        <Select style="width: 200px" v-model="selectedSoft">
+                            <Option
+                                :value="item.id"
+                                v-for="item in softList"
+                                :key="item.id"
+                                >{{ item.softname }}</Option
+                            >
+                        </Select>
+                    </FormItem>
+                    <FormItem label="软件型号：" prop="">
+                        <Select
+                            style="width: 200px"
+                            v-model="addAppData.rolecode"
+                        >
+                            <Option
+                                :value="item.id"
+                                v-for="item in pariceList"
+                                :key="item.id"
+                                >{{ item.rolename }}</Option
+                            >
+                        </Select>
+                    </FormItem>
+                </template>
+            </Form>
+        </Modal>
+    </Card>
 </template>
 <script type="text/javascript">
 import Tables from '@/components/tables'
 import Buttons from '@/components/buttons'
+import templateList from '@/views/agent-component/components/templateList.vue';
 export default {
     components: {
         Tables,
         Buttons,
+        templateList
     },
     data: function () {
         return {
+            isAdd: true,
+            selectedSoft: "",
+            softList: [],
+
             loading: false,
             pageno: 10,
             pageNum: 1,
             moves: window.vueAppUrl,
-            appList: [
-
-            ],
+            appList: [],
             searching: false,
             isEdit: false,
             isModal: false,
@@ -260,7 +319,7 @@ export default {
                         render: (h, params) => {
                             return h('div', {
                                 style: {
-                                    color: 'red'
+                                    color: params.row.sort == 1 ? '#ed4014' : '#2d8cf0'
                                 }
                             }, params.row.sort == 1 ? '高级管理员' : '普通管理员');
                         },
@@ -297,7 +356,7 @@ export default {
                             return h('div', [
                                 h('Button', {
                                     props: {
-                                        type: 'warning',
+                                        type: 'info',
                                         size: 'small'
                                     },
                                     style: {
@@ -385,7 +444,7 @@ export default {
                 isModal: false,
                 user: '',
                 name: '',
-                rolecode: 'singlepage',
+                rolecode: '',
                 example_appid: ''
             },
 
@@ -440,7 +499,7 @@ export default {
                                     on: {
                                         click: () => {
                                             this.$router.push({
-                                                path: '/details',
+                                                name: 'agent_details',
                                                 query: {
                                                     user: params.row.id
                                                 }
@@ -518,13 +577,33 @@ export default {
             }
         }
     },
+    watch: {
+        selectedSoft (val) {
+            this.getAgentprice();
+        },
+    },
     created: function () {
         this.get();
-        this.getAgentprice();
-        this.getAppList();
+        // this.getAgentprice();
+        this.getSoftList();
         // this.addPriseApp();
     },
     methods: {
+        getSoftList () {
+            this.$http.request({
+                url: "/api_agent.php?action=soft_listof",
+                params: {
+                }
+            }).then((res) => {
+                this.softList = res.data.body || [];
+                console.log(res.data);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
+        },
         imageLoad: function (e) {
             var $this = e.target;
             $this.setAttribute('src', $this.getAttribute('data-image'));
@@ -582,25 +661,7 @@ export default {
                 }
             })
         },
-        getGroundList: function (e) {
-            var $this = e.target,
-                viewH = $this.offsetHeight,
-                //可见高度  
-                contentH = $this.scrollHeight,
-                //内容高度  
-                scrollTop = $this.scrollTop; //滚动高度  
 
-            // console.log($this.getAttribute("class").indexOf('js-on-more'));
-            if ($this.getAttribute("class").indexOf('js-on-more') >= 0) {
-                return false;
-            }
-            // console.log(viewH,contentH,scrollTop);
-            if (scrollTop / (contentH - viewH) >= 1) { //到达底部100px时,加载新内容  
-                this.pageNum++;
-                this.getAppList();
-                //console.log(me.page,me.maxPage);
-            }
-        },
         delApp: function (params) {
             var _this = this;
             var json = {
@@ -659,39 +720,7 @@ export default {
                 _this.$Loading.error();
             });
         },
-        getAppList: function () {
-            var _this = this;
-            var data = {
-                action: 'example_applist',
-                page: this.pageNum,
-                pageno: 30
-            };
-            // console.log(data);
-            this.$Loading.start();
-            _this.$http.post('/api_agent.php', _this.$qs.stringify(data)).then(function (response) {
-                // console.log(response.data);
-                if (response.data.status == 1) {
-                    if (response.data.body == null || response.data.body.length == 0) {
-                        document.getElementById('scrollList').classList.add("js-on-more");
-                    } else {
-                        document.getElementById('scrollList') && document.getElementById('scrollList').classList.remove("js-on-more");
-                    }
-                    _this.appList = _this.appList.concat(response.data.body || []);
-                    _this.total = response.data.total;
-                } else {
-                    _this.$Message.info(response.data.message);
-                }
 
-                _this.$Loading.finish();
-            }).catch(function (response) {
-                console.log(response);
-                _this.$Notice.error({
-                    title: '错误提示',
-                    desc: response
-                });
-                _this.$Loading.error();
-            });
-        },
         getSearchAppList: function () {
             var _this = this;
             var data = {
@@ -742,7 +771,7 @@ export default {
                 appid: this.vueAppid,
                 user: this.addAppData.user,
                 app_name: this.addAppData.name,
-                rolecode: this.addAppData.rolecode,
+                roleID: this.addAppData.rolecode,
                 example_appid: this.addAppData.example_appid
             };
             this.loading = true;
@@ -821,10 +850,7 @@ export default {
                 }
             })
         },
-        addskippage: function (page) {
-            this.page = page;
-            this.getAppList();
-        },
+
         skippage: function (page) {
             this.pageData.page = page;
             this.get();
@@ -836,24 +862,17 @@ export default {
         getAgentprice: function () {
             var _this = this;
             var data = {
-                action: 'agentprice',
-                appid: this.vueAppid,
-
+                action: 'role_listof',
+                softID: this.selectedSoft
             };
-            this.$Loading.start();
             _this.$http.post('/api_agent.php', _this.$qs.stringify(data)).then(function (response) {
-                if (response.data.status == 1) {
-                    _this.pariceList = response.data.body;
-                }
-                // console.log(response.data);
-                _this.$Loading.finish();
+                _this.pariceList = response.data.body;
+                console.log(response.data);
             }).catch(function (response) {
-                console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
                     desc: response
                 });
-                _this.$Loading.error();
             });
         },
         getAdmin: function (keyword) {
@@ -872,7 +891,6 @@ export default {
                     _this.adminData.data = response.data.body;
                     _this.adminData.total = Number(response.data.total);
                 }
-                console.log(JSON.stringify(response.data.body));
                 _this.$Loading.finish();
             }).catch(function (response) {
                 console.log(response);
@@ -951,9 +969,9 @@ export default {
                         _this.$Loading.error();
                     });
                 } else {
-                    this.editAdmin.loading = false;
-                    this.$nextTick(() => {
-                        this.editAdmin.loading = true;
+                    _this.editPassword.loading = false;
+                    _this.$nextTick(() => {
+                        _this.editPassword.loading = true;
                     });
                 }
             })
@@ -999,6 +1017,17 @@ export default {
         },
         previewApp: function (params) {
             window.open('//a.richapps.cn/appeditor/preview.php?appid=' + params.fromappid);
+        },
+        goeditAdmin () {
+            this.$router.push({
+                name: "agent_add",
+                params: {
+                    page: 1
+                },
+                query: {
+                    userid: this.editAdmin.id
+                }
+            });
         }
     }
 }
