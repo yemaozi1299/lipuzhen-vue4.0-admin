@@ -269,6 +269,11 @@ export default {
                     yc: false
                 };
                 console.log(res.data);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         fetchData () {
@@ -287,6 +292,11 @@ export default {
                     this.tableData = res.data.body || [];
                 }
                 console.log(res.data);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         chooseEdit: function (selection) {
@@ -316,6 +326,11 @@ export default {
                     this.dataInitial();
                 }
                 console.log(res.data);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         del (softID) {
@@ -334,6 +349,11 @@ export default {
                 this.dataInitial();
 
                 console.log(res.data);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
     }

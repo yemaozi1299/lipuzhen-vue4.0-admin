@@ -124,7 +124,12 @@ export default {
             }).then((res) => {
                 this.tableData = res.data.body || [];
                 console.log(res);
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         chooseEdit: function (selection) {
             var chooseID = []

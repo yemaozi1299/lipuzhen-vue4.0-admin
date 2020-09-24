@@ -173,7 +173,12 @@ export default {
             }).then((res) => {
                 this.codeList = res.data.body || [];
                 console.log(res);
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         handleSubmit (name) {
             /*

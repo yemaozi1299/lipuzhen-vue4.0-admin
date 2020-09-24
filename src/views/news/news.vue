@@ -487,6 +487,11 @@ export default {
             }).then((res) => {
                 this.langList = res.data.body || [];
                 console.log(res);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         changeLange (id) {
@@ -527,6 +532,11 @@ export default {
                 this.page = parseInt(res.data.page);
                 this.loading = false;
                 this.chooseID = [];
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         getClass () {
@@ -537,6 +547,11 @@ export default {
                 }
             }).then((res) => {
                 this.classList = res.data.body || [];
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         pathEdit () {
@@ -588,6 +603,11 @@ export default {
                 this.classname = "";
                 this.dataInitial();
                 console.log(res);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
             console.log(params);
         },
@@ -608,6 +628,11 @@ export default {
                 this.classname = "";
                 this.getClass();
                 console.log(res);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         classStateEdit (id) {
@@ -755,7 +780,12 @@ export default {
                     } else {
                         _this.$Message.error(response.data.message)
                     }
-                })
+                }).catch((response) => {
+                    this.$Notice.error({
+                        title: '错误提示',
+                        desc: response
+                    });
+                });
             } else {
                 _this.$Message.info('请选择要操作的记录')
                 return false
@@ -845,7 +875,12 @@ export default {
                             } else {
                                 _this.$Message.error(response.data.message)
                             }
-                        })
+                        }).catch((response) => {
+                            this.$Notice.error({
+                                title: '错误提示',
+                                desc: response
+                            });
+                        });
                     }
                 })
 

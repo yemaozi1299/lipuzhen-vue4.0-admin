@@ -152,6 +152,11 @@ export default {
             }).then((res) => {
                 this.tableData = res.data.body || [];
                 console.log(res);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         chooseEdit: function (selection) {
@@ -189,6 +194,11 @@ export default {
                     this.$Message.success("清除成功");
                 }
                 console.log(res);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         removeSurvey (params) {
@@ -203,6 +213,11 @@ export default {
                     this.$Message.success("删除成功");
                 }
                 console.log(res);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         }
     }

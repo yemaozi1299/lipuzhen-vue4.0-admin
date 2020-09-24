@@ -32,7 +32,7 @@
                         @on-keyup.enter="get(keyword)"
                         clearable
                         class="ant-search-input mg-r-10"
-                        style="width: 200px;"
+                        style="width: 200px"
                     />
                     <Button
                         type="primary"
@@ -50,110 +50,110 @@
             @on-ok="addRole"
             @on-cancel=""
         >
-            <label style="display: block; margin-bottom: 10px;">
-                <span style="width: 90px; display: inline-block;"
+            <label style="display: block; margin-bottom: 10px">
+                <span style="width: 90px; display: inline-block"
                     >型号名称：</span
                 >
                 <Input
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="role_add.rolename"
                 ></Input>
             </label>
 
-            <label style="display: block; margin-bottom: 10px;">
-                <span style="width: 90px; display: inline-block;"
+            <label style="display: block; margin-bottom: 10px">
+                <span style="width: 90px; display: inline-block"
                     >型号代码：</span
                 >
                 <Input
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="role_add.rolecode"
                 ></Input>
             </label>
 
-            <label style="display: block; margin-bottom: 10px;">
-                <span style="width: 90px; display: inline-block;"
+            <label style="display: block; margin-bottom: 10px">
+                <span style="width: 90px; display: inline-block"
                     >驿站级价格：</span
                 >
                 <Input
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="role_add.gj_price"
                 ></Input>
             </label>
 
-            <label style="display: block; margin-bottom: 10px;">
-                <span style="width: 90px; display: inline-block;"
+            <label style="display: block; margin-bottom: 10px">
+                <span style="width: 90px; display: inline-block"
                     >微企级价格：</span
                 >
                 <Input
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="role_add.wq_price"
                 ></Input>
             </label>
 
-            <label style="display: block; margin-bottom: 10px;">
-                <span style="width: 90px; display: inline-block;"
+            <label style="display: block; margin-bottom: 10px">
+                <span style="width: 90px; display: inline-block"
                     >企业级价格：</span
                 >
                 <Input
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="role_add.qy_price"
                 ></Input>
             </label>
 
-            <label style="display: block; margin-bottom: 10px;">
-                <span style="width: 90px; display: inline-block;"
+            <label style="display: block; margin-bottom: 10px">
+                <span style="width: 90px; display: inline-block"
                     >区县级价格：</span
                 >
                 <Input
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="role_add.hj_price"
                 ></Input>
             </label>
 
-            <label style="display: block; margin-bottom: 10px;">
-                <span style="width: 90px; display: inline-block;"
+            <label style="display: block; margin-bottom: 10px">
+                <span style="width: 90px; display: inline-block"
                     >市级价格：</span
                 >
                 <Input
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="role_add.bj_price"
                 ></Input>
             </label>
 
-            <label style="display: block; margin-bottom: 10px;">
-                <span style="width: 90px; display: inline-block;"
+            <label style="display: block; margin-bottom: 10px">
+                <span style="width: 90px; display: inline-block"
                     >省级价格：</span
                 >
                 <Input
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="role_add.zs_price"
                 ></Input>
             </label>
 
-            <label style="display: block; margin-bottom: 10px;">
-                <span style="width: 90px; display: inline-block;"
+            <label style="display: block; margin-bottom: 10px">
+                <span style="width: 90px; display: inline-block"
                     >型号描述：</span
                 >
                 <Input
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="role_add.description"
                 ></Input>
             </label>
 
-            <label style="display: block; margin-bottom: 10px;">
-                <span style="width: 90px; display: inline-block;"
+            <label style="display: block; margin-bottom: 10px">
+                <span style="width: 90px; display: inline-block"
                     >是否隐藏：</span
                 >
-                <Select v-model="role_add.yc" style="width: 200px;">
+                <Select v-model="role_add.yc" style="width: 200px">
                     <Option :value="1">隐藏</Option>
                     <Option :value="0">不隐藏</Option>
                 </Select>
@@ -166,91 +166,91 @@
             @on-ok="editRole"
             @on-cancel=""
         >
-            <label style="display: block; margin-bottom: 10px;">
+            <label style="display: block; margin-bottom: 10px">
                 <span>型号名称：</span>
                 <Input
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="role_edit.rolename"
                 ></Input>
             </label>
 
-            <label style="display: block; margin-bottom: 10px;">
+            <label style="display: block; margin-bottom: 10px">
                 <span>型号代码：</span>
                 <Input
                     disabled
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="role_edit.rolecode"
                 ></Input>
             </label>
 
-            <label style="display: block; margin-bottom: 10px;">
+            <label style="display: block; margin-bottom: 10px">
                 <span>驿站级价格：</span>
                 <Input
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="role_edit.gj_price"
                 ></Input>
             </label>
 
-            <label style="display: block; margin-bottom: 10px;">
+            <label style="display: block; margin-bottom: 10px">
                 <span style="">微企级价格：</span>
                 <Input
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="role_edit.wq_price"
                 ></Input>
             </label>
 
-            <label style="display: block; margin-bottom: 10px;">
+            <label style="display: block; margin-bottom: 10px">
                 <span style="">企业级价格：</span>
                 <Input
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="role_edit.qy_price"
                 ></Input>
             </label>
 
-            <label style="display: block; margin-bottom: 10px;">
+            <label style="display: block; margin-bottom: 10px">
                 <span>区县级价格：</span>
                 <Input
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="role_edit.hj_price"
                 ></Input>
             </label>
 
-            <label style="display: block; margin-bottom: 10px;">
+            <label style="display: block; margin-bottom: 10px">
                 <span>市级价格：</span>
                 <Input
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="role_edit.bj_price"
                 ></Input>
             </label>
 
-            <label style="display: block; margin-bottom: 10px;">
+            <label style="display: block; margin-bottom: 10px">
                 <span>省级价格：</span>
                 <Input
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="role_edit.zs_price"
                 ></Input>
             </label>
 
-            <label style="display: block; margin-bottom: 10px;">
+            <label style="display: block; margin-bottom: 10px">
                 <span>型号描述：</span>
                 <Input
                     type="text"
-                    style="width: 200px;"
+                    style="width: 200px"
                     v-model="role_edit.description"
                 ></Input>
             </label>
 
-            <label style="display: block; margin-bottom: 10px;">
+            <label style="display: block; margin-bottom: 10px">
                 <span>是否隐藏：</span>
-                <Select v-model="role_edit.yc" style="width: 200px;">
+                <Select v-model="role_edit.yc" style="width: 200px">
                     <Option :value="1">隐藏</Option>
                     <Option :value="0">不隐藏</Option>
                 </Select>
@@ -435,6 +435,11 @@ export default {
                 }
                 // console.log(JSON.stringify(response.data));
                 _this.$Loading.finish();
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         addRole: function () {
@@ -461,6 +466,11 @@ export default {
                 }
                 console.log(response.data);
                 _this.$Loading.finish();
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         editRole: function () {
@@ -487,6 +497,11 @@ export default {
                 }
                 // console.log(response.data);
                 _this.$Loading.finish();
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         roleDel: function (params) {
@@ -507,6 +522,11 @@ export default {
                         }
                         console.log(response.data);
                         _this.$Loading.finish();
+                    }).catch((response) => {
+                        this.$Notice.error({
+                            title: '错误提示',
+                            desc: response
+                        });
                     });
                 },
                 onCancel: function () {
@@ -528,6 +548,11 @@ export default {
                 }
                 console.log(response.data);
                 _this.$Loading.finish();
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         }
     }

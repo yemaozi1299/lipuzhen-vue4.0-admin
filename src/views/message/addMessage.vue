@@ -26,6 +26,11 @@ export default {
         }
         this.$http.post("/api_edit.php?action=guestbook_add", data).then((res) => {
             console.log(res);
+        }).catch((response) => {
+            this.$Notice.error({
+                title: '错误提示',
+                desc: response
+            });
         });
     },
     methods: {

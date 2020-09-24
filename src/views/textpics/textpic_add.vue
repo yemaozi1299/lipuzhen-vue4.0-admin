@@ -126,7 +126,12 @@ export default {
                     title: data.title
                 };
                 this.changeContent(data.body);
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         handleChange (html, text) {
             this.formValidate.body = html

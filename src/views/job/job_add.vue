@@ -274,7 +274,12 @@ export default {
                 this.changeContent(this.formValidate.message);
                 console.log(res);
                 this.getClass();
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         getClass () {
             var that = this;
@@ -286,6 +291,11 @@ export default {
                 this.classidList = res.data.body || [];
                 this.$nextTick(() => {
                     this.classidList.length && (this.formValidate.groupid = this.formValidate.groupid ? this.formValidate.groupid : this.classidList[0].id);
+                });
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
                 });
             });
         },

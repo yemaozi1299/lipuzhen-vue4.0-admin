@@ -284,6 +284,11 @@ export default {
                 this.classname = "";
                 this.showClass = false;
                 this.getNewClass();
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         addClassCancel () {
@@ -316,6 +321,11 @@ export default {
                         }
                     }).then((res) => {
                         this.getNewClass();
+                    }).catch((response) => {
+                        this.$Notice.error({
+                            title: '错误提示',
+                            desc: response
+                        });
                     });
                 }
             });
@@ -335,7 +345,12 @@ export default {
                     }).then((res) => {
                         this.get();
                         this.getClass();
-                    })
+                    }).catch((response) => {
+                        this.$Notice.error({
+                            title: '错误提示',
+                            desc: response
+                        });
+                    });
                 }
             });
         },
@@ -378,7 +393,12 @@ export default {
             }).then((res) => {
 
                 console.log(res);
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         }
     }
 }

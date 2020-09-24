@@ -302,6 +302,11 @@ export default {
                 this.tableData = res.data.body || [];
                 this.total = parseInt(res.data.total || 0);
                 console.log(res.data);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         getClass () {
@@ -312,7 +317,12 @@ export default {
             }).then((res) => {
                 this.classList = res.data.body || [];
                 console.log(res.data);
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         chooseEdit: function (selection) {
             var chooseID = []
@@ -368,6 +378,11 @@ export default {
                         }
                     }).then((res) => {
                         this.getClass();
+                    }).catch((response) => {
+                        this.$Notice.error({
+                            title: '错误提示',
+                            desc: response
+                        });
                     });
                 }
             });
@@ -386,7 +401,12 @@ export default {
                     }).then((res) => {
                         this.dataInitial();
                         this.getClass();
-                    })
+                    }).catch((response) => {
+                        this.$Notice.error({
+                            title: '错误提示',
+                            desc: response
+                        });
+                    });
                 }
             });
         },
@@ -404,6 +424,11 @@ export default {
                 this.classname = "";
                 this.showClass = false;
                 this.getClass();
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         handleSelectAll (status) { // 全选按钮
@@ -420,7 +445,12 @@ export default {
                 }
             }).then((res) => {
                 console.log(res);
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         addClassCancel () {
             this.showClass = false
@@ -482,7 +512,12 @@ export default {
                     } else {
                         _this.$Message.error(response.data.message)
                     }
-                })
+                }).catch((response) => {
+                    this.$Notice.error({
+                        title: '错误提示',
+                        desc: response
+                    });
+                });
             } else {
                 _this.$Message.info('请选择要操作的记录')
                 return false

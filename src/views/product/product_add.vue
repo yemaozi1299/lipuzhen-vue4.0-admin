@@ -304,6 +304,11 @@ export default {
                 this.uploadListName = facemoreName;
                 this.changeContent(data.readme);
                 // this.formValidate = res.data.body;
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         getNewClass: function () {
@@ -438,6 +443,11 @@ export default {
                 this.$Message.info("添加成功");
                 this.getNewClass();
                 console.log(res);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
 

@@ -262,6 +262,11 @@ export default {
                     return [];
                 }
                 _this.$Loading.finish();
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         handleSubmit: function (name) {

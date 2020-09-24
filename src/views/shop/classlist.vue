@@ -31,7 +31,7 @@
             <p>
                 <tree-select
                     v-model="treeSelected"
-                    style="width: 300px;"
+                    style="width: 300px"
                     check-strictly
                     :expand-all="true"
                     @on-change="handleTreeSelectChange"
@@ -154,6 +154,11 @@ export default {
             }
             this.$http.post("/api_edit.php?action=album_add", data).then((res) => {
                 console.log(res);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         dataInitial: function (keyword) {
@@ -278,6 +283,11 @@ export default {
                     }).then((res) => {
                         this.dataInitial();
                         console.log(res);
+                    }).catch((response) => {
+                        this.$Notice.error({
+                            title: '错误提示',
+                            desc: response
+                        });
                     });
 
                     // _this.editGroup(item);
@@ -313,6 +323,11 @@ export default {
                     this.isModal = false;
                     this.treeSelected = [];
                     console.log(res);
+                }).catch((response) => {
+                    this.$Notice.error({
+                        title: '错误提示',
+                        desc: response
+                    });
                 });
             } else {
                 this.$Message.warning("请选择小分类");
@@ -348,6 +363,11 @@ export default {
                     }).then((res) => {
                         this.dataInitial();
                         console.log(res);
+                    }).catch((response) => {
+                        this.$Notice.error({
+                            title: '错误提示',
+                            desc: response
+                        });
                     });
 
                     // _this.editGroup(item);

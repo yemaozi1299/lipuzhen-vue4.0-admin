@@ -497,6 +497,11 @@ export default {
             }).then((res) => {
                 this.softList = res.data.body || [];
                 console.log(res.data);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         loadingOut () {
@@ -638,6 +643,11 @@ export default {
                 }
                 this.getAppList();
                 console.log(res.data);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         editPasswordData (name) {

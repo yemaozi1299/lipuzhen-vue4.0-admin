@@ -182,7 +182,12 @@ export default {
                     this.tableData = res.data.body || [];
                 }
                 console.log(res);
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         chooseEdit: function (selection) {
             var chooseID = []
@@ -225,6 +230,11 @@ export default {
                 }
 
                 console.log(res.data);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         edit () {
@@ -252,6 +262,11 @@ export default {
                     this.$Message.warning(res.data.message);
                 }
                 console.log(res.data);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         del (p_code) {
@@ -270,6 +285,11 @@ export default {
                 this.dataInitial();
 
                 console.log(res.data);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         }
     }

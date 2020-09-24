@@ -413,7 +413,7 @@ export default {
                             title: '错误提示',
                             desc: response,
                         });
-                    });
+                    })
                 },
                 onCancel: () => {
                 }

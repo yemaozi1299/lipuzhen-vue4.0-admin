@@ -154,6 +154,11 @@ export default {
                 } else {
                     _this.header = data.leader_price == data.price ? '0' : (data.leader_price == 0 ? '2' : '1')
                 }
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         editDetail: function (params) {

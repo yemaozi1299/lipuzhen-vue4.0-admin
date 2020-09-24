@@ -248,7 +248,12 @@ export default {
 
                 this.tableData = res.data.body || [];
                 console.log(res);
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         chooseEdit: function (selection) {
             var chooseID = []
@@ -300,7 +305,12 @@ export default {
                     _this.isModal = false;
                     _this.chooseID = [];
                     _this.dataInitial();
-                })
+                }).catch((response) => {
+                    this.$Notice.error({
+                        title: '错误提示',
+                        desc: response
+                    });
+                });
             } else {
                 _this.$Message.info('请选择要操作的记录')
                 return false
@@ -316,7 +326,12 @@ export default {
                 this.addBlock.isModal = false;
                 this.dataInitial();
                 console.log(res);
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         blockEdit () {
             this.$http.post("/api_admin.php?action=block_template_edit", {
@@ -328,7 +343,12 @@ export default {
                 this.editBlock.isModal = false;
                 this.dataInitial();
                 console.log(res);
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
     }
 }

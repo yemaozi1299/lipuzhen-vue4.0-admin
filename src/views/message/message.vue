@@ -51,14 +51,14 @@
                         <Icon
                             class="ant-icon"
                             type="md-settings"
-                            style="left: 0px;"
+                            style="left: 0px"
                             v-on:click.stop="handleEdit(item)"
                         />
                         <span>{{ item.groupname }}</span>
                         <Icon
                             class="ant-icon"
                             type="ios-close-circle-outline"
-                            style="right: 0px;"
+                            style="right: 0px"
                             v-on:click.stop="delGroundState(item)"
                         />
                     </MenuItem>
@@ -78,7 +78,7 @@
                         type="flex"
                         justify="center"
                         align="middle"
-                        style="margin: 10px 5px 0 5px;"
+                        style="margin: 10px 5px 0 5px"
                     >
                         <Col span="8">分类名称:</Col>
                         <Col span="16">
@@ -92,7 +92,7 @@
                         type="flex"
                         justify="center"
                         align="middle"
-                        style="margin: 10px; text-align: center;"
+                        style="margin: 10px; text-align: center"
                     >
                         <Col span="12">
                             <Button type="primary" @click="addClassConfirm"
@@ -112,7 +112,7 @@
                     @on-change="handleSelectAll"
                 >
                     <span class="mg-l-10">已选</span
-                    ><span style="color: #3091f2;">{{ chooseID.length }}</span
+                    ><span style="color: #3091f2">{{ chooseID.length }}</span
                     ><span> / {{ tableData.length }} 条留言</span>
                 </Checkbox>
                 <Button
@@ -142,7 +142,7 @@
         </tables>
         <Modal v-model="isModal" width="660">
             <p slot="header">回复留言</p>
-            <div style="text-align: left;">
+            <div style="text-align: left">
                 <div class="expand-row">
                     <span class="expand-key">回复内容： </span>
                     <span class="expand-value">{{
@@ -311,6 +311,11 @@ export default {
                 });
                 this.total = parseInt(res.data.total || 0);
                 this.tableData = tabList;
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         getClass () {
@@ -318,6 +323,11 @@ export default {
             this.$http.post("/api_edit.php?action=guestbook_groupList", data).then((res) => {
                 this.classList = res.data.body || [];
                 console.log(res.data);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         skippage: function (page) {
@@ -394,7 +404,12 @@ export default {
                     this.chooseID = [];
                     this.get();
                 }
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         guestbookReply () {
             this.modal_loading = true;
@@ -419,7 +434,12 @@ export default {
                     this.get();
                 }
                 this.modal_loading = false;
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         handleEdit: function (item) {           //
             var value = "";
@@ -448,6 +468,11 @@ export default {
                         }
                     }).then((res) => {
                         this.getClass();
+                    }).catch((response) => {
+                        this.$Notice.error({
+                            title: '错误提示',
+                            desc: response
+                        });
                     });
                 }
             });
@@ -466,7 +491,12 @@ export default {
                     }).then((res) => {
                         this.get();
                         this.getClass();
-                    })
+                    }).catch((response) => {
+                        this.$Notice.error({
+                            title: '错误提示',
+                            desc: response
+                        });
+                    });
                 }
             });
         },
@@ -484,6 +514,11 @@ export default {
                 this.classname = "";
                 this.showClass = false;
                 this.getClass();
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         addClassCancel () {

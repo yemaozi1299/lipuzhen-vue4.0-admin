@@ -32,7 +32,7 @@
                         @on-keyup.enter="get(keyword)"
                         clearable
                         class="ant-search-input mg-r-10"
-                        style="width: 200px;"
+                        style="width: 200px"
                     />
                     <Button
                         type="primary"
@@ -46,34 +46,34 @@
 
         <Modal v-model="isModal" title="续费" @on-ok="appPrice" @on-cancel="">
             <label
-                style="display: block; margin-bottom: 10px;"
+                style="display: block; margin-bottom: 10px"
                 class="label-price"
             >
                 <span class="label-span">版本</span>
                 <span>{{ addAppData.rolename }}</span>
             </label>
             <label
-                style="display: block; margin-bottom: 10px;"
+                style="display: block; margin-bottom: 10px"
                 class="label-price"
             >
                 <span class="label-span">开始时间</span>
                 <span>{{ addAppData.starttime }}</span>
             </label>
             <label
-                style="display: block; margin-bottom: 10px;"
+                style="display: block; margin-bottom: 10px"
                 class="label-price"
             >
                 <span class="label-span">结束时间</span>
                 <span>{{ addAppData.endtime }}</span>
             </label>
             <label
-                style="display: block; margin-bottom: 10px;"
+                style="display: block; margin-bottom: 10px"
                 class="label-price"
             >
                 <span class="label-span">续费</span>
                 <Input
                     type="text"
-                    style="width: 50px;"
+                    style="width: 50px"
                     v-model="addAppData.year"
                 ></Input>
                 <span>年</span>
@@ -286,7 +286,12 @@ export default {
                 }
                 // console.log(JSON.stringify(response.data));
                 _this.$Loading.finish();
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         skippage: function (page) {
             this.pageData.page = page;
@@ -306,7 +311,12 @@ export default {
                 }
                 // console.log(response.data);
                 _this.$Loading.finish();
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         delApp: function (params) {
             var _this = this;
@@ -324,7 +334,12 @@ export default {
                     _this.$Message.warning(response.data.message);
                 }
                 _this.$Loading.finish();
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         getPrice: function () {
             var _this = this;
@@ -339,6 +354,11 @@ export default {
                 }
                 console.log(_this.priceList);
                 _this.$Loading.finish();
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         getAgentPrice: function (rolecode) {
@@ -393,6 +413,11 @@ export default {
                     });
                 }
 
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         }
     }

@@ -25,7 +25,7 @@
                         @on-keyup.enter="get(keyword)"
                         clearable
                         class="ant-search-input mg-r-10"
-                        style="width: 200px;"
+                        style="width: 200px"
                     />
                     <Button
                         type="primary"
@@ -117,7 +117,12 @@ export default {
                 }
                 // console.log(JSON.stringify(response.data));
                 _this.$Loading.finish();
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         skippage: function (page) {
             this.pageData.page = page;

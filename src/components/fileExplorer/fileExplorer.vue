@@ -495,7 +495,12 @@ export default {
                 }
             }).then((data) => {
                 this.filetypeisokAll = data.data.body || []
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         _getFolderURL: function (folder) {
             return parse(this.baseURL, {

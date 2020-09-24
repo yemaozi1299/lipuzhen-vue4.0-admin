@@ -292,6 +292,11 @@ export default {
                     this.tableData = [];
                 }
                 console.log(res.data);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         getPrivilege () {
@@ -312,7 +317,12 @@ export default {
                     this.addCompanyData.p_code_arr = code;
                     this.selectedCode = code;
                 }
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         add () {
             var data = this.addCompanyData || {};
@@ -345,6 +355,11 @@ export default {
                 }
                 this.dataInitial()
 
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         edit () {
@@ -378,6 +393,11 @@ export default {
                 }
                 this.dataInitial();
 
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         del (roleID) {
@@ -396,6 +416,11 @@ export default {
                 this.dataInitial();
 
                 console.log(res.data);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         chooseEdit: function (selection) {
@@ -425,6 +450,11 @@ export default {
                     this.dataInitial();
                 }
                 console.log(res.data);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         }
     }

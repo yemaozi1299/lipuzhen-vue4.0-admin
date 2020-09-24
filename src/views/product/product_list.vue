@@ -374,6 +374,11 @@ export default {
             }).then((res) => {
                 this.langList = res.data.body || [];
                 console.log(res);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         changeLange (id) {
@@ -408,6 +413,11 @@ export default {
                 this.total = parseInt(res.data.total || 0);
                 this.tableData = res.data.body || [];
                 this.chooseID = [];
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         getClass () {
@@ -418,6 +428,11 @@ export default {
                 this.classList = res.data.body || [];
 
                 console.log(this.classList);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
 
         },
@@ -489,6 +504,11 @@ export default {
                         }
                     }).then((res) => {
                         this.getClass();
+                    }).catch((response) => {
+                        this.$Notice.error({
+                            title: '错误提示',
+                            desc: response
+                        });
                     });
                 }
             });
@@ -545,7 +565,12 @@ export default {
                     } else {
                         _this.$Message.error(response.data.message)
                     }
-                })
+                }).catch((response) => {
+                    this.$Notice.error({
+                        title: '错误提示',
+                        desc: response
+                    });
+                });
             } else {
                 _this.$Message.info('请选择要操作的记录')
                 return false
@@ -632,7 +657,12 @@ export default {
                     }).then((res) => {
                         this.get();
                         this.getClass();
-                    })
+                    }).catch((response) => {
+                        this.$Notice.error({
+                            title: '错误提示',
+                            desc: response
+                        });
+                    });
                 }
             });
         },
@@ -654,6 +684,11 @@ export default {
                 this.upid = 0;
                 this.showClass = false;
                 this.getClass();
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         addClassCancel () {

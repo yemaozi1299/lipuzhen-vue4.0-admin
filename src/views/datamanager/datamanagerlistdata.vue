@@ -228,6 +228,11 @@ export default {
                 else {
                     _this.$Message.error(response.data.message);
                 }
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
 
         },
@@ -251,6 +256,11 @@ export default {
                 else {
                     _this.$Message.error(response.data.message);
                 }
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
 
         },
@@ -328,6 +338,11 @@ export default {
                     this.classitems = response.data.body;
                 }
                 this.$Loading.finish();
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
 
         },

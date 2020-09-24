@@ -575,7 +575,12 @@ export default {
                 } else {
                     _this.$Message.error(response.data.message)
                 }
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         addClassCancel: function () {
             this.showClass = false

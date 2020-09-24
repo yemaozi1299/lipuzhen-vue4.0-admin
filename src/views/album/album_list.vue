@@ -32,7 +32,7 @@
             <template slot="footer"></template>
         </tables>
         <Modal title="查看图片" v-model="visible">
-            <img :src="imgName" v-if="visible" style="width: 100%;" />
+            <img :src="imgName" v-if="visible" style="width: 100%" />
         </Modal>
     </Card>
 </template>
@@ -152,6 +152,11 @@ export default {
             }).then((res) => {
                 this.tableData = res.data.body || [];
                 this.total = parseInt(res.data.total || 1);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         chooseEdit: function (selection) {

@@ -717,6 +717,11 @@ export default {
                 else {
                     _this.$Message.error(response.data.message);
                 }
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         getPostlistName: function () {
@@ -740,6 +745,11 @@ export default {
                 else {
                     _this.$Message.error(response.data.message);
                 }
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         handleView (name) {

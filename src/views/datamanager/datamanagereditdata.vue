@@ -240,6 +240,11 @@ export default {
                 if (response.data.status == 1) {
                     this.classitems = response.data.body;
                 }
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         handleSubmit: function (name) {

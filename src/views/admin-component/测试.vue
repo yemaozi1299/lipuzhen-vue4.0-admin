@@ -75,7 +75,12 @@ export default {
                 }
             }).then((res) => {
 
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         chooseEdit: function (selection) {
             var chooseID = []

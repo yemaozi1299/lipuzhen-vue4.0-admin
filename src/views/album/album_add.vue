@@ -199,7 +199,12 @@ export default {
                 }
 
                 console.log(res);
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         handleSubmit (name) {
             var _this = this

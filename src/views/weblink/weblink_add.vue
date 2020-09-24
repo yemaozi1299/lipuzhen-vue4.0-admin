@@ -206,7 +206,12 @@ export default {
                 }
                 this.getNewClass();
                 // this.formValidate = res.data.body;
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         getNewClass: function () {
             this.$http.request({
@@ -319,6 +324,11 @@ export default {
                 this.$Message.info("添加成功");
                 this.getNewClass();
                 console.log(res);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
 

@@ -534,6 +534,11 @@ export default {
                     _this.pageData.total = Number(response.data.total);
                 }
                 console.log(response.data);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         skippage: function (page) {
@@ -554,7 +559,12 @@ export default {
                 }
                 console.log(response.data);
                 _this.$Loading.finish();
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         appPrice: function () {
             this.$Message.error('超级管理员还没有续费功能');

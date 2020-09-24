@@ -127,6 +127,11 @@ export default {
                     choice: data.choice,
                     items: body
                 }
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         handleSubmit (name) {

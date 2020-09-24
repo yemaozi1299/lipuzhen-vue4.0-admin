@@ -71,7 +71,12 @@ export default {
                 }
                 // console.log(response.data);
                 _this.$Loading.finish();
-            })
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         getInfo: function () {
             var _this = this;

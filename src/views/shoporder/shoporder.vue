@@ -1,6 +1,6 @@
 <template>
     <Card class="shoporder-wrapper">
-        <div style="margin-bottom:10px">
+        <div style="margin-bottom: 10px">
             <Menu
                 mode="horizontal"
                 theme="light"
@@ -110,7 +110,7 @@
                     size="small"
                     ref="table"
                 ></Table>
-                <div style="padding: 20px 0;">
+                <div style="padding: 20px 0">
                     <Page
                         :total="total"
                         :current="page"
@@ -142,9 +142,7 @@
                     <Col span="4">实收: 元</Col>
                 </Row>
             </div>
-            <div v-if="total > 0">
-                111111
-            </div>
+            <div v-if="total > 0">111111</div>
             <div v-else>
                 <div class="no-record">查无记录</div>
             </div>
@@ -157,15 +155,15 @@
             @on-cancel=""
             :loading="orderPriceEditLoading"
         >
-            <label style="display:block;margin-bottom:10px">
+            <label style="display: block; margin-bottom: 10px">
                 <span>订单号：</span>
                 <span>{{ activeNumber }}</span>
             </label>
-            <label style="display:block;margin-bottom:10px">
+            <label style="display: block; margin-bottom: 10px">
                 <span>实付金额：</span>
                 <Input
                     type="text"
-                    style="width:200px;"
+                    style="width: 200px"
                     v-model="orderPrice"
                 ></Input>
             </label>
@@ -178,13 +176,13 @@
             @on-cancel=""
             :loading="orderPost.loading"
         >
-            <label style="display:block;margin-bottom:10px">
+            <label style="display: block; margin-bottom: 10px">
                 <span>订单号：</span>
                 <span>{{ activeNumber }}</span>
             </label>
-            <label style="display:block;margin-bottom:10px">
+            <label style="display: block; margin-bottom: 10px">
                 <span>快递公司：</span>
-                <Select v-model="orderPost.postname" style="width:200px">
+                <Select v-model="orderPost.postname" style="width: 200px">
                     <Option
                         v-for="item in expressList"
                         :value="item.name"
@@ -193,15 +191,15 @@
                     >
                 </Select>
             </label>
-            <label style="display:block;margin-bottom:10px">
+            <label style="display: block; margin-bottom: 10px">
                 <span>快递单号：</span>
                 <Input
                     type="text"
-                    style="width:200px;"
+                    style="width: 200px"
                     v-model="orderPost.postnumber"
                 ></Input>
             </label>
-            <label style="display:block;margin-bottom:10px">
+            <label style="display: block; margin-bottom: 10px">
                 <span>发货时间：</span>
                 <DatePicker
                     type="date"
@@ -228,15 +226,15 @@
             @on-ok="modal1 = false"
             @on-cancel="modal1 = false"
         >
-            <label style="display:block;margin-bottom:10px">
+            <label style="display: block; margin-bottom: 10px">
                 <span>订单号：</span>
                 <span>{{ activeNumber }}</span>
             </label>
-            <label style="display:block;margin-bottom:10px">
+            <label style="display: block; margin-bottom: 10px">
                 <span>快递公司：</span>
                 <span>{{ showPostname }}</span>
             </label>
-            <label style="display:block;margin-bottom:10px">
+            <label style="display: block; margin-bottom: 10px">
                 <span>快递单号：</span>
                 <span>{{ showPostnumber }}</span>
             </label>
@@ -517,6 +515,11 @@
                         }, 2000);
                         _this.$Message.info(response.data.message);
                     }
+                }).catch((response) => {
+                    this.$Notice.error({
+                        title: '错误提示',
+                        desc: response
+                    });
                 });
 
             },
@@ -567,6 +570,11 @@
                         _this.$Message.info(response.data.message);
                     }
 
+                }).catch((response) => {
+                    this.$Notice.error({
+                        title: '错误提示',
+                        desc: response
+                    });
                 });
             },
             orderPriceEdit: function () {
@@ -605,6 +613,11 @@
                         _this.$Message.info(response.data.message);
                     }
 
+                }).catch((response) => {
+                    this.$Notice.error({
+                        title: '错误提示',
+                        desc: response
+                    });
                 });
             },
             fetchData: function () {
@@ -672,7 +685,12 @@
                     }
 
 
-                })
+                }).catch((response) => {
+                    this.$Notice.error({
+                        title: '错误提示',
+                        desc: response
+                    });
+                });
 
             },
             getNowFormatDate: function (date) {
@@ -737,7 +755,12 @@
                                 _this.fetchData();
                             } else { }
 
-                        })
+                        }).catch((response) => {
+                            this.$Notice.error({
+                                title: '错误提示',
+                                desc: response
+                            });
+                        });
 
                     },
                     onCancel: () => {
@@ -763,7 +786,12 @@
                             console.log(response)
                             _this.get();
 
-                        })
+                        }).catch((response) => {
+                            this.$Notice.error({
+                                title: '错误提示',
+                                desc: response
+                            });
+                        });
                     },
                     onCancel: () => {
                         // this.$Message.info('点击了取消');
