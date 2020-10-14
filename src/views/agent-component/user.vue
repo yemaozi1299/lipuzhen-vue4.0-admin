@@ -819,28 +819,22 @@ export default {
                         mobile: params.mobile,
                         password: params.password
                     };
-                    this.$Loading.start();
                     _this.$http.post('/api_agent.php', _this.$qs.stringify(data)).then(function (response) {
                         _this.addCompanyData.loading = false;
-                        if (response.data.status == 1) {
-                            _this.get();
-                            _this.addCompanyData.name = '';
-                            _this.addCompanyData.password = '';
-                            _this.isAddCompany = false;
-                        } else {
-                            _this.$Message.warning(response.data.message);
-                            _this.$nextTick(() => {
-                                _this.addCompanyData.loading = true;
-                            });
-                        }
-                        _this.$Loading.finish();
+                        _this.get();
+                        _this.addCompanyData.name = '';
+                        _this.addCompanyData.password = '';
+                        _this.isAddCompany = false;
                     }).catch(function (response) {
+                        _this.addCompanyData.loading = false;
+                        _this.$nextTick(() => {
+                            _this.addCompanyData.loading = true;
+                        });
                         console.log(response);
                         _this.$Notice.error({
                             title: '错误提示',
                             desc: response
                         });
-                        _this.$Loading.error();
                     });
                 } else {
                     this.addCompanyData.loading = false;
@@ -1016,7 +1010,7 @@ export default {
 
         },
         previewApp: function (params) {
-            window.open('//a.richapps.cn/appeditor/preview.php?appid=' + params.fromappid);
+            window.open('/appeditor/preview.php?appid=' + params.fromappid);
         },
         goeditAdmin () {
             this.$router.push({

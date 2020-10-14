@@ -218,7 +218,7 @@ export default {
                     },
                     {
                         title: '代理级别',
-                        key: 'agentjb',
+                        key: 'level',
                         align: 'center',
                         width: 90
                     },

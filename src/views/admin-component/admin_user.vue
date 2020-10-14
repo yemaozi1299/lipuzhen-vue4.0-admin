@@ -178,9 +178,9 @@
                 <Select v-model="agentEdit.value" style="width: 200px">
                     <Option
                         v-for="item in agentEdit.body"
-                        :value="item.code"
-                        :key="item.value"
-                        >{{ item.name }}</Option
+                        :value="item.id"
+                        :key="item.id"
+                        >{{ item.level }}</Option
                     >
                 </Select>
             </div>
@@ -639,7 +639,7 @@ export default {
     created: function () {
         this.get();
         this.getSoftList();
-        // this.getAgentJibie();
+        this.getAgentJibie();
         // this.addPriseApp();
     },
     watch: {
@@ -913,17 +913,14 @@ export default {
             var data = {
                 action: 'agent_add',
                 companyid: this.agentEdit.id,
-                rolecode: this.agentEdit.value,
+                levelID: this.agentEdit.value,
                 starttime: start,
                 endtime: end,
                 area: this.agentEdit.area
             };
-            this.$Loading.start();
+            console.log(data);
             _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
-                if (response.data.status == 1) {
-                    _this.get();
-                }
-                _this.$Loading.finish();
+                _this.get();
             }).catch(function (response) {
                 console.log(response);
                 _this.$Notice.error({
@@ -977,24 +974,22 @@ export default {
 
         },
         previewApp: function (params) {
-            window.open('//a.richapps.cn/appeditor/preview.php?appid=' + params.fromappid);
+            window.open('/appeditor/preview.php?appid=' + params.fromappid);
         },
         getAgentJibie: function () {
             var _this = this;
             var data = {
-                action: 'agent_jb',
+                action: 'level_listof',
             }
-            this.$Loading.start();
             _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
-                _this.agentEdit.body = _this.editCode(response.data);
-                _this.$Loading.finish();
+                console.log(response, "======================================");
+                _this.agentEdit.body = response.data.body || [];
             }).catch(function (response) {
                 console.log(response);
                 _this.$Notice.error({
                     title: '错误提示',
                     desc: response
                 });
-                _this.$Loading.error();
             });
         },
         editCode: function (list) {

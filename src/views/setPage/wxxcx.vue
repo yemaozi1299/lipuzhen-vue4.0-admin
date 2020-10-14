@@ -27,7 +27,7 @@
             <Col :xs="24" :lg="8" style="padding-bottom: 10px">
                 <Card
                     ><a
-                        href="/rich2020/edit.html?appid="
+                        :href="`/appeditor/index.php?appid=${vueAppid}`"
                         target="_blank"
                         class="card-item"
                         >小程序界面编辑</a
@@ -37,7 +37,7 @@
             <Col :xs="24" :lg="8" style="padding-bottom: 10px">
                 <Card
                     ><a
-                        href="/rich2020/preview.php?appid="
+                        :href="`/appeditor/preview.php?appid=${vueAppid}`"
                         target="_blank"
                         class="card-item"
                         >预览</a
@@ -55,7 +55,11 @@
 
 <script>
 export default {
-
+    data () {
+        return {
+            vueAppid: this.$cookieStore.get("CookVueAppid"),
+        }
+    }
 }
 </script>
 

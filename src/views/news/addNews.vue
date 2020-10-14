@@ -278,7 +278,8 @@ export default {
             this.$http.request({
                 url: "/api_edit.php?action=news_get",
                 params: {
-                    id: this.newid
+                    id: this.newid,
+                    appid: this.vueAppid,
                 }
             }).then((res) => {
                 var data = res.data.body;
@@ -309,6 +310,7 @@ export default {
             });
         },
         getNewClass: function () {
+
             this.$http.request({
                 url: "/api_edit.php?action=news_class_get",
                 params: {

@@ -437,7 +437,8 @@ export default {
                 pageno: this.pageno,
                 keyword: keyword || this.formItem.keyword,
                 classid: this.classid,
-                shoptype: this.getType
+                shoptype: this.getType,
+                appid: this.vueAppid
             }
             console.log(that.$http);
             that.$http.request({
@@ -449,6 +450,11 @@ export default {
                 that.total = res.data.total;
                 that.chooseID = [];
                 console.log(res)
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         getClass: function () {
@@ -469,6 +475,11 @@ export default {
                     that.$Message.error(res.data.message)
                 }
                 console.log(res);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
             });
         },
         classmovein: function (classid) { // 移入分类

@@ -183,7 +183,7 @@ export default {
     },
     data () {
         return {
-
+            vueAppid: this.$cookieStore.get("CookVueAppid"),
             columns: [{
                 type: 'selection',
                 width: 80,
@@ -300,7 +300,8 @@ export default {
                 keyword: keyword,
                 page: this.page,
                 pageno: this.pageno,
-                groupid: this.classid
+                groupid: this.classid,
+                appid: this.vueAppid
             }
             this.$http.post("/api_edit.php?action=guestbook_list", data).then((res) => {
                 var tabList = [];
@@ -319,7 +320,9 @@ export default {
             });
         },
         getClass () {
-            var data = {}
+            var data = {
+                appid: this.vueAppid
+            }
             this.$http.post("/api_edit.php?action=guestbook_groupList", data).then((res) => {
                 this.classList = res.data.body || [];
                 console.log(res.data);
@@ -397,7 +400,8 @@ export default {
                 url: "/api_edit.php?action=guestbook_check",
                 params: {
                     chooseID: editList,
-                    editmode: type
+                    editmode: type,
+                    appid: this.vueAppid
                 }
             }).then((res) => {
                 if (res.data.status == 1) {
@@ -422,7 +426,8 @@ export default {
                 url: "/api_edit.php?action=guestbook_re",
                 params: {
                     id: this.messageContent.id,
-                    message: this.replyContent
+                    message: this.replyContent,
+                    appid: this.vueAppid
                 }
             }).then((res) => {
                 if (res.data.status == 1) {
@@ -464,7 +469,8 @@ export default {
                         url: "/api_edit.php?action=guestbook_groupEdit",
                         params: {
                             groupid: item.id,
-                            groupname: value
+                            groupname: value,
+                            appid: this.vueAppid
                         }
                     }).then((res) => {
                         this.getClass();
@@ -487,6 +493,7 @@ export default {
                         url: "/api_edit.php?action=guestbook_groupDel",
                         params: {
                             groupid: item.id,
+                            appid: this.vueAppid
                         }
                     }).then((res) => {
                         this.get();
@@ -508,7 +515,8 @@ export default {
             this.$http.request({
                 url: "/api_edit.php?action=guestbook_groupADD",
                 params: {
-                    groupname: this.classname
+                    groupname: this.classname,
+                    appid: this.vueAppid
                 }
             }).then((res) => {
                 this.classname = "";

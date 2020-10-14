@@ -822,9 +822,18 @@ export default {
 				},
 				component: () => import('@/views/setPage/responsive.vue')
 			},
+			{
+				path: '/public_site',
+				name: 'public_site',
+				meta: {
+					title: '生成静态页面',
+					notCache: true,
+					icon: 'md-home'
+				},
+				component: () => import('@/views/setPage/components/public_site.vue')
+			},
 		]
 	},
-
 
 
 	{
@@ -1186,6 +1195,32 @@ export default {
 				},
 			]
 		},
+		{
+			path: "/admin_agent_level",
+			name: "adminAgentLevel",
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'level_list',
+					meta: {
+						title: '代理商等级列表',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/admin_agent_level/level_list.vue')
+				},
+				{
+					path: '/admin_agent_level/:page/level_add',
+					name: 'level_add',
+					meta: {
+						title: '代理商等级添加',
+						icon: 'md-home',
+						hideInMenu: true
+					},
+					component: () => import('@/views/admin-component/admin_agent_level/level_add.vue')
+				},
+			]
+		}
 	]
 
 }

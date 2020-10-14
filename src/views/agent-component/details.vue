@@ -45,39 +45,34 @@
         </tables>
 
         <Modal v-model="isModal" title="续费" @on-ok="appPrice" @on-cancel="">
-            <label
-                style="display: block; margin-bottom: 10px"
-                class="label-price"
-            >
-                <span class="label-span">版本</span>
-                <span>{{ addAppData.rolename }}</span>
-            </label>
-            <label
-                style="display: block; margin-bottom: 10px"
-                class="label-price"
-            >
-                <span class="label-span">开始时间</span>
-                <span>{{ addAppData.starttime }}</span>
-            </label>
-            <label
-                style="display: block; margin-bottom: 10px"
-                class="label-price"
-            >
-                <span class="label-span">结束时间</span>
-                <span>{{ addAppData.endtime }}</span>
-            </label>
-            <label
-                style="display: block; margin-bottom: 10px"
-                class="label-price"
-            >
-                <span class="label-span">续费</span>
-                <Input
-                    type="text"
-                    style="width: 50px"
-                    v-model="addAppData.year"
-                ></Input>
-                <span>年</span>
-            </label>
+            <Form label-position="left" :label-width="100">
+                <FormItem label="版本">
+                    <span>{{ addAppData.rolename }}</span>
+                </FormItem>
+                <FormItem label="开始时间">
+                    <span>{{ addAppData.starttime }}</span>
+                </FormItem>
+                <FormItem label="结束时间">
+                    <span>{{ addAppData.endtime }}</span>
+                </FormItem>
+                <FormItem label="续费">
+                    <Row>
+                        <Col span="8">
+                            <Input-number
+                                :min="1"
+                                type="text"
+                                style="width: 50px"
+                                v-model="addAppData.year"
+                                :disabled="addAppData.loading"
+                            ></Input-number>
+                            <span> 年</span>
+                        </Col>
+                        <Col span="16">
+                            续扣费：<span>{{ yearPrice }}</span>
+                        </Col>
+                    </Row>
+                </FormItem>
+            </Form>
         </Modal>
     </Card>
 </template>
@@ -110,10 +105,12 @@ export default {
                 rolename: '',
                 endtime: '',
                 year: 1,
-                id: ''
+                id: '',
+                loading: false
             },
             priceList: {},
             versionArr: {},
+            yearPrice: "",
             infoData: {
                 columns: [
 
@@ -132,7 +129,7 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                            window.open('//a.richapps.cn/appeditor/preview.php?appid=' + params.row.id);
+                                            window.open('/appeditor/preview.php?appid=' + params.row.id);
                                             console.log(params.row.id);
                                         }
                                     }
@@ -148,7 +145,7 @@ export default {
                             return h('a', {
                                 on: {
                                     click: () => {
-                                        window.open('//a.richapps.cn/appeditor/preview.php?appid=' + params.row.id);
+                                        window.open('/appeditor/preview.php?appid=' + params.row.id);
                                         console.log(params.row.id);
                                     }
                                 }
@@ -221,8 +218,8 @@ export default {
                                                 year: 1,
                                                 id: params.row.id
                                             };
-                                            console.log(params.row.rolecode);
-                                            this.addAppData['agentPrice'] = this.getAgentPrice(params.row.rolecode);
+                                            this.appYearMoney();
+                                            console.log(params.row);
                                             this.isModal = true;
                                         }
                                     }
@@ -264,6 +261,12 @@ export default {
         this.get();
         this.getPrice();
     },
+    watch: {
+        'addAppData.year' (val) {
+            this.appYearMoney();
+            console.log(val);
+        }
+    },
     methods: {
         get: function (keyword) {
             var _this = this;
@@ -278,14 +281,12 @@ export default {
             };
             _this.searching = keyword ? true : false;
             _this.infoData.data = [];
-            this.$Loading.start();
             _this.$http.post('/api_agent.php', _this.$qs.stringify(data)).then(function (response) {
                 if (response.data.status == 1) {
                     _this.infoData.data = response.data.body;
                     _this.pageData.total = Number(response.data.total);
                 }
                 // console.log(JSON.stringify(response.data));
-                _this.$Loading.finish();
             }).catch((response) => {
                 this.$Notice.error({
                     title: '错误提示',
@@ -368,12 +369,27 @@ export default {
                 }
             }
         },
+        appYearMoney () {
+            var _this = this;
+            _this.$http.get('/api_agent.php', {
+                action: "app_year_money",
+                appid: this.addAppData.id,
+
+            }).then(function (res) {
+                _this.yearPrice = parseFloat(res.data.price || 0) * _this.addAppData.year;
+                console.log(res.data.price);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
+        },
         appPrice: function () {
             var _this = this;
-            var price = parseInt(this.addAppData.agentPrice.price) * this.addAppData.year;
 
             this.$Modal.confirm({
-                content: '此续费操作将扣除余额' + price + '元，是否确定',
+                content: '此续费操作将扣除余额' + this.yearPrice + '元，是否确定',
                 cancelText: '取消',
                 onOk: function () {
                     _this.appYear();

@@ -543,6 +543,7 @@ export default {
             this.$http.request({
                 url: "/api_edit.php?action=news_class_get",
                 params: {
+                    appid: this.vueAppid,
                     language: this.selectedLang.id
                 }
             }).then((res) => {

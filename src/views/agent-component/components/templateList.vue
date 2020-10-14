@@ -393,7 +393,6 @@ export default {
         },
         previewApp: function (params) {
             this.$emit("previewApp", params);
-            // window.open('//a.richapps.cn/appeditor/preview.php?appid=' + params.fromappid);
         },
         addTemplate (params) {
             this.$emit("successCallback", params);

@@ -15,6 +15,7 @@ export default {
     created () {
         var data = {
             groupid: 14,
+            vueAppid: this.$cookieStore.get("CookVueAppid"),
             items: {
                 name: "所谓老杨",
                 tel: "13144825885",

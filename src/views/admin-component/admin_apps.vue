@@ -162,39 +162,40 @@
             </Form>
         </Modal>
         <!-- 图片库弹窗 -->
-        <Modal v-model="isUpload" width="860">
+        <!-- <Modal v-model="isUpload" width="860">
             <p slot="header">更换缩略图</p>
             <fileExplorer
                 :options="options"
                 @successCallback="uploadListFun"
             ></fileExplorer>
             <div slot="footer"></div>
-        </Modal>
+        </Modal> -->
     </Card>
 </template>
 
 <script type="text/javascript">
 import Tables from '@/components/tables'
 import Buttons from '@/components/buttons'
-import fileExplorer from '@/components/fileExplorer/fileExplorer'
+// import fileExplorer from '@/components/fileExplorer/fileExplorer'
 import noImage from '@/assets/images/noimage.jpg'
 export default {
     components: {
         Tables,
         Buttons,
-        fileExplorer
+        // fileExplorer
     },
     data: function () {
         return {
             softList: [],
             selectedSoft: "",
             isUpload: false,
-            options: {
-                mode: "single",
-                _displayMode: 'grid',  // grid 和 list
-                type: 'image',
-                appid: this.$cookieStore.get("CookVueAppid")
-            },
+            // options: {
+            //     mode: "single",
+            //     _displayMode: 'grid',  // grid 和 list
+            //     type: 'image',
+            //     appid: this.$cookieStore.get("CookVueAppid"),
+            //     php: "/api_admin.php"
+            // },
             example_data: {
                 isModal: false,
                 cover: '',
@@ -249,7 +250,7 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                            window.open('//a.richapps.cn/appeditor/preview.php?appid=' + params.row.id);
+                                            window.open('/appeditor/preview.php?appid=' + params.row.id);
                                             console.log(params.row.id);
                                         }
                                     }
@@ -264,7 +265,7 @@ export default {
                             return h('a', {
                                 on: {
                                     click: () => {
-                                        window.open('//a.richapps.cn/appeditor/preview.php?appid=' + params.row.id);
+                                        window.open('/appeditor/preview.php?appid=' + params.row.id);
                                         console.log(params.row.id);
                                     }
                                 }

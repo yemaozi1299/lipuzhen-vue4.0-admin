@@ -330,7 +330,7 @@ export default {
                             return h('div', [
                                 h('Button', {
                                     props: {
-                                        type: params.row.yc == 1 ? '' : 'success',
+                                        type: params.row.yc == 1 ? 'error' : 'success',
                                         size: 'small'
                                     },
                                     style: {
