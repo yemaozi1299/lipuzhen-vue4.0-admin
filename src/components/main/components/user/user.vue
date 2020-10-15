@@ -2,16 +2,16 @@
     <div class="user-avatar-dropdown">
         <Dropdown @on-click="handleClick">
             <Badge :dot="!!messageUnreadCount">
-                <Avatar :src="userAvatar" />
+                <Avatar :src="userAvatar" icon="ios-person" />
             </Badge>
             <Icon :size="18" type="md-arrow-dropdown"></Icon>
             <DropdownMenu slot="list">
-                <DropdownItem name="message">
+                <!-- <DropdownItem name="message">
                     消息中心<Badge
                         style="margin-left: 10px;"
                         :count="messageUnreadCount"
                     ></Badge>
-                </DropdownItem>
+                </DropdownItem> -->
                 <DropdownItem name="logout">退出登录</DropdownItem>
             </DropdownMenu>
         </Dropdown>
@@ -38,11 +38,24 @@ export default {
             'handleLogOut'
         ]),
         logout () {
-            this.handleLogOut().then(() => {
+            if (this.$store.state.software == '1') {
+                this.$http.request({
+                    method: "POST",
+                    url: "/login.php?mode=logout",
+                    params: {}
+                }).then((res) => {
+                    console.log(res);
+                }).catch((response) => {
+                    this.$Notice.error({
+                        title: '错误提示',
+                        desc: response
+                    });
+                });
+            } else {
                 this.$router.push({
-                    name: 'login'
+                    name: 'welcome'
                 })
-            })
+            }
         },
         message () {
             this.$router.push({

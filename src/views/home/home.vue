@@ -90,7 +90,7 @@ export default {
                 },
                 appcount: {
                     icon: "md-eye",
-                    title: "总预览量",
+                    title: "总访问量",
                     count: 0,
                     color: "#ff5b33"
                 },
@@ -123,7 +123,7 @@ export default {
                     title: "简历数量",
                     count: 0,
                     color: "#e0ed14"
-                }
+                },
             },
             inforCardData: [],
             numCardData: []
@@ -147,7 +147,11 @@ export default {
                 // }
                 console.log(response.data);
                 var data = response.data.body || {}, arr = [], numList = [];
+                var software = response.data.software;
                 for (var key in data) {
+                    if (key == "appid") {
+                        continue
+                    }
                     if (typeof data[key] == "object") {
                         arr.push(Object.assign({}, data[key], _this.defaultList[key]));
                     } else {
@@ -156,6 +160,7 @@ export default {
                         }));
                     }
                 }
+                _this.$store.commit('softwareChange', software);
                 _this.inforCardData = arr;
                 _this.numCardData = numList;
                 console.log(arr, numList);

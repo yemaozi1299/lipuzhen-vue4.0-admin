@@ -14,7 +14,6 @@ import 'view-design/dist/styles/iview.css';
 import './index.styl';
 
 
-
 Vue.prototype.$cookieStore = Cookies;
 Vue.prototype.$http = axios;
 Vue.prototype.$qs = qs;

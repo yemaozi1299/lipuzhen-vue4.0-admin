@@ -2,6 +2,8 @@ import axios from 'axios'
 import store from '@/store'
 import { Notice, LoadingBar } from 'view-design'
 import qs from 'qs';
+import Cookies from 'js-cookie';
+import { parse, getParam } from '@/libs/tools'
 const addErrorLog = errorInfo => {
 	const { statusText, status, request: { responseURL } } = errorInfo
 	let info = {
@@ -94,23 +96,36 @@ class HttpRequest {
 	}
 	request (options) {
 		const instance = axios.create()
-		options = Object.assign(this.getInsideConfig(), options)
+		// options.params = Object.assign(options.params, {
+		// 	appid: Cookies.get("CookVueAppid")
+		// });
+		options.url = parse(options.url, {
+			appid: Cookies.get("CookVueAppid")
+		});
+		options = Object.assign(this.getInsideConfig(), options);
 		this.interceptors(instance, options.url)
 		return instance(options)
 	}
 	get (url, data) {
-		const instance = axios.create()
+		const instance = axios.create();
+		url = parse(url, {
+			appid: Cookies.get("CookVueAppid")
+		});
 		var options = {
 			method: "GET",
 			url: url,
 			params: data
 		}
+
 		options = Object.assign(this.getInsideConfig(), options)
 		this.interceptors(instance, options.url)
 		return instance(options)
 	}
 	post (url, data) {
-		const instance = axios.create()
+		const instance = axios.create();
+		url = parse(url, {
+			appid: Cookies.get("CookVueAppid")
+		});
 		data = typeof data === "string" ? data : qs.stringify(data);
 		var options = {
 			method: "POST",

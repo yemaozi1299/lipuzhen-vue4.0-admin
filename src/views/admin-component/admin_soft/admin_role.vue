@@ -30,6 +30,7 @@
             title="添加型号"
             @on-ok="add"
             @on-cancel=""
+            :loading="addCompanyData.loading"
         >
             <Form label-position="left" :label-width="100">
                 <FormItem label="软件名称：">
@@ -141,7 +142,8 @@ export default {
                 marketprice: "",
                 rolename: "",
                 rolecode: "",
-                p_code_arr: []
+                p_code_arr: [],
+                loading: true
             },
             columns: [
                 {
@@ -266,17 +268,8 @@ export default {
             this.getPrivilege();
         },
         showAddRole () {
-            this.addCompanyData = {
-                roleID: 0,
-                isModal: true,
-                softID: "",
-                yc: false,
-                description: "",
-                marketprice: "",
-                rolename: "",
-                rolecode: "",
-                p_code_arr: this.selectedCode
-            }
+            this.addCompanyData.isModal = true;
+            this.addCompanyData.p_code_arr = this.selectedCode;
         },
         dataInitial () {
             this.$http.request({
@@ -339,23 +332,23 @@ export default {
                     yc: data.yc ? "1" : "0"
                 }
             }).then((res) => {
-                console.log(res);
-                if (res.data.status == 1) {
-                    this.addCompanyData = {
-                        isModal: false,
-                        softID: this.softID,
-                        yc: false,
-                        description: "",
-                        marketprice: "",
-                        rolename: "",
-                        p_code_arr: this.selectedCode
-                    };
-                } else {
-                    this.$Message.error(res.data.message);
-                }
-                this.dataInitial()
+                this.addCompanyData = {
+                    isModal: false,
+                    softID: this.softID,
+                    yc: false,
+                    description: "",
+                    marketprice: "",
+                    rolename: "",
+                    p_code_arr: this.selectedCode,
+                    loading: false
+                };
+                this.dataInitial();
 
             }).catch((response) => {
+                this.addCompanyData.loading = false;
+                this.$nextTick(() => {
+                    this.addCompanyData.loading = true;
+                })
                 this.$Notice.error({
                     title: '错误提示',
                     desc: response

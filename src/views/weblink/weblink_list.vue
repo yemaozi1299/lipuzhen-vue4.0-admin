@@ -183,7 +183,14 @@ export default {
                             },
                             on: {
                                 'click': (val) => {
-                                    this.removeLink(params.row)
+                                    this.$Modal.confirm({
+                                        title: "删除链接",
+                                        content: "确定要删除链接吗",
+                                        onOk: () => {
+                                            this.removeLink(params.row)
+                                        }
+                                    });
+
                                 }
                             }
                         }, '删除'),
@@ -388,10 +395,10 @@ export default {
                 method: "POST",
                 url: "/api_edit.php?action=weblink_del",
                 params: {
-                    delid: params.id
+                    delid: [params.id]
                 }
             }).then((res) => {
-
+                this.dataInitial();
                 console.log(res);
             }).catch((response) => {
                 this.$Notice.error({

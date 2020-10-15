@@ -1,5 +1,5 @@
 <template>
-    <Layout style="height: 100%;" class="main">
+    <Layout style="height: 100%" class="main">
         <Sider
             hide-trigger
             collapsible
@@ -31,13 +31,10 @@
                     :collapsed="collapsed"
                     @on-coll-change="handleCollapsedChange"
                 >
-                    <user
-                        :message-unread-count="3"
-                        user-avatar="https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png"
-                    />
+                    <user :message-unread-count="0" user-avatar="" />
                     <headerSoft
                         @on-lang-change="setSoft"
-                        style="margin-right: 10px; float: left;"
+                        style="margin-right: 10px; float: left"
                         :lang="``"
                     />
 
@@ -116,6 +113,7 @@ export default {
         '$route': 'fetchData',
     },
     created () {
+
     },
     computed: {
         rotateIcon () {

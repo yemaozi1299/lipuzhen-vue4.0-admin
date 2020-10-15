@@ -174,6 +174,33 @@
             ></addAdmin>
             <p slot="footer"></p>
         </Modal>
+
+        <Modal v-model="isModal" title="修改应用信息" @on-ok="wxappEdit">
+            <Form :label-width="100" label-position="left">
+                <FormItem label="应用头像">
+                    <div @click="showFile">
+                        <Avatar
+                            shape="square"
+                            icon="ios-person"
+                            :size="80"
+                            :src="path"
+                        />
+                    </div>
+                </FormItem>
+                <FormItem label="应用名称">
+                    <Input v-model="wxAppName"></Input>
+                </FormItem>
+            </Form>
+        </Modal>
+        <Modal v-model="isUpload" width="860">
+            <p slot="header">选择图片</p>
+            <fileExplorer
+                v-if="isUpload"
+                :options="options"
+                @successCallback="uploadListFun"
+            ></fileExplorer>
+            <div slot="footer"></div>
+        </Modal>
     </Layout>
 </template>
 <script>
@@ -182,16 +209,25 @@ import applogo from '@/assets/images/welcome/applogo.png'
 import Tables from '@/components/tables'
 import Buttons from '@/components/buttons'
 import Cookies from 'js-cookie';
+import fileExplorer from '@/components/fileExplorer/fileExplorer';
 
 import addAdmin from './home_manager/home_add'
 export default {
     components: {
         Tables,
         Buttons,
-        addAdmin
+        addAdmin,
+        fileExplorer
     },
     data () {
         return {
+            isUpload: false,
+            options: {
+                mode: "single",
+                _displayMode: 'grid',  // grid 和 list
+                type: 'image',
+                appid: 0
+            },
             softData: {
                 name: "",
                 isModal: false,
@@ -214,7 +250,7 @@ export default {
             content: 2,
             wxAppName: '',
             picname: '',
-            path: '/images/applogo.png',
+            path: '',
             app_id: '',
             isModal: false,
             _index: 0,
@@ -510,22 +546,15 @@ export default {
                 title: '提示',
                 content: '是否退出登录？',
                 onOk: () => {
-                    _this.$http.post('/logout.php').then(function (response) {
-                        if (response.data.status == 1) {
-                            _this.$Message.info('退出成功');
-                            window.location.href = 'http://a.richapps.cn/';
-                        } else {
-
-                        }
-                    })
-                        .catch(function (response) {
-                            _this.$Notice.error({
-                                title: '错误提示',
-                                desc: response
-                            });
-                            _this.$Loading.error();
+                    _this.$http.post('/login.php?mode=logout').then(function (response) {
+                        _this.$Message.info('退出成功');
+                        window.location.href = 'http://a.richapps.cn/';
+                    }).catch(function (response) {
+                        _this.$Notice.error({
+                            title: '错误提示',
+                            desc: response
                         });
-
+                    });
                 },
                 onCancel: () => {
                     _this.$Message.info('取消退出');
@@ -575,23 +604,9 @@ export default {
 
             _this.$http.post('/api_home.php', _this.$qs.stringify(data)).then(function (response) {
                 console.log(response.data);
-                if (response.data.status == 1) {
-                    var body = [];
-                    _this.appData.content = response.data.body;
-                    _this.pageData.total = Number(response.data.total);
-                } else if (response.data.status == 2) {
-                    _this.$Modal.confirm({
-                        title: '提示',
-                        content: response.data.message,
-                        onOk: function () {
-                            window.location.href = 'http://a.richapps.cn/';
-                        },
-                        onCancel: function () {
-                            window.location.href = 'http://a.richapps.cn/';
-                        }
-                    });
-                }
-                _this.$Loading.finish();
+                var body = [];
+                _this.appData.content = response.data.body;
+                _this.pageData.total = Number(response.data.total);
             }).catch(function (response) {
                 _this.$Notice.error({
                     title: '错误提示',
@@ -613,11 +628,41 @@ export default {
                 this.picname = pic[pic.length - 1];
             }
             this.isModal = !this.isModal;
-            this.path = params.row.logo || '/images/applogo.png';
+            this.path = params.row.logo || this.applogo || '/images/applogo.png';
             this.wxAppName = params.row.name;
-            this.$cookieStore.set("CookVueAppid", params.row.id);
             this.app_id = params.row.id;
             console.log(params.row);
+        },
+        wxappEdit: function () {
+            var _this = this;
+            var data = {
+                action: 'wxapp_edit',
+                appid: this.app_id,
+                appname: this.wxAppName,
+                logoname: this.picname
+            }
+            console.log(_this.$qs.stringify(data));
+            _this.$http.post('/api_home.php', _this.$qs.stringify(data)).then(function (response) {
+                _this.getAppList();
+                _this.picname = "";
+                _this.path = "";
+            })
+                .catch(function (response) {
+                    _this.$Notice.error({
+                        title: '错误提示',
+                        desc: response
+                    });
+                });
+        },
+        showFile () {
+            this.options.appid = this.app_id;
+            this.isUpload = true;
+        },
+        uploadListFun (files) {
+            this.isUpload = false;
+            this.picname = files.name;
+            this.path = files.url;
+            console.log(files);
         },
         addSoft () {
             if (this.softData.softID == 0) {

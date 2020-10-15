@@ -27,33 +27,302 @@ import Admin from '@/components/admin';
  * }
  */
 export default {
+	admin: [
+		{
+			path: '/',
+			redirect: '/welcome',
+			meta: {
+				hideInMenu: true
+			},
+		}, {
+			path: '/welcome',
+			name: 'welcome',
+			meta: {
+				title: '管理中心',
+				icon: 'md-home',
+				hideInMenu: true
+			},
+			component: () => import('@/views/welcome/welcome.vue'),
+
+		}, {
+			path: '/welcome/addAdmin',
+			name: 'welcomeAdmin',
+			meta: {
+				title: '管理员添加',
+				icon: 'md-home',
+				hideInMenu: true
+			},
+			component: () => import('@/views/welcome/home_manager/home_add.vue'),
+
+		},
+		{
+			path: '/admin_info',
+			name: 'adminInfo',
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'admin_info',
+					meta: {
+						title: '统计信息',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/statistical.vue')
+				},
+			]
+		},
+		{
+			path: '/admin_user',
+			name: 'admin_user',
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'admin_user',
+					meta: {
+						title: '企业管理',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/admin_user.vue')
+				},
+				{
+					path: '/admin_user/:page/admin_add',
+					name: 'admin_add',
+					meta: {
+						title: '管理员添加',
+						hideInMenu: true
+					},
+					component: () => import('@/views/admin-component/admin_manager/admin_add.vue')
+				},
+
+			]
+		},
+
+
+
+		{
+			path: '/admin_apps',
+			name: 'adminApps',
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'admin_apps',
+					meta: {
+						title: '应用管理',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/admin_apps.vue')
+				},
+				{
+					path: ':page/:user',
+					name: 'admin_apps_2',
+					meta: {
+						title: '应用管理-查询',
+						icon: 'md-home',
+						hideInMenu: true
+					},
+					component: () => import('@/views/admin-component/admin_apps.vue')
+				},
+				{
+					path: ':page/admin_apps/example_appadd/',
+					name: 'example_appadd',
+					meta: {
+						title: '添加应用样板',
+						icon: 'md-home',
+						hideInMenu: true
+					},
+					component: () => import('@/views/admin-component/example_appadd.vue')
+				},
+			]
+		},
+		{
+			path: '/agentlistof',
+			name: 'agentListof',
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'agentlistof',
+					meta: {
+						title: '代理商管理',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/agentlistof.vue')
+				},
+			]
+		},
+		{
+			path: '/admin_agentPrice',
+			name: 'adminAgentPrice',
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'admin_agentPrice',
+					meta: {
+						title: '代理商财务明细',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/admin_agentPrice.vue')
+				},
+			]
+		},
+		{
+			path: '/admin_model',
+			name: 'adminModel',
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'admin_model',
+					meta: {
+						title: '应用型号',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/app_model.vue')
+				},
+			]
+		},
+		{
+			path: '/admin_manager',
+			name: 'adminManager',
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'admin_manager',
+					meta: {
+						title: '超级管理员设置',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/admin_manager.vue')
+				},
+			]
+		},
+		{
+			path: '/templateList',
+			name: 'TemplateList',
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'templateList',
+					meta: {
+						title: '样板列表',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/template_list.vue')
+				},
+			]
+		},
+		{
+			path: '/page_manager',
+			name: 'pageManager',
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'page_manager',
+					meta: {
+						title: '模板管理',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/page_manager.vue')
+				},
+			]
+		},
+		{
+			path: '/admin_soft',
+			name: 'adminSoft',
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'admin_soft',
+					meta: {
+						title: '软件管理',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/admin_soft/admin_soft.vue')
+				},
+				{
+					path: '/admin_soft/admin_privilege/:softID',
+					name: 'admin_privilege',
+					meta: {
+						title: '功能管理',
+						icon: 'md-home',
+						hideInMenu: true
+					},
+					component: () => import('@/views/admin-component/admin_soft/admin_privilege.vue')
+				},
+				{
+					path: '/admin_soft/admin_role/:softID',
+					name: 'admin_role',
+					meta: {
+						title: '型号管理',
+						icon: 'md-home',
+						hideInMenu: true
+					},
+					component: () => import('@/views/admin-component/admin_soft/admin_role.vue')
+				}
+			]
+		},
+
+		{
+			path: '/admin_block_template',
+			name: 'blockTemplate',
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'block_template',
+					meta: {
+						title: '模块样式管理',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/block_template/block_list.vue')
+				},
+				{
+					path: '/admin_block_template/template_list/:blockname/:pageid',
+					name: 'block_template_list',
+					meta: {
+						title: '模块样式列表',
+						icon: 'md-home',
+						hideInMenu: true
+					},
+					component: () => import('@/views/admin-component/block_template/template_list.vue')
+				},
+			]
+		},
+		{
+			path: "/admin_agent_level",
+			name: "adminAgentLevel",
+			component: Admin,
+			children: [
+				{
+					path: ':page?',
+					name: 'level_list',
+					meta: {
+						title: '代理商等级列表',
+						icon: 'md-home'
+					},
+					component: () => import('@/views/admin-component/admin_agent_level/level_list.vue')
+				},
+				{
+					path: '/admin_agent_level/:page/level_add',
+					name: 'level_add',
+					meta: {
+						title: '代理商等级添加',
+						icon: 'md-home',
+						hideInMenu: true
+					},
+					component: () => import('@/views/admin-component/admin_agent_level/level_add.vue')
+				},
+			]
+		}
+	],
 	main: [{
-		path: '/',
-		redirect: '/welcome',
-		meta: {
-			hideInMenu: true
-		},
-	}, {
-		path: '/welcome',
-		name: 'welcome',
-		meta: {
-			title: '管理中心',
-			icon: 'md-home',
-			hideInMenu: true
-		},
-		component: () => import('@/views/welcome/welcome.vue'),
-
-	}, {
-		path: '/welcome/addAdmin',
-		name: 'welcomeAdmin',
-		meta: {
-			title: '管理员添加',
-			icon: 'md-home',
-			hideInMenu: true
-		},
-		component: () => import('@/views/welcome/home_manager/home_add.vue'),
-
-	}, {
 		path: '/home',
 		name: '_home',
 		component: Main,
@@ -228,10 +497,6 @@ export default {
 					component: () => import('@/views/shopinfo/ticketlist.vue')
 				}]
 			},
-
-
-
-
 		]
 	},
 	{
@@ -476,7 +741,6 @@ export default {
 			},
 		]
 	},
-
 	{
 		path: '/info',
 		component: Main,
@@ -772,6 +1036,25 @@ export default {
 	},
 
 	{
+		path: '/sqlfile',
+		name: "sqlFile",
+		component: Main,
+		children: [
+			{
+				path: ':page?',
+				name: 'sql_file',
+				meta: {
+					title: '数据库管理',
+					icon: 'ios-folder-outline'
+				},
+				component: () => import('@/views/sqlFile/sql_list')
+			},
+		]
+	},
+
+
+
+	{
 		path: '/wxxcx',
 		name: '_wxxcx',
 		component: Main,
@@ -803,6 +1086,7 @@ export default {
 
 		]
 	},
+
 	{
 		path: '/responsive',
 		name: '_responsive',
@@ -953,274 +1237,7 @@ export default {
 		},
 
 
-	],
-	admin: [
-		{
-			path: '/admin_info',
-			name: 'adminInfo',
-			component: Admin,
-			children: [
-				{
-					path: ':page?',
-					name: 'admin_info',
-					meta: {
-						title: '统计信息',
-						icon: 'md-home'
-					},
-					component: () => import('@/views/admin-component/statistical.vue')
-				},
-			]
-		},
-		{
-			path: '/admin_user',
-			name: 'admin_user',
-			component: Admin,
-			children: [
-				{
-					path: ':page?',
-					name: 'admin_user',
-					meta: {
-						title: '企业管理',
-						icon: 'md-home'
-					},
-					component: () => import('@/views/admin-component/admin_user.vue')
-				},
-				{
-					path: '/admin_user/:page/admin_add',
-					name: 'admin_add',
-					meta: {
-						title: '管理员添加',
-						hideInMenu: true
-					},
-					component: () => import('@/views/admin-component/admin_manager/admin_add.vue')
-				},
-
-			]
-		},
-
-
-
-		{
-			path: '/admin_apps',
-			name: 'adminApps',
-			component: Admin,
-			children: [
-				{
-					path: ':page?',
-					name: 'admin_apps',
-					meta: {
-						title: '应用管理',
-						icon: 'md-home'
-					},
-					component: () => import('@/views/admin-component/admin_apps.vue')
-				},
-				{
-					path: ':page/:user',
-					name: 'admin_apps_2',
-					meta: {
-						title: '应用管理-查询',
-						icon: 'md-home',
-						hideInMenu: true
-					},
-					component: () => import('@/views/admin-component/admin_apps.vue')
-				},
-				{
-					path: ':page/admin_apps/example_appadd/',
-					name: 'example_appadd',
-					meta: {
-						title: '添加应用样板',
-						icon: 'md-home',
-						hideInMenu: true
-					},
-					component: () => import('@/views/admin-component/example_appadd.vue')
-				},
-			]
-		},
-		{
-			path: '/agentlistof',
-			name: 'agentListof',
-			component: Admin,
-			children: [
-				{
-					path: ':page?',
-					name: 'agentlistof',
-					meta: {
-						title: '代理商管理',
-						icon: 'md-home'
-					},
-					component: () => import('@/views/admin-component/agentlistof.vue')
-				},
-			]
-		},
-		{
-			path: '/admin_agentPrice',
-			name: 'adminAgentPrice',
-			component: Admin,
-			children: [
-				{
-					path: ':page?',
-					name: 'admin_agentPrice',
-					meta: {
-						title: '代理商财务明细',
-						icon: 'md-home'
-					},
-					component: () => import('@/views/admin-component/admin_agentPrice.vue')
-				},
-			]
-		},
-		{
-			path: '/admin_model',
-			name: 'adminModel',
-			component: Admin,
-			children: [
-				{
-					path: ':page?',
-					name: 'admin_model',
-					meta: {
-						title: '应用型号',
-						icon: 'md-home'
-					},
-					component: () => import('@/views/admin-component/app_model.vue')
-				},
-			]
-		},
-		{
-			path: '/admin_manager',
-			name: 'adminManager',
-			component: Admin,
-			children: [
-				{
-					path: ':page?',
-					name: 'admin_manager',
-					meta: {
-						title: '超级管理员设置',
-						icon: 'md-home'
-					},
-					component: () => import('@/views/admin-component/admin_manager.vue')
-				},
-			]
-		},
-		{
-			path: '/templateList',
-			name: 'TemplateList',
-			component: Admin,
-			children: [
-				{
-					path: ':page?',
-					name: 'templateList',
-					meta: {
-						title: '样板列表',
-						icon: 'md-home'
-					},
-					component: () => import('@/views/admin-component/template_list.vue')
-				},
-			]
-		},
-		{
-			path: '/page_manager',
-			name: 'pageManager',
-			component: Admin,
-			children: [
-				{
-					path: ':page?',
-					name: 'page_manager',
-					meta: {
-						title: '模板管理',
-						icon: 'md-home'
-					},
-					component: () => import('@/views/admin-component/page_manager.vue')
-				},
-			]
-		},
-		{
-			path: '/admin_soft',
-			name: 'adminSoft',
-			component: Admin,
-			children: [
-				{
-					path: ':page?',
-					name: 'admin_soft',
-					meta: {
-						title: '软件管理',
-						icon: 'md-home'
-					},
-					component: () => import('@/views/admin-component/admin_soft/admin_soft.vue')
-				},
-				{
-					path: '/admin_soft/admin_privilege/:softID',
-					name: 'admin_privilege',
-					meta: {
-						title: '功能管理',
-						icon: 'md-home',
-						hideInMenu: true
-					},
-					component: () => import('@/views/admin-component/admin_soft/admin_privilege.vue')
-				},
-				{
-					path: '/admin_soft/admin_role/:softID',
-					name: 'admin_role',
-					meta: {
-						title: '型号管理',
-						icon: 'md-home',
-						hideInMenu: true
-					},
-					component: () => import('@/views/admin-component/admin_soft/admin_role.vue')
-				}
-			]
-		},
-
-		{
-			path: '/admin_block_template',
-			name: 'blockTemplate',
-			component: Admin,
-			children: [
-				{
-					path: ':page?',
-					name: 'block_template',
-					meta: {
-						title: '模块样式管理',
-						icon: 'md-home'
-					},
-					component: () => import('@/views/admin-component/block_template/block_list.vue')
-				},
-				{
-					path: '/admin_block_template/template_list/:blockname/:pageid',
-					name: 'block_template_list',
-					meta: {
-						title: '模块样式列表',
-						icon: 'md-home',
-						hideInMenu: true
-					},
-					component: () => import('@/views/admin-component/block_template/template_list.vue')
-				},
-			]
-		},
-		{
-			path: "/admin_agent_level",
-			name: "adminAgentLevel",
-			component: Admin,
-			children: [
-				{
-					path: ':page?',
-					name: 'level_list',
-					meta: {
-						title: '代理商等级列表',
-						icon: 'md-home'
-					},
-					component: () => import('@/views/admin-component/admin_agent_level/level_list.vue')
-				},
-				{
-					path: '/admin_agent_level/:page/level_add',
-					name: 'level_add',
-					meta: {
-						title: '代理商等级添加',
-						icon: 'md-home',
-						hideInMenu: true
-					},
-					component: () => import('@/views/admin-component/admin_agent_level/level_add.vue')
-				},
-			]
-		}
 	]
+
 
 }

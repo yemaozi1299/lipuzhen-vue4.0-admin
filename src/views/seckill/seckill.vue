@@ -395,7 +395,12 @@ export default {
         goSettingPage: function (type, id) {
             var type = type == 0 ? 1 : 2;
             this.$router.push({
-                path: '/seckill/goods-setting/' + type + '/' + id
+                name: 'seckillgid',
+                params: {
+                    page: this.page,
+                    type: type,
+                    id: id
+                }
             });
         },
         delSeckill: function (id) {

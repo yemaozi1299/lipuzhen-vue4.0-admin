@@ -257,9 +257,7 @@ export default {
                     yc: data.yc ? "1" : "0"
                 }
             }).then((res) => {
-                if (res.data.status == 1) {
-                    this.dataInitial();
-                }
+                this.dataInitial();
                 this.addCompanyData = {
                     id: 0,
                     isModal: false,

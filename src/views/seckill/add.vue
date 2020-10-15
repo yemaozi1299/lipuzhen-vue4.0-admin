@@ -140,7 +140,12 @@ export default {
             this.get();
         },
         skippage: function (page) {
-            this.$router.push({ path: "/seckill/add/" + page });
+            this.$router.push({
+                name: "seckilladd",
+                params: {
+                    page: page
+                }
+            });
         },
         get: function () {
             var that = this;
@@ -256,7 +261,7 @@ export default {
                 name: 'seckillgid',
                 params: {
                     page: this.page,
-                    type: 0,
+                    type: "0",
                     id: id
                 }
             });
