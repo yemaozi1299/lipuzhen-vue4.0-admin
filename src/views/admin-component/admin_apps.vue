@@ -170,6 +170,47 @@
             ></fileExplorer>
             <div slot="footer"></div>
         </Modal> -->
+
+        <Modal
+            v-model="softData.isModal"
+            title="设置软件授权信息"
+            @on-ok="appsoftSet"
+        >
+            <Form :label-width="100" label-position="left">
+                <!-- <FormItem label="APPID">
+                    <span>{{ softData.id }}</span>
+                </FormItem>
+                <FormItem label="应用名称">
+                    <span>{{ softData.name }}</span>
+                </FormItem>
+                <FormItem label="roleID">
+                    <span>{{ softData.roleID }}</span>
+                </FormItem>
+                <FormItem label="softID">
+                    <span>{{ softData.softID }}</span>
+                </FormItem> -->
+                <FormItem label="授权状态">
+                    <i-switch v-model="softData.haveSoft">
+                        <span slot="open">开</span>
+                        <span slot="close">关</span>
+                    </i-switch>
+                </FormItem>
+                <div v-show="softData.haveSoft">
+                    <FormItem label="授权域名">
+                        <Input
+                            v-model="softData.url"
+                            placeholder="http://www.baidu.com"
+                        ></Input>
+                    </FormItem>
+                    <FormItem label="AppSecret（选填）">
+                        <Input
+                            v-model="softData.AppSecret"
+                            placeholder=""
+                        ></Input>
+                    </FormItem>
+                </div>
+            </Form>
+        </Modal>
     </Card>
 </template>
 
@@ -189,13 +230,36 @@ export default {
             softList: [],
             selectedSoft: "",
             isUpload: false,
-            // options: {
-            //     mode: "single",
-            //     _displayMode: 'grid',  // grid 和 list
-            //     type: 'image',
-            //     appid: this.$cookieStore.get("CookVueAppid"),
-            //     php: "/api_admin.php"
-            // },
+            softData: {
+                isModal: false,
+                name: "",
+                haveSoft: false,
+                id: "",
+                roleID: "",
+                softID: "",
+                AppSecret: "",
+                url: "",
+                user: ""
+            },
+            /*
+                AppCode: null
+                AppSecret: null
+                bottom_nav: "{"position":"bottom","color":"#59607B","selectedColor":"#3091F2","backgroundColor":"#fff","borderStyle":"black","list":[]}"
+                count: "0"
+                endtime: "1665564345"
+                haveSoft: "0"
+                id: "14"
+                logo: "BlR5DLJq7XHNb.jpg"
+                name: "全功能小程序2"
+                roleID: "8"
+                softID: "3"
+                starttime: "1600917673"
+                status: "1"
+                url: null
+                user: "1"
+        	
+            */
+
             example_data: {
                 isModal: false,
                 cover: '',
@@ -299,12 +363,12 @@ export default {
                         key: 'companyname',
                     },
                     {
-                        title: '试用',
+                        title: '软件',
                         render: (h, params) => {
                             return h('div', [
                                 h('Button', {
                                     props: {
-                                        type: (params.row.status == 1 ? 'success' : 'error'),
+                                        type: (params.row.haveSoft == 0 ? 'success' : 'warning'),
                                         size: 'small'
                                     },
                                     style: {
@@ -312,13 +376,14 @@ export default {
                                     },
                                     on: {
                                         click: () => {
+                                            this.appGet(params.row);
                                             console.log("=============================");
                                         }
                                     }
-                                }, params.row.status == 0 ? '试用' : (params.row.status == 1 ? '正常' : '待审核'))
+                                }, params.row.haveSoft == 0 ? '授权' : '修改')
                             ]);
                         },
-                        width: '90px'
+                        width: '120px'
 
                     },
                     {
@@ -472,9 +537,6 @@ export default {
         getSoftList () {
             this.$http.request({
                 url: "/api_admin.php?action=soft_listof",
-                params: {
-                    appid: this.vueAppid,
-                }
             }).then((res) => {
                 this.softList = res.data.body || [];
                 console.log(res.data);
@@ -716,11 +778,57 @@ export default {
                 });
                 _this.$Loading.error();
             });
+        },
+        appGet (params) {
+            this.$http.request({
+                method: "POST",
+                url: "/api_admin.php?action=app_get",
+                params: {
+                    user: params.user,
+                    appid: params.id
+                }
+            }).then((res) => {
+                this.showHaveSoft(res.data);
+                console.log(res);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
+        },
+        showHaveSoft (params) {
+            var data = params.body;
+            data.haveSoft = data.haveSoft == "1" ? true : false;
+            data.isModal = true;
+            this.softData = data;
+        },
+        appsoftSet () {
+            var params = this.softData;
+            this.$http.request({
+                method: "POST",
+                url: "/api_admin.php?action=app_soft_set",
+                params: {
+                    user: params.user,
+                    appid: params.id,
+                    url: params.url,
+                    AppSecret: params.AppSecret,
+                    haveSoft: params.haveSoft ? "1" : "0"
+                }
+            }).then((res) => {
+                this.softData.isModal = false;
+                this.get();
+                console.log(res);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         }
     }
 }
 </script>
-
 
 <style lang="less">
 .label-price {

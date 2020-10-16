@@ -1,6 +1,6 @@
 <template>
     <Card>
-        <p slot="title">添加新闻</p>
+        <p slot="title">添加文章</p>
         <Form
             ref="formValidate"
             :model="formValidate"
@@ -8,13 +8,13 @@
             :label-width="200"
             style="padding-bottom: 30px"
         >
-            <Form-item label="新闻标题" prop="title">
+            <Form-item label="文章标题" prop="title">
                 <Input
                     v-model="formValidate.title"
                     placeholder="请输入名称"
                 ></Input>
             </Form-item>
-            <Form-item label="新闻摘要" prop="summary">
+            <Form-item label="文章摘要" prop="summary">
                 <Input
                     v-model="formValidate.summary"
                     placeholder="请输入摘要"
@@ -80,7 +80,7 @@
                     >
                 </RadioGroup>
             </Form-item>
-            <Form-item label="新闻分类" prop="classid">
+            <Form-item label="文章分类" prop="classid">
                 <Select v-model="formValidate.classid" style="width: 200px">
                     <template v-for="item in classidList">
                         <Option :value="item.id">{{ item.sortname }}</Option>
@@ -101,11 +101,11 @@
                     >添加分类</Buttons
                 >
             </Form-item>
-            <Form-item label="新闻推荐" prop="tj">
+            <Form-item label="文章推荐" prop="tj">
                 <i-Switch v-model="formValidate.tj" /> 推荐
             </Form-item>
             <Form-item
-                label="新闻排序（值越高排序越前）"
+                label="文章排序（值越高排序越前）"
                 prop="pr"
                 v-if="newid > 0"
             >
@@ -115,7 +115,7 @@
                     style="width: 300px"
                 ></InputNumber>
             </Form-item>
-            <Form-item label="相关新闻关键字" prop="keyword">
+            <Form-item label="相关文章关键字" prop="keyword">
                 <Input
                     v-model="formValidate.keyword"
                     placeholder="请输入关键字"
@@ -133,7 +133,7 @@
                     @on-change="changeDateTime"
                 ></DatePicker>
             </Form-item>
-            <Form-item label="新闻正文" prop="body">
+            <Form-item label="文章正文" prop="body">
                 <editor
                     ref="editor"
                     :value="editorContent"
@@ -228,7 +228,7 @@ export default {
                     { required: true, message: '标题不能为空', trigger: 'blur' }
                 ],
                 classid: [
-                    { required: true, message: '新闻分类不能为空', trigger: 'blur' }
+                    { required: true, message: '文章分类不能为空', trigger: 'blur' }
                 ],
                 date: [
                     { required: true, message: '请填写日期', trigger: 'blur' }

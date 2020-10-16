@@ -20,7 +20,7 @@ import Admin from '@/components/admin';
 支付设置改成微信参数
 店铺信息改成餐饮管理
 信息发布改成资讯管理
-新闻系统
+文章系统
 留言系统
 产品系统
 招聘系统
@@ -754,7 +754,7 @@ export default {
 				path: "/news/:pageid?",
 				name: "news",
 				meta: {
-					title: "新闻系统",
+					title: "文章系统",
 				},
 				component: () => import('@/views/news/news.vue')
 			},
@@ -762,7 +762,7 @@ export default {
 				path: "/news/:pageid?/addNews/:newid",
 				name: "addnews",
 				meta: {
-					title: "添加新闻",
+					title: "添加文章",
 					hideInMenu: true
 				},
 				component: () => import('@/views/news/addNews.vue')

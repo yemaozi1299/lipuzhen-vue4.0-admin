@@ -74,6 +74,47 @@
                 </FormItem>
             </Form>
         </Modal>
+
+        <Modal
+            v-model="softData.isModal"
+            title="设置软件授权信息"
+            @on-ok="appsoftSet"
+        >
+            <Form :label-width="100" label-position="left">
+                <!-- <FormItem label="APPID">
+                    <span>{{ softData.id }}</span>
+                </FormItem>
+                <FormItem label="应用名称">
+                    <span>{{ softData.name }}</span>
+                </FormItem>
+                <FormItem label="roleID">
+                    <span>{{ softData.roleID }}</span>
+                </FormItem>
+                <FormItem label="softID">
+                    <span>{{ softData.softID }}</span>
+                </FormItem> -->
+                <FormItem label="授权状态">
+                    <i-switch v-model="softData.haveSoft">
+                        <span slot="open">开</span>
+                        <span slot="close">关</span>
+                    </i-switch>
+                </FormItem>
+                <div v-show="softData.haveSoft">
+                    <FormItem label="授权域名">
+                        <Input
+                            v-model="softData.url"
+                            placeholder="http://www.baidu.com"
+                        ></Input>
+                    </FormItem>
+                    <FormItem label="AppSecret（选填）">
+                        <Input
+                            v-model="softData.AppSecret"
+                            placeholder=""
+                        ></Input>
+                    </FormItem>
+                </div>
+            </Form>
+        </Modal>
     </Card>
 </template>
 
@@ -87,6 +128,17 @@ export default {
     },
     data: function () {
         return {
+            softData: {
+                isModal: false,
+                name: "",
+                haveSoft: false,
+                id: "",
+                roleID: "",
+                softID: "",
+                AppSecret: "",
+                url: "",
+                user: ""
+            },
             pageno: 10,
             loading: false,
             isModal: false,
@@ -172,6 +224,30 @@ export default {
                     {
                         title: '所属企业',
                         key: 'companyname',
+                    },
+                    {
+                        title: '软件',
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: (params.row.haveSoft == 0 ? 'success' : 'warning'),
+                                        size: 'small'
+                                    },
+                                    style: {
+                                        color: '#fff',
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.appGet(params.row);
+                                            console.log("=============================");
+                                        }
+                                    }
+                                }, params.row.haveSoft == 0 ? '授权' : '修改')
+                            ]);
+                        },
+                        width: '120px'
+
                     },
                     {
                         title: '状态',
@@ -398,10 +474,6 @@ export default {
                 }
             });
 
-
-
-
-
         },
         appYear: function () {
             var _this = this;
@@ -429,6 +501,55 @@ export default {
                     });
                 }
 
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
+        },
+
+
+        appGet (params) {
+            this.$http.request({
+                method: "POST",
+                url: "/api_agent.php?action=app_get",
+                params: {
+                    user: params.user,
+                    appid: params.id
+                }
+            }).then((res) => {
+                this.showHaveSoft(res.data);
+                console.log(res);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
+        },
+        showHaveSoft (params) {
+            var data = params.body;
+            data.haveSoft = data.haveSoft == "1" ? true : false;
+            data.isModal = true;
+            this.softData = data;
+        },
+        appsoftSet () {
+            var params = this.softData;
+            this.$http.request({
+                method: "POST",
+                url: "/api_agent.php?action=app_soft_set",
+                params: {
+                    user: params.user,
+                    appid: params.id,
+                    url: params.url,
+                    AppSecret: params.AppSecret,
+                    haveSoft: params.haveSoft ? "1" : "0"
+                }
+            }).then((res) => {
+                this.softData.isModal = false;
+                this.get();
+                console.log(res);
             }).catch((response) => {
                 this.$Notice.error({
                     title: '错误提示',

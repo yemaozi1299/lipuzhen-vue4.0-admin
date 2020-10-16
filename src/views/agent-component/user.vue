@@ -1022,7 +1022,8 @@ export default {
                     userid: this.editAdmin.id
                 }
             });
-        }
+        },
+
     }
 }
 </script>

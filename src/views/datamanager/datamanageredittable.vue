@@ -187,10 +187,10 @@ export default {
             this.formValidate.table = this.$route.params.table;
             this.get(this.$route.params.table);
         },
-        get: function (table = 0) {//获取新闻内容
+        get: function (table = 0) {//获取文章内容
             var _this = this;
             if (table == 0) {
-                return false;//添加新闻
+                return false;//添加文章
             }
             //datamanager_gettable  获取表信息和表字段     $tableid 要获取信息的表ID
 

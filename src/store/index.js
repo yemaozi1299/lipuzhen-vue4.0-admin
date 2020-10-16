@@ -5,14 +5,16 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
 	state: {
-		software: ''
+		software: '',
+		appid: ''
 	},
 	getter: {
 
 	},
 	mutations: {
 		softwareChange (state, payload) {
-			state.software = payload
+			state.software = payload.software;
+			state.appid = payload.appid;
 		}
 	},
 	actions: {

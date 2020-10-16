@@ -209,7 +209,7 @@ export default {
         this.get();
     },
     methods: {
-        get: function () {//获取新闻内容
+        get: function () {//获取应用内容
             var _this = this;
             var apiurl = "/api_edit.php?action=goods_payGet&appid=" + this.vueAppid;;
             _this.$http.get(apiurl)

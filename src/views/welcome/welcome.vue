@@ -190,6 +190,9 @@
                 <FormItem label="应用名称">
                     <Input v-model="wxAppName"></Input>
                 </FormItem>
+                <FormItem label="AppSecret">
+                    <Input v-model="appSecret"></Input>
+                </FormItem>
             </Form>
         </Modal>
         <Modal v-model="isUpload" width="860">
@@ -199,6 +202,32 @@
                 :options="options"
                 @successCallback="uploadListFun"
             ></fileExplorer>
+            <div slot="footer"></div>
+        </Modal>
+        <Modal v-model="appGetData.isModal" title="授权信息">
+            <Form :label-width="100" label-position="left">
+                <FormItem label="授权域名">
+                    <span>{{ appGetData.url }}</span>
+                </FormItem>
+                <FormItem label="AppCode">
+                    <span>{{ appGetData.AppCode }}</span>
+                </FormItem>
+                <FormItem label="AppSecret">
+                    <span>{{ appGetData.AppSecret }}</span>
+                </FormItem>
+                <FormItem label="软件包下载">
+                    <Button>
+                        <a
+                            target="_blank"
+                            :href="
+                                '/move/api_home.php?action=softdownload&appid=' +
+                                appGetData.id
+                            "
+                            >下载</a
+                        >
+                    </Button>
+                </FormItem>
+            </Form>
             <div slot="footer"></div>
         </Modal>
     </Layout>
@@ -221,6 +250,17 @@ export default {
     },
     data () {
         return {
+            appGetData: {
+                isModal: false,
+                name: "",
+                haveSoft: false,
+                id: "",
+                roleID: "",
+                softID: "",
+                AppSecret: "",
+                url: "",
+                user: ""
+            },
             isUpload: false,
             options: {
                 mode: "single",
@@ -234,6 +274,7 @@ export default {
                 softID: 0,
                 loading: true
             },
+            appSecret: "",
             softList: [],
             loading: false,
             welcome_logo,
@@ -353,6 +394,29 @@ export default {
                         title: '结束时间',
                         key: 'endtime',
                         align: 'center'
+                    },
+                    {
+                        title: '授权信息',
+                        align: 'center',
+                        width: 100,
+                        render: (h, params) => {
+                            return h('div', [
+                                h('Button', {
+                                    props: {
+                                        type: 'info',
+                                        disabled: params.row.haveSoft == "0" ? true : false
+                                    },
+                                    style: {
+                                        margin: '5px'
+                                    },
+                                    on: {
+                                        click: () => {
+                                            this.showHaveSoft(params.row)
+                                        }
+                                    }
+                                }, params.row.haveSoft == "1" ? "查看" : "无")
+                            ]);
+                        }
                     },
                     {
                         title: '操作',
@@ -521,6 +585,7 @@ export default {
         this.getAppList();
         this.getSoftList();
         this.isAgentorAdmin();
+        console.log(process.env.NODE_ENV);
     },
     methods: {
         getSoftList () {
@@ -607,20 +672,29 @@ export default {
                 var body = [];
                 _this.appData.content = response.data.body;
                 _this.pageData.total = Number(response.data.total);
+
             }).catch(function (response) {
                 _this.$Notice.error({
                     title: '错误提示',
                     desc: response
                 });
             });
-
         },
         routerPage (params) {
-            Cookies.set("CookVueAppid", params.id);
-            Cookies.set("CookRolecode", params.rolename);
-            this.$router.push({
-                name: "home"
-            });
+            // 开发版固定跳到 应用管理后台
+            if (process.env.NODE_ENV == 'development' || params.haveSoft == "0") {
+                Cookies.set("CookVueAppid", params.id);
+                Cookies.set("CookRolecode", params.rolename);
+                this.$router.push({
+                    name: "home"
+                });
+                return
+            }
+            if (params.haveSoft == "1" && params.url) {
+                window.open(params.url + "/move/login.php", "_blank");
+            }
+
+
         },
         show: function (params) {
             if (params.row.logo) {
@@ -631,6 +705,7 @@ export default {
             this.path = params.row.logo || this.applogo || '/images/applogo.png';
             this.wxAppName = params.row.name;
             this.app_id = params.row.id;
+            this.appSecret = params.row.AppSecret;
             console.log(params.row);
         },
         wxappEdit: function () {
@@ -639,13 +714,15 @@ export default {
                 action: 'wxapp_edit',
                 appid: this.app_id,
                 appname: this.wxAppName,
-                logoname: this.picname
+                logoname: this.picname,
+                appSecret: this.appSecret
             }
             console.log(_this.$qs.stringify(data));
             _this.$http.post('/api_home.php', _this.$qs.stringify(data)).then(function (response) {
                 _this.getAppList();
                 _this.picname = "";
                 _this.path = "";
+                _this.$Message.info(response.data.message);
             })
                 .catch(function (response) {
                     _this.$Notice.error({
@@ -805,7 +882,13 @@ export default {
             // this.editAdmin.id = params.row.id;
             this.isEdit = true;
             this.getAdmin();
-        }
+        },
+        showHaveSoft (params) {
+            var data = JSON.parse(JSON.stringify(params || {}));
+            data.haveSoft = data.haveSoft == "1" ? true : false;
+            data.isModal = true;
+            this.appGetData = data;
+        },
     }
 }
 </script>

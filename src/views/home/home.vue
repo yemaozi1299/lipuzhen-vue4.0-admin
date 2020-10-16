@@ -148,6 +148,7 @@ export default {
                 console.log(response.data);
                 var data = response.data.body || {}, arr = [], numList = [];
                 var software = response.data.software;
+                var software = response.data.appid;
                 for (var key in data) {
                     if (key == "appid") {
                         continue
@@ -160,7 +161,10 @@ export default {
                         }));
                     }
                 }
-                _this.$store.commit('softwareChange', software);
+                _this.$store.commit('softwareChange', {
+                    software,
+                    appid
+                });
                 _this.inforCardData = arr;
                 _this.numCardData = numList;
                 console.log(arr, numList);

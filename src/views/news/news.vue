@@ -2,7 +2,7 @@
     <div>
         <Card class="new-list-card" style="" dis-hover>
             <p slot="title" style="height: auto">
-                <span>新闻列表</span>
+                <span>文章列表</span>
                 <Dropdown
                     trigger="click"
                     placement="top"
@@ -30,7 +30,7 @@
                             class="ant-btn mg-r-20"
                             v-on:click="pathEdit"
                         >
-                            <Icon type="md-add" />添加新闻
+                            <Icon type="md-add" />添加文章
                         </Button>
                         <Input
                             v-model="keyword"
@@ -346,7 +346,7 @@ export default {
             },
             {
                 width: 200,
-                title: "新闻标题",
+                title: "文章标题",
                 key: "title"
             }, {
                 width: 96,
@@ -354,7 +354,7 @@ export default {
                 align: "center",
                 key: "counter"
             }, {
-                title: "新闻日期",
+                title: "文章日期",
                 key: "date",
                 width: 150
             }, {
@@ -428,7 +428,7 @@ export default {
             }],
             classColumns: [
                 {
-                    title: "新闻分类",
+                    title: "文章分类",
                     key: "sortname"
                 }
             ],
@@ -695,7 +695,7 @@ export default {
             var value = "";
             this.$Modal.confirm({
                 title: "删除分类",
-                content: "确定要删除分类吗，删除该新闻分类会将其下所有新闻删除",
+                content: "确定要删除分类吗，删除该文章分类会将其下所有文章删除",
                 onOk: function () {
                     var apiurl = "/api_edit.php?action=news_class_del";
                     var data = {
@@ -739,16 +739,16 @@ export default {
 
             switch (name) {
                 case 'delete':
-                    var content = '确定对所选新闻进行：删除'
+                    var content = '确定对所选文章进行：删除'
                     var action = 'news_del'
                     break
                 case 'show':
-                    var content = '确定对所选新闻进行：显示'
+                    var content = '确定对所选文章进行：显示'
                     var action = 'news_updown'
                     mode = 0;
                     break
                 case 'hide':
-                    var content = '确定对所选新闻进行：隐藏'
+                    var content = '确定对所选文章进行：隐藏'
                     var action = 'news_updown'
                     mode = 1;
                     break
@@ -861,7 +861,7 @@ export default {
             if (item) {
                 this.$Modal.confirm({
                     title: "删除提示",
-                    content: "确定要删除该条新闻吗",
+                    content: "确定要删除该条文章吗",
                     onOk: () => {
                         var apiurl = '/api_edit.php?action=news_del'
                         var data = {

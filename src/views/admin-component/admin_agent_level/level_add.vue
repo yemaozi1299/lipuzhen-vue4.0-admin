@@ -1,6 +1,6 @@
 <template>
     <Card>
-        <p slot="title">添加新闻</p>
+        <p slot="title">添加文章</p>
         <Form
             ref="formValidate"
             :model="formValidate"

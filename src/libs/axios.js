@@ -99,18 +99,22 @@ class HttpRequest {
 		// options.params = Object.assign(options.params, {
 		// 	appid: Cookies.get("CookVueAppid")
 		// });
-		options.url = parse(options.url, {
-			appid: Cookies.get("CookVueAppid")
-		});
+		if (options.params && !options.params.appid) {
+			options.url = parse(options.url, {
+				appid: Cookies.get("CookVueAppid")
+			});
+		}
 		options = Object.assign(this.getInsideConfig(), options);
 		this.interceptors(instance, options.url)
 		return instance(options)
 	}
 	get (url, data) {
 		const instance = axios.create();
-		url = parse(url, {
-			appid: Cookies.get("CookVueAppid")
-		});
+		if (!data.appid) {
+			url = parse(url, {
+				appid: Cookies.get("CookVueAppid")
+			});
+		}
 		var options = {
 			method: "GET",
 			url: url,
@@ -123,9 +127,11 @@ class HttpRequest {
 	}
 	post (url, data) {
 		const instance = axios.create();
-		url = parse(url, {
-			appid: Cookies.get("CookVueAppid")
-		});
+		if (!data.appid) {
+			url = parse(url, {
+				appid: Cookies.get("CookVueAppid")
+			});
+		}
 		data = typeof data === "string" ? data : qs.stringify(data);
 		var options = {
 			method: "POST",
