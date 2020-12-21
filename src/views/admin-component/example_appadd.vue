@@ -31,7 +31,7 @@
                         ></Icon>
                         <Icon
                             type="ios-trash-outline"
-                            @click.native="handleRemove"
+                            @click.native="handleRemove('pc')"
                         ></Icon>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                         ></Icon>
                         <Icon
                             type="ios-trash-outline"
-                            @click.native="handleRemove"
+                            @click.native="handleRemove('mobile')"
                         ></Icon>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                         ></Icon>
                         <Icon
                             type="ios-trash-outline"
-                            @click.native="handleRemove"
+                            @click.native="handleRemove('mina')"
                         ></Icon>
                     </div>
                 </div>
@@ -193,7 +193,8 @@ export default {
             this.visible = true
         },
         handleRemove: function (mode) {
-            this[mode] = "";
+            this['cover_' + mode] = "";
+            this['cover_' + mode + '_name'] = "";
         },
         handleBeforeUpload: function (type) {
             this.uploadType = type;

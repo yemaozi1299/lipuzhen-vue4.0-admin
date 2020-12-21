@@ -1,4 +1,4 @@
-# lipuzhen-vue4.0-admin
+# admin
 
 ## Project setup
 ```

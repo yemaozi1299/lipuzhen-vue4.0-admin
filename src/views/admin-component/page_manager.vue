@@ -44,7 +44,7 @@
             </div>
             <ul class="page-example-ul">
                 <li v-for="item in list">
-                    <img :src="moves + item.cover" alt="" />
+                    <img :src="item.coverUrl" alt="" />
                     <p>{{ item.name }}</p>
                     <span class="delete-tpl" v-on:click="del(item.id)">✖</span>
                 </li>

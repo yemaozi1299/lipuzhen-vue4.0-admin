@@ -16,8 +16,7 @@ const addErrorLog = errorInfo => {
 	// if (!responseURL.includes('save_error_logger')) store.dispatch('addErrorLog', info)
 }
 
-
-
+console.log(store);
 class HttpRequest {
 	// 对象会传入一个baseURL和url
 	constructor(baseUrl = baseURL) {
@@ -65,8 +64,12 @@ class HttpRequest {
 		instance.interceptors.response.use(res => {
 			//删除url
 			this.destroy(url)
-			const { data, status } = res
+			const { data, status } = res;
+
 			if (data && (data.status == 1 || data.message == "查无记录" || data.message == "查无此外卖商家" || data.message == "未设置") && status == 200) {
+				return { data, status }
+			} else if (data && data.status == 2) {
+				window.location = data.url;
 				return { data, status }
 			} else {
 				console.log(data, url, res.config, status);
@@ -95,10 +98,8 @@ class HttpRequest {
 		})
 	}
 	request (options) {
-		const instance = axios.create()
-		// options.params = Object.assign(options.params, {
-		// 	appid: Cookies.get("CookVueAppid")
-		// });
+		const instance = axios.create();
+
 		if (options.params && !options.params.appid) {
 			options.url = parse(options.url, {
 				appid: Cookies.get("CookVueAppid")
@@ -110,7 +111,7 @@ class HttpRequest {
 	}
 	get (url, data) {
 		const instance = axios.create();
-		if (!data.appid) {
+		if (data && !data.appid) {
 			url = parse(url, {
 				appid: Cookies.get("CookVueAppid")
 			});
@@ -127,7 +128,7 @@ class HttpRequest {
 	}
 	post (url, data) {
 		const instance = axios.create();
-		if (!data.appid) {
+		if (data && !data.appid) {
 			url = parse(url, {
 				appid: Cookies.get("CookVueAppid")
 			});

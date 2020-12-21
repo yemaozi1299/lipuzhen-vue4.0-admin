@@ -19,13 +19,6 @@
         >
             <template slot="header">
                 <div class="search-area">
-                    <Button
-                        type="primary"
-                        class="ant-btn mg-r-20"
-                        v-on:click="isAddCompany = true"
-                    >
-                        <Icon type="md-add" />添加
-                    </Button>
                     <Input
                         v-model="keyword"
                         placeholder="关键字"
@@ -121,6 +114,7 @@
 <script type="text/javascript">
 import Tables from '@/components/tables'
 import Buttons from '@/components/buttons'
+import noImage from '@/assets/images/noimage.jpg'
 export default {
     components: {
         Tables,
@@ -169,16 +163,16 @@ export default {
                     {
                         title: '应用图标',
                         render: (h, params) => {
-                            return h('div', [
+                            return h('div', {
+                                attrs: {
+                                    class: 'app-upload-list'
+                                }
+                            }, [
                                 h('img', {
                                     attrs: {
-                                        src: params.row.logo ? ('/userlist/' + params.row.user + '/' + params.row.id + '/userpic/' + params.row.logo) : '/images/noimage.gif',
+                                        src: params.row.logo ? ('/userlist/' + params.row.user + '/' + params.row.id + '/userpic/' + params.row.logo) : noImage,
                                     },
-                                    style: {
-                                        margin: '10px 0px',
-                                        width: '50px',
-                                        height: '50px'
-                                    },
+
                                     on: {
                                         click: () => {
                                             window.open('/appeditor/preview.php?appid=' + params.row.id);
@@ -188,26 +182,64 @@ export default {
                                 }, '设置')
                             ]);
                         },
-                        width: '90px'
+                        width: '100px'
 
                     },
                     {
                         title: '应用名称',
+                        align: "center",
                         render: (h, params) => {
-                            return h('a', {
-                                on: {
-                                    click: () => {
-                                        window.open('/appeditor/preview.php?appid=' + params.row.id);
-                                        console.log(params.row.id);
+                            var btn = [
+                                h('Dropdown', {
+                                    props: {
+                                        placement: "right"
+                                    },
+                                    on: {
+                                        'on-click': (val) => {
+                                            this.openPage(params.row, val);
+                                            console.log(val);
+                                        }
                                     }
-                                }
-                            }, params.row.name);
+                                }, [
+                                    h('Button', {
+                                        props: {
+                                            type: 'text',
+                                        },
+                                        style: {
+                                            margin: '5px',
+                                            padding: '0 20px',
+                                            color: '#39f'
+                                        },
+                                        on: {
+                                            click: () => {
+
+                                            }
+                                        }
+                                    }, params.row.name),
+                                    h('DropdownMenu', {
+                                        slot: "list"
+                                    }, [
+                                        h('DropdownItem', {
+                                            props: {
+                                                name: "/preshow.php?appid="
+                                            }
+                                        }, '预览网站'),
+                                        h('DropdownItem', {
+                                            props: {
+                                                name: "/appeditor/preview.php?appid="
+                                            }
+                                        }, '预览小程序')
+                                    ])
+                                ])
+                            ];
+
+                            return h('div', btn);
                         }
                     },
                     {
                         title: '版本',
                         key: 'rolename',
-                        width: '90px'
+                        width: '120px'
                     },
                     {
                         title: '到期时间',
@@ -344,6 +376,16 @@ export default {
         }
     },
     methods: {
+        openPage (params, name) {
+            // 开发版固定跳到 应用管理后台
+            if (process.env.NODE_ENV == 'development' || params.haveSoft == "0") {
+                window.open(`${name + params.id}`, '_self');
+                return
+            }
+            if (params.haveSoft == "1" && params.url) {
+                window.open(`${params.url + name + params.id}`, '_self');
+            }
+        },
         get: function (keyword) {
             var _this = this;
             keyword ? this.pageData.page = 1 : '';

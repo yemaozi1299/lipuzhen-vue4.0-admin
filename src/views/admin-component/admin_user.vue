@@ -333,11 +333,12 @@ export default {
             },
             editPassword: {
                 isModal: false,
-                loading: false,
+                loading: true,
                 password: '',
                 isPassword: '',
                 id: '',
-                phone: ''
+                phone: '',
+                user: ''
             },
             editAdmin: {
                 isModal: false,
@@ -409,9 +410,16 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                            this.editPassword.id = params.row.id;
-                                            this.editPassword.phone = params.row.mobile;
-                                            this.editPassword.isModal = true;
+                                            var row = params.row;
+                                            var data = {
+                                                id: row.id,
+                                                phone: row.mobile,
+                                                isModal: true,
+                                                user: row.user
+                                            }
+                                            console.log(row);
+
+                                            Object.assign(this.editPassword, data);
                                         }
                                     }
                                 }, '修改'),
@@ -854,8 +862,6 @@ export default {
                 _this.$Loading.error();
             });
         },
-
-
         editPasswordData: function (name) {
             var _this = this;
             var params = this.editPassword;
@@ -872,30 +878,32 @@ export default {
 
                     var data = {
                         action: 'manager_password',
-                        managerid: this.editPassword.id,
-                        password: this.editPassword.password
+                        managerid: params.id,
+                        password: params.password,
+                        user: params.user
                     };
-                    this.$Loading.start();
+                    console.log(data);
                     _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
                         _this.editPassword.loading = false;
-                        if (response.data.status == 1) {
-                            _this.editPassword.password = '';
-                            _this.editPassword.isPassword = '';
-                            _this.$Message.success("修改成功");
-                        } else {
-                            _this.$nextTick(() => {
-                                _this.editPassword.loading = true;
-                            });
-                            _this.$Message.error(response.data.message);
-                        }
-                        _this.$Loading.finish();
+                        _this.editPassword.password = '';
+                        _this.editPassword.isPassword = '';
+                        _this.editPassword.isModal = false;
+
+                        _this.$nextTick(() => {
+                            _this.editPassword.loading = true;
+                        });
+
+
+                        _this.$Message.success("修改成功");
                     }).catch(function (response) {
-                        console.log(response);
                         _this.$Notice.error({
                             title: '错误提示',
                             desc: response
                         });
-                        _this.$Loading.error();
+                        _this.$nextTick(() => {
+                            _this.editPassword.loading = true;
+                        });
+                        _this.$Message.error(response.data.message);
                     });
                 } else {
                     _this.editPassword.loading = false;
@@ -968,6 +976,7 @@ export default {
             } else {
                 this.addAppData.example_appid = item.id;
                 this.addAppData.name = item.name;
+                this.addAppData.rolecode = item.roleID;
                 this.addAppData.rolename = item.rolename;
                 // this.addPriseApp();
             }

@@ -131,6 +131,7 @@
                                                         v-if="getAppType.pc"
                                                     ></span
                                                     ><span
+                                                        @click="toPreview(item)"
                                                         class="txt_span ng-binding"
                                                         v-if="getAppType.pc"
                                                         >预览</span
@@ -425,6 +426,10 @@ export default {
         },
         addTemplate (params) {
             this.$emit("successCallback", params);
+        },
+        toPreview (params) {
+            window.open("/preview.html?appid=" + params.id);
+            console.log(params);
         }
     }
 }

@@ -1,7 +1,7 @@
 <template>
     <Layout id="welcome-wrapper" class="layout-wrapper">
         <Header class="index-header">
-            <div class="header-nav" :style="'width:' + maxWidth + 'px'">
+            <div class="header-nav">
                 <h1 class="logo">
                     <a href="javascript:void(0)"
                         ><img class="logo-large" :src="welcome_logo"
@@ -9,8 +9,12 @@
                 </h1>
                 <ul class="nav-list">
                     <li class="active">
-                        <router-link to="">管理中心</router-link>
+                        <router-link to="">我的应用</router-link>
                     </li>
+                    <li>
+                        <span @click="showEditAdmin">管理员管理</span>
+                    </li>
+
                     <li v-if="isAgent">
                         <router-link to="/agent_info">代理商平台</router-link>
                     </li>
@@ -18,9 +22,6 @@
                         <router-link to="/admin_info"
                             >超级管理员平台</router-link
                         >
-                    </li>
-                    <li>
-                        <span @click="showEditAdmin">管理员管理</span>
                     </li>
                 </ul>
                 <ul class="account-wrap">
@@ -30,8 +31,8 @@
                 </ul>
             </div>
         </Header>
-        <Content>
-            <Card class="page-component">
+        <Content class="contenter">
+            <div class="page-component">
                 <tables
                     ref="tables"
                     editable
@@ -42,6 +43,7 @@
                     :total="pageData.total"
                     :current="pageData.page"
                     :page-size="appData.pageno"
+                    @on-skippage="skippage"
                     show-total
                     show-elevator
                     showlayout
@@ -59,11 +61,11 @@
                         </div>
                     </template>
                 </tables>
-            </Card>
+            </div>
         </Content>
         <Modal
             v-model="softData.isModal"
-            title="设为样板"
+            title="添加应用"
             @on-ok="addSoft"
             @on-cancel=""
             :loading="softData.loading"
@@ -72,7 +74,7 @@
                 <FormItem label="应用名称：">
                     <Input type="text" v-model="softData.name"></Input>
                 </FormItem>
-                <FormItem label="softID">
+                <FormItem label="软件类型">
                     <Select
                         v-model="softData.softID"
                         placeholder="选择软件类型"
@@ -190,9 +192,6 @@
                 <FormItem label="应用名称">
                     <Input v-model="wxAppName"></Input>
                 </FormItem>
-                <FormItem label="AppSecret">
-                    <Input v-model="appSecret"></Input>
-                </FormItem>
             </Form>
         </Modal>
         <Modal v-model="isUpload" width="860">
@@ -213,7 +212,13 @@
                     <span>{{ appGetData.AppCode }}</span>
                 </FormItem>
                 <FormItem label="AppSecret">
-                    <span>{{ appGetData.AppSecret }}</span>
+                    <span style="margin-right: 10px">{{
+                        appGetData.AppSecret
+                    }}</span>
+                    <Button @click="editAppSecret" type="info">重置</Button>
+                </FormItem>
+                <FormItem label="userKey">
+                    <span>{{ appGetData.userKey }}</span>
                 </FormItem>
                 <FormItem label="软件包下载">
                     <Button>
@@ -233,7 +238,7 @@
     </Layout>
 </template>
 <script>
-import welcome_logo from '@/assets/images/welcome_logo.png'
+import welcome_logo from '@/assets/images/logo.png'
 import applogo from '@/assets/images/welcome/applogo.png'
 import Tables from '@/components/tables'
 import Buttons from '@/components/buttons'
@@ -274,7 +279,6 @@ export default {
                 softID: 0,
                 loading: true
             },
-            appSecret: "",
             softList: [],
             loading: false,
             welcome_logo,
@@ -322,9 +326,20 @@ export default {
             appData: {
                 title: [
                     {
+                        title: "APPID",
+                        key: "id",
+                        align: 'center',
+                        width: 100,
+
+                        render: (h, params) => {
+                            return h('div', {}, params.row.user + "-" + params.row.id);
+                        }
+                    },
+                    {
                         title: '应用图标',
                         key: 'img',
                         align: 'center',
+                        width: 100,
                         render: (h, params) => {
                             return h('div', [
                                 h('img', {
@@ -349,37 +364,67 @@ export default {
                     {
                         title: '应用名称',
                         key: 'name',
-                        width: 250,
+                        width: 200,
                         align: 'center',
                         render: (h, params) => {
-                            return h('div', [
-                                h('Button', {
+                            var btn = [
+                                h('Dropdown', {
                                     props: {
-                                        type: 'text'
-                                    },
-                                    style: {
-                                        color: '#39f'
+                                        placement: "right"
                                     },
                                     on: {
-                                        click: () => {
-                                            this.show(params);
-                                            this._index = params.row._index;
-                                            console.log(params.row);
+                                        'on-click': (val) => {
+                                            this.openPage(params.row, val);
+                                            console.log(val);
                                         }
                                     }
-                                }, params.row.name)
-                            ]);
+                                }, [
+                                    h('Button', {
+                                        props: {
+                                            type: 'text',
+                                        },
+                                        style: {
+                                            margin: '5px',
+                                            padding: '0 20px',
+                                            color: '#39f'
+                                        },
+                                        on: {
+                                            click: () => {
+
+                                            }
+                                        }
+                                    }, params.row.name),
+                                    h('DropdownMenu', {
+                                        slot: "list"
+                                    }, [
+                                        h('DropdownItem', {
+                                            props: {
+                                                name: "/preshow.php?appid="
+                                            }
+                                        }, '预览网站'),
+                                        h('DropdownItem', {
+                                            props: {
+                                                name: "/appeditor/preview.php?appid="
+                                            }
+                                        }, '预览小程序')
+                                    ])
+                                ])
+                            ];
+                            return h('div', btn);
+
                         }
                     },
                     {
                         title: '所属软件',
                         align: 'center',
-                        key: 'soft'
+                        key: 'soft',
+                        width: 100,
                     },
                     {
-                        title: '版本',
+                        title: '型号',
                         align: 'center',
-                        key: 'rolename'
+                        key: 'rolename',
+                        width: 100,
                     },
 
                     {
@@ -393,10 +438,11 @@ export default {
                     {
                         title: '结束时间',
                         key: 'endtime',
-                        align: 'center'
+                        align: 'center',
+                        width: 200,
                     },
                     {
-                        title: '授权信息',
+                        title: '软件下载',
                         align: 'center',
                         width: 100,
                         render: (h, params) => {
@@ -422,24 +468,94 @@ export default {
                         title: '操作',
                         key: 'opr',
                         align: 'center',
-                        width: 100,
+                        width: 155,
+                        fixed: 'right',
                         render: (h, params) => {
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        type: 'success',
-                                        disabled: params.row.overdue == 1 ? true : false
-                                    },
-                                    style: {
-                                        margin: '5px'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            this.routerPage(params.row)
+                            console.log(params.row);
+                            var btn = [];
+                            if (params.row.overdue == 1 || params.row.haveSoft == 1) {
+                                btn.push([
+                                    h('Button', {
+                                        props: {
+                                            type: 'success',
+                                            disabled: params.row.overdue == 1 ? true : false
+                                        },
+                                        style: {
+                                            margin: '5px',
+                                            padding: '0 20px',
+                                        },
+                                        on: {
+                                            click: () => {
+                                                this.routerPage(params.row)
+                                            }
                                         }
-                                    }
-                                }, '管理')
-                            ]);
+                                    }, params.row.overdue == 1 ? '已过期' : params.row.haveSoft == 1 ? '管理' : '内容')
+                                ])
+                            } else {
+                                btn.push([
+                                    h('Dropdown', {
+                                        props: {
+                                            placement: "left"
+                                        },
+                                        on: {
+                                            'on-click': (val) => {
+                                                this.openPage(params.row, val);
+                                            }
+                                        }
+                                    }, [
+                                        h('Button', {
+                                            props: {
+                                                type: 'info',
+                                            },
+                                            style: {
+                                                margin: '5px',
+                                                padding: '0 20px'
+                                            },
+                                            on: {
+                                                click: () => {
+
+                                                }
+                                            }
+                                        }, '设计'),
+                                        h('DropdownMenu', {
+                                            slot: "list"
+                                        }, [
+                                            h('DropdownItem', {
+                                                props: {
+                                                    name: "/main.php?appid="
+                                                }
+                                            }, '网站'),
+                                            h('DropdownItem', {
+                                                props: {
+                                                    name: "/appeditor/?appid="
+                                                }
+                                            }, '小程序')
+                                        ])
+                                    ]),
+                                    h('Button', {
+                                        props: {
+                                            type: 'success',
+                                            disabled: params.row.overdue == 1 ? true : false
+                                        },
+                                        style: {
+                                            margin: '5px',
+                                            padding: '0 20px'
+                                        },
+                                        on: {
+                                            click: () => {
+                                                this.routerPage(params.row);
+                                            }
+                                        }
+                                    }, params.row.overdue == 1 ? '已过期' : params.row.haveSoft == 1 ? '管理' : '内容'),
+
+                                ]);
+                            }
+
+                            return h('div', {
+                                style: {
+                                    'text-align': 'center'
+                                }
+                            }, btn);
                         }
                     }
                 ],
@@ -581,13 +697,21 @@ export default {
         }
     },
     created: function () {
-        window.document.title = '欢迎使用';
-        this.getAppList();
-        this.getSoftList();
-        this.isAgentorAdmin();
-        console.log(process.env.NODE_ENV);
+        this.fetchData();
+    },
+    watch: {
+        '$route': 'fetchData'
     },
     methods: {
+        fetchData () {
+            window.document.title = '欢迎使用';
+            this.pageData.page = Number(this.$route.query.page) || 1;
+            this.getAppList();
+            this.getSoftList();
+            this.isAgentorAdmin();
+            console.log(process.env.NODE_ENV);
+
+        },
         getSoftList () {
             this.$http.request({
                 method: "POST",
@@ -611,9 +735,11 @@ export default {
                 title: '提示',
                 content: '是否退出登录？',
                 onOk: () => {
-                    _this.$http.post('/login.php?mode=logout').then(function (response) {
+                    _this.$http.post('/api_edit.php?action=logout').then(function (res) {
                         _this.$Message.info('退出成功');
-                        window.location.href = 'http://a.richapps.cn/';
+                        setTimeout(() => {
+                            window.location = res.data.url;
+                        }, 1000);
                     }).catch(function (response) {
                         _this.$Notice.error({
                             title: '错误提示',
@@ -662,11 +788,10 @@ export default {
             var _this = this;
             var data = {
                 action: 'wxapp_listof',
-                page: page || 1,
+                page: this.pageData.page || 1,
                 pageno: 10,
                 apptype: 0
             }
-
             _this.$http.post('/api_home.php', _this.$qs.stringify(data)).then(function (response) {
                 console.log(response.data);
                 var body = [];
@@ -685,17 +810,28 @@ export default {
             if (process.env.NODE_ENV == 'development' || params.haveSoft == "0") {
                 Cookies.set("CookVueAppid", params.id);
                 Cookies.set("CookRolecode", params.rolename);
-                this.$router.push({
-                    name: "home"
-                });
+                window.open("/work/app-component/", '_self');
                 return
             }
             if (params.haveSoft == "1" && params.url) {
-                window.open(params.url + "/move/login.php", "_blank");
+                window.open(params.url + "/move/sso.php", '_self');
+            }
+        },
+        openPage (params, name) {
+            // 开发版固定跳到 应用管理后台
+            Cookies.set("CookVueAppid", params.id);
+            Cookies.set("CookRolecode", params.rolename);
+            if (process.env.NODE_ENV == 'development' || params.haveSoft == "0") {
+                window.open(`${name + params.id}`, '_self');
+                return
+            }
+            if (params.haveSoft == "1" && params.url) {
+                window.open(`${params.url + name + params.id}`, '_self');
             }
 
-
         },
+
+
         show: function (params) {
             if (params.row.logo) {
                 var pic = params.row.logo.split("/");
@@ -705,7 +841,6 @@ export default {
             this.path = params.row.logo || this.applogo || '/images/applogo.png';
             this.wxAppName = params.row.name;
             this.app_id = params.row.id;
-            this.appSecret = params.row.AppSecret;
             console.log(params.row);
         },
         wxappEdit: function () {
@@ -715,7 +850,6 @@ export default {
                 appid: this.app_id,
                 appname: this.wxAppName,
                 logoname: this.picname,
-                appSecret: this.appSecret
             }
             console.log(_this.$qs.stringify(data));
             _this.$http.post('/api_home.php', _this.$qs.stringify(data)).then(function (response) {
@@ -889,6 +1023,41 @@ export default {
             data.isModal = true;
             this.appGetData = data;
         },
+        editAppSecret () {
+            var _this = this;
+            this.$Modal.confirm({
+                title: "确认重置",
+                content: "重置后,需要修改您手工修改软件所在服务器上的move/data/soft_config.php文件中$AppSecret参数,参数不一致软件将无法运行,确定重置吗?",
+                type: "warning",
+                onOk: () => {
+                    var data = {
+                        action: 'wxapp_editAppSecret',
+                        AppSecret: "",
+                        appid: _this.appGetData.id
+                    };
+                    _this.$http.post('/api_home.php', _this.$qs.stringify(data)).then(function (response) {
+                        _this.appGetData.AppSecret = response.data.body;
+                        _this.getAppList();
+                        console.log(response);
+                    }).catch(function (response) {
+                        _this.$Notice.error({
+                            title: '错误提示',
+                            desc: response
+                        });
+                    });
+                },
+                onCancel: () => {
+                }
+            })
+        },
+        skippage (page) {
+            this.$router.push({
+                name: 'welcome',
+                query: {
+                    page: page
+                }
+            });
+        }
     }
 }
 </script>
@@ -904,10 +1073,12 @@ export default {
     background-color: #333;
     color: #ddd;
     font-size: 14px;
+    padding: 0 20px;
 }
 /******************导航样式**********************/
 .header-nav {
-    width: 1200px;
+    width: 100%;
+    max-width: 1200px;
     line-height: 70px;
     margin: 0 auto;
     overflow: hidden;
@@ -917,7 +1088,12 @@ export default {
 }
 .header-nav .logo a {
     width: 200px;
+    margin-top: 6px;
     display: block;
+}
+.header-nav .logo a .logo-large {
+    max-width: 100%;
+    height: auto;
 }
 .header-nav .nav-list,
 .header-nav .account-wrap {
@@ -1106,10 +1282,31 @@ export default {
     width: 100%;
     height: 100%;
 }
+.contenter {
+    overflow: auto;
+    height: calc(100% - 70px);
+    background-color: #fff;
+}
 
 .page-component {
-    width: 1200px;
-    height: calc(100% - 70px);
-    margin: 20px auto 0px;
+    width: 100%;
+    max-width: 1200px;
+    height: auto;
+    margin: 20px auto 80px;
+    border: 1px solid rgb(246, 247, 251);
+    padding: 20px;
+    background-color: #fff;
+}
+#welcome-wrapper .page-content {
+    position: fixed;
+    bottom: 0px;
+    background-color: #fff;
+    width: 100%;
+    left: 0;
+    z-index: 10;
+    text-align: center;
+}
+#welcome-wrapper .ivu-table-fixed-body {
+    overflow: initial;
 }
 </style>

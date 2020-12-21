@@ -997,17 +997,18 @@ export default {
             });
         },
         selectApp: function (item) {
+            this.addAppData.isModal = true;
             if (item.id == '') {
-                this.addAppData.isModal = true;
                 this.addAppData.example_appid = '';
                 this.addAppData.name = '我的小程序';
             } else {
-                this.addAppData.isModal = true;
                 this.addAppData.example_appid = item.id;
                 this.addAppData.name = item.name;
+                this.addAppData.rolecode = item.roleID;
+                this.addAppData.rolename = item.rolename;
                 // this.addPriseApp();
             }
-
+            console.log(item);
         },
         previewApp: function (params) {
             window.open('/appeditor/preview.php?appid=' + params.fromappid);

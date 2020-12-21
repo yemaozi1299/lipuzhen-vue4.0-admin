@@ -33,7 +33,7 @@
             :loading="addCompanyData.loading"
         >
             <Form label-position="left" :label-width="100">
-                <FormItem label="软件名称：">
+                <FormItem label="型号名称：">
                     <Input
                         type="text"
                         v-model="addCompanyData.rolename"
@@ -81,7 +81,7 @@
             @on-cancel=""
         >
             <Form label-position="left" :label-width="100">
-                <FormItem label="软件名称：">
+                <FormItem label="型号名称：">
                     <Input
                         type="text"
                         v-model="addCompanyData.rolename"

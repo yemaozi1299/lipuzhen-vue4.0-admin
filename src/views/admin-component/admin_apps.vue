@@ -302,6 +302,7 @@ export default {
 
                     {
                         title: '应用图标',
+                        width: 100,
                         render: (h, params) => {
                             return h('div', {
                                 attrs: {
@@ -322,24 +323,63 @@ export default {
                             ]);
                         },
 
+
                     },
                     {
                         title: '应用名称',
+                        align: "center",
+                        width: 200,
                         render: (h, params) => {
-                            return h('a', {
-                                on: {
-                                    click: () => {
-                                        window.open('/appeditor/preview.php?appid=' + params.row.id);
-                                        console.log(params.row.id);
+                            var btn = [
+                                h('Dropdown', {
+                                    props: {
+                                        placement: "right"
+                                    },
+                                    on: {
+                                        'on-click': (val) => {
+                                            this.openPage(params.row, val);
+                                            console.log(val);
+                                        }
                                     }
-                                }
-                            }, params.row.name);
+                                }, [
+                                    h('Button', {
+                                        props: {
+                                            type: 'text',
+                                        },
+                                        style: {
+                                            margin: '5px',
+                                            padding: '0 20px',
+                                            color: '#39f'
+                                        },
+                                        on: {
+                                            click: () => {
+
+                                            }
+                                        }
+                                    }, params.row.name),
+                                    h('DropdownMenu', {
+                                        slot: "list"
+                                    }, [
+                                        h('DropdownItem', {
+                                            props: {
+                                                name: "/preshow.php?appid="
+                                            }
+                                        }, '预览网站'),
+                                        h('DropdownItem', {
+                                            props: {
+                                                name: "/appeditor/preview.php?appid="
+                                            }
+                                        }, '预览小程序')
+                                    ])
+                                ])
+                            ];
+                            return h('div', btn);
                         }
                     },
                     {
                         title: '版本',
                         key: 'rolename',
-                        width: '90px'
+                        width: '120px'
 
                     },
                     {
@@ -357,13 +397,16 @@ export default {
                     {
                         title: '所属代理商',
                         key: 'agentname',
+                        width: 120,
                     },
                     {
                         title: '所属企业',
                         key: 'companyname',
+                        width: 120,
                     },
                     {
                         title: '软件',
+                        width: 120,
                         render: (h, params) => {
                             return h('div', [
                                 h('Button', {
@@ -377,13 +420,12 @@ export default {
                                     on: {
                                         click: () => {
                                             this.appGet(params.row);
-                                            console.log("=============================");
                                         }
                                     }
                                 }, params.row.haveSoft == 0 ? '授权' : '修改')
                             ]);
                         },
-                        width: '120px'
+
 
                     },
                     {
@@ -534,6 +576,16 @@ export default {
         }
     },
     methods: {
+        openPage (params, name) {
+            // 开发版固定跳到 应用管理后台
+            if (process.env.NODE_ENV == 'development' || params.haveSoft == "0") {
+                window.open(`${name + params.id}`, '_self');
+                return
+            }
+            if (params.haveSoft == "1" && params.url) {
+                window.open(`${params.url + name + params.id}`, '_self');
+            }
+        },
         getSoftList () {
             this.$http.request({
                 url: "/api_admin.php?action=soft_listof",

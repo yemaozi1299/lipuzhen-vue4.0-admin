@@ -1,6 +1,6 @@
 <template>
     <Card>
-        <p slot="title">添加文章</p>
+        <p slot="title">添加代理商等级</p>
         <Form
             ref="formValidate"
             :model="formValidate"

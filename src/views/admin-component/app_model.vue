@@ -429,11 +429,8 @@ export default {
             };
             this.$Loading.start();
             _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
-                if (response.data.status == 1) {
-                    _this.userData.data = response.data.body;
-                    // console.log(response.data);
-                }
-                // console.log(JSON.stringify(response.data));
+                _this.userData.data = response.data.body;
+                console.log(response.data);
                 _this.$Loading.finish();
             }).catch((response) => {
                 this.$Notice.error({
