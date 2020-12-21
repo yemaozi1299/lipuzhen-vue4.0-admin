@@ -343,7 +343,7 @@ export default {
 					meta: {
 						title: '统计信息',
 						notCache: true,
-						icon: 'md-home'
+						icon: 'ios-podium'
 					},
 					component: () => import('@/views/agent-component/info.vue')
 				},
@@ -359,7 +359,7 @@ export default {
 					name: 'user',
 					meta: {
 						title: '企业列表',
-						icon: 'md-home'
+						icon: 'ios-contacts'
 					},
 					component: () => import('@/views/agent-component/user.vue')
 				},
@@ -384,7 +384,7 @@ export default {
 					name: 'agent_details',
 					meta: {
 						title: '应用管理',
-						icon: 'md-home'
+						icon: 'ios-apps'
 					},
 					component: () => import('@/views/agent-component/details.vue')
 				},
@@ -400,7 +400,7 @@ export default {
 					name: 'agent_financial',
 					meta: {
 						title: '代理商财务明细',
-						icon: 'md-home'
+						icon: 'md-calculator'
 					},
 					component: () => import('@/views/agent-component/financial.vue')
 				},
@@ -416,7 +416,7 @@ export default {
 					name: 'agent_price',
 					meta: {
 						title: '代理商价格',
-						icon: 'md-home'
+						icon: 'ios-clipboard'
 					},
 					component: () => import('@/views/agent-component/price.vue')
 				},

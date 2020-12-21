@@ -22,14 +22,146 @@
 		root_s.parentNode.insertBefore(cnzz_s_tag, root_s);
 	</script> -->
 </head>
-
+<style>
+	#app .ie-content {
+		text-align: center;
+	}
+	#app p.ie-content {
+		margin: 20px 0px;
+	}
+	.browser-list {
+		margin: 15px 0 10px;
+		padding: 0;
+		height: 42px;
+		text-align: center;
+	}
+	.browser {
+		display: inline-block;
+		width: 155px;
+		height: 34px;
+		line-height: 22px;
+		list-style: none;
+	}
+	.browser img {
+		width: 34px;
+		height: 34px;
+		border: 0;
+		float: left;
+		margin-right: 10px;
+	}
+	.browser span {
+		display: block;
+		font-size: 12px;
+		line-height: 1.2;
+	}
+	#ie-show-content {
+		display: none;
+	}
+</style>
 <body>
-	<noscript>
-		<strong>We're sorry but admin doesn't work properly without JavaScript enabled. Please enable it
-			to continue.</strong>
-	</noscript>
-	<div id="app"></div>
+	<div id="app">
+		<div id="ie-show-content">
+			<h1 class="ie-content">您浏览器过于老旧，请使用更先进的浏览器</h1>
+			<p class="ie-content">
+				推荐使用以下浏览器的最新版本。如果你的电脑已有以下浏览器的最新版本则直接使用该浏览器访问网页即可。
+			</p>
+			<ul id="browser-list" class="browser-list">
+				<li class="browser chrome">
+					<a
+						href="//www.google.cn/chrome/thankyou.html?standalone=1&amp;statcb=0&amp;installdataindex=defaultbrowser"
+						target="_blank"
+						id="browser-chrome-link"
+						><img
+							src="/editpublic/images/ie/chrome.png"
+							width="34"
+							height="34"
+							alt="谷歌浏览器"
+						/>谷歌浏览器<span>Google Chrome</span></a
+					>
+				</li>
+				<li class="browser firefox">
+					<a
+						href="//download.mozilla.org/?product=firefox-latest-ssl&amp;os=win&amp;lang=zh-CN"
+						target="_blank"
+						id="browser-firefox-link"
+						><img
+							src="/editpublic/images/ie/firefox.png"
+							width="34"
+							height="34"
+							alt="火狐浏览器"
+						/>火狐浏览器<span>Mozilla Firefox</span></a
+					>
+				</li>
+				<li class="browser edge">
+					<a
+						href="//www.microsoft.com/zh-cn/windows/microsoft-edge"
+						target="_blank"
+						id="browser-edge-link"
+						title="Microsoft Edge 专为 Windows 10 打造！请选择其他浏览器。"
+						style="color: #777; cursor: default"
+						onclick="return false;"
+						><img
+							src="/editpublic/images/ie/edge_gray.png"
+							width="34"
+							height="34"
+							alt="微软浏览器"
+						/>微软浏览器<span>Microsoft Edge</span></a
+					>
+				</li>
+				<li class="browser ie2345">
+					<a
+						href="https://download-2345.b0.upaiyun.com/2345explorer/p8_k2345886_v2.0.exe"
+						target="_blank"
+						id="browser-ie2345-link"
+						><img
+							src="/editpublic/images/ie/ie2345.png"
+							width="34"
+							height="34"
+							alt="2345浏览器"
+						/>2345加速浏览器<span>双内核安全版</span></a
+					>
+				</li>
+				<li class="browser se360">
+					<a
+						href="https://dl.360safe.com/netunion/20140425/360se+75526+n1abed0ce91.exe"
+						target="_blank"
+						id="browser-se360-link"
+						><img
+							src="/editpublic/images/ie/se360.png"
+							width="34"
+							height="34"
+							alt="360安全浏览器"
+						/>360安全浏览器<span>小白用户选择</span></a
+					>
+				</li>
+				<li class="browser qqbrowser">
+					<a
+						href="https://qqbrowser-1251013107.file.myqcloud.com/QQBrowser_subid@100002_urlid@100002.exe"
+						target="_blank"
+						id="browser-qqbrowser-link"
+						><img
+							src="/editpublic/images/ie/qqbrowser.png"
+							width="34"
+							height="34"
+							alt="QQ浏览器9"
+						/>QQ浏览器9<span>腾讯用户推荐</span></a
+					>
+				</li>
+				<li class="browser clearleft"></li>
+			</ul>
+		</div>
+	</div>
+	
 	<!-- built files will be auto injected -->
 </body>
+
+
+	
+<script>
+document.querySelector && "undefined" != typeof Proxy || (document.getElementById('ie-show-content').style.display = 'block')
+
+</script>
+
+
 
 </html>

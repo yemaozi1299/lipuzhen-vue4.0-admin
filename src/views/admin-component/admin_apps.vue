@@ -579,11 +579,11 @@ export default {
         openPage (params, name) {
             // 开发版固定跳到 应用管理后台
             if (process.env.NODE_ENV == 'development' || params.haveSoft == "0") {
-                window.open(`${name + params.id}`, '_self');
+                window.open(`${name + params.id}`);
                 return
             }
             if (params.haveSoft == "1" && params.url) {
-                window.open(`${params.url + name + params.id}`, '_self');
+                window.open(`${params.url + name + params.id}`);
             }
         },
         getSoftList () {

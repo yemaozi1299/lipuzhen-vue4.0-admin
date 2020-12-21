@@ -120,8 +120,7 @@
                                                             width: 164px;
                                                         "
                                                         v-if="
-                                                            (getAppType.mobile ||
-                                                                getAppType.mina) &&
+                                                            getAppType.mina &&
                                                             getAppType.pc ==
                                                                 false
                                                         "
@@ -189,6 +188,7 @@
                                                             height: 164px;
                                                             width: 164px;
                                                         "
+                                                        v-if="getAppType.mina"
                                                         :src="item.QrUrl"
                                                     />
                                                     <span
@@ -428,7 +428,7 @@ export default {
             this.$emit("successCallback", params);
         },
         toPreview (params) {
-            window.open("/preview.html?appid=" + params.id);
+            window.open("/preshow.php?appid=" + params.id);
             console.log(params);
         }
     }

@@ -814,7 +814,7 @@ export default {
                 return
             }
             if (params.haveSoft == "1" && params.url) {
-                window.open(params.url + "/move/sso.php", '_self');
+                window.open(params.url + "/move/sso.php");
             }
         },
         openPage (params, name) {
@@ -822,11 +822,11 @@ export default {
             Cookies.set("CookVueAppid", params.id);
             Cookies.set("CookRolecode", params.rolename);
             if (process.env.NODE_ENV == 'development' || params.haveSoft == "0") {
-                window.open(`${name + params.id}`, '_self');
+                window.open(`${name + params.id}`);
                 return
             }
             if (params.haveSoft == "1" && params.url) {
-                window.open(`${params.url + name + params.id}`, '_self');
+                window.open(`${params.url + name + params.id}`);
             }
 
         },
@@ -903,6 +903,10 @@ export default {
                 this.$Notice.error({
                     title: '错误提示',
                     desc: response
+                });
+                this.softData.loading = false;
+                this.$nextTick(() => {
+                    this.softData.loading = true;
                 });
             });
         },
