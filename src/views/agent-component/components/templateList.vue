@@ -120,8 +120,7 @@
                                                             width: 164px;
                                                         "
                                                         v-if="
-                                                            (getAppType.mobile ||
-                                                                getAppType.mina) &&
+                                                            getAppType.mina &&
                                                             getAppType.pc ==
                                                                 false
                                                         "
@@ -131,6 +130,7 @@
                                                         v-if="getAppType.pc"
                                                     ></span
                                                     ><span
+                                                        @click="toPreview(item)"
                                                         class="txt_span ng-binding"
                                                         v-if="getAppType.pc"
                                                         >预览</span
@@ -188,6 +188,7 @@
                                                             height: 164px;
                                                             width: 164px;
                                                         "
+                                                        v-if="getAppType.mina"
                                                         :src="item.QrUrl"
                                                     />
                                                     <span
@@ -217,7 +218,6 @@
                                         <div class="deleteBtn">
                                             <Button
                                                 v-if="isAdd"
-                                                class="mg-r-20"
                                                 type="info"
                                                 @click="addTemplate(item)"
                                                 >使用样板</Button
@@ -396,6 +396,10 @@ export default {
         },
         addTemplate (params) {
             this.$emit("successCallback", params);
+        },
+        toPreview (params) {
+            window.open("/preshow.php?appid=" + params.id);
+            console.log(params);
         }
     }
 }
