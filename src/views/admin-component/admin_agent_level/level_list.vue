@@ -79,7 +79,7 @@ export default {
                         return h('div', [
                             h('Button', {
                                 props: {
-                                    type: 'warning',
+                                    type: 'info',
                                     size: 'small'
                                 },
                                 style: {
@@ -152,7 +152,7 @@ export default {
         },
         fetchData () {
             this.page = this.$route.params.pageid ? parseInt(this.$route.params.pageid) : 1;
-            this.dataInitial()
+            this.dataInitial();
         },
         dataInitial () {
             this.$http.request({

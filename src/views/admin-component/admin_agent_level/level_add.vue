@@ -23,7 +23,7 @@
             <Form-item label="是否隐藏" prop="yc">
                 <i-switch v-model="formValidate.yc" />
             </Form-item>
-            <FormItem label="软件类型：" prop="">
+            <!-- <FormItem label="软件类型：" prop="">
                 <Select style="width: 200px" v-model="selectedSoft">
                     <Option
                         :value="item.id"
@@ -32,9 +32,9 @@
                         >{{ item.softname }}</Option
                     >
                 </Select>
-            </FormItem>
-            <Form-item label="设置等级价格" prop="price">
-                <tables
+            </FormItem> -->
+            <!-- <Form-item label="设置等级价格" prop="price">
+				<tables
                     ref="tables"
                     search-place="top"
                     v-model="tableData"
@@ -45,6 +45,21 @@
                     <template slot="sider"></template>
                     <template slot="footer"></template>
                 </tables>
+			</Form-item> -->
+            <Form-item label="设置等级价格" prop="price">
+                <template v-for="item in softList">
+                    <p>{{ item.softname }}</p>
+                    <tables
+                        ref="tables"
+                        search-place="top"
+                        v-model="item.role"
+                        :columns="columns"
+                    >
+                        <template slot="header"></template>
+                        <template slot="sider"></template>
+                        <template slot="footer"></template>
+                    </tables>
+                </template>
             </Form-item>
             <Form-item>
                 <Button
@@ -100,14 +115,13 @@ export default {
                         return h('div', [
                             h('inputNumber', {
                                 props: {
-                                    value: parseInt(params.row.marketprice || 0)
+                                    value: this.levelPrice ? parseInt(this.levelPrice[params.row.id]) : parseInt(params.row.marketprice || 0)
                                 },
                                 style: {
                                 },
                                 on: {
                                     'on-change': (value) => {
-                                        this.pariceList[params.index].marketprice = value;
-
+                                        this.pariceList[params.index].price = value;
                                         console.log(params);
                                     }
                                 }
@@ -122,6 +136,7 @@ export default {
                 yc: false,
                 loading: false
             },
+            levelPrice: "",
             ruleValidate: {
                 level: [
                     { required: true, message: '标题不能为空', trigger: 'blur' }
@@ -132,17 +147,15 @@ export default {
     },
     created () {
         this.levelID = this.$route.query.levelID;
-        if (this.levelID) {
-            this.get();
-        }
-        this.getSoftList();
+        this.get();
+        // this.getSoftList();
     },
     methods: {
         get () {
             this.$http.request({
                 url: "/api_admin.php?action=level_get",
                 params: {
-                    levelID: this.levelID
+                    levelID: this.levelID || 0
                 }
             }).then((res) => {
                 console.log(res);
@@ -153,6 +166,9 @@ export default {
                     yc: data.yc == 1 ? true : false,
                     loading: false
                 };
+                this.softList = data.soft || [];
+                // this.upDateLevelPrice(data.price);
+                // this.selectedSoft = this.levelID;
                 // this.softList = res.data.body || [];
             }).catch((response) => {
                 this.$Notice.error({
@@ -160,6 +176,13 @@ export default {
                     desc: response
                 });
             });
+        },
+        upDateLevelPrice (price) {
+            var list = {};
+            price.forEach((item) => {
+                list[item.roleID] = item.price;
+            });
+            this.levelPrice = list;
         },
         handleSubmit (name) {
             var _this = this
@@ -170,7 +193,7 @@ export default {
                         data = this.formValidate,
                         price = {};
                     this.pariceList.forEach((item) => {
-                        price[item.id] = item.marketprice;
+                        price[item.id] = item.price;
                     });
                     params = {
                         action: this.levelID ? "level_edit" : "level_add",
@@ -181,7 +204,6 @@ export default {
                         price: price
                     };
                     console.log(params);
-
                     this.$http.post(apiurl, params).then(function (response) {
                         if (response.data.status == 1) {
                             _this.$Message.info('保存成功');
@@ -205,11 +227,10 @@ export default {
         getSoftList () {
             this.$http.request({
                 url: "/api_admin.php?action=soft_listof",
-                params: {
-
-                }
+                params: {}
             }).then((res) => {
                 this.softList = res.data.body || [];
+                console.log(this.softList);
             }).catch((response) => {
                 this.$Notice.error({
                     title: '错误提示',
@@ -228,8 +249,9 @@ export default {
                 _this.tableData = res.data.body || [];
                 _this.$nextTick(() => {
                     _this.pariceList = JSON.parse(JSON.stringify(res.data.body)) || [];
+                    console.log(_this.tableData);
+
                 })
-                console.log(_this.pariceList);
             }).catch(function (response) {
                 _this.$Notice.error({
                     title: '错误提示',

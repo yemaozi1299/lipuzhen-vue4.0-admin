@@ -211,7 +211,7 @@
                                                     {{ item.name }}
                                                 </div>
                                                 <div class="number">
-                                                    编号: {{ item.id }}
+                                                    编号: {{ item.fromappid }}
                                                 </div>
                                             </div>
                                         </div>
@@ -428,7 +428,7 @@ export default {
             this.$emit("successCallback", params);
         },
         toPreview (params) {
-            window.open("/preshow.php?appid=" + params.id);
+            window.open("/preshow.php?appid=" + params.fromappid);
             console.log(params);
         }
     }

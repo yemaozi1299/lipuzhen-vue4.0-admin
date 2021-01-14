@@ -83,7 +83,8 @@ export default {
                 p_name: "",
                 p_code: "",
                 softID: "",
-                yc: false
+                yc: false,
+                loading: true
             },
             columns: [
                 {
@@ -231,6 +232,10 @@ export default {
 
                 console.log(res.data);
             }).catch((response) => {
+                this.addCompanyData.loading = false;
+                this.$nextTick(() => {
+                    this.addCompanyData.loading = true;
+                });
                 this.$Notice.error({
                     title: '错误提示',
                     desc: response
@@ -248,21 +253,23 @@ export default {
                     p_name: data.p_name,
                 }
             }).then((res) => {
-                if (res.data.status == 1) {
-                    this.dataInitial();
-                    this.addCompanyData = {
-                        p_id: 0,
-                        isModal: false,
-                        p_name: "",
-                        p_code: "",
-                        softID: "",
-                        yc: false
-                    };
-                } else {
-                    this.$Message.warning(res.data.message);
-                }
+                this.addCompanyData.loading = false;
+                this.dataInitial();
+                this.addCompanyData = {
+                    p_id: 0,
+                    isModal: false,
+                    p_name: "",
+                    p_code: "",
+                    softID: "",
+                    yc: false,
+                    loading: true
+                };
                 console.log(res.data);
             }).catch((response) => {
+                this.addCompanyData.loading = false;
+                this.$nextTick(() => {
+                    this.addCompanyData.loading = true;
+                });
                 this.$Notice.error({
                     title: '错误提示',
                     desc: response

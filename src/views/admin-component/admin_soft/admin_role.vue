@@ -339,16 +339,15 @@ export default {
                     description: "",
                     marketprice: "",
                     rolename: "",
-                    p_code_arr: this.selectedCode,
+                    p_code_arr: this.selectedCode || [],
                     loading: false
                 };
                 this.dataInitial();
-
             }).catch((response) => {
                 this.addCompanyData.loading = false;
                 this.$nextTick(() => {
                     this.addCompanyData.loading = true;
-                })
+                });
                 this.$Notice.error({
                     title: '错误提示',
                     desc: response

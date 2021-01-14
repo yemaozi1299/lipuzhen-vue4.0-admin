@@ -58,6 +58,20 @@
                             >
                                 <Icon type="md-add" />添加应用
                             </Button>
+                            <Input
+                                v-model="appKeyword"
+                                placeholder="关键字"
+                                @on-keyup.enter="getAppList"
+                                clearable
+                                class="ant-search-input mg-r-10"
+                                style="width: 200px"
+                            />
+                            <Button
+                                type="primary"
+                                @click="getAppList"
+                                icon="ios-search"
+                                class="ant-search-btn"
+                            ></Button>
                         </div>
                     </template>
                 </tables>
@@ -301,6 +315,7 @@ export default {
             _index: 0,
             isUploadApp: false,
             maxWidth: 1200,
+            appKeyword: "",
 
             mbData: {
                 title: [
@@ -710,7 +725,6 @@ export default {
             this.getSoftList();
             this.isAgentorAdmin();
             console.log(process.env.NODE_ENV);
-
         },
         getSoftList () {
             this.$http.request({
@@ -790,14 +804,14 @@ export default {
                 action: 'wxapp_listof',
                 page: this.pageData.page || 1,
                 pageno: 10,
-                apptype: 0
+                apptype: 0,
+                keyword: this.appKeyword || ""
             }
             _this.$http.post('/api_home.php', _this.$qs.stringify(data)).then(function (response) {
                 console.log(response.data);
                 var body = [];
                 _this.appData.content = response.data.body;
                 _this.pageData.total = Number(response.data.total);
-
             }).catch(function (response) {
                 _this.$Notice.error({
                     title: '错误提示',
@@ -828,7 +842,6 @@ export default {
             if (params.haveSoft == "1" && params.url) {
                 window.open(`${params.url + name + params.id}`);
             }
-
         },
 
 

@@ -31,7 +31,7 @@
 
         <Modal
             v-model="addCompanyData.isModal"
-            title="添加代理商"
+            title="添加软件类型"
             @on-ok="addSoft"
             @on-cancel=""
             :loading="addCompanyData.loading"
@@ -77,7 +77,7 @@ export default {
             addCompanyData: {
                 id: 0,
                 isModal: false,
-                loading: false,
+                loading: true,
                 softcode: "",
                 softname: "",
                 description: "",
@@ -237,7 +237,7 @@ export default {
             this.addCompanyData = {
                 id: 0,
                 isModal: true,
-                loading: false,
+                loading: true,
                 softname: "",
                 description: "",
                 yc: false
@@ -268,6 +268,10 @@ export default {
                 };
                 console.log(res.data);
             }).catch((response) => {
+                this.addCompanyData.loading = false;
+                this.$nextTick(() => {
+                    this.addCompanyData.loading = true;
+                });
                 this.$Notice.error({
                     title: '错误提示',
                     desc: response
@@ -276,15 +280,13 @@ export default {
         },
         fetchData () {
             this.page = this.$route.params.pageid ? parseInt(this.$route.params.pageid) : 1;
-            this.dataInitial()
+            this.dataInitial();
         },
         dataInitial () {
             this.$http.request({
                 method: "POST",
                 url: "/api_admin.php?action=soft_listof",
-                params: {
-
-                }
+                params: {}
             }).then((res) => {
                 if (res.data.status == 1) {
                     this.tableData = res.data.body || [];

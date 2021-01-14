@@ -242,7 +242,7 @@ export default {
                                     },
                                     on: {
                                         click: () => {
-                                            // this.companyStatus(params.row);
+                                            this.agentStatus(params.row);
                                         }
                                     }
                                 }, params.row.status == 1 ? '正常' : '关闭')
@@ -404,9 +404,7 @@ export default {
                 pageno: 10,
                 page: this.pageData.page,
             }
-            _this.searching = keyword ? true : false;
             _this.infoData.data = [];
-            this.$Loading.start();
             _this.$http.post('/api_admin.php', _this.$qs.stringify(data)).then(function (response) {
                 if (response.data.status == 1) {
                     _this.infoData.data = response.data.body;
@@ -415,7 +413,6 @@ export default {
                     _this.$Message.info(response.data.message);
                 }
                 console.log(response.data);
-                _this.$Loading.finish();
             }).catch(function (response) {
                 console.log(response);
                 _this.$Notice.error({
@@ -428,6 +425,24 @@ export default {
         skippage: function (page) {
             this.pageData.page = page;
             this.get();
+        },
+        agentStatus (param) {
+            console.log(param);
+            this.$http.request({
+                url: "/api_admin.php?action=agent_status",
+                params: {
+                    id: param.id,
+                    status: param.status == "1" ? "0" : "1"
+                }
+            }).then((res) => {
+                this.get();
+                console.log(res);
+            }).catch((response) => {
+                this.$Notice.error({
+                    title: '错误提示',
+                    desc: response
+                });
+            });
         },
         agentDel: function (params) {
             var _this = this;
